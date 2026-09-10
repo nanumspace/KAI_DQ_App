@@ -222,6 +222,9 @@
     .dl .row { display: flex; gap: 10px; flex-wrap: wrap; }
     .dl .row .btn { flex: 1; min-width: 130px; }
     .dl .sz { margin-top: 10px; font-size: 12px; color: var(--faint); font-family: var(--mono); }
+    .dl.wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: center; }
+    .dl.wide .for { margin-bottom: 0; }
+    @media (max-width: 960px) { .dl.wide { grid-template-columns: 1fr; } }
     .dl-note { margin-top: 18px; color: var(--muted); font-size: 13.5px; line-height: 1.6; text-align: center; }
     .dl-note code { font-family: var(--mono); background: var(--surface-2); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; font-size: 12.5px; }
 
@@ -506,6 +509,16 @@
             <div class="row"><a class="btn btn-accent" id="dl-mac-arm64" href="https://github.com/nanumspace/KAI_DQ_App/releases/download/v0.1.0/QualityValidator-0.1.0-mac-arm64.dmg" data-i18n="dl.dmg">디스크 이미지 (.dmg)</a></div>
             <div class="sz">QualityValidator-0.1.0-mac-arm64.dmg</div>
           </div>
+          <div class="dl wide reveal">
+            <div>
+              <div class="arch"><span class="archname" data-i18n="dl.samples">견본 데이터</span><span class="pill" data-i18n="dl.samplespill">가상데이터 · 실제 환자 무관</span></div>
+              <p class="for" data-i18n="dl.samplesfor">앱 동작을 확인할 때 쓰는 100명 가상 코호트입니다. 6개 코호트 × clean(오류 없음) / dirty(오류 주입 + 정답표) 12개 폴더가 들어 있고, 폴더마다 CSV 와 엑셀 두 형태와 기대 결과(규칙 수, 위반 건수)를 적은 README 가 있습니다. 폴더째 검증 실행 화면에 끌어다 놓으면 됩니다. 먼저 dirty 폴더로 실행해 오류가 잡히는 모습을 보세요.</p>
+            </div>
+            <div>
+              <div class="row"><a class="btn btn-accent" id="dl-samples-all" href="https://github.com/nanumspace/KAI_DQ_App/releases/download/v0.1.0/SampleData-0.1.0-all.zip" data-i18n="dl.samplesall">전체 묶음 (zip)</a><a class="btn btn-ghost" href="https://github.com/nanumspace/KAI_DQ_App/releases/latest" data-i18n="dl.samplesby">코호트별 zip</a></div>
+              <div class="sz">SampleData-0.1.0-all.zip</div>
+            </div>
+          </div>
         </div>
         <p class="dl-note" data-i18n="dl.note">
           Windows 설치 파일은 GlobalSign EV 인증서로, macOS 는 Apple Developer ID 로 서명하고 공증했습니다. 32비트 Windows 와 Intel Mac 은 제공하지 않습니다.<br>
@@ -596,7 +609,10 @@
         'dl.x64pill': { ko: '대부분의 PC', en: 'Most PCs' }, 'dl.x64for': { ko: 'Intel · AMD 64비트 Windows 10/11. 병원 업무용 PC 는 대부분 여기에 해당합니다.', en: 'Intel · AMD 64-bit Windows 10/11. Most hospital PCs.' },
         'dl.armpill': { ko: 'ARM PC', en: 'ARM PCs' }, 'dl.armfor': { ko: 'Snapdragon 등 ARM 기반 Windows 11. Surface Pro X · Copilot+ PC.', en: 'Snapdragon and other ARM Windows 11. Surface Pro X · Copilot+ PCs.' },
         'dl.macfor': { ko: 'M1 이후 Mac. Developer ID 서명과 Apple 공증을 거쳐 경고 없이 열립니다.', en: 'M1 and later Macs. Developer ID signed and Apple notarized; opens without warnings.' },
-        'dl.exe': { ko: '설치 파일 (.exe)', en: 'Installer (.exe)' }, 'dl.dmg': { ko: '디스크 이미지 (.dmg)', en: 'Disk image (.dmg)' },
+        'dl.exe': { ko: '설치 파일 (.exe)', en: 'Installer (.exe)' },
+        'dl.samples': { ko: '견본 데이터', en: 'Sample data' }, 'dl.samplespill': { ko: '가상데이터 · 실제 환자 무관', en: 'Synthetic · no real patients' },
+        'dl.samplesfor': { ko: '앱 동작을 확인할 때 쓰는 100명 가상 코호트입니다. 6개 코호트 × clean(오류 없음) / dirty(오류 주입 + 정답표) 12개 폴더가 들어 있고, 폴더마다 CSV 와 엑셀 두 형태와 기대 결과(규칙 수, 위반 건수)를 적은 README 가 있습니다. 폴더째 검증 실행 화면에 끌어다 놓으면 됩니다. 먼저 dirty 폴더로 실행해 오류가 잡히는 모습을 보세요.', en: '100-patient synthetic cohorts for trying the app: 12 folders, six cohorts × clean (no faults) / dirty (injected faults + answer key). Each folder has CSV and Excel forms and a README with the expected result (rules, violations). Drop a folder onto the Run screen. Start with a dirty folder to watch faults being caught.' },
+        'dl.samplesall': { ko: '전체 묶음 (zip)', en: 'All-in-one (zip)' }, 'dl.samplesby': { ko: '코호트별 zip', en: 'Per-cohort zips' }, 'dl.dmg': { ko: '디스크 이미지 (.dmg)', en: 'Disk image (.dmg)' },
         'dl.note': { ko: 'Windows 설치 파일은 GlobalSign EV 인증서로, macOS 는 Apple Developer ID 로 서명하고 공증했습니다. 32비트 Windows 와 Intel Mac 은 제공하지 않습니다.<br><code>SHA256SUMS.txt</code> 로 파일을 대조할 수 있습니다. · <a href="https://github.com/nanumspace/KAI_DQ_App/releases">모든 릴리스 보기</a>', en: 'Windows installers are signed with a GlobalSign EV certificate; macOS with Apple Developer ID and notarized. No 32-bit Windows or Intel Mac builds.<br>Verify files against <code>SHA256SUMS.txt</code>. · <a href="https://github.com/nanumspace/KAI_DQ_App/releases">All releases</a>' },
         'docs.eyebrow': { ko: '문서', en: 'Docs' }, 'docs.title': { ko: '설명서와 설계 문서', en: 'Manual and design documents' },
         'docs.d1b': { ko: '사용자 설명서', en: 'User manual' }, 'docs.d1': { ko: '설치, 입력 파일 준비, 검증 실행, 출력물 읽기와 제출, 자주 묻는 질문.', en: 'Install, prepare input files, run, read outputs and submit, FAQ.' },
@@ -635,12 +651,12 @@
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (rel) {
           if (!rel || !rel.assets) return;
-          var map = { 'dl-win-x64': /-win-x64\.exe$/, 'dl-win-arm64': /-win-arm64\.exe$/, 'dl-mac-arm64': /-mac-arm64\.dmg$/ };
+          var map = { 'dl-win-x64': /-win-x64\.exe$/, 'dl-win-arm64': /-win-arm64\.exe$/, 'dl-mac-arm64': /-mac-arm64\.dmg$/, 'dl-samples-all': /^SampleData-.*-all\.zip$/ };
           var changed = false;
           Object.keys(map).forEach(function (id) {
             var a = rel.assets.filter(function (x) { return map[id].test(x.name); })[0];
             var el = document.getElementById(id);
-            if (a && el) { el.href = a.browser_download_url; var sz = el.parentElement.nextElementSibling; if (sz) sz.textContent = a.name + ' · ' + (a.size / 1048576).toFixed(0) + ' MB'; changed = true; }
+            if (a && el) { el.href = a.browser_download_url; var sz = el.parentElement.nextElementSibling; if (sz && sz.classList.contains('sz')) sz.textContent = a.name + ' · ' + (a.size / 1048576).toFixed(0) + ' MB'; changed = true; }
           });
           if (changed && rel.tag_name) document.getElementById('ver').textContent = rel.tag_name;
         }).catch(function () {});

@@ -83,7 +83,8 @@ npm run dist:win                 # Windows 설치 파일 (Windows 에서)
 | 빌드 준비 | 타입 검사, `electron-vite build`. 빌드 대상 플랫폼의 DuckDB 바이너리만 `node_modules/@duckdb/` 에 남기고 나머지는 잠시 치움 (Windows 바이너리는 npm 레지스트리에서 받아 `~/Library/Caches/kai-release/` 에 보관) |
 | macOS | `electron-builder --mac --arm64`. hardened runtime 으로 Developer ID 서명, 앱 공증과 staple 은 electron-builder 가 `APPLE_KEYCHAIN_PROFILE` 로 수행. 이어서 DMG 자체를 `notarytool` 로 공증하고 staple (오프라인 PC 에서도 경고 없이 열리도록) |
 | Windows | x64, arm64 각각 `electron-builder --win`. exe 마다 `app/build/sign-win.cjs` 훅이 `osslsigncode` 로 토큰 서명 (PKCS#11 은 OpenSC 모듈, 중간 인증서 `app/build/globalsign-ev-codesigning-ca-2020.pem` 첨부, RFC 3161 타임스탬프) |
-| 검증 | `osslsigncode verify`, `spctl -a -t open`, `xcrun stapler validate`, `SHA256SUMS.txt` |
+| 견본 데이터 | `app/build/pack-samples.cjs` 가 `synth/output/` 의 clean/dirty 를 코호트별 zip 12개와 전체 묶음 1개로 만듦. 각 zip 에 CSV, 시트당 테이블 엑셀, (dirty) `fault_manifest.csv`, 기대 결과를 적은 README.txt |
+| 검증 | `osslsigncode verify`, `spctl -a -t open`, `xcrun stapler validate`, `SHA256SUMS.txt` (설치 파일과 견본 zip) |
 | 게시 | 태그 `v<버전>` 생성과 push, `gh release create` 로 DMG·exe·SHA256SUMS 첨부. `--replace` 를 주면 같은 버전의 기존 Release 와 태그를 지우고 다시 게시 |
 
 Windows 32비트(x86)는 만들지 않습니다. DuckDB Node 바인딩이 Windows 는 x64 와 arm64 만 제공하고, Windows 11 은 64비트 전용입니다.

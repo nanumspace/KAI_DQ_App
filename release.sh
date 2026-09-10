@@ -23,6 +23,7 @@
 #   QualityValidator-<버전>-mac-arm64.dmg     Developer ID 서명 + 공증 + staple
 #   QualityValidator-<버전>-win-x64.exe       GlobalSign EV 서명 (SafeNet 토큰)
 #   QualityValidator-<버전>-win-arm64.exe
+#   SampleData-<버전>-<COHORT>-<clean|dirty>.zip ×12, SampleData-<버전>-all.zip   견본 데이터 (가상데이터, app/build/pack-samples.cjs)
 #   SHA256SUMS.txt
 
 set -euo pipefail
@@ -151,7 +152,7 @@ if [ "$PUBLISH_ONLY" = 0 ]; then
   mkdir -p "$OUT"
   [ "$SKIP_MAC" = 0 ] && rm -rf "$OUT"/*.dmg "$OUT"/*.dmg.blockmap "$OUT"/mac-* 2>/dev/null || true
   [ "$SKIP_WIN" = 0 ] && rm -rf "$OUT"/*.exe "$OUT"/*.exe.blockmap "$OUT"/win-* 2>/dev/null || true
-  rm -f "$OUT"/SHA256SUMS.txt
+  rm -f "$OUT"/SHA256SUMS.txt "$OUT"/SampleData-*.zip
 
   # -------------------------------------------------------------- 4. macOS
   if [ "$SKIP_MAC" = 0 ]; then
@@ -190,8 +191,11 @@ if [ "$PUBLISH_ONLY" = 0 ]; then
 
 fi
 
-# ---------------------------------------------------------------- 6. 검증
+# ---------------------------------------------------------------- 6. 견본 데이터와 검증
 {
+  log "견본 데이터 묶음 (가상데이터)"
+  rm -f "$OUT"/SampleData-*.zip
+  node "$APP/build/pack-samples.cjs" "$OUT" "$VERSION"
   log "산출물 검증"
   rm -rf "$OUT"/*.blockmap "$OUT"/builder-*.yml "$OUT"/latest*.yml "$OUT"/*-unpacked "$OUT"/mac-* "$OUT"/.icon-* 2>/dev/null || true
   if [ "$UNSIGNED" = 0 ]; then
@@ -205,7 +209,7 @@ fi
       xcrun stapler validate "$f" >/dev/null 2>&1 && ok "staple 확인" || fail "staple 검증 실패"
     done
   fi
-  (cd "$OUT" && shasum -a 256 *.dmg *.exe 2>/dev/null > SHA256SUMS.txt) && ok "SHA256SUMS.txt"
+  (cd "$OUT" && shasum -a 256 *.dmg *.exe *.zip 2>/dev/null > SHA256SUMS.txt) && ok "SHA256SUMS.txt"
   ls -lh "$OUT" | awk 'NR>1 {printf "  %8s  %s\n", $5, $9}'
 }
 
@@ -215,7 +219,7 @@ if [ "$PUBLISH" = 0 ] && [ "$PUBLISH_ONLY" = 0 ]; then
   exit 0
 fi
 log "GitHub Release $TAG"
-ASSETS=("$OUT"/*.dmg "$OUT"/*.exe "$OUT"/SHA256SUMS.txt)
+ASSETS=("$OUT"/*.dmg "$OUT"/*.exe "$OUT"/SampleData-*.zip "$OUT"/SHA256SUMS.txt)
 NOTES="$(mktemp)"
 {
   echo "## Quality Validator $TAG"
@@ -225,6 +229,10 @@ NOTES="$(mktemp)"
   for f in "$OUT"/*.dmg; do [ -f "$f" ] && echo "| \`$(basename "$f")\` | macOS (Apple Silicon) | Developer ID 서명, Apple 공증 |"; done
   for f in "$OUT"/*-win-x64.exe; do [ -f "$f" ] && echo "| \`$(basename "$f")\` | Windows 10/11 64비트 (x64) | GlobalSign EV 코드 서명 |"; done
   for f in "$OUT"/*-win-arm64.exe; do [ -f "$f" ] && echo "| \`$(basename "$f")\` | Windows 11 ARM (arm64) | GlobalSign EV 코드 서명 |"; done
+  echo
+  echo "### 견본 데이터 (가상데이터)"
+  echo
+  echo "앱 동작을 확인할 때 쓰는 가상데이터입니다. 실제 환자와 무관합니다. \`SampleData-$VERSION-all.zip\` 은 6개 코호트 × clean(오류 없음) / dirty(오류 주입 + 정답표) 12개 폴더 전체이고, 코호트별 zip 은 그중 하나입니다. 각 zip 의 README.txt 에 기대 결과(규칙 수, 위반 건수)가 있습니다. 폴더째 앱의 검증 실행 화면에 끌어다 놓으면 됩니다."
   echo
   echo "설치와 사용 방법은 [사용자 설명서](https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/blob/main/manual/README.md)를 보세요."
   echo

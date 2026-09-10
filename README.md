@@ -21,7 +21,7 @@
 
 ## 빠른 시작
 
-**병원 담당자**는 [Releases](../../releases)에서 설치 파일을 받아 [사용자 설명서](manual/README.md)를 따릅니다.
+**병원 담당자**는 [Releases](../../releases)에서 설치 파일을 받아 [사용자 설명서](manual/README.md)를 따릅니다. 같은 페이지의 견본 데이터 zip(가상데이터, clean/dirty)으로 앱 동작을 먼저 확인할 수 있습니다.
 
 **개발자**는 다음으로 앱을 개발 모드로 띄웁니다.
 
@@ -67,7 +67,7 @@ gh auth login
 ./release.sh --replace        # 같은 버전을 다시 게시 (기존 Release 와 태그 삭제 후)
 ```
 
-USB 토큰을 꽂고, 변경 사항을 모두 커밋한 뒤 main 브랜치에서 실행합니다. 산출물은 `QualityValidator-<버전>-mac-arm64.dmg`, `QualityValidator-<버전>-win-x64.exe`, `QualityValidator-<버전>-win-arm64.exe`, `SHA256SUMS.txt` 입니다. 자세한 동작은 [docs/reproduce.md](docs/reproduce.md)에 있습니다.
+USB 토큰을 꽂고, 변경 사항을 모두 커밋한 뒤 main 브랜치에서 실행합니다. 산출물은 `QualityValidator-<버전>-mac-arm64.dmg`, `QualityValidator-<버전>-win-x64.exe`, `QualityValidator-<버전>-win-arm64.exe`, 견본 데이터 `SampleData-<버전>-*.zip`(13개), `SHA256SUMS.txt` 입니다. 자세한 동작은 [docs/reproduce.md](docs/reproduce.md)에 있습니다.
 
 ## 문서
 

@@ -122,15 +122,18 @@
     .side .m { padding: 6px 8px; border-radius: 6px; margin-bottom: 3px; color: #c9d5e8; }
     .side .m.on { background: #2f4f86; color: #fff; font-weight: 600; }
     .side .ft { margin-top: 18px; color: #8ea0bf; font-size: 9px; line-height: 1.5; }
-    .main { padding: 12px 14px; color: var(--win-text); }
+    .main { padding: 12px 14px; color: var(--win-text); min-width: 0; overflow: hidden; }
     .main .hd { font-weight: 700; font-size: 13px; margin-bottom: 8px; }
     .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
-    .step { border: 1px solid var(--win-line); border-radius: 6px; padding: 5px 6px; font-size: 9.5px; display: flex; align-items: center; gap: 5px; color: var(--muted); }
+    .step { border: 1px solid var(--win-line); border-radius: 6px; padding: 5px 6px; font-size: 9.5px; display: flex; align-items: center; gap: 5px; color: var(--muted); min-width: 0; }
+    .step span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .step i { flex: none; }
     .step i { width: 14px; height: 14px; border-radius: 50%; display: inline-grid; place-items: center; font-style: normal; font-size: 8.5px; background: var(--win-head); }
     .step.done { border-color: var(--ok); color: var(--win-text); } .step.done i { background: var(--ok); color: #fff; }
     .step.cur { border-color: var(--accent); color: var(--win-text); } .step.cur i { background: var(--accent); color: #fff; }
-    .mt { width: 100%; border-collapse: collapse; font-size: 10px; }
-    .mt th, .mt td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--win-line); white-space: nowrap; }
+    .mt { width: 100%; border-collapse: collapse; font-size: 10px; table-layout: fixed; }
+    .mt th, .mt td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--win-line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mt col.c1 { width: 31%; } .mt col.c2 { width: 33%; } .mt col.c3 { width: 12%; } .mt col.c4 { width: 24%; }
     .mt th { background: var(--win-head); font-weight: 600; font-size: 9.5px; }
     .mt tbody tr:nth-child(even) td { background: var(--win-alt); }
     .mt .n { font-family: var(--mono); text-align: right; }
@@ -192,9 +195,9 @@
     .outs code.no { border-color: rgba(212,51,51,.4); color: var(--err); text-decoration: line-through; }
 
     /* screens */
-    .shots { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto; gap: 16px; }
+    .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .shot { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-sm); }
-    .shot:first-child { grid-row: span 2; }
+    .shot:first-child { grid-column: span 2; }
     .shot img { display: block; width: 100%; height: auto; }
     .shot figcaption { padding: 12px 16px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); }
     .shot figcaption b { color: var(--text); }
@@ -242,7 +245,7 @@
       .mock:hover { transform: none; }
       .features, .docs { grid-template-columns: 1fr 1fr; }
       .flow, .band, .shots { grid-template-columns: 1fr; }
-      .shot:first-child { grid-row: auto; }
+      .shot:first-child { grid-column: auto; }
       .stats .wrap { grid-template-columns: 1fr; }
       .dl-grid { grid-template-columns: 1fr 1fr; }
     }
@@ -323,12 +326,13 @@
               <div class="step"><i>4</i><span data-i18n="mock.s4">결과와 출력물</span></div>
             </div>
             <table class="mt" aria-hidden="true">
+              <colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup>
               <thead><tr><th data-i18n="mock.th1">테이블</th><th data-i18n="mock.th2">파일 / 시트</th><th class="n" data-i18n="mock.th3">행</th><th data-i18n="mock.th4">점검</th></tr></thead>
               <tbody>
                 <tr><td>PERSON</td><td>cohort.xlsx / PERSON</td><td class="n">100</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
                 <tr><td>VISIT_OCCURRENCE</td><td>visit_2026.csv</td><td class="n">1,867</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
                 <tr><td>MEASUREMENT</td><td>검사결과.csv (EUC-KR)</td><td class="n">7,363</td><td><span class="pill-s p-warn" data-i18n="mock.warn">날짜 형식 표본</span></td></tr>
-                <tr><td>DRUG_EXPOSURE</td><td>drug.csv</td><td class="n">1,361</td><td><span class="pill-s p-warn">antp_therapy_id → antp_id</span></td></tr>
+                <tr><td>DRUG_EXPOSURE</td><td>drug.csv</td><td class="n">1,361</td><td><span class="pill-s p-warn" data-i18n="mock.alias">별칭 antp_id</span></td></tr>
                 <tr><td>LUNG_CANCER</td><td>cohort.xlsx / LUNG_CANCER</td><td class="n">2,082</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
                 <tr><td>ADVERSE_EVENT</td><td>ae.csv</td><td class="n">255</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
               </tbody>
@@ -561,7 +565,7 @@
         'mock.sub': { ko: 'K-AI 코호트 데이터 품질검증', en: 'K-AI cohort data quality' }, 'mock.m1': { ko: '▶ 검증 실행', en: '▶ Run validation' }, 'mock.m2': { ko: '▤ 결과 보고서', en: '▤ Report' }, 'mock.m3': { ko: '⌕ 오류 현황 조회', en: '⌕ Findings' }, 'mock.m4': { ko: '⌂ 대시보드', en: '⌂ Dashboard' }, 'mock.m5': { ko: '▥ 통계 모니터링', en: '▥ Monitoring' }, 'mock.m6': { ko: '☰ 검증 규칙 관리', en: '☰ Rules' },
         'mock.ft': { ko: '규칙 1,196개 · 6개 질환 코호트<br>v0.1.0', en: '1,196 rules · 6 cohorts<br>v0.1.0' }, 'mock.hd': { ko: '검증 실행 · 폐암 (LUNG_CANCER)', en: 'Run · Lung cancer (LUNG_CANCER)' },
         'mock.s1': { ko: '코호트와 파일', en: 'Cohort & files' }, 'mock.s2': { ko: '대응 · 사전 점검', en: 'Mapping · pre-check' }, 'mock.s3': { ko: '검증 실행', en: 'Run' }, 'mock.s4': { ko: '결과와 출력물', en: 'Results' },
-        'mock.th1': { ko: '테이블', en: 'Table' }, 'mock.th2': { ko: '파일 / 시트', en: 'File / sheet' }, 'mock.th3': { ko: '행', en: 'Rows' }, 'mock.th4': { ko: '점검', en: 'Check' }, 'mock.ok': { ko: '이상 없음', en: 'OK' }, 'mock.warn': { ko: '날짜 형식 표본', en: 'Date format sample' },
+        'mock.th1': { ko: '테이블', en: 'Table' }, 'mock.th2': { ko: '파일 / 시트', en: 'File / sheet' }, 'mock.th3': { ko: '행', en: 'Rows' }, 'mock.th4': { ko: '점검', en: 'Check' }, 'mock.ok': { ko: '이상 없음', en: 'OK' }, 'mock.warn': { ko: '날짜 형식 표본', en: 'Date format sample' }, 'mock.alias': { ko: '별칭 antp_id', en: 'Alias antp_id' },
         'mock.run': { ko: '검증 실행', en: 'Run' }, 'mock.prog': { ko: '규칙 427개 중 308개 · 교차 검증 중', en: '308 of 427 rules · cross-table checks' },
         'stat1.u': { ko: '규칙', en: 'rules' }, 'stat1.cap': { ko: '구조 규칙 1,121개는 명세에서 자동 생성, 교차 테이블 SQL 규칙 75개는 임상 논리로 작성.', en: '1,121 structural rules generated from the spec, 75 cross-table SQL rules written from clinical logic.' },
         'stat2.u': { ko: '코호트', en: 'cohorts' }, 'stat2.cap': { ko: 'OMOP-CDM 핵심 8개 테이블 + 질환 특화·이상사례·항암 테이블, 1,105개 필드 명세.', en: '8 OMOP-CDM core tables + disease, adverse-event and anticancer tables; a 1,105-field specification.' },

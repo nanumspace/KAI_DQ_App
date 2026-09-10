@@ -68,6 +68,10 @@ npm run dist:win                 # Windows 설치 파일 (Windows 에서)
 
 `.github/workflows/ci.yml`은 push와 pull request마다 TypeScript 엔진의 회귀 시험(`dq-ts`의 `npm test`)과 앱의 타입 검사·빌드를 실행합니다.
 
+## 소개 페이지 (GitHub Pages)
+
+`docs/index.html` 한 파일(인라인 CSS·JS, 한/영 전환, 라이트/다크)과 `docs/img/` 캡처가 소개 페이지입니다. `docs/` 아래가 바뀌어 main 에 push 되면 `.github/workflows/deploy-pages.yml` 이 https://nanumspace.github.io/KAI_DQ_App/ 에 배포합니다. 다운로드 단추는 GitHub 의 최신 Release 를 읽어 파일 이름과 링크를 스스로 갱신하므로, 새 버전을 릴리스해도 페이지를 고칠 필요가 없습니다. 캡처는 `internal/presentations/img/` 원본을 1600px JPEG 로 줄인 것입니다.
+
 ## 릴리스 (`release.sh`)
 
 서명에 USB 토큰과 키체인이 필요하므로 릴리스는 GitHub Actions 가 아니라 개발자의 macOS 에서 `release.sh` 로 합니다. 사용법은 루트 README 의 릴리스 절에 있습니다. 스크립트가 하는 일은 다음 순서입니다.

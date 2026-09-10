@@ -10,4 +10,6 @@
 | [engine.md](engine.md) | 검증 엔진 세 층(Python · TypeScript · 앱), 검출 성능과 해석의 한계, 앱 구조 |
 | [reproduce.md](reproduce.md) | 환경 준비, 전체 파이프라인 재현, 앱 개발·빌드·배포, CI |
 
+`index.html`과 `img/`는 GitHub Pages 소개 페이지(https://nanumspace.github.io/KAI_DQ_App/)의 원본입니다. `docs/` 가 바뀌면 `.github/workflows/deploy-pages.yml` 이 자동으로 배포합니다.
+
 각 하위 폴더의 README(`app/README.md`, `dq-ts/README.md`)는 그 구성 요소의 세부 사항을 다룹니다.

@@ -62,6 +62,7 @@ npm run dist:win                 # Windows 설치 파일 (Windows 에서)
 - 개발 모드에서는 명세 위치가 저장소 루트이고, 실행 이력은 OS의 앱 데이터 폴더(`~/Library/Application Support/kai-quality-validator` 또는 `%APPDATA%`)에 저장됩니다.
 - 설치본은 `spec/`, `rules/` YAML과 `synth/output/clean` 견본 데이터를 `resources/kai/`에 내장합니다.
 - DuckDB는 네이티브 모듈이라 `asarUnpack`으로 풀어 둡니다.
+- 앱 아이콘은 `app/build/icon.svg`(원본)와 `app/build/icon.png`(1024×1024)입니다. electron-builder가 PNG를 macOS icns와 Windows ico로 변환합니다. SVG를 고치면 `qlmanage -t -s 1024 -o app/build app/build/icon.svg && mv app/build/icon.svg.png app/build/icon.png`으로 다시 만듭니다.
 
 ## CI
 
@@ -79,7 +80,7 @@ npm run dist:win                 # Windows 설치 파일 (Windows 에서)
 | macOS | `electron-builder --mac --arm64`. hardened runtime 으로 Developer ID 서명, 앱 공증과 staple 은 electron-builder 가 `APPLE_KEYCHAIN_PROFILE` 로 수행. 이어서 DMG 자체를 `notarytool` 로 공증하고 staple (오프라인 PC 에서도 경고 없이 열리도록) |
 | Windows | x64, arm64 각각 `electron-builder --win`. exe 마다 `app/build/sign-win.cjs` 훅이 `osslsigncode` 로 토큰 서명 (PKCS#11 은 OpenSC 모듈, 중간 인증서 `app/build/globalsign-ev-codesigning-ca-2020.pem` 첨부, RFC 3161 타임스탬프) |
 | 검증 | `osslsigncode verify`, `spctl -a -t open`, `xcrun stapler validate`, `SHA256SUMS.txt` |
-| 게시 | 태그 `v<버전>` 생성과 push, `gh release create` 로 DMG·exe·SHA256SUMS 첨부 |
+| 게시 | 태그 `v<버전>` 생성과 push, `gh release create` 로 DMG·exe·SHA256SUMS 첨부. `--replace` 를 주면 같은 버전의 기존 Release 와 태그를 지우고 다시 게시 |
 
 Windows 32비트(x86)는 만들지 않습니다. DuckDB Node 바인딩이 Windows 는 x64 와 arm64 만 제공하고, Windows 11 은 64비트 전용입니다.
 

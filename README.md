@@ -62,6 +62,7 @@ gh auth login
 ./release.sh --publish-only   # 위 산출물로 태그와 Release 만
 ./release.sh --skip-win       # macOS 만 (또는 --skip-mac)
 ./release.sh --unsigned       # 서명·공증 없는 시험 빌드. 배포 금지
+./release.sh --replace        # 같은 버전을 다시 게시 (기존 Release 와 태그 삭제 후)
 ```
 
 USB 토큰을 꽂고, 변경 사항을 모두 커밋한 뒤 main 브랜치에서 실행합니다. 산출물은 `QualityValidator-<버전>-mac-arm64.dmg`, `QualityValidator-<버전>-win-x64.exe`, `QualityValidator-<버전>-win-arm64.exe`, `SHA256SUMS.txt` 입니다. 자세한 동작은 [docs/reproduce.md](docs/reproduce.md)에 있습니다.

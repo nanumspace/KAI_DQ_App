@@ -72,16 +72,20 @@ npm run smoke          # 빌드 후 자동 점검: 폐암 clean(CSV) · 당뇨 d
 
 개발 모드에서는 명세 위치가 저장소 루트(`app/..`)이고, 실행 이력은 OS 의 앱 데이터 폴더(`~/Library/Application Support/kai-quality-validator` 또는 `%APPDATA%`)에 저장됩니다.
 
-## 배포 빌드
+## 배포 빌드와 릴리스
+
+배포용 빌드는 저장소 루트의 `release.sh` 가 합니다 (macOS 에서 실행, Windows 는 SafeNet 토큰 서명, macOS 는 Developer ID 서명과 공증). 사용법은 루트 README 의 릴리스 절, 단계별 동작은 `docs/reproduce.md` 에 있습니다.
 
 ```bash
-npm run dist:mac       # release/*.dmg (macOS 에서)
-npm run dist:win       # release/*.exe (Windows 에서, 또는 GitHub Actions windows 러너)
+../release.sh --no-publish   # 빌드·서명·공증·검증 (release/ 에 산출물)
+npm run dist:mac             # 서명·공증 포함 macOS 빌드만 (APPLE_KEYCHAIN_PROFILE 필요)
+npm run dist:win             # Windows 빌드만 (토큰 서명 훅 build/sign-win.cjs 가 동작)
 ```
 
-- `package.json > build.extraResources` 가 `../spec/*.yaml`, `../rules/*.yaml` 을 `resources/kai/` 로 복사하므로 설치본은 명세를 내장합니다.
-- DuckDB 는 네이티브 모듈이라 `asarUnpack` 으로 풀어 둡니다. Windows x64, macOS arm64, macOS x64 는 각각 해당 OS 에서 빌드합니다.
-- 코드 서명(Windows 인증서, Apple 공증)은 아직 설정하지 않았습니다. 서명 없이 배포하면 SmartScreen · Gatekeeper 경고가 뜹니다.
+- `build/icon.svg` 가 앱 아이콘 원본이고 `build/icon.png`(1024×1024)를 electron-builder 가 macOS icns 와 Windows ico 로 변환합니다. SVG 를 고치면 `qlmanage -t -s 1024 -o build build/icon.svg && mv build/icon.svg.png build/icon.png` 으로 다시 만듭니다. 색은 K-AIPA 브랜드(남색 `#003B73`, 파랑 `#275BAB`, 청록 `#00C2D1`)를 따릅니다.
+- `build/sign-win.cjs` 는 Windows exe 서명 훅, `build/globalsign-*.pem` 은 서명에 첨부하는 중간 인증서와 검증용 루트 인증서입니다.
+- `package.json > build.extraResources` 가 `../spec/*.yaml`, `../rules/*.yaml`, 견본 데이터를 `resources/kai/` 로 복사하므로 설치본은 명세를 내장합니다.
+- DuckDB 는 네이티브 모듈이라 `asarUnpack` 으로 풀어 둡니다. 설치본에는 대상 플랫폼의 바이너리만 들어가며(`release.sh` 가 교체), Windows 32비트는 바이너리가 없어 만들지 않습니다.
 
 ## 확인된 것 (2026-09-10)
 
@@ -91,7 +95,7 @@ npm run dist:win       # release/*.exe (Windows 에서, 또는 GitHub Actions wi
 
 ## 이후 할 일
 
-- Windows 러너에서 설치 파일 빌드와 Windows 11 실행 확인 (한글 경로·폰트 포함)
-- 코드 서명(Windows 인증서, Apple 공증)과 자동 업데이트
+- 실제 Windows 11 PC 에서 설치·실행 확인 (한글 경로·폰트 포함)
+- 자동 업데이트
 - 규칙 심각도 3단계(정보 등급)와 규칙별 조치 안내를 `rules/*.yaml` 에 추가하고, 규칙 관리 화면에서 활성화 여부를 편집
 - 파일럿에서 회수한 submission.json 을 모아 보는 중앙용 화면

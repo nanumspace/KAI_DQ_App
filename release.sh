@@ -8,6 +8,7 @@
 #         --no-publish            빌드·서명·공증·검증까지만 (태그·Release 안 만듦)
 #         --publish-only          release/ 에 이미 있는 산출물로 태그·Release 만
 #         --unsigned              서명·공증 없이 빌드 (시험용, 배포 금지)
+#         --replace               같은 버전의 기존 태그와 GitHub Release 를 지우고 다시 게시
 #
 # 준비물 (한 번만)
 #   brew install osslsigncode opensc gh
@@ -15,6 +16,8 @@
 #   Apple 공증   : xcrun notarytool store-credentials kai-notary --apple-id <Apple ID> --team-id <Team ID>
 #   GitHub 로그인: gh auth login
 #   SafeNet USB 토큰을 꽂아 둔다. 키체인에 "Developer ID Application" 인증서가 있어야 한다.
+#   앱 아이콘은 app/build/icon.svg → icon.png (1024×1024). SVG 를 고치면 아래로 다시 만든다:
+#     qlmanage -t -s 1024 -o app/build app/build/icon.svg && mv app/build/icon.svg.png app/build/icon.png
 #
 # 산출물 (app/release/)
 #   QualityValidator-<버전>-mac-arm64.dmg     Developer ID 서명 + 공증 + staple
@@ -32,7 +35,7 @@ PKCS11_MODULE="${KAI_PKCS11_MODULE:-/opt/homebrew/lib/opensc-pkcs11.so}"
 CACHE="$HOME/Library/Caches/kai-release"
 WIN_ARCHS=(x64 arm64)
 
-SKIP_MAC=0; SKIP_WIN=0; PUBLISH=1; PUBLISH_ONLY=0; UNSIGNED=0; NEW_VERSION=""
+SKIP_MAC=0; SKIP_WIN=0; PUBLISH=1; PUBLISH_ONLY=0; UNSIGNED=0; REPLACE=0; NEW_VERSION=""
 for a in "$@"; do
   case "$a" in
     --skip-mac) SKIP_MAC=1 ;;
@@ -40,6 +43,7 @@ for a in "$@"; do
     --no-publish) PUBLISH=0 ;;
     --publish-only) PUBLISH_ONLY=1 ;;
     --unsigned) UNSIGNED=1 ;;
+    --replace) REPLACE=1 ;;
     -h|--help) sed -n '2,25p' "$0"; exit 0 ;;
     [0-9]*) NEW_VERSION="$a" ;;
     *) echo "알 수 없는 옵션: $a" >&2; exit 2 ;;
@@ -95,8 +99,14 @@ OUT="$APP/release"
 log "릴리스 버전 $TAG"
 if [ "$PUBLISH" = 1 ] || [ "$PUBLISH_ONLY" = 1 ]; then
   [ -z "$(git -C "$ROOT" status --porcelain)" ] || fail "커밋되지 않은 변경이 있습니다. 먼저 커밋하세요 (git status)."
-  git -C "$ROOT" rev-parse "$TAG" >/dev/null 2>&1 && fail "태그 $TAG 가 이미 있습니다. 새 버전을 지정하세요: ./release.sh <버전>"
-  gh release view "$TAG" >/dev/null 2>&1 && fail "Release $TAG 가 이미 GitHub 에 있습니다."
+  if [ "$REPLACE" = 1 ]; then
+    gh release view "$TAG" >/dev/null 2>&1 && gh release delete "$TAG" --yes --cleanup-tag >/dev/null && ok "기존 Release $TAG 삭제"
+    git -C "$ROOT" tag -d "$TAG" >/dev/null 2>&1 || true
+    git -C "$ROOT" push -q --delete origin "$TAG" >/dev/null 2>&1 || true
+  else
+    git -C "$ROOT" rev-parse "$TAG" >/dev/null 2>&1 && fail "태그 $TAG 가 이미 있습니다. 새 버전을 지정하거나 --replace 를 쓰세요."
+    gh release view "$TAG" >/dev/null 2>&1 && fail "Release $TAG 가 이미 GitHub 에 있습니다. 다시 게시하려면 --replace 를 쓰세요."
+  fi
 fi
 
 # ---------------------------------------------------------------- 3. 빌드 준비

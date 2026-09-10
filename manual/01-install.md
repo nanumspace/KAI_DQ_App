@@ -6,20 +6,28 @@ GitHub 저장소의 **Releases** 페이지에서 운영체제에 맞는 파일�
 
 | 운영체제 | 파일 |
 |---|---|
-| Windows 11 (64비트) | `Quality Validator Setup <버전>.exe` |
-| macOS (Apple Silicon 또는 Intel) | `Quality Validator-<버전>.dmg` |
+| Windows 10/11 64비트 (일반 PC) | `QualityValidator-<버전>-win-x64.exe` |
+| Windows 11 ARM (Snapdragon 등 ARM 노트북) | `QualityValidator-<버전>-win-arm64.exe` |
+| macOS (Apple Silicon) | `QualityValidator-<버전>-mac-arm64.dmg` |
+
+어느 것을 받을지 모르면 Windows 는 x64, Mac 은 arm64 를 받습니다. 32비트 Windows 와 Intel Mac 용은 제공하지 않습니다.
+
+설치 파일은 모두 코드 서명이 되어 있습니다. Windows 는 GlobalSign EV 인증서(게시자 Nanum Space Co,. Ltd), macOS 는 Apple Developer ID 서명과 공증입니다. 파일의 SHA-256 은 Release 페이지의 `SHA256SUMS.txt` 와 대조할 수 있습니다.
 
 ## Windows
 
-1. 받은 `.exe` 파일을 실행합니다.
-2. "Windows의 PC 보호" 경고가 뜨면 **추가 정보**를 누른 뒤 **실행**을 누릅니다. 설치 파일에 코드 서명이 아직 없어서 나오는 경고입니다.
+1. 받은 `.exe` 파일을 실행합니다. 파일 속성의 "디지털 서명" 탭에서 서명자 **Nanum Space Co,. Ltd** 를 확인할 수 있습니다.
+2. 설치 위치를 확인하고 설치합니다. 관리자 권한 없이 사용자 폴더에 설치됩니다.
 3. 설치가 끝나면 시작 메뉴의 **Quality Validator**로 엽니다.
+
+"Windows의 PC 보호" 경고가 뜨면 파일이 손상되었거나 다른 곳에서 받은 것입니다. Release 페이지에서 다시 받습니다.
 
 ## macOS
 
 1. 받은 `.dmg`를 열고 **Quality Validator**를 **Applications** 폴더로 끌어다 놓습니다.
-2. 처음 열 때 "확인되지 않은 개발자" 경고가 뜨면, Finder에서 앱을 **control 키를 누른 채 클릭**하고 **열기**를 선택합니다. 한 번 허용하면 다음부터는 바로 열립니다.
-3. 그래도 열리지 않으면 **시스템 설정 → 개인정보 보호 및 보안**에서 **그래도 열기**를 누릅니다.
+2. Applications 폴더에서 앱을 엽니다. 공증된 앱이므로 경고 없이 열립니다.
+
+"확인되지 않은 개발자" 경고가 뜨면 파일이 손상되었거나 다른 곳에서 받은 것입니다. Release 페이지에서 다시 받습니다.
 
 ## 설치 후 확인
 

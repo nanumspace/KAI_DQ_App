@@ -40,6 +40,32 @@ npm run engine -- --cohort LUNG_CANCER --data <csv 폴더> --out <출력 폴더>
 
 가상데이터 6개 코호트(질환당 100명)에서 clean 데이터 오탐 0건, 오류를 주입한 dirty 데이터의 주입 오류 622건 전부 검출(재현율 1.00)입니다. 이 값은 프로그램이 규칙을 정확히 구현했다는 증거이며, 실제 병원 데이터의 품질이나 오탐률에 대한 예측이 아닙니다. 자세한 표와 해석의 한계는 [docs/engine.md](docs/engine.md)에 있습니다.
 
+## 릴리스 (빌드 · 서명 · 공증 · 배포)
+
+저장소 루트의 `release.sh` 하나로 macOS DMG 와 Windows 설치 파일을 빌드하고, 코드 서명과 Apple 공증을 거쳐 GitHub Release 에 올립니다. macOS 에서 실행하며, Windows 서명은 SafeNet USB 토큰(GlobalSign EV 인증서)을, macOS 서명은 키체인의 Developer ID 인증서를 씁니다.
+
+**한 번만 준비할 것**
+
+```bash
+brew install osslsigncode opensc gh
+security add-generic-password -a "$USER" -s kai-safenet-pin -w          # 토큰 PIN (대화식 입력)
+xcrun notarytool store-credentials kai-notary --apple-id <Apple ID> --team-id <Team ID>   # 앱 암호 입력
+gh auth login
+```
+
+**릴리스할 때**
+
+```bash
+./release.sh 0.2.0            # 버전을 올리고(커밋) 빌드 → 서명 → 공증 → 검증 → 태그 → GitHub Release
+./release.sh                  # package.json 의 현재 버전으로 릴리스
+./release.sh --no-publish     # 빌드·서명·공증·검증까지만 (app/release/ 에 산출물)
+./release.sh --publish-only   # 위 산출물로 태그와 Release 만
+./release.sh --skip-win       # macOS 만 (또는 --skip-mac)
+./release.sh --unsigned       # 서명·공증 없는 시험 빌드. 배포 금지
+```
+
+USB 토큰을 꽂고, 변경 사항을 모두 커밋한 뒤 main 브랜치에서 실행합니다. 산출물은 `QualityValidator-<버전>-mac-arm64.dmg`, `QualityValidator-<버전>-win-x64.exe`, `QualityValidator-<버전>-win-arm64.exe`, `SHA256SUMS.txt` 입니다. 자세한 동작은 [docs/reproduce.md](docs/reproduce.md)에 있습니다.
+
 ## 문서
 
 - [docs/overview.md](docs/overview.md) 배경, 코호트 DB 구조, 설계 원칙, 5단계 계획

@@ -13,8 +13,8 @@
     "start": "electron-vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "smoke": "electron-vite build && KAI_SMOKE=1 electron .",
-    "dist:mac": "electron-vite build && electron-builder --mac",
-    "dist:win": "electron-vite build && electron-builder --win"
+    "dist:mac": "electron-vite build && electron-builder --mac --arm64 --publish never",
+    "dist:win": "electron-vite build && electron-builder --win --x64 --arm64 --publish never"
   },
   "dependencies": {
     "@duckdb/node-api": "^1.5.5-r.4",
@@ -73,19 +73,42 @@
     ],
     "mac": {
       "target": [
-        "dmg"
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
       ],
-      "category": "public.app-category.medical"
+      "category": "public.app-category.medical",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "notarize": true
     },
     "win": {
       "target": [
         "nsis"
-      ]
+      ],
+      "signtoolOptions": {
+        "sign": "./build/sign-win.cjs",
+        "signingHashAlgorithms": [
+          "sha256"
+        ],
+        "publisherName": [
+          "Nanum Space Co,. Ltd"
+        ]
+      }
     },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "language": "1042"
+    },
+    "artifactName": "QualityValidator-${version}-${os}-${arch}.${ext}",
+    "npmRebuild": false,
+    "dmg": {
+      "sign": true
     }
   },
   "allowScripts": {

@@ -63,14 +63,24 @@ npm run dist:win                 # Windows 설치 파일 (Windows 에서)
 - 설치본은 `spec/`, `rules/` YAML과 `synth/output/clean` 견본 데이터를 `resources/kai/`에 내장합니다.
 - DuckDB는 네이티브 모듈이라 `asarUnpack`으로 풀어 둡니다.
 
-## CI와 릴리스
+## CI
 
 `.github/workflows/ci.yml`은 push와 pull request마다 TypeScript 엔진의 회귀 시험(`dq-ts`의 `npm test`)과 앱의 타입 검사·빌드를 실행합니다.
 
-`.github/workflows/release.yml`은 `v*` 태그를 push하면 Windows 러너에서 설치 파일(.exe), macOS 러너에서 DMG를 빌드해 GitHub Release에 첨부합니다.
+## 릴리스 (`release.sh`)
 
-```bash
-git tag v0.1.0 && git push origin v0.1.0
-```
+서명에 USB 토큰과 키체인이 필요하므로 릴리스는 GitHub Actions 가 아니라 개발자의 macOS 에서 `release.sh` 로 합니다. 사용법은 루트 README 의 릴리스 절에 있습니다. 스크립트가 하는 일은 다음 순서입니다.
 
-코드 서명(Windows 인증서, Apple 공증)은 아직 설정하지 않았습니다. 서명 없이 배포하면 Windows SmartScreen과 macOS Gatekeeper 경고가 뜨며, 사용자 설명서의 설치 절에 우회 방법을 안내합니다. 서명을 넣으려면 인증서를 GitHub Secrets에 등록하고 `release.yml`의 환경 변수(`CSC_LINK`, `CSC_KEY_PASSWORD`, Apple의 `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID`)를 채웁니다.
+| 단계 | 내용 |
+|---|---|
+| 사전 점검 | 토큰 인식과 PIN 로그인, Developer ID 인증서, 공증 프로필, GitHub 로그인, main 브랜치, 커밋되지 않은 변경 없음, 같은 태그 없음 |
+| 버전 | 인자로 버전을 주면 `app/package.json`(과 `dq-ts`)의 버전을 올리고 커밋 |
+| 빌드 준비 | 타입 검사, `electron-vite build`. 빌드 대상 플랫폼의 DuckDB 바이너리만 `node_modules/@duckdb/` 에 남기고 나머지는 잠시 치움 (Windows 바이너리는 npm 레지스트리에서 받아 `~/Library/Caches/kai-release/` 에 보관) |
+| macOS | `electron-builder --mac --arm64`. hardened runtime 으로 Developer ID 서명, 앱 공증과 staple 은 electron-builder 가 `APPLE_KEYCHAIN_PROFILE` 로 수행. 이어서 DMG 자체를 `notarytool` 로 공증하고 staple (오프라인 PC 에서도 경고 없이 열리도록) |
+| Windows | x64, arm64 각각 `electron-builder --win`. exe 마다 `app/build/sign-win.cjs` 훅이 `osslsigncode` 로 토큰 서명 (PKCS#11 은 OpenSC 모듈, 중간 인증서 `app/build/globalsign-ev-codesigning-ca-2020.pem` 첨부, RFC 3161 타임스탬프) |
+| 검증 | `osslsigncode verify`, `spctl -a -t open`, `xcrun stapler validate`, `SHA256SUMS.txt` |
+| 게시 | 태그 `v<버전>` 생성과 push, `gh release create` 로 DMG·exe·SHA256SUMS 첨부 |
+
+Windows 32비트(x86)는 만들지 않습니다. DuckDB Node 바인딩이 Windows 는 x64 와 arm64 만 제공하고, Windows 11 은 64비트 전용입니다.
+
+환경 변수로 바꿀 수 있는 값: `KAI_NOTARY_PROFILE`(기본 kai-notary), `KAI_PIN_SERVICE`(기본 kai-safenet-pin), `KAI_PKCS11_MODULE`(기본 `/opt/homebrew/lib/opensc-pkcs11.so`), `KAI_TSA_URL`(기본 `http://timestamp.digicert.com`).

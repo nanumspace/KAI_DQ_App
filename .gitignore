@@ -1,0 +1,23 @@
+# 비공개 개발문서: 원본 데이터 사전, 설계 결정 기록, 사전 결함 목록, 발표 자료, 개인 스크립트
+internal/
+
+# 의존성과 빌드 산출물
+node_modules/
+app/out/
+app/release/
+dq-ts/dist/
+dq-ts/output/
+*.tsbuildinfo
+__pycache__/
+*.pyc
+
+# 앱 실행 이력 DB (실행 시 OS 앱 데이터 폴더에 생기지만, 실수로 복사된 경우 대비)
+*.duckdb
+*.duckdb.wal
+
+# OS · 편집기
+.DS_Store
+Thumbs.db
+.cache/
+.vscode/
+.idea/

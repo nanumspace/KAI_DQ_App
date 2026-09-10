@@ -1,0 +1,176 @@
+# 규칙 카탈로그(단계 1)와 가상데이터 생성기(단계 2)가 공유하는 대표 concept 목록.
+# concept_id 는 OMOP 표준 어휘의 대표값이며, 병원 적용 전 Athena 로 최신 어휘와 대조해야 한다.
+# (검증 프로그램은 이 목록을 '허용 집합' 이 아니라 '코호트 정의 및 타당성 범위' 용도로만 사용한다.)
+
+cohort_definition:
+  LUNG_CANCER:
+    condition_concept_ids: [4115276, 4311499, 258375]     # Primary malignant neoplasm of lung / NSCLC / SCLC
+    kcd_prefix: ["C34"]
+    age_at_index: {median_min: 55, median_max: 75}
+    female_ratio: {min: 0.2, max: 0.6}
+  BREAST_CANCER:
+    condition_concept_ids: [4112853, 4162253]              # Malignant tumor of breast / Carcinoma in situ of breast
+    kcd_prefix: ["C50", "D05"]
+    age_at_index: {median_min: 40, median_max: 65}
+    female_ratio: {min: 0.95, max: 1.0}
+  COLORECTAL_CANCER:
+    condition_concept_ids: [4180790, 4164337, 443381]      # Colon / Rectum / Rectosigmoid
+    kcd_prefix: ["C18", "C19", "C20", "C21"]
+    age_at_index: {median_min: 55, median_max: 75}
+    female_ratio: {min: 0.3, max: 0.6}
+  MASLD:
+    condition_concept_ids: [4058680, 46273476]             # Fatty liver / NAFLD
+    kcd_prefix: ["K76"]
+    age_at_index: {median_min: 40, median_max: 65}
+    female_ratio: {min: 0.3, max: 0.7}
+  DIABETES:
+    condition_concept_ids: [201826]                        # Type 2 diabetes mellitus
+    kcd_prefix: ["E11"]
+    age_at_index: {median_min: 45, median_max: 70}
+    female_ratio: {min: 0.3, max: 0.7}
+  LYMPHOMA:
+    condition_concept_ids: [4300704, 438090, 4147411, 4038836, 4038838]  # DLBCL / Hodgkin / Follicular / Mantle cell / PTCL
+    kcd_prefix: ["C81", "C82", "C83", "C84", "C85"]
+    age_at_index: {median_min: 45, median_max: 75}
+    female_ratio: {min: 0.3, max: 0.6}
+
+conditions:
+  4115276: {name: Primary malignant neoplasm of lung, kcd: C34.9}
+  4311499: {name: Non-small cell lung cancer, kcd: C34.9}
+  258375:  {name: Small cell carcinoma of lung, kcd: C34.9}
+  4112853: {name: Malignant tumor of breast, kcd: C50.9}
+  4162253: {name: Carcinoma in situ of breast, kcd: D05.9}
+  4180790: {name: Primary malignant neoplasm of colon, kcd: C18.9}
+  4164337: {name: Primary malignant neoplasm of rectum, kcd: C20}
+  443381:  {name: Primary malignant neoplasm of rectosigmoid junction, kcd: C19}
+  4058680: {name: Fatty liver, kcd: K76.0}
+  46273476: {name: Nonalcoholic fatty liver disease, kcd: K76.0}
+  201826:  {name: Type 2 diabetes mellitus, kcd: E11.9}
+  4300704: {name: Diffuse large B-cell lymphoma, kcd: C83.3}
+  438090:  {name: Hodgkin lymphoma, kcd: C81.9}
+  4147411: {name: Follicular lymphoma, kcd: C82.9}
+  4038836: {name: Mantle cell lymphoma, kcd: C83.1}
+  4038838: {name: Peripheral T-cell lymphoma, kcd: C84.4}
+  320128:  {name: Essential hypertension, kcd: I10}
+  432867:  {name: Hyperlipidemia, kcd: E78.5}
+  433736:  {name: Obesity, kcd: E66.9}
+  4185932: {name: Ischemic heart disease, kcd: I25.9}
+  46271022: {name: Chronic kidney disease, kcd: N18.9}
+  81893:   {name: Ulcerative colitis, kcd: K51.9}
+  255573:  {name: Chronic obstructive lung disease, kcd: J44.9}
+  4112343: {name: Hepatic cirrhosis, kcd: K74.6}
+
+adverse_events:      # CTCAE 항목의 SNOMED 대표 concept
+  27674:   {name: Nausea, typical_grade: [1, 2]}
+  196523:  {name: Diarrhea, typical_grade: [1, 3]}
+  301794:  {name: Neutropenia, typical_grade: [2, 4]}
+  4304213: {name: Febrile neutropenia, typical_grade: [3, 4]}
+  439777:  {name: Anemia, typical_grade: [1, 3]}
+  4166735: {name: Peripheral neuropathy, typical_grade: [1, 3]}
+  4223659: {name: Fatigue, typical_grade: [1, 2]}
+  140214:  {name: Rash, typical_grade: [1, 2]}
+  4055224: {name: Hepatotoxicity, typical_grade: [1, 3]}
+  24609:   {name: Hypoglycemia, typical_grade: [1, 3]}
+  4329847: {name: Myocardial infarction, typical_grade: [3, 5]}
+  437663:  {name: Fever, typical_grade: [1, 2]}
+  4185711: {name: Cytokine release syndrome, typical_grade: [1, 4]}
+  4141062: {name: Thrombocytopenia, typical_grade: [1, 4]}
+  4265412: {name: Mucositis, typical_grade: [1, 3]}
+  432791:  {name: Vomiting, typical_grade: [1, 3]}
+
+drugs:
+  # 항암제 (drug_category: 1 세포독성, 2 표적, 3 호르몬, 4 ADC, 5 면역, 6 기타)
+  1397141: {name: cisplatin, category: 1, route: IV, unit: 8576, dose: 75, dose_unit_label: "mg/m2", cycle_days: 21}
+  1344905: {name: carboplatin, category: 1, route: IV, unit: 8576, dose: 600, dose_unit_label: "mg", cycle_days: 21}
+  1304919: {name: pemetrexed, category: 1, route: IV, unit: 8576, dose: 500, dose_unit_label: "mg/m2", cycle_days: 21}
+  1378382: {name: paclitaxel, category: 1, route: IV, unit: 8576, dose: 175, dose_unit_label: "mg/m2", cycle_days: 21}
+  1315942: {name: docetaxel, category: 1, route: IV, unit: 8576, dose: 75, dose_unit_label: "mg/m2", cycle_days: 21}
+  1314924: {name: gemcitabine, category: 1, route: IV, unit: 8576, dose: 1000, dose_unit_label: "mg/m2", cycle_days: 21}
+  35604205: {name: osimertinib, category: 2, route: PO, unit: 8576, dose: 80, dose_unit_label: "mg", cycle_days: 28}
+  45775965: {name: pembrolizumab, category: 5, route: IV, unit: 8576, dose: 200, dose_unit_label: "mg", cycle_days: 21}
+  1338512: {name: doxorubicin, category: 1, route: IV, unit: 8576, dose: 60, dose_unit_label: "mg/m2", cycle_days: 21}
+  1310317: {name: cyclophosphamide, category: 1, route: IV, unit: 8576, dose: 600, dose_unit_label: "mg/m2", cycle_days: 21}
+  1387104: {name: trastuzumab, category: 2, route: IV, unit: 8576, dose: 6, dose_unit_label: "mg/kg", cycle_days: 21}
+  1436678: {name: tamoxifen, category: 3, route: PO, unit: 8576, dose: 20, dose_unit_label: "mg", cycle_days: 28}
+  1348265: {name: letrozole, category: 3, route: PO, unit: 8576, dose: 2.5, dose_unit_label: "mg", cycle_days: 28}
+  1319247: {name: anastrozole, category: 3, route: PO, unit: 8576, dose: 1, dose_unit_label: "mg", cycle_days: 28}
+  1320011: {name: oxaliplatin, category: 1, route: IV, unit: 8576, dose: 85, dose_unit_label: "mg/m2", cycle_days: 14}
+  955632:  {name: fluorouracil, category: 1, route: IV, unit: 8576, dose: 400, dose_unit_label: "mg/m2", cycle_days: 14}
+  1337620: {name: capecitabine, category: 1, route: PO, unit: 8576, dose: 1000, dose_unit_label: "mg/m2", cycle_days: 21}
+  1367268: {name: irinotecan, category: 1, route: IV, unit: 8576, dose: 180, dose_unit_label: "mg/m2", cycle_days: 14}
+  1397599: {name: bevacizumab, category: 2, route: IV, unit: 8576, dose: 5, dose_unit_label: "mg/kg", cycle_days: 14}
+  1314273: {name: rituximab, category: 2, route: IV, unit: 8576, dose: 375, dose_unit_label: "mg/m2", cycle_days: 21}
+  1308290: {name: vincristine, category: 1, route: IV, unit: 8576, dose: 1.4, dose_unit_label: "mg/m2", cycle_days: 21}
+  1551099: {name: prednisone, category: 6, route: PO, unit: 8576, dose: 100, dose_unit_label: "mg", cycle_days: 21}
+  1350504: {name: etoposide, category: 1, route: IV, unit: 8576, dose: 100, dose_unit_label: "mg/m2", cycle_days: 21}
+  1329033: {name: bleomycin, category: 1, route: IV, unit: 8510, dose: 10, dose_unit_label: "unit/m2", cycle_days: 14}
+  1319193: {name: dacarbazine, category: 1, route: IV, unit: 8576, dose: 375, dose_unit_label: "mg/m2", cycle_days: 14}
+  1305058: {name: brentuximab vedotin, category: 4, route: IV, unit: 8576, dose: 1.8, dose_unit_label: "mg/kg", cycle_days: 21}
+  # 비항암제
+  1503297: {name: metformin, category: null, route: PO, unit: 8576, dose: 500, dose_unit_label: "mg", cycle_days: null}
+  1597756: {name: glimepiride, category: null, route: PO, unit: 8576, dose: 2, dose_unit_label: "mg", cycle_days: null}
+  1580747: {name: sitagliptin, category: null, route: PO, unit: 8576, dose: 100, dose_unit_label: "mg", cycle_days: null}
+  45774435: {name: empagliflozin, category: null, route: PO, unit: 8576, dose: 10, dose_unit_label: "mg", cycle_days: null}
+  1502905: {name: insulin glargine, category: null, route: SC, unit: 8718, dose: 20, dose_unit_label: "IU", cycle_days: null}
+  1545958: {name: atorvastatin, category: null, route: PO, unit: 8576, dose: 20, dose_unit_label: "mg", cycle_days: null}
+  1308216: {name: lisinopril, category: null, route: PO, unit: 8576, dose: 10, dose_unit_label: "mg", cycle_days: null}
+  1584910: {name: pioglitazone, category: null, route: PO, unit: 8576, dose: 15, dose_unit_label: "mg", cycle_days: null}
+  1583722: {name: semaglutide, category: null, route: SC, unit: 8576, dose: 1, dose_unit_label: "mg", cycle_days: null}
+  1518254: {name: dexamethasone, category: 6, route: PO, unit: 8576, dose: 8, dose_unit_label: "mg", cycle_days: null}
+  35201159: {name: ondansetron, category: null, route: PO, unit: 8576, dose: 8, dose_unit_label: "mg", cycle_days: null}
+  1301125: {name: filgrastim, category: null, route: SC, unit: 9655, dose: 300, dose_unit_label: "ug", cycle_days: null}
+
+measurements:        # concept_id: 이름, 단위 concept, 타당 범위(경계 포함), 정상범위, 정규 분포 파라미터(생성용)
+  3004410: {name: Hemoglobin A1c, unit: 8554, unit_label: "%", plausible: [3, 20], normal: [4, 5.6], gen: {mean: 7.2, sd: 1.3}}
+  3004501: {name: Glucose (fasting), unit: 8840, unit_label: "mg/dL", plausible: [20, 1000], normal: [70, 99], gen: {mean: 135, sd: 35}}
+  3013721: {name: AST, unit: 8645, unit_label: "U/L", plausible: [0, 5000], normal: [0, 40], gen: {mean: 38, sd: 20}}
+  3006923: {name: ALT, unit: 8645, unit_label: "U/L", plausible: [0, 5000], normal: [0, 40], gen: {mean: 45, sd: 28}}
+  3024929: {name: Platelet count, unit: 8848, unit_label: "10^3/uL", plausible: [1, 2000], normal: [150, 400], gen: {mean: 220, sd: 60}}
+  3000963: {name: Hemoglobin, unit: 8713, unit_label: "g/dL", plausible: [2, 25], normal: [12, 17], gen: {mean: 12.8, sd: 1.6}}
+  3016723: {name: Creatinine, unit: 8840, unit_label: "mg/dL", plausible: [0.1, 30], normal: [0.6, 1.2], gen: {mean: 0.9, sd: 0.25}}
+  3004249: {name: Systolic blood pressure, unit: 8876, unit_label: "mmHg", plausible: [50, 300], normal: [90, 130], gen: {mean: 128, sd: 15}}
+  3012888: {name: Diastolic blood pressure, unit: 8876, unit_label: "mmHg", plausible: [20, 200], normal: [60, 85], gen: {mean: 78, sd: 10}}
+  3036277: {name: Body height, unit: 8582, unit_label: "cm", plausible: [100, 230], normal: [150, 185], gen: {mean: 164, sd: 9}}
+  3025315: {name: Body weight, unit: 9529, unit_label: "kg", plausible: [20, 250], normal: [45, 90], gen: {mean: 66, sd: 12}}
+  3038553: {name: Body mass index, unit: 9531, unit_label: "kg/m2", plausible: [10, 70], normal: [18.5, 25], gen: {mean: 24.5, sd: 3.8}}
+  3022192: {name: Triglyceride, unit: 8840, unit_label: "mg/dL", plausible: [10, 5000], normal: [0, 150], gen: {mean: 150, sd: 70}}
+  3007070: {name: HDL cholesterol, unit: 8840, unit_label: "mg/dL", plausible: [5, 200], normal: [40, 60], gen: {mean: 48, sd: 12}}
+  3028437: {name: LDL cholesterol, unit: 8840, unit_label: "mg/dL", plausible: [10, 500], normal: [0, 130], gen: {mean: 110, sd: 32}}
+  3022250: {name: Lactate dehydrogenase, unit: 8645, unit_label: "U/L", plausible: [20, 10000], normal: [120, 250], gen: {mean: 260, sd: 110}}
+  3010813: {name: Leukocytes, unit: 8848, unit_label: "10^3/uL", plausible: [0.1, 500], normal: [4, 10], gen: {mean: 6.5, sd: 2.2}}
+  3017732: {name: Neutrophils absolute, unit: 8848, unit_label: "10^3/uL", plausible: [0, 100], normal: [1.5, 7.5], gen: {mean: 4.0, sd: 1.8}}
+  3028641: {name: CEA, unit: 8555, unit_label: "ng/mL", plausible: [0, 10000], normal: [0, 5], gen: {mean: 6, sd: 8}}
+  3020491: {name: Albumin, unit: 8713, unit_label: "g/dL", plausible: [0.5, 7], normal: [3.5, 5.2], gen: {mean: 4.1, sd: 0.4}}
+  3024128: {name: Total bilirubin, unit: 8840, unit_label: "mg/dL", plausible: [0, 60], normal: [0.2, 1.2], gen: {mean: 0.8, sd: 0.4}}
+  3020460: {name: C-reactive protein, unit: 8859, unit_label: "mg/L", plausible: [0, 600], normal: [0, 5], gen: {mean: 6, sd: 9}}
+  3049187: {name: eGFR, unit: 9550, unit_label: "mL/min/1.73m2", plausible: [1, 200], normal: [90, 130], gen: {mean: 85, sd: 20}}
+  3006315: {name: Beta-2 microglobulin, unit: 8859, unit_label: "mg/L", plausible: [0, 50], normal: [0.8, 2.2], gen: {mean: 2.4, sd: 1.1}}
+  3027114: {name: Total cholesterol, unit: 8840, unit_label: "mg/dL", plausible: [50, 800], normal: [0, 200], gen: {mean: 190, sd: 38}}
+  3013682: {name: Urea nitrogen, unit: 8840, unit_label: "mg/dL", plausible: [1, 300], normal: [7, 20], gen: {mean: 15, sd: 5}}
+
+procedures:
+  4059400: {name: CT of chest, category: imaging}
+  4305790: {name: PET-CT whole body, category: imaging}
+  4032404: {name: Bronchoscopy with biopsy, category: biopsy}
+  4033181: {name: Lobectomy of lung, category: surgery}
+  4044530: {name: Mammography, category: imaging}
+  4234573: {name: Mastectomy, category: surgery}
+  4118029: {name: Breast-conserving surgery, category: surgery}
+  4249893: {name: Core needle biopsy of breast, category: biopsy}
+  4090256: {name: Sentinel lymph node biopsy, category: surgery}
+  4050470: {name: Colectomy, category: surgery}
+  4179986: {name: Colonoscopy with biopsy, category: biopsy}
+  4207701: {name: CT of abdomen and pelvis, category: imaging}
+  4123795: {name: MRI of pelvis, category: imaging}
+  4148096: {name: Low anterior resection of rectum, category: surgery}
+  4287806: {name: Liver biopsy, category: biopsy}
+  4260906: {name: Transient elastography of liver, category: imaging}
+  4180938: {name: Ultrasonography of abdomen, category: imaging}
+  4321806: {name: Liver transplantation, category: surgery}
+  4179908: {name: Fundoscopy, category: exam}
+  4306780: {name: Excisional lymph node biopsy, category: biopsy}
+  4023083: {name: Bone marrow biopsy, category: biopsy}
+  4181206: {name: Radiotherapy, category: radiotherapy}
+  4030027: {name: Autologous stem cell transplant, category: transplant}
+  4053096: {name: CAR-T cell infusion, category: transplant}
+  4283893: {name: Leukapheresis, category: transplant}

@@ -1,0 +1,47 @@
+name: Release
+
+# v* 태그를 push 하면 Windows 설치 파일과 macOS DMG 를 빌드해 GitHub Release 에 첨부한다.
+#   git tag v0.1.0 && git push origin v0.1.0
+# 코드 서명은 아직 설정하지 않았다. 서명하려면 Secrets 에 인증서를 넣고 아래 env 를 채운다.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: Windows 설치 파일
+            script: dist:win
+            artifact: "app/release/*.exe"
+          - os: macos-latest
+            name: macOS DMG
+            script: dist:mac
+            artifact: "app/release/*.dmg"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+        working-directory: app
+      # --publish never: electron-builder 가 스스로 게시하지 않게 한다. 첨부는 아래 단계가 한다.
+      # 코드 서명을 설정하면 이 단계에 env 를 추가한다:
+      #   CSC_LINK, CSC_KEY_PASSWORD (Windows/macOS 인증서), APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID (공증)
+      - run: npm run ${{ matrix.script }} -- --publish never
+        working-directory: app
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ matrix.artifact }}
+          generate_release_notes: true

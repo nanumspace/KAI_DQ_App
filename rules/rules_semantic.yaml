@@ -1,0 +1,1243 @@
+# 단계 1-B: 교차 테이블 / 임상 의미 규칙 (수동 작성)
+#
+# 실행 방식: 각 규칙의 sql 은 DuckDB 에서 실행되며 "위반 행" 을 반환해야 한다.
+#   반환 컬럼: person_id, row_key, detail   (row_key 는 위반 행의 식별자, detail 은 사람이 읽을 설명)
+# 치환자: {TODAY} 검증 실행일, {COHORT_CONDITION_IDS} 코호트 정의 진단 concept 목록, {DISEASE} 코호트 특화 테이블명
+# scope: all 또는 코호트 목록. requires: 규칙 실행에 필요한 테이블(없으면 건너뜀).
+# category: Conformance / Completeness / Plausibility  (Kahn)
+# severity: error(적재 거부 수준) / warning(검토 필요)
+
+rules:
+
+# ---------------------------------------------------------------------------
+# 공통: 방문 / 환자 / 시간 순서
+# ---------------------------------------------------------------------------
+- id: SEM-COM-001
+  name: 방문 종료일 >= 시작일
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: all
+  requires: [VISIT_OCCURRENCE]
+  desc: visit_end_date 는 visit_start_date 보다 앞설 수 없다.
+  sql: |
+    SELECT person_id, CAST(visit_occurrence_id AS VARCHAR) AS row_key,
+           'visit_end_date ' || visit_end_date || ' < visit_start_date ' || visit_start_date AS detail
+    FROM VISIT_OCCURRENCE WHERE visit_end_date < visit_start_date
+
+- id: SEM-COM-002
+  name: 방문일 >= 출생연도
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: all
+  requires: [VISIT_OCCURRENCE, PERSON]
+  desc: 방문 시작일의 연도가 출생연도보다 앞설 수 없다.
+  sql: |
+    SELECT v.person_id, CAST(v.visit_occurrence_id AS VARCHAR) AS row_key,
+           'visit_start_date ' || v.visit_start_date || ' < year_of_birth ' || p.year_of_birth AS detail
+    FROM VISIT_OCCURRENCE v JOIN PERSON p USING (person_id)
+    WHERE EXTRACT(year FROM v.visit_start_date) < p.year_of_birth
+
+- id: SEM-COM-003
+  name: 사망 이후 임상 이벤트 금지
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: all
+  requires: [PERSON]
+  desc: 방문/처치/약물/검사/진단/관찰/노트 날짜는 PERSON.death_date 를 넘을 수 없다.
+  sql: |
+    WITH ev AS (
+      SELECT person_id, 'VISIT_OCCURRENCE:' || visit_occurrence_id AS row_key, visit_start_date AS d FROM VISIT_OCCURRENCE
+      UNION ALL SELECT person_id, 'PROCEDURE_OCCURRENCE:' || procedure_occurrence_id, procedure_date FROM PROCEDURE_OCCURRENCE
+      UNION ALL SELECT person_id, 'DRUG_EXPOSURE:' || drug_exposure_id, drug_exposure_start_date FROM DRUG_EXPOSURE
+      UNION ALL SELECT person_id, 'MEASUREMENT:' || measurement_id, measurement_date FROM MEASUREMENT
+      UNION ALL SELECT person_id, 'CONDITION_OCCURRENCE:' || condition_occurrence_id, condition_start_date FROM CONDITION_OCCURRENCE
+      UNION ALL SELECT person_id, 'OBSERVATION:' || observation_id, observation_date FROM OBSERVATION
+      UNION ALL SELECT person_id, 'NOTE:' || note_id, note_date FROM NOTE
+    )
+    SELECT ev.person_id, ev.row_key, '이벤트일 ' || ev.d || ' > death_date ' || p.death_date AS detail
+    FROM ev JOIN PERSON p USING (person_id)
+    WHERE p.death_date IS NOT NULL AND ev.d > p.death_date
+
+- id: SEM-COM-004
+  name: 관찰기간 시작 이전 이벤트 금지
+  category: Plausibility
+  subcategory: temporal
+  severity: warning
+  scope: all
+  requires: [PERSON, VISIT_OCCURRENCE]
+  desc: observation_period_start_date 가 있으면 방문은 그 이후여야 한다.
+  sql: |
+    SELECT v.person_id, CAST(v.visit_occurrence_id AS VARCHAR) AS row_key,
+           'visit_start_date ' || v.visit_start_date || ' < observation_period_start_date ' || p.observation_period_start_date AS detail
+    FROM VISIT_OCCURRENCE v JOIN PERSON p USING (person_id)
+    WHERE p.observation_period_start_date IS NOT NULL AND v.visit_start_date < p.observation_period_start_date
+
+- id: SEM-COM-005
+  name: 이벤트-방문 환자 일치
+  category: Conformance
+  subcategory: relational
+  severity: error
+  scope: all
+  requires: [VISIT_OCCURRENCE]
+  desc: 이벤트의 person_id 는 참조하는 visit_occurrence 의 person_id 와 같아야 한다.
+  sql: |
+    WITH ev AS (
+      SELECT person_id, visit_occurrence_id, 'PROCEDURE_OCCURRENCE:' || procedure_occurrence_id AS row_key FROM PROCEDURE_OCCURRENCE
+      UNION ALL SELECT person_id, visit_occurrence_id, 'DRUG_EXPOSURE:' || drug_exposure_id FROM DRUG_EXPOSURE
+      UNION ALL SELECT person_id, visit_occurrence_id, 'MEASUREMENT:' || measurement_id FROM MEASUREMENT
+      UNION ALL SELECT person_id, visit_occurrence_id, 'CONDITION_OCCURRENCE:' || condition_occurrence_id FROM CONDITION_OCCURRENCE
+      UNION ALL SELECT person_id, visit_occurrence_id, 'OBSERVATION:' || observation_id FROM OBSERVATION
+      UNION ALL SELECT person_id, visit_occurrence_id, 'NOTE:' || note_id FROM NOTE
+      UNION ALL SELECT person_id, visit_occurrence_id, 'ADVERSE_EVENT:' || adverse_event_id FROM ADVERSE_EVENT
+    )
+    SELECT ev.person_id, ev.row_key, 'visit ' || ev.visit_occurrence_id || ' 의 person_id=' || v.person_id AS detail
+    FROM ev JOIN VISIT_OCCURRENCE v ON ev.visit_occurrence_id = v.visit_occurrence_id
+    WHERE ev.person_id <> v.person_id
+
+- id: SEM-COM-006
+  name: 이벤트일이 방문 기간 안에 있음
+  category: Plausibility
+  subcategory: temporal
+  severity: warning
+  scope: all
+  requires: [VISIT_OCCURRENCE]
+  desc: 처치/검사/진단 날짜는 참조 방문의 시작일~종료일 안에 있어야 한다 (약물은 시작일만 확인).
+  sql: |
+    WITH ev AS (
+      SELECT person_id, visit_occurrence_id, procedure_date AS d, 'PROCEDURE_OCCURRENCE:' || procedure_occurrence_id AS row_key FROM PROCEDURE_OCCURRENCE
+      UNION ALL SELECT person_id, visit_occurrence_id, measurement_date, 'MEASUREMENT:' || measurement_id FROM MEASUREMENT
+      UNION ALL SELECT person_id, visit_occurrence_id, condition_start_date, 'CONDITION_OCCURRENCE:' || condition_occurrence_id FROM CONDITION_OCCURRENCE
+      UNION ALL SELECT person_id, visit_occurrence_id, drug_exposure_start_date, 'DRUG_EXPOSURE:' || drug_exposure_id FROM DRUG_EXPOSURE
+    )
+    SELECT ev.person_id, ev.row_key, '이벤트일 ' || ev.d || ' 가 방문기간 ' || v.visit_start_date || '~' || v.visit_end_date || ' 밖' AS detail
+    FROM ev JOIN VISIT_OCCURRENCE v ON ev.visit_occurrence_id = v.visit_occurrence_id
+    WHERE ev.d IS NOT NULL AND (ev.d < v.visit_start_date OR ev.d > v.visit_end_date)
+
+- id: SEM-COM-007
+  name: 약물 종료일 >= 시작일, days_supply 일치
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: all
+  requires: [DRUG_EXPOSURE]
+  desc: drug_exposure_end_date >= start. days_supply 가 있으면 end - start + 1 = days_supply 여야 한다 (오차 1일 허용).
+  sql: |
+    SELECT person_id, CAST(drug_exposure_id AS VARCHAR) AS row_key,
+           CASE WHEN drug_exposure_end_date < drug_exposure_start_date THEN 'end < start'
+                ELSE 'days_supply=' || days_supply || ' 이나 기간=' || (drug_exposure_end_date - drug_exposure_start_date + 1) END AS detail
+    FROM DRUG_EXPOSURE
+    WHERE drug_exposure_end_date < drug_exposure_start_date
+       OR (days_supply IS NOT NULL AND ABS((drug_exposure_end_date - drug_exposure_start_date + 1) - days_supply) > 1)
+
+- id: SEM-COM-008
+  name: 투여 빈도/간격 조건부 필수
+  category: Completeness
+  subcategory: conditional
+  severity: warning
+  scope: all
+  requires: [DRUG_EXPOSURE]
+  desc: frequency_per_day 가 있으면 days_supply 필수. dosing_interval_day > 1 이면 dosing_number 필수 (사전 규정).
+  sql: |
+    SELECT person_id, CAST(drug_exposure_id AS VARCHAR) AS row_key,
+           CASE WHEN frequency_per_day IS NOT NULL AND days_supply IS NULL THEN 'frequency_per_day 있음, days_supply 없음'
+                ELSE 'dosing_interval_day>1, dosing_number 없음' END AS detail
+    FROM DRUG_EXPOSURE
+    WHERE (frequency_per_day IS NOT NULL AND days_supply IS NULL)
+       OR (dosing_interval_day > 1 AND dosing_number IS NULL)
+
+- id: SEM-COM-009
+  name: 검사 결과값 존재
+  category: Completeness
+  subcategory: conditional
+  severity: error
+  scope: all
+  requires: [MEASUREMENT]
+  desc: value_as_number 와 value_as_concept_id 중 하나는 있어야 한다.
+  sql: |
+    SELECT person_id, CAST(measurement_id AS VARCHAR) AS row_key, 'value_as_number, value_as_concept_id 모두 NULL' AS detail
+    FROM MEASUREMENT WHERE value_as_number IS NULL AND value_as_concept_id IS NULL
+
+- id: SEM-COM-010
+  name: 정상범위 하한 <= 상한
+  category: Plausibility
+  subcategory: atemporal
+  severity: error
+  scope: all
+  requires: [MEASUREMENT]
+  desc: range_low 는 range_high 보다 클 수 없다.
+  sql: |
+    SELECT person_id, CAST(measurement_id AS VARCHAR) AS row_key, 'range_low ' || range_low || ' > range_high ' || range_high AS detail
+    FROM MEASUREMENT WHERE range_low IS NOT NULL AND range_high IS NOT NULL AND range_low > range_high
+
+- id: SEM-COM-011
+  name: 검사항목별 타당 범위
+  category: Plausibility
+  subcategory: atemporal
+  severity: warning
+  scope: all
+  requires: [MEASUREMENT]
+  desc: 대표 검사항목(HbA1c, 혈당, AST/ALT, 혈소판, 혈압, 신장/체중/BMI 등)의 값이 임상 타당 범위 안에 있어야 한다. 기준은 spec/concepts.yaml.
+  sql: |
+    SELECT m.person_id, CAST(m.measurement_id AS VARCHAR) AS row_key,
+           c.name || '=' || m.value_as_number || ' (타당범위 ' || c.lo || '~' || c.hi || ')' AS detail
+    FROM MEASUREMENT m JOIN _MEASUREMENT_CONCEPTS c ON m.measurement_concept_id = c.concept_id
+    WHERE m.value_as_number IS NOT NULL AND (m.value_as_number < c.lo OR m.value_as_number > c.hi)
+
+- id: SEM-COM-012
+  name: age_at_index 와 index date 일치
+  category: Plausibility
+  subcategory: computational
+  severity: error
+  scope: all
+  requires: [PERSON, CONDITION_OCCURRENCE]
+  desc: index date = 코호트 정의 진단의 최초 condition_start_date (결정 D-12). age_at_index 는 index 연도 - 출생연도 와 1 이내여야 한다.
+  sql: |
+    WITH idx AS (
+      SELECT person_id, MIN(condition_start_date) AS index_date
+      FROM CONDITION_OCCURRENCE WHERE condition_concept_id IN ({COHORT_CONDITION_IDS}) GROUP BY person_id
+    )
+    SELECT p.person_id, CAST(p.person_id AS VARCHAR) AS row_key,
+           'age_at_index=' || p.age_at_index || ', index_date=' || i.index_date || ', year_of_birth=' || p.year_of_birth AS detail
+    FROM PERSON p JOIN idx i USING (person_id)
+    WHERE ABS((EXTRACT(year FROM i.index_date) - p.year_of_birth) - p.age_at_index) > 1
+
+- id: SEM-COM-013
+  name: 코호트 포함 조건
+  category: Completeness
+  subcategory: cohort
+  severity: error
+  scope: all
+  requires: [PERSON, CONDITION_OCCURRENCE, VISIT_OCCURRENCE]
+  desc: 모든 환자는 코호트 정의 진단 1건 이상과 방문 1건 이상을 가져야 한다.
+  sql: |
+    SELECT p.person_id, CAST(p.person_id AS VARCHAR) AS row_key,
+           CASE WHEN c.person_id IS NULL THEN '코호트 정의 진단 없음' ELSE '방문 기록 없음' END AS detail
+    FROM PERSON p
+    LEFT JOIN (SELECT DISTINCT person_id FROM CONDITION_OCCURRENCE WHERE condition_concept_id IN ({COHORT_CONDITION_IDS})) c USING (person_id)
+    LEFT JOIN (SELECT DISTINCT person_id FROM VISIT_OCCURRENCE) v USING (person_id)
+    WHERE c.person_id IS NULL OR v.person_id IS NULL
+
+- id: SEM-COM-014
+  name: 특화 테이블 누락 환자
+  category: Completeness
+  subcategory: cohort
+  severity: warning
+  scope: all
+  requires: [PERSON]
+  desc: PERSON 의 모든 환자는 특화 테이블에 1행 이상 있어야 한다.
+  sql: |
+    SELECT p.person_id, CAST(p.person_id AS VARCHAR) AS row_key, '{DISEASE} 에 행 없음' AS detail
+    FROM PERSON p LEFT JOIN (SELECT DISTINCT person_id FROM {DISEASE}) d USING (person_id)
+    WHERE d.person_id IS NULL
+
+- id: SEM-COM-015
+  name: 특화 테이블 고아 환자
+  category: Conformance
+  subcategory: relational
+  severity: error
+  scope: all
+  requires: [PERSON]
+  desc: 특화/이상사례/항암 테이블의 person_id 는 PERSON 에 있어야 한다 (FK 규칙과 중복이나 코호트 관점 요약용).
+  sql: |
+    SELECT d.person_id, '{DISEASE}:' || CAST(d.person_id AS VARCHAR) AS row_key, 'PERSON 에 없는 person_id' AS detail
+    FROM (SELECT DISTINCT person_id FROM {DISEASE}) d LEFT JOIN PERSON p USING (person_id) WHERE p.person_id IS NULL
+
+- id: SEM-COM-016
+  name: 이상사례 발생일 >= 항암 시작일
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: all
+  requires: [ADVERSE_EVENT, ANTP_THERAPY]
+  desc: antp_id 로 연결된 이상사례는 해당 항암요법 시작일 이후에 발생해야 하고, 환자가 같아야 한다.
+  sql: |
+    SELECT a.person_id, CAST(a.adverse_event_id AS VARCHAR) AS row_key,
+           CASE WHEN a.person_id <> t.person_id THEN 'ANTP person_id 불일치 (' || t.person_id || ')'
+                ELSE 'AE ' || a.adverse_event_start_date || ' < antp_start_date ' || t.antp_start_date END AS detail
+    FROM ADVERSE_EVENT a JOIN ANTP_THERAPY t USING (antp_id)
+    WHERE a.person_id <> t.person_id OR a.adverse_event_start_date < t.antp_start_date
+
+- id: SEM-COM-017
+  name: 중대한 이상사례 조건부 필수 / 치명 결과와 사망 일치
+  category: Completeness
+  subcategory: conditional
+  severity: error
+  scope: all
+  requires: [ADVERSE_EVENT, PERSON]
+  desc: is_serious=1 이면 seriousness_concept_id 필수. severity 5(사망) 또는 outcome 5(치명) 이면 PERSON.death_date 가 있어야 한다.
+  sql: |
+    SELECT a.person_id, CAST(a.adverse_event_id AS VARCHAR) AS row_key,
+           CASE WHEN a.is_serious = 1 AND a.seriousness_concept_id IS NULL THEN 'is_serious=1 인데 seriousness_concept_id 없음'
+                ELSE '치명 AE 인데 PERSON.death_date 없음' END AS detail
+    FROM ADVERSE_EVENT a JOIN PERSON p USING (person_id)
+    WHERE (a.is_serious = 1 AND a.seriousness_concept_id IS NULL)
+       OR ((a.severity_concept_id = 5 OR a.outcome_concept_id = 5) AND p.death_date IS NULL)
+
+- id: SEM-COM-018
+  name: 항암요법 기간 및 line 번호
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: all
+  requires: [ANTP_THERAPY]
+  desc: antp_end_date >= antp_start_date. 동일 환자의 line 번호는 1부터 빈틈없이 증가하고, 시작일 순서와 일치해야 한다.
+  sql: |
+    WITH o AS (
+      SELECT *, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY antp_start_date, antp_id) AS rn FROM ANTP_THERAPY
+    )
+    SELECT person_id, CAST(antp_id AS VARCHAR) AS row_key,
+           CASE WHEN antp_end_date < antp_start_date THEN 'antp_end_date < antp_start_date'
+                ELSE 'line=' || regimen_or_line_of_therapy || ' 이나 시작일 순서=' || rn END AS detail
+    FROM o WHERE antp_end_date < antp_start_date OR regimen_or_line_of_therapy <> rn
+
+- id: SEM-COM-019
+  name: 항암요법 기간이 연결 약물 기간과 일치
+  category: Plausibility
+  subcategory: computational
+  severity: warning
+  scope: all
+  requires: [ANTP_THERAPY, DRUG_EXPOSURE]
+  desc: antp_start_date = MIN(drug_exposure_start_date), antp_end_date >= MAX(drug_exposure_end_date) (사전 산식). 약물이 연결되지 않은 요법도 경고.
+  sql: |
+    WITH d AS (
+      SELECT antp_id, MIN(drug_exposure_start_date) AS s, MAX(drug_exposure_end_date) AS e FROM DRUG_EXPOSURE WHERE antp_id IS NOT NULL GROUP BY antp_id
+    )
+    SELECT t.person_id, CAST(t.antp_id AS VARCHAR) AS row_key,
+           CASE WHEN d.antp_id IS NULL THEN '연결된 DRUG_EXPOSURE 없음'
+                WHEN t.antp_start_date <> d.s THEN 'antp_start_date ' || t.antp_start_date || ' <> MIN(drug start) ' || d.s
+                ELSE 'antp_end_date ' || t.antp_end_date || ' < MAX(drug end) ' || d.e END AS detail
+    FROM ANTP_THERAPY t LEFT JOIN d USING (antp_id)
+    WHERE d.antp_id IS NULL OR t.antp_start_date <> d.s OR (t.antp_end_date IS NOT NULL AND t.antp_end_date < d.e)
+
+- id: SEM-COM-020
+  name: 진행일 >= 항암 시작일, 치료 종료 시 종료일 필수
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: all
+  requires: [ANTP_THERAPY]
+  desc: days_to_progression(PD 발생일) 은 antp_start_date 이후여야 하고, treatment_outcome=0(Not on Tx) 이면 antp_end_date 필수.
+  sql: |
+    SELECT person_id, CAST(antp_id AS VARCHAR) AS row_key,
+           CASE WHEN days_to_progression < antp_start_date THEN 'PD ' || days_to_progression || ' < start ' || antp_start_date
+                ELSE 'treatment_outcome=0 인데 antp_end_date 없음' END AS detail
+    FROM ANTP_THERAPY
+    WHERE days_to_progression < antp_start_date OR (treatment_outcome = 0 AND antp_end_date IS NULL)
+
+- id: SEM-COM-021
+  name: 약물-항암요법 환자 일치 및 항암제 연결
+  category: Conformance
+  subcategory: relational
+  severity: error
+  scope: all
+  requires: [DRUG_EXPOSURE, ANTP_THERAPY]
+  desc: antp_id 가 있는 약물의 person_id 는 ANTP 의 person_id 와 같아야 한다. 항암제 concept 인데 antp_id 가 없으면 경고 수준 위반.
+  sql: |
+    SELECT d.person_id, CAST(d.drug_exposure_id AS VARCHAR) AS row_key, 'ANTP ' || d.antp_id || ' 의 person_id=' || t.person_id AS detail
+    FROM DRUG_EXPOSURE d JOIN ANTP_THERAPY t USING (antp_id) WHERE d.person_id <> t.person_id
+    UNION ALL
+    SELECT d.person_id, CAST(d.drug_exposure_id AS VARCHAR), '항암제(' || c.name || ') 인데 antp_id 없음'
+    FROM DRUG_EXPOSURE d JOIN _ANTICANCER_DRUGS c ON d.drug_concept_id = c.concept_id WHERE d.antp_id IS NULL
+
+- id: SEM-COM-022
+  name: 진단일 <= 첫 항암요법 시작일
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: all
+  requires: [ANTP_THERAPY, CONDITION_OCCURRENCE]
+  desc: 코호트 정의 진단의 최초일은 첫 항암요법 시작일보다 앞서거나 같아야 한다.
+  sql: |
+    WITH idx AS (SELECT person_id, MIN(condition_start_date) AS dx FROM CONDITION_OCCURRENCE WHERE condition_concept_id IN ({COHORT_CONDITION_IDS}) GROUP BY person_id),
+         tx AS (SELECT person_id, MIN(antp_start_date) AS s FROM ANTP_THERAPY GROUP BY person_id)
+    SELECT tx.person_id, CAST(tx.person_id AS VARCHAR) AS row_key, '첫 항암 ' || tx.s || ' < 진단 ' || idx.dx AS detail
+    FROM tx JOIN idx USING (person_id) WHERE tx.s < idx.dx
+
+- id: SEM-COM-023
+  name: 중복 이벤트 레코드
+  category: Plausibility
+  subcategory: atemporal
+  severity: warning
+  scope: all
+  requires: [MEASUREMENT]
+  desc: 동일 환자, 동일 concept, 동일 날짜, 동일 값의 검사/진단이 2건 이상이면 중복 적재 의심.
+  sql: |
+    SELECT person_id, 'MEASUREMENT:' || measurement_concept_id || '@' || measurement_date AS row_key, COUNT(*) || '건 중복' AS detail
+    FROM MEASUREMENT GROUP BY person_id, measurement_concept_id, measurement_date, value_as_number HAVING COUNT(*) > 1
+    UNION ALL
+    SELECT person_id, 'CONDITION_OCCURRENCE:' || condition_concept_id || '@' || condition_start_date, COUNT(*) || '건 중복'
+    FROM CONDITION_OCCURRENCE GROUP BY person_id, condition_concept_id, condition_start_date HAVING COUNT(*) > 1
+
+- id: SEM-COM-024
+  name: 코호트 인구학적 분포
+  category: Plausibility
+  subcategory: distribution
+  severity: warning
+  scope: all
+  requires: [PERSON]
+  desc: 성비와 index 나이 중앙값이 질환별 기대 범위(spec/concepts.yaml) 안에 있어야 한다. 집계 수준 규칙이므로 위반 시 1행 반환.
+  sql: |
+    WITH s AS (
+      SELECT AVG(CASE WHEN gender_concept_id = 8532 THEN 1.0 ELSE 0.0 END) AS f, MEDIAN(age_at_index) AS med FROM PERSON
+    )
+    SELECT NULL AS person_id, 'COHORT' AS row_key,
+           'female_ratio=' || ROUND(f, 2) || ' (기대 {FEMALE_MIN}~{FEMALE_MAX}), median_age=' || med || ' (기대 {AGE_MIN}~{AGE_MAX})' AS detail
+    FROM s WHERE f < {FEMALE_MIN} OR f > {FEMALE_MAX} OR med < {AGE_MIN} OR med > {AGE_MAX}
+
+- id: SEM-COM-025
+  name: 검사항목별 단위 일관성
+  category: Conformance
+  subcategory: value
+  severity: warning
+  scope: all
+  requires: [MEASUREMENT]
+  desc: 같은 measurement_concept_id 는 한 기관 안에서 하나의 unit_concept_id 를 써야 한다.
+  sql: |
+    SELECT NULL AS person_id, 'MEASUREMENT:' || measurement_concept_id AS row_key,
+           COUNT(DISTINCT unit_concept_id) || '개 단위 혼용: ' || STRING_AGG(DISTINCT CAST(unit_concept_id AS VARCHAR), ',') AS detail
+    FROM MEASUREMENT WHERE unit_concept_id IS NOT NULL GROUP BY measurement_concept_id HAVING COUNT(DISTINCT unit_concept_id) > 1
+
+- id: SEM-COM-026
+  name: 입원 방문 기간 중첩
+  category: Plausibility
+  subcategory: temporal
+  severity: warning
+  scope: all
+  requires: [VISIT_OCCURRENCE]
+  desc: 같은 환자의 입원(9201) 방문은 기간이 겹칠 수 없다.
+  sql: |
+    SELECT a.person_id, CAST(a.visit_occurrence_id AS VARCHAR) AS row_key, 'visit ' || b.visit_occurrence_id || ' 와 기간 중첩' AS detail
+    FROM VISIT_OCCURRENCE a JOIN VISIT_OCCURRENCE b ON a.person_id = b.person_id AND a.visit_occurrence_id < b.visit_occurrence_id
+    WHERE a.visit_concept_id = 9201 AND b.visit_concept_id = 9201
+      AND a.visit_start_date <= b.visit_end_date AND b.visit_start_date <= a.visit_end_date
+
+- id: SEM-COM-027
+  name: 노트 본문 존재
+  category: Completeness
+  subcategory: value
+  severity: warning
+  scope: all
+  requires: [NOTE]
+  desc: NOTE 행은 note_text 가 비어 있으면 안 된다 (판독문 등 원문 적재가 목적).
+  sql: |
+    SELECT person_id, CAST(note_id AS VARCHAR) AS row_key, 'note_text 비어 있음' AS detail
+    FROM NOTE WHERE note_text IS NULL OR LENGTH(TRIM(note_text)) = 0
+
+- id: SEM-COM-028
+  name: 처방 약물 이벤트의 핵심 테이블 존재
+  category: Completeness
+  subcategory: cross-table
+  severity: warning
+  scope: [LUNG_CANCER, BREAST_CANCER, COLORECTAL_CANCER]
+  requires: [DRUG_EXPOSURE]
+  desc: 특화 테이블 drug 그룹(drug_prsc_ymd)이 있으면 같은 환자의 DRUG_EXPOSURE 에 같은 시작일 레코드가 있어야 한다.
+  sql: |
+    SELECT d.person_id, '{DISEASE}:' || d.{DISEASE_PK} AS row_key, 'drug_prsc_ymd ' || d.drug_prsc_ymd || ' 에 해당하는 DRUG_EXPOSURE 없음' AS detail
+    FROM {DISEASE} d LEFT JOIN DRUG_EXPOSURE e ON d.person_id = e.person_id AND d.drug_prsc_ymd = e.drug_exposure_start_date
+    WHERE d.drug_prsc_ymd IS NOT NULL AND e.drug_exposure_id IS NULL
+
+- id: SEM-COM-029
+  name: 특화 테이블 death_date 와 PERSON 일치
+  category: Conformance
+  subcategory: cross-table
+  severity: error
+  scope: all
+  requires: [PERSON]
+  desc: 특화 테이블에 death_date 가 있으면 PERSON.death_date 와 같아야 한다.
+  sql: |
+    SELECT d.person_id, '{DISEASE}:' || d.{DISEASE_PK} AS row_key, '{DISEASE}.death_date=' || d.death_date || ' <> PERSON.death_date=' || COALESCE(CAST(p.death_date AS VARCHAR), 'NULL') AS detail
+    FROM {DISEASE} d JOIN PERSON p USING (person_id)
+    WHERE d.death_date IS NOT NULL AND (p.death_date IS NULL OR d.death_date <> p.death_date)
+
+- id: SEM-COM-030
+  name: 특화 테이블 방문 환자 일치
+  category: Conformance
+  subcategory: relational
+  severity: error
+  scope: all
+  requires: [VISIT_OCCURRENCE]
+  desc: 특화 테이블 행의 person_id 는 참조 방문의 person_id 와 같아야 한다.
+  sql: |
+    SELECT d.person_id, '{DISEASE}:' || d.{DISEASE_PK} AS row_key, 'visit ' || d.visit_occurrence_id || ' 의 person_id=' || v.person_id AS detail
+    FROM {DISEASE} d JOIN VISIT_OCCURRENCE v USING (visit_occurrence_id) WHERE d.person_id <> v.person_id
+
+# ---------------------------------------------------------------------------
+# 암 공통 (폐암/유방암/대장암 특화 테이블이 같은 필드명을 공유)
+# ---------------------------------------------------------------------------
+- id: SEM-CA-001
+  name: 수술 후 외과병리일 >= 수술일
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: [LUNG_CANCER, BREAST_CANCER, COLORECTAL_CANCER]
+  requires: []
+  desc: 같은 환자의 srgc_ptem_ymd(외과병리 시행일)는 가장 가까운 이전 oprt_ymd 이후 60일 안에 있어야 한다.
+  sql: |
+    WITH op AS (SELECT person_id, oprt_ymd FROM {DISEASE} WHERE oprt_ymd IS NOT NULL),
+         pa AS (SELECT person_id, {DISEASE_PK} AS pk, srgc_ptem_ymd FROM {DISEASE} WHERE srgc_ptem_ymd IS NOT NULL)
+    SELECT pa.person_id, '{DISEASE}:' || pa.pk AS row_key, 'srgc_ptem_ymd ' || pa.srgc_ptem_ymd || ' 에 대응하는 수술(0~60일 전) 없음' AS detail
+    FROM pa LEFT JOIN op ON pa.person_id = op.person_id AND op.oprt_ymd <= pa.srgc_ptem_ymd AND pa.srgc_ptem_ymd - op.oprt_ymd <= 60
+    GROUP BY pa.person_id, pa.pk, pa.srgc_ptem_ymd HAVING COUNT(op.oprt_ymd) = 0
+
+- id: SEM-CA-002
+  name: 병리 TNM 조합 일치
+  category: Conformance
+  subcategory: computational
+  severity: warning
+  scope: [LUNG_CANCER, BREAST_CANCER, COLORECTAL_CANCER]
+  requires: []
+  desc: afop_path_tnm_stag_vl 은 T/N/M 개별 값을 이어 붙인 것과 같아야 한다. 임상 TNM(clnc_*) 도 동일.
+  sql: |
+    SELECT person_id, '{DISEASE}:' || {DISEASE_PK} AS row_key, 'path TNM ' || afop_path_tnm_stag_vl || ' <> ' || afop_path_t_stag_vl || afop_path_n_stag_vl || afop_path_m_stag_vl AS detail
+    FROM {DISEASE}
+    WHERE afop_path_tnm_stag_vl IS NOT NULL AND afop_path_t_stag_vl IS NOT NULL
+      AND REPLACE(afop_path_tnm_stag_vl, ' ', '') <> afop_path_t_stag_vl || afop_path_n_stag_vl || afop_path_m_stag_vl
+    UNION ALL
+    SELECT person_id, '{DISEASE}:' || {DISEASE_PK}, 'clinical TNM ' || clnc_tnm_stag_vl || ' <> ' || clnc_t_stag_vl || clnc_n_stag_vl || clnc_m_stag_vl
+    FROM {DISEASE}
+    WHERE clnc_tnm_stag_vl IS NOT NULL AND clnc_t_stag_vl IS NOT NULL
+      AND REPLACE(clnc_tnm_stag_vl, ' ', '') <> clnc_t_stag_vl || clnc_n_stag_vl || clnc_m_stag_vl
+
+- id: SEM-CA-003
+  name: 방사선 총선량 = 1회 선량 x 횟수
+  category: Plausibility
+  subcategory: computational
+  severity: warning
+  scope: [LUNG_CANCER, BREAST_CANCER, COLORECTAL_CANCER]
+  requires: []
+  desc: rd_totl_gy 는 rd_gy x rd_impl_nt 와 10% 이내로 일치해야 한다.
+  sql: |
+    SELECT person_id, '{DISEASE}:' || {DISEASE_PK} AS row_key, 'rd_totl_gy=' || rd_totl_gy || ' vs ' || rd_gy || 'x' || rd_impl_nt AS detail
+    FROM {DISEASE}
+    WHERE rd_gy IS NOT NULL AND rd_impl_nt IS NOT NULL AND rd_totl_gy IS NOT NULL
+      AND ABS(rd_totl_gy - rd_gy * rd_impl_nt) > 0.1 * rd_totl_gy + 0.01
+
+- id: SEM-CA-004
+  name: BMI = 체중 / 신장^2
+  category: Plausibility
+  subcategory: computational
+  severity: warning
+  scope: [LUNG_CANCER, BREAST_CANCER, COLORECTAL_CANCER, MASLD]
+  requires: []
+  desc: bmi_vl 은 wt_msrm_vl / (ht_msrm_vl/100)^2 와 0.5 이내로 일치해야 한다.
+  sql: |
+    SELECT person_id, '{DISEASE}:' || {DISEASE_PK} AS row_key, 'bmi_vl=' || bmi_vl || ' vs 계산값 ' || ROUND(wt_msrm_vl / POWER(ht_msrm_vl / 100.0, 2), 1) AS detail
+    FROM {DISEASE}
+    WHERE ht_msrm_vl IS NOT NULL AND wt_msrm_vl IS NOT NULL AND bmi_vl IS NOT NULL
+      AND ABS(bmi_vl - wt_msrm_vl / POWER(ht_msrm_vl / 100.0, 2)) > 0.5
+
+- id: SEM-CA-005
+  name: 재발일 > 수술일, 전이진단일 >= 진단일
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: [LUNG_CANCER, BREAST_CANCER, COLORECTAL_CANCER]
+  requires: [CONDITION_OCCURRENCE]
+  desc: rldg_ymd(재발 진단일)는 같은 환자의 첫 수술일 이후, mtdg_ymd(전이 진단일)는 코호트 진단일 이후여야 한다.
+  sql: |
+    WITH op AS (SELECT person_id, MIN(oprt_ymd) AS first_op FROM {DISEASE} WHERE oprt_ymd IS NOT NULL GROUP BY person_id),
+         dx AS (SELECT person_id, MIN(condition_start_date) AS dx FROM CONDITION_OCCURRENCE WHERE condition_concept_id IN ({COHORT_CONDITION_IDS}) GROUP BY person_id)
+    SELECT d.person_id, '{DISEASE}:' || d.{DISEASE_PK} AS row_key, 'rldg_ymd ' || d.rldg_ymd || ' <= 첫 수술 ' || op.first_op AS detail
+    FROM {DISEASE} d JOIN op USING (person_id) WHERE d.rldg_ymd IS NOT NULL AND d.rldg_ymd <= op.first_op
+    UNION ALL
+    SELECT d.person_id, '{DISEASE}:' || d.{DISEASE_PK}, 'mtdg_ymd ' || d.mtdg_ymd || ' < 진단 ' || dx.dx
+    FROM {DISEASE} d JOIN dx USING (person_id) WHERE d.mtdg_ymd IS NOT NULL AND d.mtdg_ymd < dx.dx
+
+- id: SEM-CA-006
+  name: 코호트 KCD 진단코드 비율
+  category: Plausibility
+  subcategory: distribution
+  severity: warning
+  scope: [LUNG_CANCER, BREAST_CANCER, COLORECTAL_CANCER]
+  requires: []
+  desc: 특화 테이블 진단 KCD(lucn/brcn/clcn_diag_kncd) 값 중 90% 이상이 코호트 정의 코드(C34 / C50,D05 / C18-C21)로 시작해야 한다.
+  sql: |
+    WITH k AS (SELECT person_id, {DISEASE_KCD} AS kcd FROM {DISEASE} WHERE {DISEASE_KCD} IS NOT NULL),
+         s AS (SELECT AVG(CASE WHEN {KCD_MATCH} THEN 1.0 ELSE 0.0 END) AS r, COUNT(*) AS n FROM k)
+    SELECT NULL AS person_id, 'COHORT' AS row_key, '코호트 KCD 비율=' || ROUND(r, 3) || ' (n=' || n || ')' AS detail FROM s WHERE r < 0.9
+
+- id: SEM-CA-007
+  name: 침윤 림프절 수 <= 절제 림프절 수
+  category: Plausibility
+  subcategory: atemporal
+  severity: error
+  scope: [BREAST_CANCER, COLORECTAL_CANCER]
+  requires: []
+  desc: pstv_ln_cnt <= totl_ln_cnt.
+  sql: |
+    SELECT person_id, '{DISEASE}:' || {DISEASE_PK} AS row_key, 'pstv_ln_cnt ' || pstv_ln_cnt || ' > totl_ln_cnt ' || totl_ln_cnt AS detail
+    FROM {DISEASE} WHERE pstv_ln_cnt IS NOT NULL AND totl_ln_cnt IS NOT NULL AND pstv_ln_cnt > totl_ln_cnt
+
+- id: SEM-CA-008
+  name: 병리 판독일 >= 검사 시행일
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: [COLORECTAL_CANCER]
+  requires: []
+  desc: impt_read_ymd >= imem_ymd, mlpt_read_ymd >= mlem_ymd, sgpt_read_ymd >= srgc_ptem_ymd, bpsy_read_ymd >= bpsy_ymd.
+  sql: |
+    SELECT person_id, '{DISEASE}:' || {DISEASE_PK} AS row_key,
+           CASE WHEN impt_read_ymd < imem_ymd THEN 'impt_read_ymd < imem_ymd'
+                WHEN mlpt_read_ymd < mlem_ymd THEN 'mlpt_read_ymd < mlem_ymd'
+                WHEN sgpt_read_ymd < srgc_ptem_ymd THEN 'sgpt_read_ymd < srgc_ptem_ymd'
+                ELSE 'bpsy_read_ymd < bpsy_ymd' END AS detail
+    FROM {DISEASE}
+    WHERE impt_read_ymd < imem_ymd OR mlpt_read_ymd < mlem_ymd OR sgpt_read_ymd < srgc_ptem_ymd OR bpsy_read_ymd < bpsy_ymd
+
+# ---------------------------------------------------------------------------
+# 폐암
+# ---------------------------------------------------------------------------
+- id: SEM-LC-001
+  name: Stage IV 이면 stage_iv_diagnosis_date 필수
+  category: Completeness
+  subcategory: conditional
+  severity: warning
+  scope: [LUNG_CANCER]
+  requires: [CONDITION_OCCURRENCE]
+  desc: clinical_stage 가 IV 계열이면 stage_iv_diagnosis_date 가 있어야 하고, 코호트 진단일 이후여야 한다.
+  sql: |
+    WITH dx AS (SELECT person_id, MIN(condition_start_date) AS dx FROM CONDITION_OCCURRENCE WHERE condition_concept_id IN ({COHORT_CONDITION_IDS}) GROUP BY person_id)
+    SELECT d.person_id, 'LUNG_CANCER:' || d.lc_id AS row_key,
+           CASE WHEN d.stage_iv_diagnosis_date IS NULL THEN 'clinical_stage=' || d.clinical_stage || ' 인데 stage_iv_diagnosis_date 없음'
+                ELSE 'stage_iv_diagnosis_date ' || d.stage_iv_diagnosis_date || ' < 진단 ' || dx.dx END AS detail
+    FROM LUNG_CANCER d LEFT JOIN dx USING (person_id)
+    WHERE d.clinical_stage LIKE 'IV%' AND (d.stage_iv_diagnosis_date IS NULL OR d.stage_iv_diagnosis_date < dx.dx)
+
+- id: SEM-LC-002
+  name: 흡연력 논리
+  category: Plausibility
+  subcategory: atemporal
+  severity: warning
+  scope: [LUNG_CANCER]
+  requires: []
+  desc: 흡연력 없음(shis=N) 이면 흡연량/기간이 없어야 하고, 현재 흡연(cur_smok=Y) 이면 흡연력이 Y 여야 한다.
+  sql: |
+    SELECT person_id, 'LUNG_CANCER:' || lc_id AS row_key,
+           CASE WHEN shis_yn_noans_spcd = 'N' THEN '흡연력 N 인데 smok_qty/smok_dtrn_ycnt 있음' ELSE '현재흡연 Y 인데 흡연력 ' || COALESCE(shis_yn_noans_spcd, 'NULL') END AS detail
+    FROM LUNG_CANCER
+    WHERE (shis_yn_noans_spcd = 'N' AND (smok_qty IS NOT NULL OR smok_dtrn_ycnt IS NOT NULL))
+       OR (cur_smok_yn_noans_spcd = 'Y' AND COALESCE(shis_yn_noans_spcd, '') <> 'Y')
+
+- id: SEM-LC-003
+  name: 종양 크기와 T 병기 일치
+  category: Plausibility
+  subcategory: computational
+  severity: warning
+  scope: [LUNG_CANCER]
+  requires: []
+  desc: AJCC 8판 기준 T1 <= 3cm, T2 <= 5cm, T3 <= 7cm (tumr_max_diam_vl 과 afop_path_t_stag_vl).
+  sql: |
+    SELECT person_id, 'LUNG_CANCER:' || lc_id AS row_key, 'T=' || afop_path_t_stag_vl || ' 인데 최대직경 ' || tumr_max_diam_vl || 'cm' AS detail
+    FROM LUNG_CANCER
+    WHERE tumr_max_diam_vl IS NOT NULL AND afop_path_t_stag_vl IS NOT NULL AND (
+          (afop_path_t_stag_vl LIKE '%T1%' AND tumr_max_diam_vl > 3)
+       OR (afop_path_t_stag_vl LIKE '%T2%' AND tumr_max_diam_vl > 5)
+       OR (afop_path_t_stag_vl LIKE '%T3%' AND tumr_max_diam_vl > 7))
+
+- id: SEM-LC-004
+  name: 유전자검사일 >= 생검일
+  category: Plausibility
+  subcategory: temporal
+  severity: warning
+  scope: [LUNG_CANCER]
+  requires: []
+  desc: gmt_ymd(돌연변이 검사일)는 같은 환자의 첫 생검일(bpsy_ymd) 이후여야 한다.
+  sql: |
+    WITH b AS (SELECT person_id, MIN(bpsy_ymd) AS first_bx FROM LUNG_CANCER WHERE bpsy_ymd IS NOT NULL GROUP BY person_id)
+    SELECT d.person_id, 'LUNG_CANCER:' || d.lc_id AS row_key, 'gmt_ymd ' || d.gmt_ymd || ' < 첫 생검 ' || b.first_bx AS detail
+    FROM LUNG_CANCER d JOIN b USING (person_id) WHERE d.gmt_ymd IS NOT NULL AND d.gmt_ymd < b.first_bx
+
+- id: SEM-LC-005
+  name: 조직형 코드와 원천명 일치
+  category: Conformance
+  subcategory: value
+  severity: warning
+  scope: [LUNG_CANCER]
+  requires: []
+  desc: histologic_diagnosis 코드가 같은 환자 안에서 서로 다른 값이면 위반 (환자 불변 필드).
+  sql: |
+    SELECT person_id, CAST(person_id AS VARCHAR) AS row_key, COUNT(DISTINCT histologic_diagnosis) || '개의 조직형 코드' AS detail
+    FROM LUNG_CANCER WHERE histologic_diagnosis IS NOT NULL GROUP BY person_id HAVING COUNT(DISTINCT histologic_diagnosis) > 1
+
+# ---------------------------------------------------------------------------
+# 유방암
+# ---------------------------------------------------------------------------
+- id: SEM-BC-001
+  name: 유방암 코호트 성별
+  category: Plausibility
+  subcategory: distribution
+  severity: error
+  scope: [BREAST_CANCER]
+  requires: [PERSON]
+  desc: 임신/출산 관련 필드가 채워진 환자는 여성이어야 한다.
+  sql: |
+    SELECT d.person_id, 'BREAST_CANCER:' || d.bc_id AS row_key, '산과 필드 있음, gender_concept_id=' || p.gender_concept_id AS detail
+    FROM BREAST_CANCER d JOIN PERSON p USING (person_id)
+    WHERE p.gender_concept_id <> 8532 AND (d.pregnant_at_diagnosis IS NOT NULL OR d.history_of_live_birth IS NOT NULL OR d.menopause_status IS NOT NULL)
+
+- id: SEM-BC-002
+  name: 폐경 상태 논리
+  category: Plausibility
+  subcategory: atemporal
+  severity: warning
+  scope: [BREAST_CANCER]
+  requires: []
+  desc: 폐경 전(1) 이면 meno_age_vl 이 없어야 하고, 폐경 후(2) 이면 meno_yn=Y 여야 한다. 초경 나이 < 폐경 나이, 첫 출산 나이 >= 초경 나이.
+  sql: |
+    SELECT person_id, 'BREAST_CANCER:' || bc_id AS row_key,
+           CASE WHEN menopause_status = 1 AND meno_age_vl IS NOT NULL THEN '폐경 전인데 meno_age_vl 있음'
+                WHEN menopause_status = 2 AND COALESCE(meno_yn_noans_spcd, '') = 'N' THEN '폐경 후인데 meno_yn=N'
+                WHEN mena_age_vl >= meno_age_vl THEN '초경 나이 >= 폐경 나이'
+                ELSE '첫 출산 나이 < 초경 나이' END AS detail
+    FROM BREAST_CANCER
+    WHERE (menopause_status = 1 AND meno_age_vl IS NOT NULL)
+       OR (menopause_status = 2 AND COALESCE(meno_yn_noans_spcd, '') = 'N')
+       OR (mena_age_vl IS NOT NULL AND meno_age_vl IS NOT NULL AND mena_age_vl >= meno_age_vl)
+       OR (delv_age_vl IS NOT NULL AND mena_age_vl IS NOT NULL AND delv_age_vl < mena_age_vl)
+
+- id: SEM-BC-003
+  name: 임신/출산 조건부 논리
+  category: Completeness
+  subcategory: conditional
+  severity: warning
+  scope: [BREAST_CANCER]
+  requires: [PERSON]
+  desc: 진단 시 임신(1) 이면 index 나이 15~55. 출산력 없음(2) 이면 delv_chld_cnt 0/NULL 이고 postpartum 아님. 가임력보존 기타(4) 이면 상세 필수. 임신 시도 없음(2) 이면 성공 여부 NULL. 임신 성공(1) 이면 결과 필수.
+  sql: |
+    SELECT d.person_id, 'BREAST_CANCER:' || d.bc_id AS row_key,
+           CASE WHEN d.pregnant_at_diagnosis = 1 AND (p.age_at_index < 15 OR p.age_at_index > 55) THEN '진단 시 임신인데 나이 ' || p.age_at_index
+                WHEN d.history_of_live_birth = 2 AND (d.delv_chld_cnt > 0 OR d.postpartum_at_diagnosis = 1) THEN '출산력 없음인데 자녀수/산후 진단 있음'
+                WHEN d.fertility_treatment_type = 4 AND d.fertility_treatment_type_other IS NULL THEN '가임력보존 기타인데 상세 없음'
+                WHEN d.fertility_history = 2 AND d.fertility_treatment_type IS NOT NULL THEN '가임력보존 없음인데 치료종류 있음'
+                WHEN d.pregnancy_attempt = 2 AND d.pregnancy_success IS NOT NULL THEN '임신 시도 없음인데 성공 여부 있음'
+                ELSE '임신 성공인데 pregnancy_outcome 없음' END AS detail
+    FROM BREAST_CANCER d JOIN PERSON p USING (person_id)
+    WHERE (d.pregnant_at_diagnosis = 1 AND (p.age_at_index < 15 OR p.age_at_index > 55))
+       OR (d.history_of_live_birth = 2 AND (d.delv_chld_cnt > 0 OR d.postpartum_at_diagnosis = 1))
+       OR (d.fertility_treatment_type = 4 AND d.fertility_treatment_type_other IS NULL)
+       OR (d.fertility_history = 2 AND d.fertility_treatment_type IS NOT NULL)
+       OR (d.pregnancy_attempt = 2 AND d.pregnancy_success IS NOT NULL)
+       OR (d.pregnancy_success = 1 AND d.pregnancy_outcome IS NULL)
+
+- id: SEM-BC-004
+  name: 감시림프절 양성 수 <= 절제 수
+  category: Plausibility
+  subcategory: atemporal
+  severity: error
+  scope: [BREAST_CANCER]
+  requires: []
+  desc: pstv_slnd_cnt <= slnd_totl_cnt.
+  sql: |
+    SELECT person_id, 'BREAST_CANCER:' || bc_id AS row_key, 'pstv_slnd_cnt ' || pstv_slnd_cnt || ' > slnd_totl_cnt ' || slnd_totl_cnt AS detail
+    FROM BREAST_CANCER WHERE pstv_slnd_cnt IS NOT NULL AND slnd_totl_cnt IS NOT NULL AND pstv_slnd_cnt > slnd_totl_cnt
+
+- id: SEM-BC-005
+  name: 치료 후 월경 재개일 > 항암 종료일
+  category: Plausibility
+  subcategory: temporal
+  severity: warning
+  scope: [BREAST_CANCER]
+  requires: [ANTP_THERAPY]
+  desc: first_menstrual_period_date_after_treatment 는 같은 환자의 마지막 세포독성 항암(drug_category=1) 종료일 이후여야 한다. 호르몬 치료는 제외.
+  sql: |
+    WITH t AS (SELECT person_id, MAX(antp_end_date) AS e FROM ANTP_THERAPY WHERE drug_category = 1 GROUP BY person_id)
+    SELECT d.person_id, 'BREAST_CANCER:' || d.bc_id AS row_key, '월경 재개일 ' || d.first_menstrual_period_date_after_treatment || ' <= 항암 종료 ' || t.e AS detail
+    FROM BREAST_CANCER d JOIN t USING (person_id)
+    WHERE d.first_menstrual_period_date_after_treatment IS NOT NULL AND t.e IS NOT NULL AND d.first_menstrual_period_date_after_treatment <= t.e
+
+# ---------------------------------------------------------------------------
+# 대장암
+# ---------------------------------------------------------------------------
+- id: SEM-CC-001
+  name: 장루 논리
+  category: Completeness
+  subcategory: conditional
+  severity: warning
+  scope: [COLORECTAL_CANCER]
+  requires: []
+  desc: 장루 형성 N 이면 형성 이유가 없어야 하고, 장루 복원일(ostm_reop_ymd)은 같은 환자의 장루 형성 수술일 이후여야 한다.
+  sql: |
+    WITH st AS (SELECT person_id, MIN(oprt_ymd) AS stoma_op FROM COLORECTAL_CANCER WHERE ostm_frmt_yn_unid_spcd = 'Y' AND oprt_ymd IS NOT NULL GROUP BY person_id)
+    SELECT d.person_id, 'COLORECTAL_CANCER:' || d.cc_id AS row_key, '장루 형성 N 인데 ostm_frsn 있음' AS detail
+    FROM COLORECTAL_CANCER d WHERE d.ostm_frmt_yn_unid_spcd = 'N' AND d.ostm_frsn_spcd IS NOT NULL
+    UNION ALL
+    SELECT d.person_id, 'COLORECTAL_CANCER:' || d.cc_id, CASE WHEN st.person_id IS NULL THEN '장루 복원인데 장루 형성 수술 없음' ELSE '장루 복원일 ' || d.ostm_reop_ymd || ' <= 장루 수술 ' || st.stoma_op END
+    FROM COLORECTAL_CANCER d LEFT JOIN st USING (person_id)
+    WHERE d.ostm_reop_ymd IS NOT NULL AND (st.person_id IS NULL OR d.ostm_reop_ymd <= st.stoma_op)
+
+- id: SEM-CC-002
+  name: 개복 전환 사유 조건부 필수
+  category: Completeness
+  subcategory: conditional
+  severity: warning
+  scope: [COLORECTAL_CANCER]
+  requires: []
+  desc: lapr_conv_yn=Y 이면 전환 사유(lapr_conv_resn_spcd) 필수, N 이면 사유가 없어야 한다.
+  sql: |
+    SELECT person_id, 'COLORECTAL_CANCER:' || cc_id AS row_key,
+           CASE WHEN lapr_conv_yn_unid_spcd = 'Y' THEN '개복 전환 Y 인데 사유 없음' ELSE '개복 전환 N 인데 사유 있음' END AS detail
+    FROM COLORECTAL_CANCER
+    WHERE (lapr_conv_yn_unid_spcd = 'Y' AND lapr_conv_resn_spcd IS NULL) OR (lapr_conv_yn_unid_spcd = 'N' AND lapr_conv_resn_spcd IS NOT NULL)
+
+- id: SEM-CC-003
+  name: 직장암 MRI 거리 논리
+  category: Plausibility
+  subcategory: atemporal
+  severity: warning
+  scope: [COLORECTAL_CANCER]
+  requires: []
+  desc: 항문연까지 거리(lstm_anvg_dst_vl) >= 항문직장경계부까지 거리(lstm_anju_dst_vl). 직장암 위치값은 직장/직장구불결장 진단(C19, C20) 환자에만 있어야 한다.
+  sql: |
+    SELECT person_id, 'COLORECTAL_CANCER:' || cc_id AS row_key, 'lstm_anvg ' || lstm_anvg_dst_vl || ' < lstm_anju ' || lstm_anju_dst_vl AS detail
+    FROM COLORECTAL_CANCER WHERE lstm_anvg_dst_vl IS NOT NULL AND lstm_anju_dst_vl IS NOT NULL AND lstm_anvg_dst_vl < lstm_anju_dst_vl
+    UNION ALL
+    SELECT d.person_id, 'COLORECTAL_CANCER:' || d.cc_id, '직장암 위치값 있으나 진단 KCD=' || k.kcd
+    FROM COLORECTAL_CANCER d JOIN (SELECT person_id, MIN(clcn_diag_kncd) AS kcd FROM COLORECTAL_CANCER WHERE clcn_diag_kncd IS NOT NULL GROUP BY person_id) k USING (person_id)
+    WHERE d.rtcn_loca_dst_vl IS NOT NULL AND NOT (k.kcd LIKE 'C19%' OR k.kcd LIKE 'C20%')
+
+- id: SEM-CC-004
+  name: 추정실혈량 구분과 값 일치
+  category: Conformance
+  subcategory: computational
+  severity: warning
+  scope: [COLORECTAL_CANCER]
+  requires: []
+  desc: ebl_qty_spcd 가 '1'(<100mL) / '2'(100~500) / '3'(>500) 인 경우 ebl_qty 가 구간과 일치해야 한다 (임시 코드표).
+  sql: |
+    SELECT person_id, 'COLORECTAL_CANCER:' || cc_id AS row_key, 'ebl_qty_spcd=' || ebl_qty_spcd || ', ebl_qty=' || ebl_qty AS detail
+    FROM COLORECTAL_CANCER
+    WHERE ebl_qty IS NOT NULL AND ebl_qty_spcd IS NOT NULL AND (
+          (ebl_qty_spcd = '1' AND ebl_qty >= 100) OR (ebl_qty_spcd = '2' AND (ebl_qty < 100 OR ebl_qty > 500)) OR (ebl_qty_spcd = '3' AND ebl_qty <= 500))
+
+# ---------------------------------------------------------------------------
+# 대사이상지방간
+# ---------------------------------------------------------------------------
+- id: SEM-MA-001
+  name: FIB-4 재계산 일치
+  category: Plausibility
+  subcategory: computational
+  severity: warning
+  scope: [MASLD]
+  requires: [MEASUREMENT, PERSON]
+  desc: FIB-4 = age x AST / (platelet x sqrt(ALT)). 같은 날짜(±7일) MEASUREMENT 의 AST(3013721)/ALT(3006923)/혈소판(3024929)으로 재계산하여 15% 이내 일치.
+  sql: |
+    WITH m AS (
+      SELECT person_id, measurement_date, measurement_concept_id, value_as_number FROM MEASUREMENT
+      WHERE measurement_concept_id IN (3013721, 3006923, 3024929) AND value_as_number IS NOT NULL
+    ),
+    lab AS (
+      SELECT d.masld_id, d.person_id, d.fib4_score, d.exam_gnrx_ymd,
+             MAX(CASE WHEN m.measurement_concept_id = 3013721 THEN m.value_as_number END) AS ast,
+             MAX(CASE WHEN m.measurement_concept_id = 3006923 THEN m.value_as_number END) AS alt,
+             MAX(CASE WHEN m.measurement_concept_id = 3024929 THEN m.value_as_number END) AS plt,
+             MAX(d.age) AS age
+      FROM MASLD d JOIN m ON d.person_id = m.person_id AND ABS(m.measurement_date - d.exam_gnrx_ymd) <= 7
+      WHERE d.fib4_score IS NOT NULL AND d.exam_gnrx_ymd IS NOT NULL
+      GROUP BY d.masld_id, d.person_id, d.fib4_score, d.exam_gnrx_ymd
+    )
+    SELECT person_id, 'MASLD:' || masld_id AS row_key,
+           'fib4_score=' || fib4_score || ' vs 재계산 ' || ROUND(age * ast / (plt * SQRT(alt)), 2) AS detail
+    FROM lab WHERE ast IS NOT NULL AND alt IS NOT NULL AND plt IS NOT NULL AND age IS NOT NULL AND alt > 0 AND plt > 0
+      AND ABS(fib4_score - age * ast / (plt * SQRT(alt))) > 0.15 * fib4_score + 0.05
+
+- id: SEM-MA-002
+  name: 지표 산출용 나이 = 검사일 기준 만 나이
+  category: Plausibility
+  subcategory: computational
+  severity: warning
+  scope: [MASLD]
+  requires: [PERSON]
+  desc: MASLD.age 는 exam_gnrx_ymd 연도 - year_of_birth 와 1 이내여야 한다.
+  sql: |
+    SELECT d.person_id, 'MASLD:' || d.masld_id AS row_key, 'age=' || d.age || ', exam ' || d.exam_gnrx_ymd || ', birth ' || p.year_of_birth AS detail
+    FROM MASLD d JOIN PERSON p USING (person_id)
+    WHERE d.age IS NOT NULL AND d.exam_gnrx_ymd IS NOT NULL AND ABS((EXTRACT(year FROM d.exam_gnrx_ymd) - p.year_of_birth) - d.age) > 1
+
+- id: SEM-MA-003
+  name: 음주량이 MASLD 정의 임계 미만
+  category: Plausibility
+  subcategory: atemporal
+  severity: warning
+  scope: [MASLD]
+  requires: [PERSON]
+  desc: 주당 음주량(병/회 x 회/월 x 소주 1병 약 60g / 4.3주)이 남 210g, 여 140g 를 넘으면 MetALD/ALD 의심.
+  sql: |
+    SELECT d.person_id, 'MASLD:' || d.masld_id AS row_key, '주당 알코올 ' || ROUND(d.drnk_qty * d.drnk_nt * 60 / 4.3, 0) || 'g' AS detail
+    FROM MASLD d JOIN PERSON p USING (person_id)
+    WHERE d.drnk_qty IS NOT NULL AND d.drnk_nt IS NOT NULL
+      AND d.drnk_qty * d.drnk_nt * 60 / 4.3 > CASE WHEN p.gender_concept_id = 8532 THEN 140 ELSE 210 END
+
+- id: SEM-MA-004
+  name: 예후 척도 명칭과 점수 컬럼 일치
+  category: Conformance
+  subcategory: computational
+  severity: warning
+  scope: [MASLD]
+  requires: []
+  desc: exam_gnrx_idx_nm 이 FIB-4/APRI/BARD/SAFE/LiverRisk 중 하나이고, exam_gnrx_rslt_vl 이 해당 점수 컬럼과 같아야 한다.
+  sql: |
+    SELECT person_id, 'MASLD:' || masld_id AS row_key,
+           CASE WHEN exam_gnrx_idx_nm NOT IN ('FIB-4', 'APRI', 'BARD', 'SAFE', 'LiverRisk') THEN '알 수 없는 척도명 ' || exam_gnrx_idx_nm
+                ELSE exam_gnrx_idx_nm || ' 결과값 ' || exam_gnrx_rslt_vl || ' 이 점수 컬럼과 불일치' END AS detail
+    FROM MASLD
+    WHERE exam_gnrx_idx_nm IS NOT NULL AND (
+          exam_gnrx_idx_nm NOT IN ('FIB-4', 'APRI', 'BARD', 'SAFE', 'LiverRisk')
+       OR (exam_gnrx_idx_nm = 'FIB-4' AND ABS(COALESCE(exam_gnrx_rslt_vl, -1) - COALESCE(fib4_score, -2)) > 0.01)
+       OR (exam_gnrx_idx_nm = 'APRI' AND ABS(COALESCE(exam_gnrx_rslt_vl, -1) - COALESCE(apri_score, -2)) > 0.01)
+       OR (exam_gnrx_idx_nm = 'BARD' AND ABS(COALESCE(exam_gnrx_rslt_vl, -1) - COALESCE(bard_score, -2)) > 0.01))
+
+- id: SEM-MA-005
+  name: 심장대사 위험인자 1개 이상
+  category: Completeness
+  subcategory: cohort
+  severity: warning
+  scope: [MASLD]
+  requires: [PERSON, CONDITION_OCCURRENCE, MEASUREMENT]
+  desc: MASLD 정의상 환자마다 심장대사 기준(BMI>=23, 제2형 당뇨, 고혈압, 이상지질혈증 진단 또는 해당 검사 이상) 1개 이상이 있어야 한다.
+  sql: |
+    WITH crit AS (
+      SELECT person_id FROM CONDITION_OCCURRENCE WHERE condition_concept_id IN (201826, 320128, 432867, 433736)
+      UNION SELECT person_id FROM MEASUREMENT WHERE (measurement_concept_id = 3038553 AND value_as_number >= 23)
+                                                 OR (measurement_concept_id = 3004410 AND value_as_number >= 5.7)
+                                                 OR (measurement_concept_id = 3004249 AND value_as_number >= 130)
+                                                 OR (measurement_concept_id = 3022192 AND value_as_number >= 150)
+      UNION SELECT person_id FROM MASLD WHERE bmi_vl >= 23
+    )
+    SELECT p.person_id, CAST(p.person_id AS VARCHAR) AS row_key, '심장대사 위험인자 없음' AS detail
+    FROM PERSON p LEFT JOIN crit USING (person_id) WHERE crit.person_id IS NULL
+
+- id: SEM-MA-006
+  name: 간이식일 >= 진단일
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: [MASLD]
+  requires: [CONDITION_OCCURRENCE]
+  desc: oprt_ymd(간이식) 는 코호트 진단일 이후여야 한다.
+  sql: |
+    WITH dx AS (SELECT person_id, MIN(condition_start_date) AS dx FROM CONDITION_OCCURRENCE WHERE condition_concept_id IN ({COHORT_CONDITION_IDS}) GROUP BY person_id)
+    SELECT d.person_id, 'MASLD:' || d.masld_id AS row_key, '간이식 ' || d.oprt_ymd || ' < 진단 ' || dx.dx AS detail
+    FROM MASLD d JOIN dx USING (person_id) WHERE d.oprt_ymd IS NOT NULL AND d.oprt_ymd < dx.dx
+
+# ---------------------------------------------------------------------------
+# 당뇨병 (특화 테이블 = 핵심 테이블 파생 뷰, 결정 D-07)
+# ---------------------------------------------------------------------------
+- id: SEM-DM-001
+  name: DIABETES 방문 필드가 VISIT_OCCURRENCE 와 일치
+  category: Conformance
+  subcategory: cross-table
+  severity: error
+  scope: [DIABETES]
+  requires: [VISIT_OCCURRENCE]
+  desc: visit_occurrence_id 로 연결된 방문의 concept/시작일/종료일이 핵심 테이블 값과 같아야 한다.
+  sql: |
+    SELECT d.person_id, 'DIABETES:' || d.dm_id AS row_key,
+           CASE WHEN d.visit_start_date <> v.visit_start_date THEN 'visit_start_date ' || d.visit_start_date || ' <> ' || v.visit_start_date
+                WHEN d.visit_end_date <> v.visit_end_date THEN 'visit_end_date 불일치'
+                ELSE 'visit_concept_id ' || d.visit_concept_id || ' <> ' || v.visit_concept_id END AS detail
+    FROM DIABETES d JOIN VISIT_OCCURRENCE v USING (visit_occurrence_id)
+    WHERE d.visit_start_date IS NOT NULL AND (d.visit_start_date <> v.visit_start_date OR d.visit_end_date <> v.visit_end_date OR d.visit_concept_id <> v.visit_concept_id)
+
+- id: SEM-DM-002
+  name: DIABETES 검사 필드가 MEASUREMENT 와 일치
+  category: Conformance
+  subcategory: cross-table
+  severity: error
+  scope: [DIABETES]
+  requires: [MEASUREMENT]
+  desc: measurement_id 로 연결된 검사의 concept/날짜/값/단위가 핵심 테이블과 같아야 한다.
+  sql: |
+    SELECT d.person_id, 'DIABETES:' || d.dm_id AS row_key,
+           'MEASUREMENT ' || d.measurement_id || ' 불일치: concept ' || COALESCE(CAST(d.measurement_concept_id AS VARCHAR), 'NULL') || '/' || m.measurement_concept_id
+           || ', value ' || COALESCE(CAST(d.value_as_number AS VARCHAR), 'NULL') || '/' || COALESCE(CAST(m.value_as_number AS VARCHAR), 'NULL') AS detail
+    FROM DIABETES d JOIN MEASUREMENT m USING (measurement_id)
+    WHERE d.measurement_concept_id IS NOT NULL AND (
+          d.measurement_concept_id <> m.measurement_concept_id OR d.measurement_date <> m.measurement_date
+       OR COALESCE(d.value_as_number, -1) <> COALESCE(m.value_as_number, -1) OR COALESCE(d.unit_concept_id, -1) <> COALESCE(m.unit_concept_id, -1))
+
+- id: SEM-DM-003
+  name: DIABETES 약물/진단/환자 필드가 핵심 테이블과 일치
+  category: Conformance
+  subcategory: cross-table
+  severity: error
+  scope: [DIABETES]
+  requires: [DRUG_EXPOSURE, CONDITION_OCCURRENCE, PERSON]
+  desc: drug_exposure_id / condition_occurrence_id / person_id 로 연결된 핵심 레코드와 concept, 날짜, 성별, 출생연도, 사망일이 같아야 한다.
+  sql: |
+    SELECT d.person_id, 'DIABETES:' || d.dm_id AS row_key, 'DRUG_EXPOSURE ' || d.drug_exposure_id || ' 불일치' AS detail
+    FROM DIABETES d JOIN DRUG_EXPOSURE e USING (drug_exposure_id)
+    WHERE d.drug_concept_id IS NOT NULL AND (d.drug_concept_id <> e.drug_concept_id OR d.drug_exposure_start_date <> e.drug_exposure_start_date OR d.drug_exposure_end_date <> e.drug_exposure_end_date)
+    UNION ALL
+    SELECT d.person_id, 'DIABETES:' || d.dm_id, 'CONDITION_OCCURRENCE ' || d.condition_occurrence_id || ' 불일치'
+    FROM DIABETES d JOIN CONDITION_OCCURRENCE c USING (condition_occurrence_id)
+    WHERE d.condition_concept_id IS NOT NULL AND (d.condition_concept_id <> c.condition_concept_id OR d.condition_start_date <> c.condition_start_date)
+    UNION ALL
+    SELECT d.person_id, 'DIABETES:' || d.dm_id, 'PERSON 불일치 (gender/year_of_birth/death_date)'
+    FROM DIABETES d JOIN PERSON p USING (person_id)
+    WHERE (d.gender_concept_id IS NOT NULL AND d.gender_concept_id <> p.gender_concept_id)
+       OR (d.year_of_birth IS NOT NULL AND d.year_of_birth <> p.year_of_birth)
+       OR (d.death_date IS NOT NULL AND (p.death_date IS NULL OR d.death_date <> p.death_date))
+
+- id: SEM-DM-004
+  name: 당뇨 코호트 방문 유형 = 외래
+  category: Conformance
+  subcategory: value
+  severity: warning
+  scope: [DIABETES]
+  requires: []
+  desc: 사전 규정상 DIABETES.visit_concept_id 는 외래(9202)로 고정한다.
+  sql: |
+    SELECT person_id, 'DIABETES:' || dm_id AS row_key, 'visit_concept_id=' || visit_concept_id AS detail
+    FROM DIABETES WHERE visit_concept_id IS NOT NULL AND visit_concept_id <> 9202
+
+- id: SEM-DM-005
+  name: 연 1회 이상 HbA1c
+  category: Completeness
+  subcategory: cohort
+  severity: warning
+  scope: [DIABETES]
+  requires: [PERSON, MEASUREMENT, VISIT_OCCURRENCE]
+  desc: 관찰 기간 중 방문이 있는 연도마다 HbA1c(3004410) 검사가 1건 이상 있어야 한다.
+  sql: |
+    WITH yrs AS (SELECT DISTINCT person_id, EXTRACT(year FROM visit_start_date) AS y FROM VISIT_OCCURRENCE),
+         a1c AS (SELECT DISTINCT person_id, EXTRACT(year FROM measurement_date) AS y FROM MEASUREMENT WHERE measurement_concept_id = 3004410)
+    SELECT yrs.person_id, CAST(yrs.person_id AS VARCHAR) || '@' || yrs.y AS row_key, yrs.y || '년 HbA1c 없음' AS detail
+    FROM yrs LEFT JOIN a1c USING (person_id, y) WHERE a1c.person_id IS NULL
+
+- id: SEM-DM-006
+  name: 당뇨약 처방 환자의 진단 존재
+  category: Plausibility
+  subcategory: cross-table
+  severity: warning
+  scope: [DIABETES]
+  requires: [DRUG_EXPOSURE, CONDITION_OCCURRENCE]
+  desc: 혈당강하제(metformin 등) 첫 처방일은 제2형 당뇨 진단일 이후여야 한다.
+  sql: |
+    WITH dx AS (SELECT person_id, MIN(condition_start_date) AS dx FROM CONDITION_OCCURRENCE WHERE condition_concept_id = 201826 GROUP BY person_id),
+         rx AS (SELECT person_id, MIN(drug_exposure_start_date) AS rx FROM DRUG_EXPOSURE WHERE drug_concept_id IN (1503297, 1597756, 1580747, 45774435, 1502905, 1584910, 1583722) GROUP BY person_id)
+    SELECT rx.person_id, CAST(rx.person_id AS VARCHAR) AS row_key, CASE WHEN dx.person_id IS NULL THEN '당뇨약 처방인데 T2DM 진단 없음' ELSE '첫 당뇨약 ' || rx.rx || ' < 진단 ' || dx.dx END AS detail
+    FROM rx LEFT JOIN dx USING (person_id) WHERE dx.person_id IS NULL OR rx.rx < dx.dx
+
+# ---------------------------------------------------------------------------
+# 림프종
+# ---------------------------------------------------------------------------
+- id: SEM-LY-001
+  name: 진단 그룹 존재 및 진단일 일치
+  category: Completeness
+  subcategory: cross-table
+  severity: error
+  scope: [LYMPHOMA]
+  requires: [CONDITION_OCCURRENCE, PERSON]
+  desc: 모든 환자는 dx 그룹(diagnosis_date) 행이 1개 있어야 하고, diagnosis_date 는 CONDITION_OCCURRENCE 의 림프종 진단일과 같아야 한다.
+  sql: |
+    WITH dx AS (SELECT person_id, MIN(condition_start_date) AS dx FROM CONDITION_OCCURRENCE WHERE condition_concept_id IN ({COHORT_CONDITION_IDS}) GROUP BY person_id),
+         ly AS (SELECT person_id, COUNT(*) AS n, MIN(diagnosis_date) AS d FROM LYMPHOMA WHERE diagnosis_date IS NOT NULL GROUP BY person_id)
+    SELECT p.person_id, CAST(p.person_id AS VARCHAR) AS row_key,
+           CASE WHEN ly.person_id IS NULL THEN 'dx 그룹 행 없음' WHEN ly.n > 1 THEN 'dx 그룹 행 ' || ly.n || '개'
+                ELSE 'diagnosis_date ' || ly.d || ' <> 진단 ' || dx.dx END AS detail
+    FROM PERSON p LEFT JOIN ly USING (person_id) LEFT JOIN dx USING (person_id)
+    WHERE ly.person_id IS NULL OR ly.n > 1 OR (dx.dx IS NOT NULL AND ly.d <> dx.dx)
+
+- id: SEM-LY-002
+  name: B 증상과 병기 수식자 일치
+  category: Plausibility
+  subcategory: atemporal
+  severity: warning
+  scope: [LYMPHOMA]
+  requires: []
+  desc: b_symptom_yn=1 이면 stage_suffix 에 B 가 있고 발열/야간발한/체중감소>10% 중 하나 이상. b_symptom_yn=0 이면 suffix 에 B 가 없어야 한다.
+  sql: |
+    SELECT person_id, 'LYMPHOMA:' || lym_id AS row_key,
+           CASE WHEN b_symptom_yn = 1 AND COALESCE(stage_suffix, '') NOT LIKE '%B%' THEN 'B 증상 있음인데 suffix=' || COALESCE(stage_suffix, 'NULL')
+                WHEN b_symptom_yn = 0 AND stage_suffix LIKE '%B%' THEN 'B 증상 없음인데 suffix 에 B'
+                ELSE 'B 증상 있음인데 구성 증상 없음' END AS detail
+    FROM LYMPHOMA
+    WHERE stage_assessment_date IS NOT NULL AND (
+          (b_symptom_yn = 1 AND COALESCE(stage_suffix, '') NOT LIKE '%B%')
+       OR (b_symptom_yn = 0 AND stage_suffix LIKE '%B%')
+       OR (b_symptom_yn = 1 AND COALESCE(unexplained_fever_yn, 0) = 0 AND COALESCE(drenching_night_sweats_yn, 0) = 0 AND COALESCE(weight_loss_6mo_pct, 0) <= 10))
+
+- id: SEM-LY-003
+  name: 결절외/골수/bulky 침범 논리
+  category: Plausibility
+  subcategory: atemporal
+  severity: warning
+  scope: [LYMPHOMA]
+  requires: []
+  desc: 결절외 침범 0 이면 site_count 0/NULL 및 suffix 에 E 없음, 1 이면 count>=1. 골수 침범 0 이면 pct 0/NULL. bulky=1 이면 최대 병변 >= 기준.
+  sql: |
+    SELECT person_id, 'LYMPHOMA:' || lym_id AS row_key,
+           CASE WHEN extranodal_involvement_yn = 0 AND (extranodal_site_count > 0 OR stage_suffix LIKE '%E%') THEN '결절외 침범 0 인데 count/E 있음'
+                WHEN extranodal_involvement_yn = 1 AND COALESCE(extranodal_site_count, 0) < 1 THEN '결절외 침범 1 인데 count 없음'
+                WHEN bone_marrow_involvement_yn = 0 AND bone_marrow_involvement_pct > 0 THEN '골수 침범 0 인데 pct>0'
+                ELSE 'bulky=1 인데 최대 병변 ' || largest_lesion_diameter_cm || ' < 기준 ' || bulky_disease_threshold_cm END AS detail
+    FROM LYMPHOMA
+    WHERE stage_assessment_date IS NOT NULL AND (
+          (extranodal_involvement_yn = 0 AND (extranodal_site_count > 0 OR stage_suffix LIKE '%E%'))
+       OR (extranodal_involvement_yn = 1 AND COALESCE(extranodal_site_count, 0) < 1)
+       OR (bone_marrow_involvement_yn = 0 AND bone_marrow_involvement_pct > 0)
+       OR (bulky_disease_yn = 1 AND largest_lesion_diameter_cm < bulky_disease_threshold_cm))
+
+- id: SEM-LY-004
+  name: 조직학적 전환 조건부 필수
+  category: Completeness
+  subcategory: conditional
+  severity: warning
+  scope: [LYMPHOMA]
+  requires: []
+  desc: transformation_yn=1 이면 from/to 아형과 전환일이 필수이고, 전환일은 같은 환자 진단일 이후여야 한다.
+  sql: |
+    WITH dx AS (SELECT person_id, MIN(diagnosis_date) AS d FROM LYMPHOMA WHERE diagnosis_date IS NOT NULL GROUP BY person_id)
+    SELECT l.person_id, 'LYMPHOMA:' || l.lym_id AS row_key,
+           CASE WHEN l.transformation_from_subtype IS NULL OR l.transformation_to_subtype IS NULL OR l.transformation_date IS NULL THEN '전환 1 인데 from/to/date 누락'
+                ELSE '전환일 ' || l.transformation_date || ' <= 진단일 ' || dx.d END AS detail
+    FROM LYMPHOMA l LEFT JOIN dx USING (person_id)
+    WHERE l.transformation_yn = 1 AND (l.transformation_from_subtype IS NULL OR l.transformation_to_subtype IS NULL OR l.transformation_date IS NULL OR l.transformation_date <= dx.d)
+
+- id: SEM-LY-005
+  name: IPI 점수와 위험군 일치
+  category: Conformance
+  subcategory: computational
+  severity: warning
+  scope: [LYMPHOMA]
+  requires: []
+  desc: IPI 0~1 low, 2 low-intermediate, 3 high-intermediate, 4~5 high.
+  sql: |
+    SELECT person_id, 'LYMPHOMA:' || lym_id AS row_key, 'ipi_score=' || ipi_score || ', ipi_risk_group=' || ipi_risk_group AS detail
+    FROM LYMPHOMA
+    WHERE ipi_score IS NOT NULL AND ipi_risk_group IS NOT NULL AND LOWER(ipi_risk_group) <>
+          CASE WHEN ipi_score <= 1 THEN 'low' WHEN ipi_score = 2 THEN 'low-intermediate' WHEN ipi_score = 3 THEN 'high-intermediate' ELSE 'high' END
+
+- id: SEM-LY-006
+  name: 치료 line 논리 및 항암 테이블 일치
+  category: Conformance
+  subcategory: cross-table
+  severity: error
+  scope: [LYMPHOMA]
+  requires: [ANTP_THERAPY]
+  desc: tx 그룹의 treatment_end_date >= start, current_line = prior_lines + 1. antp_id 로 연결된 ANTP_THERAPY 의 line/시작일/레지멘과 같아야 한다.
+  sql: |
+    SELECT l.person_id, 'LYMPHOMA:' || l.lym_id AS row_key,
+           CASE WHEN l.treatment_end_date < l.treatment_start_date THEN 'treatment_end_date < start'
+                WHEN l.prior_lines_of_therapy_count IS NOT NULL AND l.current_line_of_therapy <> l.prior_lines_of_therapy_count + 1 THEN 'current_line ' || l.current_line_of_therapy || ' <> prior+1'
+                WHEN t.antp_id IS NULL THEN 'antp_id 연결 없음'
+                WHEN l.current_line_of_therapy <> t.regimen_or_line_of_therapy THEN 'line ' || l.current_line_of_therapy || ' <> ANTP line ' || t.regimen_or_line_of_therapy
+                WHEN l.treatment_start_date <> t.antp_start_date THEN 'treatment_start_date <> antp_start_date'
+                ELSE 'regimen ' || l.treatment_regimen || ' <> ANTP regimen ' || t.regimen END AS detail
+    FROM LYMPHOMA l LEFT JOIN ANTP_THERAPY t ON l.antp_id = t.antp_id
+    WHERE l.treatment_start_date IS NOT NULL AND (
+          l.treatment_end_date < l.treatment_start_date
+       OR (l.prior_lines_of_therapy_count IS NOT NULL AND l.current_line_of_therapy <> l.prior_lines_of_therapy_count + 1)
+       OR t.antp_id IS NULL OR l.current_line_of_therapy <> t.regimen_or_line_of_therapy
+       OR l.treatment_start_date <> t.antp_start_date OR l.treatment_regimen <> t.regimen)
+
+- id: SEM-LY-007
+  name: 이식 / CAR-T 조건부 논리 및 날짜 순서
+  category: Completeness
+  subcategory: conditional
+  severity: warning
+  scope: [LYMPHOMA]
+  requires: []
+  desc: 이식 1 이면 유형/일자 필수. CAR-T 1 이면 표적항원/주입일 필수이며 성분채집일 <= 림프구감소 시작일 <= 주입일.
+  sql: |
+    SELECT person_id, 'LYMPHOMA:' || lym_id AS row_key,
+           CASE WHEN stem_cell_transplant_yn = 1 AND (stem_cell_transplant_type IS NULL OR stem_cell_transplant_date IS NULL) THEN '이식 1 인데 유형/일자 누락'
+                WHEN car_t_therapy_yn = 1 AND (car_t_target_antigen IS NULL OR car_t_infusion_date IS NULL) THEN 'CAR-T 1 인데 항원/주입일 누락'
+                ELSE 'CAR-T 날짜 순서 위반 (채집 ' || leukapheresis_date || ', 전처치 ' || lymphodepletion_start_date || ', 주입 ' || car_t_infusion_date || ')' END AS detail
+    FROM LYMPHOMA
+    WHERE (stem_cell_transplant_yn = 1 AND (stem_cell_transplant_type IS NULL OR stem_cell_transplant_date IS NULL))
+       OR (car_t_therapy_yn = 1 AND (car_t_target_antigen IS NULL OR car_t_infusion_date IS NULL))
+       OR (leukapheresis_date > lymphodepletion_start_date) OR (lymphodepletion_start_date > car_t_infusion_date) OR (leukapheresis_date > car_t_infusion_date)
+
+- id: SEM-LY-008
+  name: 반응평가 논리
+  category: Plausibility
+  subcategory: computational
+  severity: warning
+  scope: [LYMPHOMA]
+  requires: []
+  desc: Deauville 1~3 이면 metabolic_response 는 CMR, 4~5 이면 PMR/NMR/PMD. anatomic_response=PD 인 환자는 progression_date 가 있어야 한다.
+  sql: |
+    WITH pd AS (SELECT person_id, MAX(CASE WHEN progression_date IS NOT NULL THEN 1 ELSE 0 END) AS has_pd FROM LYMPHOMA GROUP BY person_id)
+    SELECT l.person_id, 'LYMPHOMA:' || l.lym_id AS row_key,
+           CASE WHEN l.deauville_score <= 3 AND l.metabolic_response <> 'CMR' THEN 'Deauville ' || l.deauville_score || ' 인데 ' || l.metabolic_response
+                WHEN l.deauville_score >= 4 AND l.metabolic_response = 'CMR' THEN 'Deauville ' || l.deauville_score || ' 인데 CMR'
+                ELSE 'anatomic_response=PD 인데 progression_date 없음' END AS detail
+    FROM LYMPHOMA l JOIN pd USING (person_id)
+    WHERE l.response_assessment_date IS NOT NULL AND (
+          (l.deauville_score <= 3 AND l.metabolic_response IS NOT NULL AND l.metabolic_response <> 'CMR')
+       OR (l.deauville_score >= 4 AND l.metabolic_response = 'CMR')
+       OR (l.anatomic_response = 'PD' AND pd.has_pd = 0))
+
+- id: SEM-LY-009
+  name: 추적/생존 상태 일관성
+  category: Plausibility
+  subcategory: temporal
+  severity: error
+  scope: [LYMPHOMA]
+  requires: [PERSON]
+  desc: last_followup_date 는 환자의 모든 이벤트일 이상. vital_status=dead 이면 death_date 와 PERSON.death_date 존재하고 같아야 하며, alive 이면 death_date 없음. 재발일 > 치료 종료일, 진행일 >= 진단일.
+  sql: |
+    WITH ev AS (
+      SELECT person_id, MAX(d) AS last_ev FROM (
+        SELECT person_id, diagnosis_date AS d FROM LYMPHOMA UNION ALL SELECT person_id, treatment_end_date FROM LYMPHOMA
+        UNION ALL SELECT person_id, response_assessment_date FROM LYMPHOMA UNION ALL SELECT person_id, progression_date FROM LYMPHOMA
+        UNION ALL SELECT person_id, relapse_date FROM LYMPHOMA UNION ALL SELECT person_id, stage_assessment_date FROM LYMPHOMA) GROUP BY person_id),
+    fu AS (SELECT l.*, p.death_date AS p_death FROM LYMPHOMA l JOIN PERSON p USING (person_id) WHERE l.last_followup_date IS NOT NULL),
+    dx AS (SELECT person_id, MIN(diagnosis_date) AS d FROM LYMPHOMA WHERE diagnosis_date IS NOT NULL GROUP BY person_id),
+    txe AS (SELECT person_id, MIN(treatment_end_date) AS first_end FROM LYMPHOMA WHERE treatment_end_date IS NOT NULL GROUP BY person_id)
+    SELECT fu.person_id, 'LYMPHOMA:' || fu.lym_id AS row_key,
+           CASE WHEN fu.last_followup_date < ev.last_ev THEN 'last_followup_date ' || fu.last_followup_date || ' < 마지막 이벤트 ' || ev.last_ev
+                WHEN LOWER(fu.vital_status) = 'dead' AND (fu.death_date IS NULL OR fu.p_death IS NULL OR fu.death_date <> fu.p_death) THEN 'dead 인데 death_date 불일치/누락'
+                ELSE 'alive 인데 death_date 있음' END AS detail
+    FROM fu JOIN ev USING (person_id)
+    WHERE fu.last_followup_date < ev.last_ev
+       OR (LOWER(fu.vital_status) = 'dead' AND (fu.death_date IS NULL OR fu.p_death IS NULL OR fu.death_date <> fu.p_death))
+       OR (LOWER(fu.vital_status) = 'alive' AND (fu.death_date IS NOT NULL OR fu.p_death IS NOT NULL))
+    UNION ALL
+    SELECT l.person_id, 'LYMPHOMA:' || l.lym_id, 'progression_date ' || l.progression_date || ' < 진단 ' || dx.d
+    FROM LYMPHOMA l JOIN dx USING (person_id) WHERE l.progression_date IS NOT NULL AND l.progression_date < dx.d
+    UNION ALL
+    SELECT l.person_id, 'LYMPHOMA:' || l.lym_id, 'relapse_date ' || l.relapse_date || ' <= 첫 치료 종료 ' || txe.first_end
+    FROM LYMPHOMA l JOIN txe USING (person_id) WHERE l.relapse_date IS NOT NULL AND l.relapse_date <= txe.first_end
+
+- id: SEM-LY-010
+  name: Double/Triple-hit 상태와 재배열 결과 일치
+  category: Conformance
+  subcategory: computational
+  severity: warning
+  scope: [LYMPHOMA]
+  requires: []
+  desc: MYC 양성 + BCL2 또는 BCL6 양성 -> double-hit, 셋 다 양성 -> triple-hit, 아니면 negative.
+  sql: |
+    SELECT person_id, 'LYMPHOMA:' || lym_id AS row_key,
+           'MYC=' || myc_rearrangement_result || ', BCL2=' || bcl2_rearrangement_result || ', BCL6=' || bcl6_rearrangement_result || ' 인데 status=' || double_hit_triple_hit_status AS detail
+    FROM LYMPHOMA
+    WHERE molecular_test_date IS NOT NULL AND myc_rearrangement_result IS NOT NULL AND bcl2_rearrangement_result IS NOT NULL AND bcl6_rearrangement_result IS NOT NULL
+      AND double_hit_triple_hit_status IS NOT NULL
+      AND LOWER(double_hit_triple_hit_status) <> CASE
+            WHEN myc_rearrangement_result = 'positive' AND bcl2_rearrangement_result = 'positive' AND bcl6_rearrangement_result = 'positive' THEN 'triple-hit'
+            WHEN myc_rearrangement_result = 'positive' AND (bcl2_rearrangement_result = 'positive' OR bcl6_rearrangement_result = 'positive') THEN 'double-hit'
+            ELSE 'negative' END
+
+- id: SEM-LY-011
+  name: 림프종 대분류와 아형 일치
+  category: Conformance
+  subcategory: value
+  severity: warning
+  scope: [LYMPHOMA]
+  requires: []
+  desc: lymphoma_group 이 Hodgkin lymphoma 이면 histologic_subtype 에 Hodgkin 이 포함되어야 하고, non-Hodgkin 이면 포함되지 않아야 한다. cell_of_origin 은 DLBCL 에만.
+  sql: |
+    SELECT person_id, 'LYMPHOMA:' || lym_id AS row_key, 'group=' || lymphoma_group || ', subtype=' || histologic_subtype AS detail
+    FROM LYMPHOMA WHERE diagnosis_date IS NOT NULL AND (
+          (lymphoma_group = 'Hodgkin lymphoma' AND histologic_subtype NOT LIKE '%Hodgkin%')
+       OR (lymphoma_group = 'non-Hodgkin lymphoma' AND histologic_subtype LIKE '%Hodgkin%'))
+    UNION ALL
+    SELECT l.person_id, 'LYMPHOMA:' || l.lym_id, 'cell_of_origin 있으나 아형=' || d.histologic_subtype
+    FROM LYMPHOMA l JOIN (SELECT person_id, MIN(histologic_subtype) AS histologic_subtype FROM LYMPHOMA WHERE diagnosis_date IS NOT NULL GROUP BY person_id) d USING (person_id)
+    WHERE l.cell_of_origin IS NOT NULL AND d.histologic_subtype <> 'DLBCL'

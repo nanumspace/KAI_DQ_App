@@ -1,0 +1,216 @@
+embedded:
+  LUNG_CANCER.histologic_diagnosis:
+    '1': Adenocarcinoma
+    '2': Squamous cell carcinoma
+    '3': Large cell carcinoma
+    '4': Small cell carcinoma
+    '5': Carcinoma tumor 계열
+    '6': NSCLC NOS
+    '7': 기타
+  BREAST_CANCER.menopause_status:
+    '1': Premenopausal
+    '2': Postmenopausal
+    '3': Unknown
+  BREAST_CANCER.pregnant_at_diagnosis:
+    '1': 'Yes'
+    '2': 'No'
+  BREAST_CANCER.history_of_live_birth:
+    '1': 'Yes'
+    '2': 'No'
+  BREAST_CANCER.postpartum_at_diagnosis:
+    '1': 'Yes'
+    '2': 'No'
+  BREAST_CANCER.fertility_history:
+    '1': 'Yes'
+    '2': 'No'
+  BREAST_CANCER.fertility_treatment_type:
+    '1': GnRHa
+    '2': 난자 동결
+    '3': 배아 동결
+    '4': 기타
+    '5': GnRHa+동결
+  BREAST_CANCER.marital_status:
+    '1': 'Yes'
+    '2': 'No'
+  BREAST_CANCER.menstruation_resumed_after_treatment:
+    '1': 'Yes'
+    '2': 'No'
+  BREAST_CANCER.menstrual_regularity_after_treatment:
+    '1': Regular
+    '2': Irregular
+    '3': NA
+  BREAST_CANCER.pregnancy_attempt:
+    '1': 'Yes'
+    '2': 'No'
+  BREAST_CANCER.pregnancy_success:
+    '1': 'Yes'
+    '2': 'No'
+  BREAST_CANCER.method_of_conception:
+    '1': 자연임신
+    '2': 배란유도
+    '3': 인공수정
+    '4': 시험관
+    '5': 난자 공여
+  BREAST_CANCER.pregnancy_outcome:
+    '1': Chemical preg
+    '2': Clinical preg
+    '3': Abortion
+    '4': Live birth
+  BREAST_CANCER.delivery:
+    '1': 'Yes'
+    '2': 'No'
+  LYMPHOMA.transformation_yn:
+    '1': 'Yes'
+    '0': 'No'
+  LYMPHOMA.extranodal_involvement_yn:
+    '1': 'Yes'
+    '0': 'No'
+  LYMPHOMA.spleen_involvement_yn:
+    '1': 'Yes'
+    '0': 'No'
+  LYMPHOMA.bone_marrow_involvement_yn:
+    '1': 'Yes'
+    '0': 'No'
+  LYMPHOMA.cns_involvement_yn:
+    '1': 'Yes'
+    '0': 'No'
+  ANTP_THERAPY.treatment_intent_type:
+    '1': Neoadjuvant
+    '2': Adjuvant
+    '3': Palliative
+    '4': Maintenance
+    '5': Definitive
+    '6': Salvage
+  ANTP_THERAPY.drug_category:
+    '1': 세포독성항암제
+    '2': 표적치료제
+    '3': 호르몬치료제
+    '4': 항체-약물 접합체
+    '5': 면역항암제
+    '6': 기타
+common:
+  COMMON.yn01:
+    '1': 'Yes'
+    '0': 'No'
+omop:
+  OMOP.gender_concept_id:
+    '8507': MALE
+    '8532': FEMALE
+  OMOP.visit_concept_id:
+    '9201': Inpatient Visit
+    '9202': Outpatient Visit
+    '9203': Emergency Room Visit
+    '262': Emergency Room and Inpatient Visit
+  OMOP.visit_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+    '32810': Claim
+  OMOP.procedure_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+    '32810': Claim
+  OMOP.condition_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+    '32810': Claim
+    '32840': EHR problem list
+  OMOP.measurement_type_concept_id:
+    '32817': EHR
+    '32856': Lab
+    '32879': Registry
+  OMOP.observation_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+  OMOP.note_type_concept_id:
+    '32817': EHR
+    '44814637': Radiology report
+    '44814640': Pathology report
+    '44814641': Discharge summary
+    '44814645': Outpatient note
+    '32831': EHR note
+  OMOP.note_class_concept_id:
+    '36716164': Radiology note
+    '36716165': Pathology note
+    '36716213': Discharge summary
+    '36716177': Progress note
+    '44814641': Discharge summary
+    '3040218': Oncology note
+  OMOP.adverse_event_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+  OMOP.amount_unit_concept_id:
+    '8576': mg
+    '8587': mL
+    '9655': ug
+    '8510': unit
+    '8718': IU
+    '9551': mg/m2
+    '8504': mg/kg
+    '8573': mmol
+  OMOP.unit_concept_id:
+    '8576': mg
+    '8587': mL
+    '8840': mg/dL
+    '8753': mmol/L
+    '8554': '%'
+    '8645': U/L
+    '8848': 10^3/uL
+    '8961': 10^3/mm3
+    '8582': cm
+    '9529': kg
+    '9531': kg/m2
+    '8876': mmHg
+    '8713': g/dL
+    '8555': ng/mL
+    '8847': 10^6/uL
+    '8629': ug/L
+    '8749': umol/L
+    '9550': mL/min/1.73m2
+    '8636': ng/mL
+    '8859': mg/L
+    '9435': ug/dL
+    '8641': mIU/mL
+  OMOP.numerator_unit_concept_id:
+    '8576': mg
+    '9655': ug
+    '8718': IU
+    '8510': unit
+  OMOP.denominator_unit_concept_id:
+    '8587': mL
+    '8576': mg
+    '8582': cm
+    '9529': kg
+  OMOP.severity_concept_id:
+    '1': CTCAE Grade 1
+    '2': CTCAE Grade 2
+    '3': CTCAE Grade 3
+    '4': CTCAE Grade 4
+    '5': CTCAE Grade 5
+  OMOP.causality_concept_id:
+    '1': Certain
+    '2': Probable
+    '3': Possible
+    '4': Unlikely
+    '5': Unrelated
+    '6': Unassessable
+  OMOP.seriousness_concept_id:
+    '1': Death
+    '2': Life-threatening
+    '3': Hospitalization
+    '4': Disability
+    '5': Congenital anomaly
+    '6': Other medically important
+  OMOP.outcome_concept_id:
+    '1': Recovered
+    '2': Recovering
+    '3': Not recovered
+    '4': Recovered with sequelae
+    '5': Fatal
+    '6': Unknown
+  OMOP.action_taken_concept_id:
+    '1': None
+    '2': Dose reduced
+    '3': Interrupted
+    '4': Withdrawn
+    '5': Not applicable
+    '6': Unknown

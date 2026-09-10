@@ -1,0 +1,156 @@
+﻿rule_id,rule_name,category,severity,table,field,row_key,person_id,detail
+ST-0002,PERSON 컬럼 구성,Conformance,error,PERSON,extra_col,,,명세에 없는 컬럼: extra_col (경고)
+ST-0005,PERSON.gender_concept_id 필수,Completeness,error,PERSON,gender_concept_id,300036,300036,gender_concept_id NULL
+ST-0005,PERSON.gender_concept_id 필수,Completeness,error,PERSON,gender_concept_id,300061,300061,gender_concept_id NULL
+ST-0005,PERSON.gender_concept_id 필수,Completeness,error,PERSON,gender_concept_id,300089,300089,gender_concept_id NULL
+ST-0007,PERSON.gender_concept_id 코드표,Conformance,warning,PERSON,gender_concept_id,300033,300033,gender_concept_id=9999 코드표(OMOP.gender_concept_id) 밖
+ST-0007,PERSON.gender_concept_id 코드표,Conformance,warning,PERSON,gender_concept_id,300049,300049,gender_concept_id=9999 코드표(OMOP.gender_concept_id) 밖
+ST-0007,PERSON.gender_concept_id 코드표,Conformance,warning,PERSON,gender_concept_id,300082,300082,gender_concept_id=9999 코드표(OMOP.gender_concept_id) 밖
+ST-0034,VISIT_OCCURRENCE.visit_start_date 필수,Completeness,error,VISIT_OCCURRENCE,visit_start_date,301182,300043,visit_start_date NULL
+ST-0034,VISIT_OCCURRENCE.visit_start_date 필수,Completeness,error,VISIT_OCCURRENCE,visit_start_date,301561,300059,visit_start_date NULL
+ST-0034,VISIT_OCCURRENCE.visit_start_date 필수,Completeness,error,VISIT_OCCURRENCE,visit_start_date,302509,300097,visit_start_date NULL
+ST-0035,VISIT_OCCURRENCE.visit_start_date 타입(date),Conformance,error,VISIT_OCCURRENCE,visit_start_date,301094,300039,visit_start_date='2024/13/40' 은 date 아님
+ST-0035,VISIT_OCCURRENCE.visit_start_date 타입(date),Conformance,error,VISIT_OCCURRENCE,visit_start_date,301381,300052,visit_start_date='2024/13/40' 은 date 아님
+ST-0035,VISIT_OCCURRENCE.visit_start_date 타입(date),Conformance,error,VISIT_OCCURRENCE,visit_start_date,301826,300070,visit_start_date='2024/13/40' 은 date 아님
+ST-0065,DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,300104,300008,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0065,DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,300875,300036,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0065,DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,301921,300096,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0114,CONDITION_OCCURRENCE.condition_start_date 타입(date),Conformance,error,CONDITION_OCCURRENCE,condition_start_date,300017,300005,condition_start_date='2023-02-30' 은 date 아님
+ST-0114,CONDITION_OCCURRENCE.condition_start_date 타입(date),Conformance,error,CONDITION_OCCURRENCE,condition_start_date,300134,300025,condition_start_date='2023-02-30' 은 date 아님
+ST-0114,CONDITION_OCCURRENCE.condition_start_date 타입(date),Conformance,error,CONDITION_OCCURRENCE,condition_start_date,300219,300036,condition_start_date='2023-02-30' 은 date 아님
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,303870,300029,PK 중복: 303870
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,305751,300031,PK 중복: 305751
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,304216,300032,PK 중복: 304216
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,303870,300049,PK 중복: 303870
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,304216,300053,PK 중복: 304216
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,305751,300074,PK 중복: 305751
+ST-0136,MEASUREMENT.value_as_number 타입(float),Conformance,error,MEASUREMENT,value_as_number,300363,300005,value_as_number='N/A' 은 float 아님
+ST-0136,MEASUREMENT.value_as_number 타입(float),Conformance,error,MEASUREMENT,value_as_number,303190,300036,value_as_number='N/A' 은 float 아님
+ST-0136,MEASUREMENT.value_as_number 타입(float),Conformance,error,MEASUREMENT,value_as_number,307281,300095,value_as_number='N/A' 은 float 아님
+ST-0146,OBSERVATION 컬럼 구성,Conformance,error,OBSERVATION,value_as_string,,,컬럼 누락: value_as_string
+ST-0177,NOTE.note_date 미래 날짜 금지,Plausibility,error,NOTE,note_date,300053,300006,note_date=2030-01-01 미래 날짜
+ST-0177,NOTE.note_date 미래 날짜 금지,Plausibility,error,NOTE,note_date,300183,300021,note_date=2030-01-01 미래 날짜
+ST-0177,NOTE.note_date 미래 날짜 금지,Plausibility,error,NOTE,note_date,300644,300079,note_date=2030-01-01 미래 날짜
+ST-0499,COLORECTAL_CANCER.person_id -> PERSON.person_id 참조무결성,Conformance,error,COLORECTAL_CANCER,person_id,300984,888888888,person_id=888888888 가 PERSON.person_id 에 없음
+ST-0499,COLORECTAL_CANCER.person_id -> PERSON.person_id 참조무결성,Conformance,error,COLORECTAL_CANCER,person_id,303735,888888888,person_id=888888888 가 PERSON.person_id 에 없음
+ST-0499,COLORECTAL_CANCER.person_id -> PERSON.person_id 참조무결성,Conformance,error,COLORECTAL_CANCER,person_id,304487,888888888,person_id=888888888 가 PERSON.person_id 에 없음
+ST-0525,COLORECTAL_CANCER.drug_mdct_dtrn_mcnt 범위,Plausibility,warning,COLORECTAL_CANCER,drug_mdct_dtrn_mcnt,301069,300017,"drug_mdct_dtrn_mcnt=3400 범위 [0,240] 밖"
+ST-0525,COLORECTAL_CANCER.drug_mdct_dtrn_mcnt 범위,Plausibility,warning,COLORECTAL_CANCER,drug_mdct_dtrn_mcnt,302959,300049,"drug_mdct_dtrn_mcnt=3400 범위 [0,240] 밖"
+ST-0528,COLORECTAL_CANCER.clcn_diag_kncd 패턴,Conformance,warning,COLORECTAL_CANCER,clcn_diag_kncd,300793,300013,clcn_diag_kncd='C18.2_X' 패턴 불일치
+ST-0528,COLORECTAL_CANCER.clcn_diag_kncd 패턴,Conformance,warning,COLORECTAL_CANCER,clcn_diag_kncd,300935,300015,clcn_diag_kncd='C20_X' 패턴 불일치
+ST-0528,COLORECTAL_CANCER.clcn_diag_kncd 패턴,Conformance,warning,COLORECTAL_CANCER,clcn_diag_kncd,302170,300035,clcn_diag_kncd='C18.7_X' 패턴 불일치
+ST-0528,COLORECTAL_CANCER.clcn_diag_kncd 패턴,Conformance,warning,COLORECTAL_CANCER,clcn_diag_kncd,303468,300058,clcn_diag_kncd='Stage 4?' 패턴 불일치
+ST-0528,COLORECTAL_CANCER.clcn_diag_kncd 패턴,Conformance,warning,COLORECTAL_CANCER,clcn_diag_kncd,304376,300074,clcn_diag_kncd='Stage 4?' 패턴 불일치
+ST-0530,COLORECTAL_CANCER.rtcn_loca_dst_vl 범위,Plausibility,warning,COLORECTAL_CANCER,rtcn_loca_dst_vl,301956,300032,"rtcn_loca_dst_vl=1200 범위 [0,20] 밖"
+ST-0530,COLORECTAL_CANCER.rtcn_loca_dst_vl 범위,Plausibility,warning,COLORECTAL_CANCER,rtcn_loca_dst_vl,305549,300095,"rtcn_loca_dst_vl=1200 범위 [0,20] 밖"
+ST-0563,COLORECTAL_CANCER.afop_path_t_stag_vl 패턴,Conformance,warning,COLORECTAL_CANCER,afop_path_t_stag_vl,300263,300005,afop_path_t_stag_vl='Stage 4?' 패턴 불일치
+ST-0563,COLORECTAL_CANCER.afop_path_t_stag_vl 패턴,Conformance,warning,COLORECTAL_CANCER,afop_path_t_stag_vl,300685,300012,afop_path_t_stag_vl='Stage 4?' 패턴 불일치
+ST-0631,COLORECTAL_CANCER 그룹 'imem' anchor 날짜,Completeness,error,COLORECTAL_CANCER,imem_ymd,303234,300054,"['imem_rslt_cont', 'impt_read_ymd', 'imem_kncd'] 값 있으나 anchor imem_ymd NULL"
+ST-0632,COLORECTAL_CANCER 그룹 'mlem' anchor 날짜,Completeness,error,COLORECTAL_CANCER,mlem_ymd,301963,300032,"['mlem_rslt_cont', 'mlpt_read_ymd', 'mlem_opn_cd'] 값 있으나 anchor mlem_ymd NULL"
+ST-0639,COLORECTAL_CANCER 그룹 'fmht' anchor 날짜,Completeness,error,COLORECTAL_CANCER,fmht_rcrd_ymd,300245,300005,"['fmht_here_clcn_spcd', 'fmht_here_clcn_spnm', 'fmht_yn_noans_spcd'] 값 있으나 anchor fmht_rcrd_ymd NULL"
+ST-0645,COLORECTAL_CANCER 그룹 'imex' anchor 날짜,Completeness,error,COLORECTAL_CANCER,imex_ymd,301031,300016,"['imex_rslt_cont', 'imex_kncd', 'imex_knnm'] 값 있으나 anchor imex_ymd NULL"
+ST-0646,COLORECTAL_CANCER 그룹 'bpsy' anchor 날짜,Completeness,error,COLORECTAL_CANCER,bpsy_ymd,305824,300099,"['bpsy_rslt_cont', 'bpsy_read_ymd', 'bpsy_site_cd'] 값 있으나 anchor bpsy_ymd NULL"
+ST-0648,COLORECTAL_CANCER 그룹 'hist' anchor 날짜,Completeness,error,COLORECTAL_CANCER,rcrd_ymd,300813,300014,"['mhis_clrc_diss_spcd', 'mhis_clrc_diss_spnm', 'mhis_absg_yn_noans_spcd'] 값 있으나 anchor rcrd_ymd NULL"
+ST-0650,COLORECTAL_CANCER 환자 불변 필드 일관성,Plausibility,warning,COLORECTAL_CANCER,clcn_diag_kncd,,300013,"clcn_diag_kncd 값이 환자 내에서 다름: ['C18.2', 'C18.2_X']"
+ST-0650,COLORECTAL_CANCER 환자 불변 필드 일관성,Plausibility,warning,COLORECTAL_CANCER,clcn_diag_kncd,,300015,"clcn_diag_kncd 값이 환자 내에서 다름: ['C20', 'C20_X']"
+ST-0650,COLORECTAL_CANCER 환자 불변 필드 일관성,Plausibility,warning,COLORECTAL_CANCER,clcn_diag_kncd,,300035,"clcn_diag_kncd 값이 환자 내에서 다름: ['C18.7', 'C18.7_X']"
+ST-0650,COLORECTAL_CANCER 환자 불변 필드 일관성,Plausibility,warning,COLORECTAL_CANCER,clcn_diag_kncd,,300058,"clcn_diag_kncd 값이 환자 내에서 다름: ['C18.7', 'Stage 4?']"
+ST-0650,COLORECTAL_CANCER 환자 불변 필드 일관성,Plausibility,warning,COLORECTAL_CANCER,clcn_diag_kncd,,300074,"clcn_diag_kncd 값이 환자 내에서 다름: ['C18.7', 'Stage 4?']"
+ST-0650,COLORECTAL_CANCER 환자 불변 필드 일관성,Plausibility,warning,COLORECTAL_CANCER,clcn_diag_kncd,,888888888,"clcn_diag_kncd 값이 환자 내에서 다름: ['C18.2', 'C18.6', 'C19']"
+ST-0650,COLORECTAL_CANCER 환자 불변 필드 일관성,Plausibility,warning,COLORECTAL_CANCER,clcn_diag_knnm,,888888888,"clcn_diag_knnm 값이 환자 내에서 다름: ['상행결장의 악성 신생물', '직장구불결장이행부의 악성 신생물', '하행결장의 악성 신생물']"
+ST-1054,ADVERSE_EVENT 컬럼 구성,Conformance,error,ADVERSE_EVENT,antp_therapy_id,,,별칭 컬럼 antp_therapy_id 를 antp_id 로 해석함 (경고)
+ST-1084,ADVERSE_EVENT.severity_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,severity_concept_id,300210,300061,severity_concept_id=7 코드표(OMOP.severity_concept_id) 밖
+ST-1084,ADVERSE_EVENT.severity_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,severity_concept_id,300267,300079,severity_concept_id=7 코드표(OMOP.severity_concept_id) 밖
+ST-1084,ADVERSE_EVENT.severity_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,severity_concept_id,300286,300089,severity_concept_id=7 코드표(OMOP.severity_concept_id) 밖
+SEM-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,300258,300010,visit_end_date 2000-01-01 < visit_start_date 2026-04-24
+SEM-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,300910,300033,visit_end_date 2000-01-01 < visit_start_date 2020-09-10
+SEM-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,302254,300087,visit_end_date 2000-01-01 < visit_start_date 2021-07-27
+SEM-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,PERSON,,MEASUREMENT:300312,300005,이벤트일 2026-08-30 > death_date 2025-04-10
+SEM-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,PERSON,,MEASUREMENT:302649,300032,이벤트일 2026-08-30 > death_date 2025-04-09
+SEM-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,PERSON,,MEASUREMENT:303101,300036,이벤트일 2026-08-30 > death_date 2024-03-09
+SEM-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,PERSON,,NOTE:300644,300079,이벤트일 2030-01-01 > death_date 2023-11-27
+SEM-COM-005,이벤트-방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MEASUREMENT:300872,300001,visit 300297 의 person_id=300012
+SEM-COM-005,이벤트-방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MEASUREMENT:301212,300001,visit 300386 의 person_id=300014
+SEM-COM-005,이벤트-방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MEASUREMENT:305934,300001,visit 301973 의 person_id=300075
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:300312,300005,이벤트일 2026-08-30 가 방문기간 2022-03-24~2022-03-24 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:302649,300032,이벤트일 2026-08-30 가 방문기간 2022-09-13~2022-09-13 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:302789,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:302790,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:302791,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:302792,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:302793,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:302794,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:302795,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:303101,300036,이벤트일 2026-08-30 가 방문기간 2023-03-27~2023-03-27 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:306775,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:306776,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:306777,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:306778,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:306779,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:306780,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:306781,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,CONDITION_OCCURRENCE:300046,300010,이벤트일 2026-04-24 가 방문기간 2026-04-24~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:300190,300010,이벤트일 2026-04-24 가 방문기간 2026-04-24~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:300751,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:300752,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:300753,300033,이벤트일 2020-09-10 가 방문기간 2020-09-10~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:301791,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:301792,300087,이벤트일 2021-07-27 가 방문기간 2021-07-27~2000-01-01 밖
+SEM-COM-007,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,300229,300012,end < start
+SEM-COM-007,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,300356,300015,end < start
+SEM-COM-007,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,300939,300039,end < start
+SEM-COM-008,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,300050,300002,"frequency_per_day 있음, days_supply 없음"
+SEM-COM-008,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,300707,300029,"frequency_per_day 있음, days_supply 없음"
+SEM-COM-008,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,301820,300090,"frequency_per_day 있음, days_supply 없음"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,300363,300005,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,301935,300022,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,303190,300036,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,305427,300069,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,306629,300084,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,307281,300095,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-011,검사항목별 타당 범위,Plausibility,warning,MEASUREMENT,,305590,300073,Hemoglobin=99999.0 (타당범위 2.0~25.0)
+SEM-COM-011,검사항목별 타당 범위,Plausibility,warning,MEASUREMENT,,305940,300075,Creatinine=99999.0 (타당범위 0.1~30.0)
+SEM-COM-011,검사항목별 타당 범위,Plausibility,warning,MEASUREMENT,,306283,300080,Neutrophils absolute=99999.0 (타당범위 0.0~100.0)
+SEM-COM-012,age_at_index 와 index date 일치,Plausibility,error,"CONDITION_OCCURRENCE,PERSON",,300041,300041,"age_at_index=92, index_date=2022-03-18, year_of_birth=1944"
+SEM-COM-012,age_at_index 와 index date 일치,Plausibility,error,"CONDITION_OCCURRENCE,PERSON",,300068,300068,"age_at_index=77, index_date=2021-10-12, year_of_birth=1959"
+SEM-COM-012,age_at_index 와 index date 일치,Plausibility,error,"CONDITION_OCCURRENCE,PERSON",,300099,300099,"age_at_index=75, index_date=2022-11-30, year_of_birth=1962"
+SEM-COM-013,코호트 포함 조건,Completeness,error,"CONDITION_OCCURRENCE,PERSON,VISIT_OCCURRENCE",,300001,300001,코호트 정의 진단 없음
+SEM-COM-013,코호트 포함 조건,Completeness,error,"CONDITION_OCCURRENCE,PERSON,VISIT_OCCURRENCE",,300002,300002,코호트 정의 진단 없음
+SEM-COM-015,특화 테이블 고아 환자,Conformance,error,PERSON,,COLORECTAL_CANCER:888888888,888888888,PERSON 에 없는 person_id
+SEM-COM-016,이상사례 발생일 >= 항암 시작일,Plausibility,error,"ADVERSE_EVENT,ANTP_THERAPY",,300024,300009,AE 2015-01-01 < antp_start_date 2024-08-04
+SEM-COM-016,이상사례 발생일 >= 항암 시작일,Plausibility,error,"ADVERSE_EVENT,ANTP_THERAPY",,300268,300079,AE 2015-01-01 < antp_start_date 2023-02-16
+SEM-COM-016,이상사례 발생일 >= 항암 시작일,Plausibility,error,"ADVERSE_EVENT,ANTP_THERAPY",,300292,300090,AE 2015-01-01 < antp_start_date 2022-08-31
+SEM-COM-017,중대한 이상사례 조건부 필수 / 치명 결과와 사망 일치,Completeness,error,"ADVERSE_EVENT,PERSON",,300046,300013,is_serious=1 인데 seriousness_concept_id 없음
+SEM-COM-017,중대한 이상사례 조건부 필수 / 치명 결과와 사망 일치,Completeness,error,"ADVERSE_EVENT,PERSON",,300236,300073,is_serious=1 인데 seriousness_concept_id 없음
+SEM-COM-017,중대한 이상사례 조건부 필수 / 치명 결과와 사망 일치,Completeness,error,"ADVERSE_EVENT,PERSON",,300245,300074,is_serious=1 인데 seriousness_concept_id 없음
+SEM-COM-018,항암요법 기간 및 line 번호,Plausibility,error,ANTP_THERAPY,,300077,300081,line=5 이나 시작일 순서=1
+SEM-COM-018,항암요법 기간 및 line 번호,Plausibility,error,ANTP_THERAPY,,300028,300027,line=5 이나 시작일 순서=1
+SEM-COM-018,항암요법 기간 및 line 번호,Plausibility,error,ANTP_THERAPY,,300075,300080,line=5 이나 시작일 순서=1
+SEM-COM-023,중복 이벤트 레코드,Plausibility,warning,MEASUREMENT,,CONDITION_OCCURRENCE:4180790@2020-11-26,300026,2건 중복
+SEM-COM-023,중복 이벤트 레코드,Plausibility,warning,MEASUREMENT,,CONDITION_OCCURRENCE:4141062@2024-03-02,300084,2건 중복
+SEM-COM-023,중복 이벤트 레코드,Plausibility,warning,MEASUREMENT,,CONDITION_OCCURRENCE:4164337@2022-08-06,300097,2건 중복
+SEM-COM-028,처방 약물 이벤트의 핵심 테이블 존재,Completeness,warning,DRUG_EXPOSURE,,COLORECTAL_CANCER:300984,888888888,drug_prsc_ymd 2021-08-26 에 해당하는 DRUG_EXPOSURE 없음
+SEM-COM-028,처방 약물 이벤트의 핵심 테이블 존재,Completeness,warning,DRUG_EXPOSURE,,COLORECTAL_CANCER:304487,888888888,drug_prsc_ymd 2024-02-16 에 해당하는 DRUG_EXPOSURE 없음
+SEM-COM-029,특화 테이블 death_date 와 PERSON 일치,Conformance,error,PERSON,,COLORECTAL_CANCER:301309,300020,COLORECTAL_CANCER.death_date=2024-01-01 <> PERSON.death_date=NULL
+SEM-COM-029,특화 테이블 death_date 와 PERSON 일치,Conformance,error,PERSON,,COLORECTAL_CANCER:303942,300066,COLORECTAL_CANCER.death_date=2024-01-01 <> PERSON.death_date=NULL
+SEM-COM-029,특화 테이블 death_date 와 PERSON 일치,Conformance,error,PERSON,,COLORECTAL_CANCER:305491,300094,COLORECTAL_CANCER.death_date=2024-01-01 <> PERSON.death_date=NULL
+SEM-COM-030,특화 테이블 방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,COLORECTAL_CANCER:300984,888888888,visit 300437 의 person_id=300016
+SEM-COM-030,특화 테이블 방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,COLORECTAL_CANCER:303735,888888888,visit 301652 의 person_id=300062
+SEM-COM-030,특화 테이블 방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,COLORECTAL_CANCER:304487,888888888,visit 301972 의 person_id=300075
+SEM-CA-001,수술 후 외과병리일 >= 수술일,Plausibility,error,COLORECTAL_CANCER,,COLORECTAL_CANCER:301975,300032,srgc_ptem_ymd 2010-01-01 에 대응하는 수술(0~60일 전) 없음
+SEM-CA-001,수술 후 외과병리일 >= 수술일,Plausibility,error,COLORECTAL_CANCER,,COLORECTAL_CANCER:303892,300065,srgc_ptem_ymd 2010-01-01 에 대응하는 수술(0~60일 전) 없음
+SEM-CA-002,병리 TNM 조합 일치,Conformance,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:300263,300005,path TNM pT1N0M0 <> Stage 4?N0M0
+SEM-CA-002,병리 TNM 조합 일치,Conformance,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:300685,300012,path TNM pT4aN2aM0 <> Stage 4?N2aM0
+SEM-CA-002,병리 TNM 조합 일치,Conformance,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:302735,300045,path TNM T1N0M1 <> pT3N0M0
+SEM-CA-002,병리 TNM 조합 일치,Conformance,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:303984,300067,path TNM T1N0M1 <> pT3N0M0
+SEM-CA-003,방사선 총선량 = 1회 선량 x 횟수,Plausibility,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:303819,300064,rd_totl_gy=12.5 vs 1.8x28
+SEM-CA-003,방사선 총선량 = 1회 선량 x 횟수,Plausibility,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:304979,300084,rd_totl_gy=12.5 vs 1.8x28
+SEM-CA-004,BMI = 체중 / 신장^2,Plausibility,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:300152,300003,bmi_vl=19.9 vs 계산값 25.3
+SEM-CA-004,BMI = 체중 / 신장^2,Plausibility,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:303556,300060,bmi_vl=19.9 vs 계산값 29.6
+SEM-CA-004,BMI = 체중 / 신장^2,Plausibility,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:304357,300074,bmi_vl=19.9 vs 계산값 26.1
+SEM-CA-007,침윤 림프절 수 <= 절제 림프절 수,Plausibility,error,COLORECTAL_CANCER,,COLORECTAL_CANCER:301356,300021,pstv_ln_cnt 20 > totl_ln_cnt 15
+SEM-CA-007,침윤 림프절 수 <= 절제 림프절 수,Plausibility,error,COLORECTAL_CANCER,,COLORECTAL_CANCER:303378,300057,pstv_ln_cnt 37 > totl_ln_cnt 32
+SEM-CA-008,병리 판독일 >= 검사 시행일,Plausibility,error,COLORECTAL_CANCER,,COLORECTAL_CANCER:300254,300005,impt_read_ymd < imem_ymd
+SEM-CA-008,병리 판독일 >= 검사 시행일,Plausibility,error,COLORECTAL_CANCER,,COLORECTAL_CANCER:305180,300088,impt_read_ymd < imem_ymd
+SEM-CC-002,개복 전환 사유 조건부 필수,Completeness,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:300107,300002,개복 전환 Y 인데 사유 없음
+SEM-CC-002,개복 전환 사유 조건부 필수,Completeness,warning,COLORECTAL_CANCER,,COLORECTAL_CANCER:300330,300006,개복 전환 Y 인데 사유 없음

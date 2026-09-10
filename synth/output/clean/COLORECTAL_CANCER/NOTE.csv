@@ -1,0 +1,848 @@
+note_id,visit_occurrence_id,person_id,note_date,note_text,note_type_concept_id,note_class_concept_id
+300001,300001,300001,2019-06-25,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 4.7 cm in size, occupying about 79% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300002,300002,300001,2019-06-29,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300003,300003,300001,2019-06-28,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (4.7 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c300.",44814637,36716164
+300004,300004,300001,2019-06-30,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300005,300007,300001,2019-07-07,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300006,300008,300001,2019-08-14,Discharge summary. Right hemicolectomy (laparoscopic) on 2019-08-04 for ascending colon cancer. EBL 20 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300007,300008,300001,2019-08-11,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 4.8 cm, gross type ulceroinfiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 3/40 positive. Pathologic stage pT3N1bM0.",44814640,36716165
+300008,300009,300001,2019-09-03,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300009,300009,300001,2019-09-03,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300010,300021,300001,2020-06-21,"CT abdomen and pelvis: new anastomotic site (local recurrence) lesion, suspicious for recurrence. CEA 0.3 ng/mL.",44814637,36716164
+300011,300041,300002,2019-02-15,"Colonoscopy: Polypoid mass at Ascending colon, 5.6 cm in size, occupying about 92% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300012,300042,300002,2019-02-17,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: low.",44814640,36716165
+300013,300043,300002,2019-02-23,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (5.6 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c4a2a0.",44814637,36716164
+300014,300044,300002,2019-02-22,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300015,300045,300002,2019-03-02,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300016,300046,300002,2019-03-31,"Discharge summary. Right hemicolectomy (laparoscopic, converted to open) on 2019-03-24 for ascending colon cancer. EBL 333 mL. Postoperative course uneventful. Discharged on POD 7.",44814641,36716213
+300017,300046,300002,2019-03-29,"Colon, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 4.8 cm, gross type infiltrative. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 6/18 positive. Pathologic stage pT4aN2aM0.",44814640,36716165
+300018,300047,300002,2019-04-21,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300019,300047,300002,2019-04-21,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300020,300067,300003,2020-03-14,"Colonoscopy: Ulcerofungating mass at Sigmoid colon, 5.1 cm in size, occupying about 52% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300021,300068,300003,2020-03-16,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300022,300069,300003,2020-03-21,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (5.1 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c300.",44814637,36716164
+300023,300069,300003,2020-03-21,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300024,300071,300003,2020-04-03,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300025,300072,300003,2020-04-30,"Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2020-04-20 for sigmoid colon cancer. EBL 194 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 10.",44814641,36716213
+300026,300072,300003,2020-04-24,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 5.7 cm, gross type polypoid. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 4/22 positive. Pathologic stage pT3N2aM0.",44814640,36716165
+300027,300073,300003,2020-05-22,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300028,300073,300003,2020-05-22,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300029,300088,300004,2019-03-13,"Colonoscopy: Polypoid mass at Sigmoid colon, 1.1 cm in size, occupying about 20% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300030,300089,300004,2019-03-16,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300031,300090,300004,2019-03-19,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (1.1 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c100.",44814637,36716164
+300032,300091,300004,2019-03-18,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300033,300094,300004,2019-03-28,Molecular pathology: KRAS wild type; NRAS wild type; BRAF V600E; MSI (PCR) MSS.,44814640,36716165
+300034,300095,300004,2019-05-04,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2019-04-25 for sigmoid colon cancer. EBL 20 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300035,300095,300004,2019-05-02,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 1.1 cm, gross type polypoid. Depth of invasion: Submucosa. Lymphatic invasion absent, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/40 positive. Pathologic stage pT1N0M0.",44814640,36716165
+300036,300106,300005,2022-03-24,"Colonoscopy: Polypoid mass at Descending colon, 1.6 cm in size, occupying about 18% of the lumen. Multiple biopsies taken. Impression: Descending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300037,300107,300005,2022-03-27,"Colon, Descending colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: intermediate.",44814640,36716165
+300038,300108,300005,2022-03-27,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the descending colon (1.6 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: descending colon cancer, c100.",44814637,36716164
+300039,300109,300005,2022-03-30,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300040,300112,300005,2022-04-09,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300041,300113,300005,2022-04-29,Discharge summary. Left hemicolectomy (laparoscopic) on 2022-04-19 for descending colon cancer. EBL 118 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300042,300113,300005,2022-04-27,"Colon, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 1.7 cm, gross type ulceroinfiltrative. Depth of invasion: Submucosa. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/36 positive. Pathologic stage pT1N0M0.",44814640,36716165
+300043,300117,300005,2024-04-16,"CT abdomen and pelvis: new peritoneum lesion, suspicious for recurrence. CEA 5.7 ng/mL.",44814637,36716164
+300044,300118,300005,2024-05-14,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300045,300118,300005,2024-05-14,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300046,300134,300006,2020-03-11,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 2.2 cm in size, occupying about 38% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300047,300135,300006,2020-03-14,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: low.",44814640,36716165
+300048,300136,300006,2020-03-19,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (2.2 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectum cancer, c200.",44814637,36716164
+300049,300136,300006,2020-03-19,"Rectal MRI. Tumor lower margin 10.54 cm from anal verge (8.46 cm from anorectal junction), located left lateral. mrT2, mrN0. Shortest distance to mesorectal fascia 11.0 mm. EMVI negative. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300050,300137,300006,2020-03-18,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300051,300139,300006,2020-03-25,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300052,300140,300006,2020-05-02,"Discharge summary. Low anterior resection (laparoscopic, converted to open) on 2020-04-22 for rectum cancer. EBL 418 mL. Diverting ileostomy formed. Postoperative course uneventful. Discharged on POD 10.",44814641,36716213
+300053,300140,300006,2020-04-27,"Rectum, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 1.5 cm, gross type ulceroinfiltrative. Depth of invasion: Muscularis propria. Lymphatic invasion absent, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/28 positive. TME quality: complete. Pathologic stage pT2N0M0.",44814640,36716165
+300054,300152,300007,2022-04-20,"Colonoscopy: Ulceroinfiltrative mass at Cecum, 1.8 cm in size, occupying about 21% of the lumen. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300055,300153,300007,2022-04-24,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300056,300154,300007,2022-04-25,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the cecum (1.8 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: cecum cancer, c100.",44814637,36716164
+300057,300153,300007,2022-04-24,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300058,300157,300007,2022-05-04,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300059,300158,300007,2022-05-24,Discharge summary. Right hemicolectomy (laparoscopic) on 2022-05-15 for cecum cancer. EBL 286 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300060,300158,300007,2022-05-21,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 1.8 cm, gross type infiltrative. Depth of invasion: Submucosa. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/33 positive. Pathologic stage pT1N0M0.",44814640,36716165
+300061,300167,300008,2019-08-31,"Colonoscopy: Polypoid mass at Sigmoid colon, 3.2 cm in size, occupying about 84% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300062,300168,300008,2019-09-02,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300063,300169,300008,2019-09-04,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (3.2 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: sigmoid colon cancer, c22a0.",44814637,36716164
+300064,300170,300008,2019-09-07,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300065,300172,300008,2019-09-19,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300066,300173,300008,2019-10-20,Discharge summary. Anterior resection (sigmoidectomy) (open) on 2019-10-12 for sigmoid colon cancer. EBL 406 mL. Postoperative course uneventful. Discharged on POD 8.,44814641,36716213
+300067,300173,300008,2019-10-17,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.4 cm, gross type polypoid. Depth of invasion: Muscularis propria. Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 4/16 positive. Pathologic stage pT2N2aM0.",44814640,36716165
+300068,300174,300008,2019-11-24,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300069,300174,300008,2019-11-24,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300070,300195,300009,2021-02-15,"Colonoscopy: Ulcerofungating mass at Descending colon, 6.7 cm in size, occupying about 56% of the lumen. Multiple biopsies taken. Impression: Descending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300071,300196,300009,2021-02-17,"Colon, Descending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300072,300197,300009,2021-02-18,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the descending colon (6.7 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: descending colon cancer, c4b2b0.",44814637,36716164
+300073,300198,300009,2021-02-21,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300074,300200,300009,2021-03-06,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300075,300201,300009,2021-04-06,Discharge summary. Left hemicolectomy (laparoscopic) on 2021-03-27 for descending colon cancer. EBL 283 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300076,300201,300009,2021-04-04,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 4.9 cm, gross type infiltrative. Depth of invasion: Adjacent organ. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 8/32 positive. Pathologic stage pT4bN2bM0.",44814640,36716165
+300077,300202,300009,2021-04-25,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300078,300202,300009,2021-04-25,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300079,300213,300009,2024-07-15,"CT abdomen and pelvis: new anastomotic site (local recurrence) lesion, suspicious for recurrence. CEA 18.6 ng/mL.",44814637,36716164
+300080,300214,300009,2024-08-04,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300081,300234,300010,2022-08-13,"Colonoscopy: Polypoid mass at Sigmoid colon, 6.2 cm in size, occupying about 77% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300082,300235,300010,2022-08-17,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300083,300236,300010,2022-08-17,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (6.2 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c4a00.",44814637,36716164
+300084,300237,300010,2022-08-18,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300085,300240,300010,2022-08-25,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300086,300241,300010,2022-09-22,"Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2022-09-15 for sigmoid colon cancer. EBL 242 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 7.",44814641,36716213
+300087,300241,300010,2022-09-20,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 5.7 cm, gross type ulceroinfiltrative. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/23 positive. Pathologic stage pT4aN0M0.",44814640,36716165
+300088,300248,300010,2026-03-07,"CT abdomen and pelvis: new anastomotic site (local recurrence) lesion, suspicious for recurrence. CEA 1.4 ng/mL.",44814637,36716164
+300089,300249,300010,2026-04-04,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300090,300249,300010,2026-04-04,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300091,300263,300011,2021-12-03,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 3.1 cm in size, occupying about 68% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300092,300264,300011,2021-12-06,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: high.",44814640,36716165
+300093,300265,300011,2021-12-11,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (3.1 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c31a0.",44814637,36716164
+300094,300265,300011,2021-12-11,"Rectal MRI. Tumor lower margin 3.69 cm from anal verge (1.57 cm from anorectal junction), located right lateral. mrT3, mrN1a. Shortest distance to mesorectal fascia 12.3 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300095,300266,300011,2021-12-07,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300096,300268,300011,2021-12-23,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSI-L.,44814640,36716165
+300097,300269,300011,2022-01-11,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300098,300272,300011,2022-03-30,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 3. Residual tumor 3.69 cm from anal verge. MRF clear.,44814637,36716164
+300099,300273,300011,2022-04-19,Discharge summary. Abdominoperineal resection (laparoscopic) on 2022-04-12 for rectum cancer. EBL 20 mL. Postoperative course uneventful. Discharged on POD 7.,44814641,36716213
+300100,300273,300011,2022-04-20,"Rectum, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 3.5 cm, gross type polypoid. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 1/37 positive. TME quality: complete. Pathologic stage ypT3N1aM0.",44814640,36716165
+300101,300274,300011,2022-05-10,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300102,300295,300012,2023-10-29,"Colonoscopy: Ulceroinfiltrative mass at Sigmoid colon, 5.8 cm in size, occupying about 73% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300103,300296,300012,2023-10-31,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300104,300297,300012,2023-11-03,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (5.8 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c4a00.",44814637,36716164
+300105,300298,300012,2023-11-05,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300106,300300,300012,2023-11-18,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300107,300301,300012,2023-12-22,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2023-12-16 for sigmoid colon cancer. EBL 297 mL. Postoperative course uneventful. Discharged on POD 6.,44814641,36716213
+300108,300301,300012,2023-12-22,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 4.8 cm, gross type polypoid. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 4/26 positive. Pathologic stage pT4aN2aM0.",44814640,36716165
+300109,300302,300012,2024-01-21,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300110,300302,300012,2024-01-21,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300111,300322,300013,2021-02-11,"Colonoscopy: Polypoid mass at Ascending colon, 5.9 cm in size, occupying about 54% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300112,300323,300013,2021-02-13,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300113,300324,300013,2021-02-17,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (5.9 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the lung. Impression: ascending colon cancer, c32a1b.",44814637,36716164
+300114,300325,300013,2021-02-18,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300115,300327,300013,2021-03-04,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300116,300328,300013,2021-03-28,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300117,300328,300013,2021-03-28,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300118,300344,300013,2021-11-24,CT abdomen and pelvis: interval increase of lung metastases and new lung lesions. Progressive disease.,44814637,36716164
+300119,300360,300014,2021-02-27,"Colonoscopy: Ulceroinfiltrative mass at Rectosigmoid junction, 6.1 cm in size, occupying about 46% of the lumen. Multiple biopsies taken. Impression: Rectosigmoid junction cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300120,300361,300014,2021-03-03,"Colon, Rectosigmoid junction, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: intermediate.",44814640,36716165
+300121,300362,300014,2021-03-07,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectosigmoid junction (6.1 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: rectosigmoid junction cancer, c4a2b1a.",44814637,36716164
+300122,300362,300014,2021-03-07,"Rectal MRI. Tumor lower margin 12.05 cm from anal verge (9.36 cm from anorectal junction), located left lateral. mrT4a, mrN2b. Shortest distance to mesorectal fascia 1.8 mm. EMVI positive. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300123,300364,300014,2021-03-05,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300124,300367,300014,2021-03-12,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300125,300368,300014,2021-04-05,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300126,300368,300014,2021-04-05,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300127,300382,300014,2021-09-05,CT abdomen and pelvis: interval increase of liver metastases and new distant lymph node lesions. Progressive disease.,44814637,36716164
+300128,300400,300015,2022-05-20,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 4.2 cm in size, occupying about 74% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300129,300401,300015,2022-05-23,"Colon, Rectum, endoscopic biopsy: Mucinous adenocarcinoma, well differentiated. Tumor budding: intermediate.",44814640,36716165
+300130,300402,300015,2022-05-25,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (4.2 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectum cancer, c300.",44814637,36716164
+300131,300402,300015,2022-05-25,"Rectal MRI. Tumor lower margin 3.6 cm from anal verge (1.03 cm from anorectal junction), located circumferential. mrT3, mrN0. Shortest distance to mesorectal fascia 5.0 mm. EMVI negative. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300132,300403,300015,2022-05-26,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300133,300406,300015,2022-06-04,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300134,300407,300015,2022-06-14,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300135,300409,300015,2022-09-02,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 3. Residual tumor 3.6 cm from anal verge. MRF clear.,44814637,36716164
+300136,300410,300015,2022-09-26,Discharge summary. Low anterior resection (laparoscopic) on 2022-09-16 for rectum cancer. EBL 357 mL. Diverting ileostomy formed. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300137,300410,300015,2022-09-24,"Rectum, resection: Mucinous adenocarcinoma, well differentiated. Tumor size 4.2 cm, gross type ulceroinfiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/31 positive. TME quality: nearly complete. Pathologic stage ypT3N0M0.",44814640,36716165
+300138,300411,300015,2022-10-31,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300139,300411,300015,2022-10-31,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300140,300431,300016,2021-07-16,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 5.7 cm in size, occupying about 77% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300141,300432,300016,2021-07-18,"Colon, Ascending colon, endoscopic biopsy: Signet ring cell carcinoma, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300142,300433,300016,2021-07-20,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (5.7 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the lung. Impression: ascending colon cancer, c32a1b.",44814637,36716164
+300143,300434,300016,2021-07-22,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300144,300436,300016,2021-08-01,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300145,300437,300016,2021-08-26,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300146,300437,300016,2021-08-26,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300147,300460,300017,2020-07-24,"Colonoscopy: Polypoid mass at Sigmoid colon, 4.9 cm in size, occupying about 27% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300148,300461,300017,2020-07-28,"Colon, Sigmoid colon, endoscopic biopsy: Mucinous adenocarcinoma, well differentiated. Tumor budding: low.",44814640,36716165
+300149,300462,300017,2020-07-28,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (4.9 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the distant lymph node. Impression: sigmoid colon cancer, c4a1b1b.",44814637,36716164
+300150,300464,300017,2020-07-31,"Immunohistochemistry (MMR proteins): MLH1 loss, MSH2 intact, MSH6 intact, PMS2 loss. Interpretation: MMR-deficient (loss of MLH1/PMS2).",44814640,36716165
+300151,300467,300017,2020-08-05,Molecular pathology: KRAS wild type; NRAS wild type; BRAF V600E; MSI (PCR) MSI-H.,44814640,36716165
+300152,300468,300017,2020-08-28,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300153,300468,300017,2020-08-28,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300154,300496,300018,2023-07-01,"Colonoscopy: Polypoid mass at Transverse colon, 4.1 cm in size, occupying about 82% of the lumen. Multiple biopsies taken. Impression: Transverse colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300155,300497,300018,2023-07-04,"Colon, Transverse colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300156,300498,300018,2023-07-05,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the transverse colon (4.1 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the peritoneum. Impression: transverse colon cancer, c32a1a.",44814637,36716164
+300157,300498,300018,2023-07-05,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300158,300501,300018,2023-07-21,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300159,300502,300018,2023-08-09,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300160,300502,300018,2023-08-09,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300161,300518,300018,2024-04-16,CT abdomen and pelvis: interval increase of peritoneum metastases and new liver lesions. Progressive disease.,44814637,36716164
+300162,300535,300019,2020-05-27,"Colonoscopy: Ulcerofungating mass at Sigmoid colon, 3.4 cm in size, occupying about 39% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300163,300536,300019,2020-05-29,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: low.",44814640,36716165
+300164,300537,300019,2020-05-30,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (3.4 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c200.",44814637,36716164
+300165,300538,300019,2020-05-31,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300166,300540,300019,2020-06-13,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300167,300541,300019,2020-07-15,"Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2020-07-08 for sigmoid colon cancer. EBL 110 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 7.",44814641,36716213
+300168,300541,300019,2020-07-12,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 3.6 cm, gross type ulcerofungating. Depth of invasion: Muscularis propria. Lymphatic invasion absent, venous invasion present, perineural invasion present. Radial margin not involved. Lymph nodes: 0/22 positive. Pathologic stage pT2N0M0.",44814640,36716165
+300169,300552,300020,2019-10-12,"Colonoscopy: Ulceroinfiltrative mass at Cecum, 3.7 cm in size, occupying about 51% of the lumen. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300170,300553,300020,2019-10-15,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: low.",44814640,36716165
+300171,300554,300020,2019-10-20,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the cecum (3.7 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: cecum cancer, c300.",44814637,36716164
+300172,300555,300020,2019-10-19,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300173,300557,300020,2019-10-26,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300174,300558,300020,2019-11-23,Discharge summary. Right hemicolectomy (open) on 2019-11-16 for cecum cancer. EBL 461 mL. Postoperative course uneventful. Discharged on POD 7.,44814641,36716213
+300175,300558,300020,2019-11-23,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 2.9 cm, gross type ulcerofungating. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion present, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 1/33 positive. Pathologic stage pT4aN1aM0.",44814640,36716165
+300176,300559,300020,2019-12-28,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300177,300559,300020,2019-12-28,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300178,300584,300020,2025-05-19,"CT abdomen and pelvis: new lung lesion, suspicious for recurrence. CEA 12.5 ng/mL.",44814637,36716164
+300179,300597,300021,2022-12-14,"Colonoscopy: Ulceroinfiltrative mass at Descending colon, 2.8 cm in size, occupying about 64% of the lumen. Multiple biopsies taken. Impression: Descending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300180,300598,300021,2022-12-16,"Colon, Descending colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: intermediate.",44814640,36716165
+300181,300599,300021,2022-12-19,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the descending colon (2.8 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: descending colon cancer, c200.",44814637,36716164
+300182,300600,300021,2022-12-18,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300183,300602,300021,2022-12-27,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300184,300603,300021,2023-02-03,Discharge summary. Left hemicolectomy (open) on 2023-01-24 for descending colon cancer. EBL 388 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300185,300603,300021,2023-01-30,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 2.6 cm, gross type polypoid. Depth of invasion: Muscularis propria. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/15 positive. Pathologic stage pT2N0M0.",44814640,36716165
+300186,300611,300022,2020-04-09,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 2.4 cm in size, occupying about 42% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300187,300612,300022,2020-04-13,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: high.",44814640,36716165
+300188,300613,300022,2020-04-15,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (2.4 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c200.",44814637,36716164
+300189,300613,300022,2020-04-15,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300190,300616,300022,2020-04-27,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300191,300617,300022,2020-05-15,Discharge summary. Right hemicolectomy (laparoscopic) on 2020-05-07 for ascending colon cancer. EBL 20 mL. Postoperative course uneventful. Discharged on POD 8.,44814641,36716213
+300192,300617,300022,2020-05-14,"Colon, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 2.3 cm, gross type ulceroinfiltrative. Depth of invasion: Muscularis propria. Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 0/36 positive. Pathologic stage pT2N0M0.",44814640,36716165
+300193,300628,300023,2019-07-29,"Colonoscopy: Ulcerofungating mass at Rectum, 3.4 cm in size, occupying about 65% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300194,300629,300023,2019-07-31,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: high.",44814640,36716165
+300195,300630,300023,2019-08-04,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (3.4 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectum cancer, c300.",44814637,36716164
+300196,300630,300023,2019-08-04,"Rectal MRI. Tumor lower margin 3.01 cm from anal verge (1.49 cm from anorectal junction), located left lateral. mrT3, mrN0. Shortest distance to mesorectal fascia 1.8 mm. EMVI negative. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300197,300630,300023,2019-08-04,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300198,300632,300023,2019-08-20,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300199,300633,300023,2019-09-02,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300200,300635,300023,2019-11-19,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 1. Residual tumor 3.01 cm from anal verge. MRF clear.,44814637,36716164
+300201,300636,300023,2019-12-18,Discharge summary. Abdominoperineal resection (laparoscopic) on 2019-12-09 for rectum cancer. EBL 310 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300202,300636,300023,2019-12-14,"Rectum, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 0.0 cm, gross type ulceroinfiltrative. Depth of invasion: No residual tumor. Lymphatic invasion absent, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/28 positive. TME quality: incomplete. Pathologic stage ypT0N0M0.",44814640,36716165
+300203,300647,300024,2023-04-26,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 3.6 cm in size, occupying about 30% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300204,300648,300024,2023-04-30,"Colon, Ascending colon, endoscopic biopsy: Mucinous adenocarcinoma, poorly differentiated. Tumor budding: low.",44814640,36716165
+300205,300649,300024,2023-05-03,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (3.6 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c31a0.",44814637,36716164
+300206,300648,300024,2023-04-30,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 loss, MSH6 loss, PMS2 intact. Interpretation: MMR-deficient (loss of MSH2/MSH6).",44814640,36716165
+300207,300652,300024,2023-05-08,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300208,300653,300024,2023-06-07,Discharge summary. Right hemicolectomy (laparoscopic) on 2023-05-28 for ascending colon cancer. EBL 246 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300209,300653,300024,2023-06-04,"Colon, resection: Mucinous adenocarcinoma, poorly differentiated. Tumor size 3.2 cm, gross type polypoid. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 3/20 positive. Pathologic stage pT3N1bM0.",44814640,36716165
+300210,300654,300024,2023-07-01,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300211,300654,300024,2023-07-01,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300212,300674,300025,2019-04-05,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 3.1 cm in size, occupying about 34% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300213,300675,300025,2019-04-08,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300214,300676,300025,2019-04-11,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (3.1 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c31b0.",44814637,36716164
+300215,300676,300025,2019-04-11,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300216,300678,300025,2019-04-19,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300217,300679,300025,2019-05-25,"Discharge summary. Right hemicolectomy (open) on 2019-05-18 for ascending colon cancer. EBL 305 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 7.",44814641,36716213
+300218,300679,300025,2019-05-25,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 2.8 cm, gross type ulcerofungating. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 2/29 positive. Pathologic stage pT3N1bM0.",44814640,36716165
+300219,300680,300025,2019-07-02,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300220,300680,300025,2019-07-02,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300221,300709,300026,2020-11-26,"Colonoscopy: Ulcerofungating mass at Ascending colon, 4.1 cm in size, occupying about 47% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300222,300710,300026,2020-11-30,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300223,300711,300026,2020-12-01,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (4.1 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c300.",44814637,36716164
+300224,300710,300026,2020-11-30,"Immunohistochemistry (MMR proteins): MLH1 loss, MSH2 intact, MSH6 intact, PMS2 loss. Interpretation: MMR-deficient (loss of MLH1/PMS2).",44814640,36716165
+300225,300714,300026,2020-12-13,Molecular pathology: KRAS G12C; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300226,300715,300026,2021-01-01,Discharge summary. Right hemicolectomy (laparoscopic) on 2020-12-24 for ascending colon cancer. EBL 293 mL. Postoperative course uneventful. Discharged on POD 8.,44814641,36716213
+300227,300715,300026,2020-12-30,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 4.3 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 0/34 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300228,300726,300027,2021-08-25,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 8.8 cm in size, occupying about 36% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300229,300727,300027,2021-08-29,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: intermediate.",44814640,36716165
+300230,300728,300027,2021-09-02,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (8.8 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c4b1a0.",44814637,36716164
+300231,300727,300027,2021-08-29,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300232,300731,300027,2021-09-09,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300233,300732,300027,2021-10-01,Discharge summary. Right hemicolectomy (open) on 2021-09-21 for ascending colon cancer. EBL 449 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300234,300732,300027,2021-09-27,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 9.0 cm, gross type infiltrative. Depth of invasion: Adjacent organ. Lymphatic invasion absent, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 1/31 positive. Pathologic stage pT4bN1aM0.",44814640,36716165
+300235,300733,300027,2021-11-07,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300236,300733,300027,2021-11-07,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300237,300761,300028,2021-01-02,"Colonoscopy: Ulcerofungating mass at Ascending colon, 4.9 cm in size, occupying about 74% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300238,300762,300028,2021-01-05,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: low.",44814640,36716165
+300239,300763,300028,2021-01-06,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (4.9 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: ascending colon cancer, c32b1b.",44814637,36716164
+300240,300763,300028,2021-01-06,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300241,300767,300028,2021-01-18,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300242,300768,300028,2021-02-04,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300243,300768,300028,2021-02-04,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300244,300793,300029,2019-11-04,"Colonoscopy: Polypoid mass at Sigmoid colon, 4.4 cm in size, occupying about 82% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300245,300794,300029,2019-11-07,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: intermediate.",44814640,36716165
+300246,300795,300029,2019-11-11,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (4.4 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: sigmoid colon cancer, c31b0.",44814637,36716164
+300247,300795,300029,2019-11-11,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300248,300798,300029,2019-11-24,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300249,300799,300029,2020-01-01,"Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2019-12-23 for sigmoid colon cancer. EBL 197 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 9.",44814641,36716213
+300250,300799,300029,2019-12-26,"Colon, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 3.6 cm, gross type ulcerofungating. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 3/38 positive. Pathologic stage pT3N1bM0.",44814640,36716165
+300251,300800,300029,2020-02-08,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300252,300800,300029,2020-02-08,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300253,300826,300029,2025-06-09,"CT abdomen and pelvis: new liver lesion, suspicious for recurrence. CEA 13.3 ng/mL.",44814637,36716164
+300254,300846,300030,2022-05-07,"Colonoscopy: Polypoid mass at Rectum, 2.7 cm in size, occupying about 66% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300255,300847,300030,2022-05-10,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300256,300848,300030,2022-05-13,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (2.7 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectum cancer, c200.",44814637,36716164
+300257,300848,300030,2022-05-13,"Rectal MRI. Tumor lower margin 8.67 cm from anal verge (6.4 cm from anorectal junction), located right lateral. mrT2, mrN0. Shortest distance to mesorectal fascia 8.1 mm. EMVI negative. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300258,300848,300030,2022-05-13,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300259,300850,300030,2022-05-18,Molecular pathology: KRAS G12C; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300260,300859,300031,2019-06-14,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 5.2 cm in size, occupying about 84% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300261,300860,300031,2019-06-17,"Colon, Rectum, endoscopic biopsy: Signet ring cell carcinoma, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300262,300861,300031,2019-06-20,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (5.2 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c32b0.",44814637,36716164
+300263,300861,300031,2019-06-20,"Rectal MRI. Tumor lower margin 8.42 cm from anal verge (5.43 cm from anorectal junction), located left lateral. mrT3, mrN2b. Shortest distance to mesorectal fascia 11.6 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN present.",44814637,36716164
+300264,300862,300031,2019-06-21,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300265,300864,300031,2019-06-27,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300266,300875,300032,2022-09-13,"Colonoscopy: Polypoid mass at Rectum, 3.8 cm in size, occupying about 60% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300267,300876,300032,2022-09-16,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300268,300877,300032,2022-09-19,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (3.8 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c32a0.",44814637,36716164
+300269,300877,300032,2022-09-19,"Rectal MRI. Tumor lower margin 6.08 cm from anal verge (3.13 cm from anorectal junction), located left lateral. mrT3, mrN2a. Shortest distance to mesorectal fascia 2.1 mm. EMVI positive. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300270,300878,300032,2022-09-18,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300271,300881,300032,2022-09-29,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300272,300882,300032,2022-10-18,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300273,300884,300032,2023-01-04,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 2. Residual tumor 6.08 cm from anal verge. MRF clear.,44814637,36716164
+300274,300885,300032,2023-02-01,Discharge summary. Low anterior resection (laparoscopic) on 2023-01-24 for rectum cancer. EBL 57 mL. Diverting ileostomy formed. Postoperative course uneventful. Discharged on POD 8.,44814641,36716213
+300275,300885,300032,2023-01-31,"Rectum, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.2 cm, gross type polypoid. Depth of invasion: Muscularis propria. Lymphatic invasion absent, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/33 positive. TME quality: nearly complete. Pathologic stage ypT2N0M0.",44814640,36716165
+300276,300888,300032,2024-07-11,"CT abdomen and pelvis: new liver lesion, suspicious for recurrence. CEA 1.1 ng/mL.",44814637,36716164
+300277,300889,300032,2024-08-05,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300278,300889,300032,2024-08-05,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300279,300899,300033,2020-05-12,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 6.4 cm in size, occupying about 69% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300280,300900,300033,2020-05-14,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: high.",44814640,36716165
+300281,300901,300033,2020-05-16,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (6.4 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the distant lymph node. Impression: ascending colon cancer, c4a1b1a.",44814637,36716164
+300282,300902,300033,2020-05-18,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300283,300903,300033,2020-05-27,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300284,300904,300033,2020-06-18,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300285,300904,300033,2020-06-18,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300286,300930,300034,2020-09-01,"Colonoscopy: Polypoid mass at Transverse colon, 7.9 cm in size, occupying about 59% of the lumen. Multiple biopsies taken. Impression: Transverse colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300287,300931,300034,2020-09-04,"Colon, Transverse colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300288,300932,300034,2020-09-08,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the transverse colon (7.9 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the lung. Impression: transverse colon cancer, c4b2a1a.",44814637,36716164
+300289,300933,300034,2020-09-06,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 loss, MSH6 loss, PMS2 intact. Interpretation: MMR-deficient (loss of MSH2/MSH6).",44814640,36716165
+300290,300936,300034,2020-09-16,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300291,300937,300034,2020-09-26,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300292,300937,300034,2020-09-26,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300293,300962,300035,2019-07-05,"Colonoscopy: Polypoid mass at Sigmoid colon, 6.4 cm in size, occupying about 34% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300294,300963,300035,2019-07-07,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300295,300964,300035,2019-07-13,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (6.4 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: sigmoid colon cancer, c4a1b0.",44814637,36716164
+300296,300965,300035,2019-07-10,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300297,300967,300035,2019-07-17,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300298,300968,300035,2019-08-17,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2019-08-10 for sigmoid colon cancer. EBL 132 mL. Postoperative course uneventful. Discharged on POD 7.,44814641,36716213
+300299,300968,300035,2019-08-16,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 5.4 cm, gross type ulceroinfiltrative. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion present, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 2/29 positive. Pathologic stage pT4aN1bM0.",44814640,36716165
+300300,300969,300035,2019-09-19,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300301,300969,300035,2019-09-19,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300302,300989,300035,2021-08-07,"CT abdomen and pelvis: new lung lesion, suspicious for recurrence. CEA 19.6 ng/mL.",44814637,36716164
+300303,301012,300036,2023-03-27,"Colonoscopy: Polypoid mass at Sigmoid colon, 5.6 cm in size, occupying about 29% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300304,301013,300036,2023-03-30,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: low.",44814640,36716165
+300305,301014,300036,2023-03-30,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (5.6 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the lung. Impression: sigmoid colon cancer, c4a2b1a.",44814637,36716164
+300306,301016,300036,2023-04-02,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300307,301018,300036,2023-04-07,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSI-L.,44814640,36716165
+300308,301019,300036,2023-04-21,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300309,301019,300036,2023-04-21,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300310,301036,300036,2023-11-26,CT abdomen and pelvis: interval increase of lung metastases and new lung lesions. Progressive disease.,44814637,36716164
+300311,301038,300037,2019-03-27,"Colonoscopy: Polypoid mass at Ascending colon, 7.2 cm in size, occupying about 63% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300312,301039,300037,2019-03-30,"Colon, Ascending colon, endoscopic biopsy: Mucinous adenocarcinoma, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300313,301040,300037,2019-04-02,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (7.2 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c4b1a0.",44814637,36716164
+300314,301041,300037,2019-04-01,"Immunohistochemistry (MMR proteins): MLH1 loss, MSH2 intact, MSH6 intact, PMS2 loss. Interpretation: MMR-deficient (loss of MLH1/PMS2).",44814640,36716165
+300315,301044,300037,2019-04-11,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300316,301045,300037,2019-05-10,Discharge summary. Right hemicolectomy (open) on 2019-05-02 for ascending colon cancer. EBL 434 mL. Postoperative course uneventful. Discharged on POD 8.,44814641,36716213
+300317,301045,300037,2019-05-08,"Colon, resection: Mucinous adenocarcinoma, moderately differentiated. Tumor size 7.6 cm, gross type polypoid. Depth of invasion: Adjacent organ. Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin involved. Lymph nodes: 1/16 positive. Pathologic stage pT4bN1aM0.",44814640,36716165
+300318,301046,300037,2019-06-13,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300319,301046,300037,2019-06-13,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300320,301071,300038,2023-09-08,"Colonoscopy: Polypoid mass at Cecum, 4.9 cm in size, occupying about 39% of the lumen. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300321,301072,300038,2023-09-11,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: high.",44814640,36716165
+300322,301073,300038,2023-09-11,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the cecum (4.9 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: cecum cancer, c300.",44814637,36716164
+300323,301074,300038,2023-09-14,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300324,301077,300038,2023-09-21,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300325,301078,300038,2023-10-30,Discharge summary. Right hemicolectomy (open) on 2023-10-21 for cecum cancer. EBL 351 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300326,301078,300038,2023-10-24,"Colon, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 5.2 cm, gross type ulceroinfiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/30 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300327,301084,300039,2023-07-10,"Colonoscopy: Ulcerofungating mass at Rectum, 5.7 cm in size, occupying about 66% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300328,301085,300039,2023-07-14,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300329,301086,300039,2023-07-17,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (5.7 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: rectum cancer, c31b1a.",44814637,36716164
+300330,301086,300039,2023-07-17,"Rectal MRI. Tumor lower margin 4.14 cm from anal verge (1.36 cm from anorectal junction), located left lateral. mrT3, mrN1b. Shortest distance to mesorectal fascia 3.3 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300331,301085,300039,2023-07-14,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300332,301090,300039,2023-07-26,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300333,301091,300039,2023-08-13,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300334,301091,300039,2023-08-13,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300335,301109,300039,2024-03-17,CT abdomen and pelvis: interval increase of liver metastases and new peritoneum lesions. Progressive disease.,44814637,36716164
+300336,301117,300040,2019-05-15,"Colonoscopy: Ulceroinfiltrative mass at Sigmoid colon, 4.4 cm in size, occupying about 42% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300337,301118,300040,2019-05-17,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300338,301119,300040,2019-05-19,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (4.4 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c300.",44814637,36716164
+300339,301120,300040,2019-05-20,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300340,301122,300040,2019-06-01,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300341,301123,300040,2019-06-22,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2019-06-12 for sigmoid colon cancer. EBL 176 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300342,301123,300040,2019-06-16,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.1 cm, gross type ulcerofungating. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/14 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300343,301134,300041,2022-03-18,"Colonoscopy: Polypoid mass at Sigmoid colon, 3.5 cm in size, occupying about 71% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300344,301135,300041,2022-03-22,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300345,301136,300041,2022-03-26,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (3.5 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c300.",44814637,36716164
+300346,301137,300041,2022-03-25,"Immunohistochemistry (MMR proteins): MLH1 loss, MSH2 intact, MSH6 intact, PMS2 loss. Interpretation: MMR-deficient (loss of MLH1/PMS2).",44814640,36716165
+300347,301140,300041,2022-04-05,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300348,301141,300041,2022-05-15,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2022-05-05 for sigmoid colon cancer. EBL 55 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300349,301141,300041,2022-05-10,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.4 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 1/18 positive. Pathologic stage pT3N1aM0.",44814640,36716165
+300350,301142,300041,2022-06-24,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300351,301142,300041,2022-06-24,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300352,301162,300042,2019-03-26,"Colonoscopy: Ulcerofungating mass at Ascending colon, 4.7 cm in size, occupying about 95% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300353,301163,300042,2019-03-28,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300354,301164,300042,2019-04-02,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (4.7 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c31b0.",44814637,36716164
+300355,301165,300042,2019-03-30,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300356,301166,300042,2019-04-09,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300357,301177,300043,2021-10-13,"Colonoscopy: Ulcerofungating mass at Transverse colon, 6.9 cm in size, occupying about 31% of the lumen. Multiple biopsies taken. Impression: Transverse colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300358,301178,300043,2021-10-15,"Colon, Transverse colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: high.",44814640,36716165
+300359,301179,300043,2021-10-18,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the transverse colon (6.9 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the peritoneum. Impression: transverse colon cancer, c4b1b1a.",44814637,36716164
+300360,301180,300043,2021-10-17,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300361,301181,300043,2021-10-28,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300362,301192,300044,2021-10-06,"Colonoscopy: Polypoid mass at Rectum, 5.5 cm in size, occupying about 93% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300363,301193,300044,2021-10-10,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: high.",44814640,36716165
+300364,301194,300044,2021-10-14,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (5.5 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c31a0.",44814637,36716164
+300365,301194,300044,2021-10-14,"Rectal MRI. Tumor lower margin 8.09 cm from anal verge (6.54 cm from anorectal junction), located anterior. mrT3, mrN1a. Shortest distance to mesorectal fascia 7.4 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300366,301195,300044,2021-10-11,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300367,301198,300044,2021-10-26,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300368,301199,300044,2021-11-15,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300369,301201,300044,2022-02-07,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 4. Residual tumor 8.09 cm from anal verge. MRF threatened.,44814637,36716164
+300370,301202,300044,2022-03-02,"Discharge summary. Low anterior resection (laparoscopic) on 2022-02-20 for rectum cancer. EBL 20 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 10.",44814641,36716213
+300371,301202,300044,2022-02-27,"Rectum, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 4.6 cm, gross type ulcerofungating. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 1/22 positive. TME quality: complete. Pathologic stage ypT3N1aM0.",44814640,36716165
+300372,301203,300044,2022-03-30,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300373,301220,300045,2019-09-01,"Colonoscopy: Ulcerofungating mass at Sigmoid colon, 3.2 cm in size, occupying about 51% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300374,301221,300045,2019-09-04,"Colon, Sigmoid colon, endoscopic biopsy: Mucinous adenocarcinoma, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300375,301222,300045,2019-09-08,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (3.2 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c300.",44814637,36716164
+300376,301223,300045,2019-09-07,"Immunohistochemistry (MMR proteins): MLH1 loss, MSH2 intact, MSH6 intact, PMS2 loss. Interpretation: MMR-deficient (loss of MLH1/PMS2).",44814640,36716165
+300377,301226,300045,2019-09-14,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300378,301227,300045,2019-10-14,Discharge summary. Anterior resection (sigmoidectomy) (open) on 2019-10-08 for sigmoid colon cancer. EBL 214 mL. Postoperative course uneventful. Discharged on POD 6.,44814641,36716213
+300379,301227,300045,2019-10-14,"Colon, resection: Mucinous adenocarcinoma, moderately differentiated. Tumor size 3.6 cm, gross type ulcerofungating. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/34 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300380,301238,300046,2020-06-22,"Colonoscopy: Ulceroinfiltrative mass at Cecum, 4.3 cm in size, occupying about 54% of the lumen. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300381,301239,300046,2020-06-24,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300382,301240,300046,2020-06-25,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the cecum (4.3 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: cecum cancer, c31b0.",44814637,36716164
+300383,301241,300046,2020-06-27,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300384,301243,300046,2020-07-09,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300385,301244,300046,2020-08-06,Discharge summary. Right hemicolectomy (open) on 2020-07-29 for cecum cancer. EBL 419 mL. Postoperative course uneventful. Discharged on POD 8.,44814641,36716213
+300386,301244,300046,2020-08-06,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.6 cm, gross type ulceroinfiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 3/23 positive. Pathologic stage pT3N1bM0.",44814640,36716165
+300387,301245,300046,2020-08-27,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300388,301245,300046,2020-08-27,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300389,301260,300047,2022-08-20,"Colonoscopy: Ulcerofungating mass at Ascending colon, 5.0 cm in size, occupying about 59% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300390,301261,300047,2022-08-24,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300391,301262,300047,2022-08-24,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (5.0 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the distant lymph node. Impression: ascending colon cancer, c32a1a.",44814637,36716164
+300392,301264,300047,2022-08-27,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300393,301266,300047,2022-09-03,Molecular pathology: KRAS G12C; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300394,301267,300047,2022-09-19,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300395,301267,300047,2022-09-19,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300396,301278,300047,2023-03-06,CT abdomen and pelvis: interval increase of distant lymph node metastases and new liver lesions. Progressive disease.,44814637,36716164
+300397,301285,300048,2024-01-05,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 1.0 cm in size, occupying about 16% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300398,301286,300048,2024-01-07,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: intermediate.",44814640,36716165
+300399,301287,300048,2024-01-13,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (1.0 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c100.",44814637,36716164
+300400,301288,300048,2024-01-10,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300401,301290,300048,2024-01-23,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300402,301291,300048,2024-02-20,Discharge summary. Right hemicolectomy (laparoscopic) on 2024-02-11 for ascending colon cancer. EBL 215 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300403,301291,300048,2024-02-15,"Colon, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 0.9 cm, gross type polypoid. Depth of invasion: Submucosa. Lymphatic invasion absent, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 0/20 positive. Pathologic stage pT1N0M0.",44814640,36716165
+300404,301297,300049,2021-04-29,"Colonoscopy: Polypoid mass at Sigmoid colon, 3.2 cm in size, occupying about 47% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300405,301298,300049,2021-05-02,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: high.",44814640,36716165
+300406,301299,300049,2021-05-07,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (3.2 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c200.",44814637,36716164
+300407,301300,300049,2021-05-06,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300408,301303,300049,2021-05-11,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300409,301304,300049,2021-06-01,"Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2021-05-26 for sigmoid colon cancer. EBL 75 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 6.",44814641,36716213
+300410,301304,300049,2021-06-02,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 2.3 cm, gross type ulceroinfiltrative. Depth of invasion: Muscularis propria. Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 0/31 positive. Pathologic stage pT2N0M0.",44814640,36716165
+300411,301310,300049,2024-06-05,"CT abdomen and pelvis: new anastomotic site (local recurrence) lesion, suspicious for recurrence. CEA 0.3 ng/mL.",44814637,36716164
+300412,301311,300049,2024-06-19,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300413,301311,300049,2024-06-19,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300414,301332,300050,2020-07-19,"Colonoscopy: Polypoid mass at Ascending colon, 3.6 cm in size, occupying about 33% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300415,301333,300050,2020-07-21,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300416,301334,300050,2020-07-27,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (3.6 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c32b0.",44814637,36716164
+300417,301335,300050,2020-07-23,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300418,301336,300050,2020-08-04,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300419,301347,300051,2019-07-11,"Colonoscopy: Polypoid mass at Descending colon, 5.1 cm in size, occupying about 55% of the lumen. Multiple biopsies taken. Impression: Descending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300420,301348,300051,2019-07-14,"Colon, Descending colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: low.",44814640,36716165
+300421,301349,300051,2019-07-17,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the descending colon (5.1 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: descending colon cancer, c4a2a1b.",44814637,36716164
+300422,301350,300051,2019-07-16,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300423,301353,300051,2019-07-29,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300424,301354,300051,2019-08-16,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300425,301354,300051,2019-08-16,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300426,301377,300052,2023-07-05,"Colonoscopy: Polypoid mass at Rectum, 6.8 cm in size, occupying about 45% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300427,301378,300052,2023-07-07,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: intermediate.",44814640,36716165
+300428,301379,300052,2023-07-08,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (6.8 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectum cancer, c4b00.",44814637,36716164
+300429,301379,300052,2023-07-08,"Rectal MRI. Tumor lower margin 7.14 cm from anal verge (5.14 cm from anorectal junction), located left lateral. mrT4b, mrN0. Shortest distance to mesorectal fascia 1.0 mm. EMVI negative. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300430,301380,300052,2023-07-09,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300431,301382,300052,2023-07-21,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300432,301389,300053,2019-04-17,"Colonoscopy: Ulceroinfiltrative mass at Sigmoid colon, 4.0 cm in size, occupying about 43% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300433,301390,300053,2019-04-20,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: intermediate.",44814640,36716165
+300434,301391,300053,2019-04-20,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (4.0 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: sigmoid colon cancer, c32a1a.",44814637,36716164
+300435,301392,300053,2019-04-22,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300436,301395,300053,2019-05-04,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300437,301396,300053,2019-05-26,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300438,301396,300053,2019-05-26,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300439,301411,300053,2019-11-04,CT abdomen and pelvis: interval increase of liver metastases and new distant lymph node lesions. Progressive disease.,44814637,36716164
+300440,301430,300054,2019-06-03,"Colonoscopy: Polypoid mass at Cecum, 6.5 cm in size, occupying about 65% of the lumen. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300441,301431,300054,2019-06-05,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: intermediate.",44814640,36716165
+300442,301432,300054,2019-06-11,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the cecum (6.5 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: cecum cancer, c4a2b0.",44814637,36716164
+300443,301433,300054,2019-06-09,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300444,301434,300054,2019-06-20,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300445,301435,300054,2019-07-22,Discharge summary. Right hemicolectomy (laparoscopic) on 2019-07-16 for cecum cancer. EBL 130 mL. Postoperative course uneventful. Discharged on POD 6.,44814641,36716213
+300446,301435,300054,2019-07-24,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 6.0 cm, gross type polypoid. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 8/16 positive. Pathologic stage pT4aN2bM0.",44814640,36716165
+300447,301436,300054,2019-08-14,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300448,301436,300054,2019-08-14,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300449,301456,300055,2020-02-10,"Colonoscopy: Ulcerofungating mass at Rectum, 4.7 cm in size, occupying about 74% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300450,301457,300055,2020-02-12,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300451,301458,300055,2020-02-13,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (4.7 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: rectum cancer, c32a1a.",44814637,36716164
+300452,301458,300055,2020-02-13,"Rectal MRI. Tumor lower margin 4.6 cm from anal verge (2.09 cm from anorectal junction), located posterior. mrT3, mrN2a. Shortest distance to mesorectal fascia 10.0 mm. EMVI positive. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300453,301459,300055,2020-02-14,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300454,301461,300055,2020-02-24,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300455,301464,300056,2023-01-10,"Colonoscopy: Polypoid mass at Ascending colon, 6.0 cm in size, occupying about 93% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300456,301465,300056,2023-01-13,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300457,301466,300056,2023-01-13,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (6.0 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c4b00.",44814637,36716164
+300458,301467,300056,2023-01-17,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300459,301470,300056,2023-01-30,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300460,301471,300056,2023-02-22,Discharge summary. Right hemicolectomy (open) on 2023-02-13 for ascending colon cancer. EBL 20 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300461,301471,300056,2023-02-19,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 5.7 cm, gross type polypoid. Depth of invasion: Adjacent organ. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/23 positive. Pathologic stage pT4bN0M0.",44814640,36716165
+300462,301472,300056,2023-03-29,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300463,301472,300056,2023-03-29,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300464,301491,300057,2019-05-23,"Colonoscopy: Ulceroinfiltrative mass at Cecum, 4.3 cm in size, occupying about 83% of the lumen. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300465,301492,300057,2019-05-25,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300466,301493,300057,2019-05-31,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the cecum (4.3 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: cecum cancer, c31b0.",44814637,36716164
+300467,301494,300057,2019-05-29,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300468,301496,300057,2019-06-11,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300469,301497,300057,2019-07-05,Discharge summary. Right hemicolectomy (laparoscopic) on 2019-06-28 for cecum cancer. EBL 180 mL. Postoperative course uneventful. Discharged on POD 7.,44814641,36716213
+300470,301497,300057,2019-07-07,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.8 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 2/32 positive. Pathologic stage pT3N1bM0.",44814640,36716165
+300471,301498,300057,2019-08-14,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300472,301498,300057,2019-08-14,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300473,301511,300057,2020-06-29,"CT abdomen and pelvis: new lung lesion, suspicious for recurrence. CEA 0.3 ng/mL.",44814637,36716164
+300474,301529,300058,2023-06-24,"Colonoscopy: Polypoid mass at Sigmoid colon, 3.2 cm in size, occupying about 33% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300475,301530,300058,2023-06-27,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: high.",44814640,36716165
+300476,301531,300058,2023-07-02,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (3.2 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c300.",44814637,36716164
+300477,301532,300058,2023-07-01,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300478,301534,300058,2023-07-10,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300479,301535,300058,2023-08-10,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2023-08-01 for sigmoid colon cancer. EBL 83 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300480,301535,300058,2023-08-09,"Colon, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 2.6 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 1/13 positive. Pathologic stage pT3N1aM0.",44814640,36716165
+300481,301536,300058,2023-09-01,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300482,301536,300058,2023-09-01,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300483,301547,300059,2021-07-24,"Colonoscopy: Ulceroinfiltrative mass at Rectosigmoid junction, 6.0 cm in size, occupying about 41% of the lumen. Multiple biopsies taken. Impression: Rectosigmoid junction cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300484,301548,300059,2021-07-28,"Colon, Rectosigmoid junction, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300485,301549,300059,2021-07-28,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectosigmoid junction (6.0 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: rectosigmoid junction cancer, c4a1b1a.",44814637,36716164
+300486,301549,300059,2021-07-28,"Rectal MRI. Tumor lower margin 15.88 cm from anal verge (13.98 cm from anorectal junction), located left lateral. mrT4a, mrN1b. Shortest distance to mesorectal fascia 7.7 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300487,301550,300059,2021-07-31,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300488,301552,300059,2021-08-07,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300489,301553,300059,2021-08-27,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300490,301553,300059,2021-08-27,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300491,301572,300060,2021-08-25,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 6.4 cm in size, occupying about 84% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300492,301573,300060,2021-08-27,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300493,301574,300060,2021-08-30,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (6.4 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the bone. Impression: rectum cancer, c4a1b1a.",44814637,36716164
+300494,301574,300060,2021-08-30,"Rectal MRI. Tumor lower margin 6.84 cm from anal verge (4.48 cm from anorectal junction), located anterior. mrT4a, mrN1b. Shortest distance to mesorectal fascia 2.1 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300495,301576,300060,2021-09-01,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300496,301578,300060,2021-09-13,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300497,301579,300060,2021-09-23,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300498,301579,300060,2021-09-23,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300499,301606,300061,2021-10-10,"Colonoscopy: Polypoid mass at Descending colon, 3.8 cm in size, occupying about 40% of the lumen. Multiple biopsies taken. Impression: Descending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300500,301607,300061,2021-10-12,"Colon, Descending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300501,301608,300061,2021-10-18,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the descending colon (3.8 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: descending colon cancer, c200.",44814637,36716164
+300502,301609,300061,2021-10-16,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300503,301611,300061,2021-10-31,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300504,301612,300061,2021-12-09,"Discharge summary. Left hemicolectomy (laparoscopic) on 2021-11-29 for descending colon cancer. EBL 161 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 10.",44814641,36716213
+300505,301612,300061,2021-12-06,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.6 cm, gross type ulceroinfiltrative. Depth of invasion: Muscularis propria. Lymphatic invasion absent, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/32 positive. Pathologic stage pT2N0M0.",44814640,36716165
+300506,301622,300062,2020-05-18,"Colonoscopy: Polypoid mass at Descending colon, 6.0 cm in size, occupying about 37% of the lumen. Multiple biopsies taken. Impression: Descending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300507,301623,300062,2020-05-22,"Colon, Descending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300508,301624,300062,2020-05-21,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the descending colon (6.0 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: descending colon cancer, c32a1a.",44814637,36716164
+300509,301626,300062,2020-05-24,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300510,301629,300062,2020-05-30,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300511,301630,300062,2020-06-10,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300512,301630,300062,2020-06-10,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300513,301656,300063,2019-05-05,"Colonoscopy: Polypoid mass at Rectum, 6.0 cm in size, occupying about 89% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300514,301657,300063,2019-05-09,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300515,301658,300063,2019-05-12,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (6.0 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the peritoneum. Impression: rectum cancer, c4a1b1a.",44814637,36716164
+300516,301658,300063,2019-05-12,"Rectal MRI. Tumor lower margin 9.08 cm from anal verge (6.18 cm from anorectal junction), located left lateral. mrT4a, mrN1b. Shortest distance to mesorectal fascia 4.5 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300517,301657,300063,2019-05-09,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300518,301661,300063,2019-05-23,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300519,301662,300063,2019-06-06,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300520,301662,300063,2019-06-06,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300521,301672,300063,2020-01-18,CT abdomen and pelvis: interval increase of peritoneum metastases and new liver lesions. Progressive disease.,44814637,36716164
+300522,301674,300064,2020-07-14,"Colonoscopy: Polypoid mass at Rectum, 5.8 cm in size, occupying about 57% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300523,301675,300064,2020-07-16,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: high.",44814640,36716165
+300524,301676,300064,2020-07-20,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (5.8 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c4a1b0.",44814637,36716164
+300525,301676,300064,2020-07-20,"Rectal MRI. Tumor lower margin 6.87 cm from anal verge (3.94 cm from anorectal junction), located circumferential. mrT4a, mrN1b. Shortest distance to mesorectal fascia 1.6 mm. EMVI positive. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300526,301676,300064,2020-07-20,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 loss, MSH6 loss, PMS2 intact. Interpretation: MMR-deficient (loss of MSH2/MSH6).",44814640,36716165
+300527,301677,300064,2020-07-25,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300528,301678,300064,2020-08-05,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300529,301680,300064,2020-10-20,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 1. Residual tumor 6.87 cm from anal verge. MRF clear.,44814637,36716164
+300530,301681,300064,2020-11-19,Discharge summary. Low anterior resection (laparoscopic) on 2020-11-09 for rectum cancer. EBL 341 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300531,301681,300064,2020-11-17,"Rectum, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 0.0 cm, gross type polypoid. Depth of invasion: No residual tumor. Lymphatic invasion absent, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 0/22 positive. TME quality: nearly complete. Pathologic stage ypT0N0M0.",44814640,36716165
+300532,301685,300064,2022-11-09,"CT abdomen and pelvis: new peritoneum lesion, suspicious for recurrence. CEA 0.3 ng/mL.",44814637,36716164
+300533,301686,300064,2022-12-08,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300534,301686,300064,2022-12-08,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300535,301704,300065,2022-09-16,"Colonoscopy: Ulcerofungating mass at Ascending colon, 3.4 cm in size, occupying about 76% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300536,301705,300065,2022-09-20,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300537,301706,300065,2022-09-19,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (3.4 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c300.",44814637,36716164
+300538,301707,300065,2022-09-21,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300539,301710,300065,2022-09-30,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300540,301711,300065,2022-10-24,Discharge summary. Right hemicolectomy (open) on 2022-10-18 for ascending colon cancer. EBL 512 mL. Postoperative course uneventful. Discharged on POD 6.,44814641,36716213
+300541,301711,300065,2022-10-22,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.8 cm, gross type ulceroinfiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/12 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300542,301712,300065,2022-12-04,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300543,301712,300065,2022-12-04,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300544,301730,300066,2021-04-27,"Colonoscopy: Ulcerofungating mass at Cecum, 1.9 cm in size, occupying about 14% of the lumen. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300545,301731,300066,2021-04-30,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300546,301732,300066,2021-05-04,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the cecum (1.9 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: cecum cancer, c100.",44814637,36716164
+300547,301732,300066,2021-05-04,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300548,301735,300066,2021-05-13,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300549,301736,300066,2021-06-14,Discharge summary. Right hemicolectomy (laparoscopic) on 2021-06-07 for cecum cancer. EBL 60 mL. Postoperative course uneventful. Discharged on POD 7.,44814641,36716213
+300550,301736,300066,2021-06-11,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 2.0 cm, gross type ulcerofungating. Depth of invasion: Submucosa. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/32 positive. Pathologic stage pT1N0M0.",44814640,36716165
+300551,301747,300067,2024-03-05,"Colonoscopy: Polypoid mass at Sigmoid colon, 5.8 cm in size, occupying about 77% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300552,301748,300067,2024-03-08,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: intermediate.",44814640,36716165
+300553,301749,300067,2024-03-11,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (5.8 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c300.",44814637,36716164
+300554,301749,300067,2024-03-11,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300555,301752,300067,2024-03-19,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300556,301753,300067,2024-04-27,"Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2024-04-17 for sigmoid colon cancer. EBL 107 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 10.",44814641,36716213
+300557,301753,300067,2024-04-22,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 5.2 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/16 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300558,301758,300068,2021-10-12,"Colonoscopy: Ulcerofungating mass at Ascending colon, 2.4 cm in size, occupying about 30% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300559,301759,300068,2021-10-15,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300560,301760,300068,2021-10-18,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (2.4 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c200.",44814637,36716164
+300561,301761,300068,2021-10-19,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300562,301764,300068,2021-10-31,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300563,301774,300069,2022-12-10,"Colonoscopy: Ulcerofungating mass at Sigmoid colon, 3.1 cm in size, occupying about 64% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300564,301775,300069,2022-12-14,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300565,301776,300069,2022-12-16,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (3.1 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: sigmoid colon cancer, c31a0.",44814637,36716164
+300566,301777,300069,2022-12-17,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 loss, MSH6 loss, PMS2 intact. Interpretation: MMR-deficient (loss of MSH2/MSH6).",44814640,36716165
+300567,301780,300069,2022-12-23,Molecular pathology: KRAS wild type; NRAS G12D; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300568,301781,300069,2023-01-30,Discharge summary. Anterior resection (sigmoidectomy) (open) on 2023-01-21 for sigmoid colon cancer. EBL 235 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300569,301781,300069,2023-01-28,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 2.4 cm, gross type ulcerofungating. Depth of invasion: Muscularis propria. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 1/18 positive. Pathologic stage pT2N1aM0.",44814640,36716165
+300570,301782,300069,2023-02-27,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300571,301782,300069,2023-02-27,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300572,301795,300069,2024-07-18,"CT abdomen and pelvis: new liver lesion, suspicious for recurrence. CEA 16.6 ng/mL.",44814637,36716164
+300573,301813,300070,2020-08-09,"Colonoscopy: Ulcerofungating mass at Sigmoid colon, 5.6 cm in size, occupying about 86% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300574,301814,300070,2020-08-12,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300575,301815,300070,2020-08-12,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (5.6 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the liver. Impression: sigmoid colon cancer, c32b1b.",44814637,36716164
+300576,301817,300070,2020-08-16,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300577,301819,300070,2020-08-23,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300578,301831,300071,2021-10-25,"Colonoscopy: Ulcerofungating mass at Transverse colon, 3.6 cm in size, occupying about 35% of the lumen. Multiple biopsies taken. Impression: Transverse colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300579,301832,300071,2021-10-28,"Colon, Transverse colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300580,301833,300071,2021-10-29,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the transverse colon (3.6 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: transverse colon cancer, c200.",44814637,36716164
+300581,301833,300071,2021-10-29,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300582,301836,300071,2021-11-05,Molecular pathology: KRAS wild type; NRAS wild type; BRAF V600E; MSI (PCR) MSS.,44814640,36716165
+300583,301846,300072,2021-11-01,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 6.5 cm in size, occupying about 81% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300584,301847,300072,2021-11-05,"Colon, Ascending colon, endoscopic biopsy: Signet ring cell carcinoma, moderately differentiated. Tumor budding: low.",44814640,36716165
+300585,301848,300072,2021-11-05,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (6.5 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the lung. Impression: ascending colon cancer, c4a1b1b.",44814637,36716164
+300586,301850,300072,2021-11-06,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300587,301853,300072,2021-11-16,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300588,301854,300072,2021-12-09,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300589,301854,300072,2021-12-09,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300590,301872,300073,2021-03-12,"Colonoscopy: Polypoid mass at Sigmoid colon, 4.0 cm in size, occupying about 56% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300591,301873,300073,2021-03-15,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: intermediate.",44814640,36716165
+300592,301874,300073,2021-03-16,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (4.0 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: sigmoid colon cancer, c32a0.",44814637,36716164
+300593,301875,300073,2021-03-19,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300594,301878,300073,2021-03-31,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300595,301879,300073,2021-05-09,"Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2021-04-29 for sigmoid colon cancer. EBL 291 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 10.",44814641,36716213
+300596,301879,300073,2021-05-05,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 4.3 cm, gross type polypoid. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 5/22 positive. Pathologic stage pT3N2aM0.",44814640,36716165
+300597,301880,300073,2021-06-07,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300598,301880,300073,2021-06-07,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300599,301905,300073,2025-11-04,"CT abdomen and pelvis: new liver lesion, suspicious for recurrence. CEA 9.4 ng/mL.",44814637,36716164
+300600,301919,300074,2020-12-04,"Colonoscopy: Polypoid mass at Sigmoid colon, 3.4 cm in size, occupying about 34% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300601,301920,300074,2020-12-08,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: intermediate.",44814640,36716165
+300602,301921,300074,2020-12-11,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (3.4 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the peritoneum. Impression: sigmoid colon cancer, c32b1a.",44814637,36716164
+300603,301923,300074,2020-12-09,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300604,301925,300074,2020-12-20,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300605,301926,300074,2021-01-05,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300606,301926,300074,2021-01-05,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300607,301948,300075,2023-06-27,"Colonoscopy: Polypoid mass at Rectosigmoid junction, 3.1 cm in size, occupying about 35% of the lumen. Multiple biopsies taken. Impression: Rectosigmoid junction cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300608,301949,300075,2023-06-29,"Colon, Rectosigmoid junction, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300609,301950,300075,2023-07-02,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectosigmoid junction (3.1 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the peritoneum. Impression: rectosigmoid junction cancer, c32b1a.",44814637,36716164
+300610,301950,300075,2023-07-02,"Rectal MRI. Tumor lower margin 12.35 cm from anal verge (9.83 cm from anorectal junction), located left lateral. mrT3, mrN2b. Shortest distance to mesorectal fascia 4.3 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300611,301952,300075,2023-07-04,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300612,301954,300075,2023-07-15,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300613,301955,300075,2023-07-26,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300614,301955,300075,2023-07-26,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300615,301971,300075,2024-02-02,CT abdomen and pelvis: interval increase of peritoneum metastases and new liver lesions. Progressive disease.,44814637,36716164
+300616,301984,300076,2023-05-01,"Colonoscopy: Polypoid mass at Rectosigmoid junction, 6.6 cm in size, occupying about 68% of the lumen. Multiple biopsies taken. Impression: Rectosigmoid junction cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300617,301985,300076,2023-05-03,"Colon, Rectosigmoid junction, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300618,301986,300076,2023-05-08,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectosigmoid junction (6.6 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectosigmoid junction cancer, c4a00.",44814637,36716164
+300619,301986,300076,2023-05-08,"Rectal MRI. Tumor lower margin 13.3 cm from anal verge (10.49 cm from anorectal junction), located right lateral. mrT4a, mrN0. Shortest distance to mesorectal fascia 12.8 mm. EMVI negative. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300620,301987,300076,2023-05-07,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300621,301988,300076,2023-05-13,Molecular pathology: KRAS wild type; NRAS G12D; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300622,301989,300076,2023-06-04,Discharge summary. Anterior resection (laparoscopic) on 2023-05-26 for rectosigmoid junction cancer. EBL 20 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300623,301989,300076,2023-06-04,"Rectosigmoid colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 5.0 cm, gross type ulcerofungating. Depth of invasion: Muscularis propria. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 4/26 positive. Pathologic stage pT2N2aM0.",44814640,36716165
+300624,301990,300076,2023-06-24,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300625,301990,300076,2023-06-24,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300626,302001,300077,2020-12-09,"Colonoscopy: Polypoid mass at Ascending colon, 8.6 cm in size, occupying about 59% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300627,302002,300077,2020-12-12,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: high.",44814640,36716165
+300628,302003,300077,2020-12-15,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (8.6 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c4b1a0.",44814637,36716164
+300629,302004,300077,2020-12-13,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300630,302006,300077,2020-12-22,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300631,302007,300077,2021-01-20,Discharge summary. Right hemicolectomy (laparoscopic) on 2021-01-13 for ascending colon cancer. EBL 151 mL. Postoperative course uneventful. Discharged on POD 7.,44814641,36716213
+300632,302007,300077,2021-01-19,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 7.9 cm, gross type ulcerofungating. Depth of invasion: Muscularis propria. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 1/17 positive. Pathologic stage pT2N1aM0.",44814640,36716165
+300633,302008,300077,2021-02-11,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300634,302008,300077,2021-02-11,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300635,302024,300078,2022-04-02,"Colonoscopy: Polypoid mass at Sigmoid colon, 4.2 cm in size, occupying about 28% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300636,302025,300078,2022-04-06,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300637,302026,300078,2022-04-05,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (4.2 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c300.",44814637,36716164
+300638,302025,300078,2022-04-06,"Immunohistochemistry (MMR proteins): MLH1 loss, MSH2 intact, MSH6 intact, PMS2 loss. Interpretation: MMR-deficient (loss of MLH1/PMS2).",44814640,36716165
+300639,302029,300078,2022-04-19,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300640,302030,300078,2022-05-27,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2022-05-18 for sigmoid colon cancer. EBL 182 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300641,302030,300078,2022-05-27,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 4.3 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/19 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300642,302039,300079,2019-08-29,"Colonoscopy: Ulceroinfiltrative mass at Cecum, 5.9 cm in size, occupying about 94% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300643,302040,300079,2019-09-02,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300644,302041,300079,2019-09-05,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the cecum (5.9 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: cecum cancer, c4a2b0.",44814637,36716164
+300645,302042,300079,2019-09-04,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300646,302045,300079,2019-09-16,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300647,302046,300079,2019-10-24,"Discharge summary. Right hemicolectomy (laparoscopic) on 2019-10-15 for cecum cancer. EBL 326 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 9.",44814641,36716213
+300648,302046,300079,2019-10-20,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 6.7 cm, gross type polypoid. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/28 positive. Pathologic stage pT4aN0M0.",44814640,36716165
+300649,302047,300079,2019-11-12,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300650,302047,300079,2019-11-12,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300651,302064,300079,2023-01-27,"CT abdomen and pelvis: new distant lymph node lesion, suspicious for recurrence. CEA 6.4 ng/mL.",44814637,36716164
+300652,302083,300080,2019-10-01,"Colonoscopy: Polypoid mass at Ascending colon, 6.0 cm in size, occupying about 74% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300653,302084,300080,2019-10-04,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300654,302085,300080,2019-10-09,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (6.0 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c4a2a0.",44814637,36716164
+300655,302086,300080,2019-10-08,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300656,302088,300080,2019-10-19,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300657,302089,300080,2019-11-19,Discharge summary. Right hemicolectomy (laparoscopic) on 2019-11-10 for ascending colon cancer. EBL 309 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300658,302089,300080,2019-11-15,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 6.4 cm, gross type infiltrative. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 4/25 positive. Pathologic stage pT4aN2aM0.",44814640,36716165
+300659,302090,300080,2019-12-18,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300660,302090,300080,2019-12-18,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300661,302108,300080,2023-05-04,"CT abdomen and pelvis: new liver lesion, suspicious for recurrence. CEA 7.9 ng/mL.",44814637,36716164
+300662,302122,300081,2023-01-04,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 7.3 cm in size, occupying about 38% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300663,302123,300081,2023-01-07,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300664,302124,300081,2023-01-08,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (7.3 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c4a1a0.",44814637,36716164
+300665,302124,300081,2023-01-08,"Rectal MRI. Tumor lower margin 6.83 cm from anal verge (5.12 cm from anorectal junction), located posterior. mrT4a, mrN1a. Shortest distance to mesorectal fascia 4.7 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300666,302125,300081,2023-01-09,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300667,302128,300081,2023-01-24,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300668,302129,300081,2023-02-11,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300669,302131,300081,2023-04-26,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 2. Residual tumor 6.83 cm from anal verge. MRF clear.,44814637,36716164
+300670,302132,300081,2023-05-22,Discharge summary. Low anterior resection (laparoscopic) on 2023-05-13 for rectum cancer. EBL 162 mL. Diverting ileostomy formed. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300671,302132,300081,2023-05-17,"Rectum, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 7.4 cm, gross type ulceroinfiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/15 positive. TME quality: complete. Pathologic stage ypT3N0M0.",44814640,36716165
+300672,302139,300082,2020-04-06,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 6.9 cm in size, occupying about 65% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300673,302140,300082,2020-04-08,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: low.",44814640,36716165
+300674,302141,300082,2020-04-14,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (6.9 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c4a2b0.",44814637,36716164
+300675,302141,300082,2020-04-14,"Rectal MRI. Tumor lower margin 2.62 cm from anal verge (0.94 cm from anorectal junction), located circumferential. mrT4a, mrN2b. Shortest distance to mesorectal fascia 11.8 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN present.",44814637,36716164
+300676,302142,300082,2020-04-10,"Immunohistochemistry (MMR proteins): MLH1 loss, MSH2 intact, MSH6 intact, PMS2 loss. Interpretation: MMR-deficient (loss of MLH1/PMS2).",44814640,36716165
+300677,302144,300082,2020-04-26,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300678,302145,300082,2020-05-17,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300679,302147,300082,2020-08-09,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 3. Residual tumor 2.62 cm from anal verge. MRF clear.,44814637,36716164
+300680,302148,300082,2020-09-03,Discharge summary. Low anterior resection (laparoscopic) on 2020-08-25 for rectum cancer. EBL 204 mL. Diverting ileostomy formed. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300681,302148,300082,2020-08-30,"Rectum, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 7.8 cm, gross type ulceroinfiltrative. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 7/23 positive. TME quality: complete. Pathologic stage ypT4aN2bM0.",44814640,36716165
+300682,302149,300082,2020-10-01,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300683,302149,300082,2020-10-01,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300684,302173,300083,2024-04-04,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 2.7 cm in size, occupying about 81% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300685,302174,300083,2024-04-06,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300686,302175,300083,2024-04-07,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (2.7 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectum cancer, c200.",44814637,36716164
+300687,302175,300083,2024-04-07,"Rectal MRI. Tumor lower margin 9.86 cm from anal verge (7.64 cm from anorectal junction), located anterior. mrT2, mrN0. Shortest distance to mesorectal fascia 7.2 mm. EMVI negative. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300688,302176,300083,2024-04-11,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300689,302178,300083,2024-04-24,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300690,302179,300083,2024-05-28,Discharge summary. Low anterior resection (laparoscopic) on 2024-05-22 for rectum cancer. EBL 20 mL. Diverting ileostomy formed. Postoperative course uneventful. Discharged on POD 6.,44814641,36716213
+300691,302179,300083,2024-05-29,"Rectum, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 2.6 cm, gross type ulcerofungating. Depth of invasion: Muscularis propria. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/38 positive. TME quality: complete. Pathologic stage pT2N0M0.",44814640,36716165
+300692,302184,300084,2019-03-28,"Colonoscopy: Polypoid mass at Rectum, 3.6 cm in size, occupying about 60% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300693,302185,300084,2019-03-30,"Colon, Rectum, endoscopic biopsy: Signet ring cell carcinoma, poorly differentiated. Tumor budding: intermediate.",44814640,36716165
+300694,302186,300084,2019-04-04,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (3.6 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c31b0.",44814637,36716164
+300695,302186,300084,2019-04-04,"Rectal MRI. Tumor lower margin 10.23 cm from anal verge (7.94 cm from anorectal junction), located left lateral. mrT3, mrN1b. Shortest distance to mesorectal fascia 7.7 mm. EMVI positive. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300696,302186,300084,2019-04-04,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300697,302188,300084,2019-04-09,Molecular pathology: KRAS G12C; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300698,302189,300084,2019-04-26,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300699,302191,300084,2019-07-14,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 2. Residual tumor 10.23 cm from anal verge. MRF clear.,44814637,36716164
+300700,302192,300084,2019-07-27,Discharge summary. Low anterior resection (laparoscopic) on 2019-07-21 for rectum cancer. EBL 93 mL. Postoperative course uneventful. Discharged on POD 6.,44814641,36716213
+300701,302192,300084,2019-07-29,"Rectum, resection: Signet ring cell carcinoma, poorly differentiated. Tumor size 4.0 cm, gross type ulcerofungating. Depth of invasion: Muscularis propria. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/22 positive. TME quality: complete. Pathologic stage ypT2N0M0.",44814640,36716165
+300702,302201,300084,2024-01-04,"CT abdomen and pelvis: new liver lesion, suspicious for recurrence. CEA 4.8 ng/mL.",44814637,36716164
+300703,302202,300084,2024-01-24,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300704,302202,300084,2024-01-24,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300705,302217,300085,2022-12-01,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 4.5 cm in size, occupying about 89% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300706,302218,300085,2022-12-03,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: low.",44814640,36716165
+300707,302219,300085,2022-12-07,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (4.5 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c31a0.",44814637,36716164
+300708,302220,300085,2022-12-08,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300709,302222,300085,2022-12-17,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300710,302230,300086,2023-09-09,"Colonoscopy: Polypoid mass at Descending colon, 5.0 cm in size, occupying about 33% of the lumen. Multiple biopsies taken. Impression: Descending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300711,302231,300086,2023-09-11,"Colon, Descending colon, endoscopic biopsy: Adenocarcinoma, NOS, well differentiated. Tumor budding: intermediate.",44814640,36716165
+300712,302232,300086,2023-09-16,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the descending colon (5.0 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: descending colon cancer, c300.",44814637,36716164
+300713,302233,300086,2023-09-15,"Immunohistochemistry (MMR proteins): MLH1 loss, MSH2 intact, MSH6 intact, PMS2 loss. Interpretation: MMR-deficient (loss of MLH1/PMS2).",44814640,36716165
+300714,302235,300086,2023-09-23,Molecular pathology: KRAS G12D; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300715,302236,300086,2023-10-25,Discharge summary. Left hemicolectomy (laparoscopic) on 2023-10-15 for descending colon cancer. EBL 20 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300716,302236,300086,2023-10-19,"Colon, resection: Adenocarcinoma, NOS, well differentiated. Tumor size 4.0 cm, gross type ulcerofungating. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/21 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300717,302242,300087,2020-12-19,"Colonoscopy: Ulcerofungating mass at Rectum, 5.1 cm in size, occupying about 49% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300718,302243,300087,2020-12-21,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300719,302244,300087,2020-12-23,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (5.1 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c31b0.",44814637,36716164
+300720,302244,300087,2020-12-23,"Rectal MRI. Tumor lower margin 8.34 cm from anal verge (6.6 cm from anorectal junction), located right lateral. mrT3, mrN1b. Shortest distance to mesorectal fascia 6.5 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300721,302244,300087,2020-12-23,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300722,302246,300087,2021-01-07,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSI-L.,44814640,36716165
+300723,302247,300087,2021-01-22,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300724,302249,300087,2021-04-02,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 4. Residual tumor 8.34 cm from anal verge. MRF threatened.,44814637,36716164
+300725,302250,300087,2021-04-17,"Discharge summary. Low anterior resection (open) on 2021-04-09 for rectum cancer. EBL 430 mL. Postoperative course complicated by fever, treated conservatively. Discharged on POD 8.",44814641,36716213
+300726,302250,300087,2021-04-13,"Rectum, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 5.7 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 3/37 positive. TME quality: complete. Pathologic stage ypT3N1bM0.",44814640,36716165
+300727,302251,300087,2021-05-25,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300728,302269,300088,2024-03-18,"Colonoscopy: Ulcerofungating mass at Descending colon, 5.4 cm in size, occupying about 55% of the lumen. Multiple biopsies taken. Impression: Descending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300729,302270,300088,2024-03-20,"Colon, Descending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300730,302271,300088,2024-03-26,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the descending colon (5.4 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: descending colon cancer, c300.",44814637,36716164
+300731,302272,300088,2024-03-25,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300732,302273,300088,2024-04-02,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300733,302274,300088,2024-04-23,Discharge summary. Left hemicolectomy (laparoscopic) on 2024-04-16 for descending colon cancer. EBL 230 mL. Postoperative course uneventful. Discharged on POD 7.,44814641,36716213
+300734,302274,300088,2024-04-21,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 4.0 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/21 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300735,302279,300089,2021-08-27,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 4.6 cm in size, occupying about 37% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300736,302280,300089,2021-08-29,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300737,302281,300089,2021-08-30,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (4.6 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectum cancer, c300.",44814637,36716164
+300738,302281,300089,2021-08-30,"Rectal MRI. Tumor lower margin 3.44 cm from anal verge (1.61 cm from anorectal junction), located anterior. mrT3, mrN0. Shortest distance to mesorectal fascia 0.5 mm. EMVI negative. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300739,302282,300089,2021-08-31,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300740,302284,300089,2021-09-09,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300741,302285,300089,2021-09-25,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300742,302288,300089,2021-12-12,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 2. Residual tumor 3.44 cm from anal verge. MRF clear.,44814637,36716164
+300743,302289,300089,2022-01-09,"Discharge summary. Low anterior resection (laparoscopic) on 2021-12-30 for rectum cancer. EBL 20 mL. Diverting ileostomy formed. Postoperative course complicated by fever, treated conservatively. Discharged on POD 10.",44814641,36716213
+300744,302289,300089,2022-01-07,"Rectum, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.6 cm, gross type ulceroinfiltrative. Depth of invasion: Muscularis propria. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/26 positive. TME quality: nearly complete. Pathologic stage ypT2N0M0.",44814640,36716165
+300745,302299,300090,2022-06-23,"Colonoscopy: Polypoid mass at Ascending colon, 3.8 cm in size, occupying about 52% of the lumen, scope could not pass the lesion. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300746,302300,300090,2022-06-25,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: low.",44814640,36716165
+300747,302301,300090,2022-06-29,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the ascending colon (3.8 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: ascending colon cancer, c32a0.",44814637,36716164
+300748,302302,300090,2022-06-30,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300749,302304,300090,2022-07-12,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300750,302305,300090,2022-08-08,Discharge summary. Right hemicolectomy (open) on 2022-07-29 for ascending colon cancer. EBL 502 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300751,302305,300090,2022-08-03,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 3.8 cm, gross type ulceroinfiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion present, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 1/23 positive. Pathologic stage pT3N1aM0.",44814640,36716165
+300752,302306,300090,2022-08-31,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300753,302306,300090,2022-08-31,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300754,302328,300091,2020-04-03,"Colonoscopy: Ulcerofungating mass at Rectum, 3.1 cm in size, occupying about 61% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300755,302329,300091,2020-04-07,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300756,302330,300091,2020-04-07,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (3.1 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c31b0.",44814637,36716164
+300757,302330,300091,2020-04-07,"Rectal MRI. Tumor lower margin 6.17 cm from anal verge (4.5 cm from anorectal junction), located left lateral. mrT3, mrN1b. Shortest distance to mesorectal fascia 1.7 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300758,302331,300091,2020-04-09,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300759,302333,300091,2020-04-17,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300760,302334,300091,2020-05-03,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300761,302336,300091,2020-07-24,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 2. Residual tumor 6.17 cm from anal verge. MRF clear.,44814637,36716164
+300762,302337,300091,2020-08-08,Discharge summary. Low anterior resection (laparoscopic) on 2020-07-31 for rectum cancer. EBL 111 mL. Diverting ileostomy formed. Postoperative course uneventful. Discharged on POD 8.,44814641,36716213
+300763,302337,300091,2020-08-03,"Rectum, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.5 cm, gross type ulcerofungating. Depth of invasion: Muscularis propria. Lymphatic invasion absent, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/14 positive. TME quality: complete. Pathologic stage ypT2N0M0.",44814640,36716165
+300764,302349,300092,2019-02-02,"Colonoscopy: Polypoid mass at Sigmoid colon, 4.1 cm in size, occupying about 86% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300765,302350,300092,2019-02-04,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300766,302351,300092,2019-02-07,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the sigmoid colon (4.1 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: sigmoid colon cancer, c300.",44814637,36716164
+300767,302352,300092,2019-02-08,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 loss, MSH6 loss, PMS2 intact. Interpretation: MMR-deficient (loss of MSH2/MSH6).",44814640,36716165
+300768,302353,300092,2019-02-16,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300769,302354,300092,2019-03-10,"Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic, converted to open) on 2019-02-28 for sigmoid colon cancer. EBL 399 mL. Postoperative course uneventful. Discharged on POD 10.",44814641,36716213
+300770,302354,300092,2019-03-05,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.5 cm, gross type polypoid. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion present, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 0/27 positive. Pathologic stage pT4aN0M0.",44814640,36716165
+300771,302355,300092,2019-04-12,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300772,302355,300092,2019-04-12,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300773,302376,300093,2022-09-02,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 5.9 cm in size, occupying about 47% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300774,302377,300093,2022-09-06,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300775,302378,300093,2022-09-05,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (5.9 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the lung. Impression: rectum cancer, c32a1b.",44814637,36716164
+300776,302378,300093,2022-09-05,"Rectal MRI. Tumor lower margin 6.01 cm from anal verge (4.24 cm from anorectal junction), located anterior. mrT3, mrN2a. Shortest distance to mesorectal fascia 0.9 mm. EMVI positive. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300777,302377,300093,2022-09-06,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300778,302382,300093,2022-09-18,Molecular pathology: KRAS G12V; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300779,302383,300093,2022-10-03,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300780,302383,300093,2022-10-03,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300781,302405,300094,2019-12-06,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 4.6 cm in size, occupying about 86% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300782,302406,300094,2019-12-08,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300783,302407,300094,2019-12-10,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the ascending colon (4.6 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c300.",44814637,36716164
+300784,302408,300094,2019-12-13,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300785,302410,300094,2019-12-20,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300786,302411,300094,2020-01-15,Discharge summary. Right hemicolectomy (open) on 2020-01-09 for ascending colon cancer. EBL 165 mL. Postoperative course uneventful. Discharged on POD 6.,44814641,36716213
+300787,302411,300094,2020-01-13,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 4.1 cm, gross type polypoid. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/12 positive. Pathologic stage pT3N0M0.",44814640,36716165
+300788,302412,300094,2020-02-20,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300789,302412,300094,2020-02-20,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300790,302436,300095,2019-04-07,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 6.4 cm in size, occupying about 27% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300791,302437,300095,2019-04-09,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300792,302438,300095,2019-04-12,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the rectum (6.4 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: rectum cancer, c4b1b0.",44814637,36716164
+300793,302438,300095,2019-04-12,"Rectal MRI. Tumor lower margin 2.58 cm from anal verge (0.56 cm from anorectal junction), located right lateral. mrT4b, mrN1b. Shortest distance to mesorectal fascia 2.5 mm. EMVI negative. Mesorectal LN present. Extramesorectal LN present.",44814637,36716164
+300794,302439,300095,2019-04-11,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300795,302441,300095,2019-04-23,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300796,302442,300095,2019-05-12,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300797,302445,300095,2019-07-29,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 1. Residual tumor 2.58 cm from anal verge. MRF clear.,44814637,36716164
+300798,302446,300095,2019-08-19,"Discharge summary. Low anterior resection (laparoscopic) on 2019-08-13 for rectum cancer. EBL 50 mL. Diverting ileostomy formed. Postoperative course complicated by fever, treated conservatively. Discharged on POD 6.",44814641,36716213
+300799,302446,300095,2019-08-20,"Rectum, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 0.0 cm, gross type infiltrative. Depth of invasion: No residual tumor. Lymphatic invasion absent, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 0/29 positive. TME quality: complete. Pathologic stage ypT0N0M0.",44814640,36716165
+300800,302458,300096,2022-04-12,"Colonoscopy: Polypoid mass at Sigmoid colon, 5.1 cm in size, occupying about 58% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300801,302459,300096,2022-04-14,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: intermediate.",44814640,36716165
+300802,302460,300096,2022-04-20,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (5.1 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: sigmoid colon cancer, c32b0.",44814637,36716164
+300803,302461,300096,2022-04-18,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 loss, MSH6 loss, PMS2 intact. Interpretation: MMR-deficient (loss of MSH2/MSH6).",44814640,36716165
+300804,302462,300096,2022-04-29,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSI-H.,44814640,36716165
+300805,302463,300096,2022-06-07,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2022-05-29 for sigmoid colon cancer. EBL 138 mL. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300806,302463,300096,2022-06-02,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 4.0 cm, gross type infiltrative. Depth of invasion: Subserosa / perirectal fat. Lymphatic invasion absent, venous invasion absent, perineural invasion present. Radial margin not involved. Lymph nodes: 3/16 positive. Pathologic stage pT3N1bM0.",44814640,36716165
+300807,302464,300096,2022-07-16,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300808,302464,300096,2022-07-16,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300809,302486,300096,2025-11-28,"CT abdomen and pelvis: new liver lesion, suspicious for recurrence. CEA 13.2 ng/mL.",44814637,36716164
+300810,302499,300097,2022-08-06,"Colonoscopy: Ulcerofungating mass at Rectum, 7.3 cm in size, occupying about 65% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300811,302500,300097,2022-08-09,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300812,302501,300097,2022-08-10,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (7.3 cm) with enlarged regional lymph nodes. Multiple metastatic nodules in the bone. Impression: rectum cancer, c4a1b1a.",44814637,36716164
+300813,302501,300097,2022-08-10,"Rectal MRI. Tumor lower margin 4.84 cm from anal verge (2.91 cm from anorectal junction), located anterior. mrT4a, mrN1b. Shortest distance to mesorectal fascia 6.0 mm. EMVI positive. Mesorectal LN present. Extramesorectal LN absent.",44814637,36716164
+300814,302502,300097,2022-08-13,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300815,302505,300097,2022-08-21,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300816,302506,300097,2022-09-12,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300817,302506,300097,2022-09-12,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300818,302525,300098,2020-12-19,"Colonoscopy: Ulceroinfiltrative mass at Cecum, 5.1 cm in size, occupying about 70% of the lumen. Multiple biopsies taken. Impression: Cecum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300819,302526,300098,2020-12-22,"Colon, Cecum, endoscopic biopsy: Adenocarcinoma, NOS, poorly differentiated. Tumor budding: low.",44814640,36716165
+300820,302527,300098,2020-12-24,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the cecum (5.1 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: cecum cancer, c4a2a0.",44814637,36716164
+300821,302528,300098,2020-12-26,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300822,302530,300098,2021-01-03,Molecular pathology: KRAS wild type; NRAS wild type; BRAF V600E; MSI (PCR) MSS.,44814640,36716165
+300823,302531,300098,2021-01-31,Discharge summary. Right hemicolectomy (laparoscopic) on 2021-01-21 for cecum cancer. EBL 47 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213
+300824,302531,300098,2021-01-25,"Colon, resection: Adenocarcinoma, NOS, poorly differentiated. Tumor size 5.7 cm, gross type ulceroinfiltrative. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion present, venous invasion present, perineural invasion absent. Radial margin not involved. Lymph nodes: 4/21 positive. Pathologic stage pT4aN2aM0.",44814640,36716165
+300825,302532,300098,2021-03-07,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300826,302532,300098,2021-03-07,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300827,302542,300098,2024-06-02,"CT abdomen and pelvis: new liver lesion, suspicious for recurrence. CEA 0.3 ng/mL.",44814637,36716164
+300828,302543,300098,2024-06-28,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300829,302559,300099,2022-11-30,"Colonoscopy: Ulcerofungating mass at Sigmoid colon, 7.8 cm in size, occupying about 57% of the lumen. Multiple biopsies taken. Impression: Sigmoid colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300830,302560,300099,2022-12-03,"Colon, Sigmoid colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: high.",44814640,36716165
+300831,302561,300099,2022-12-08,"CT abdomen and pelvis (contrast). Eccentric wall thickening of the sigmoid colon (7.8 cm) with enlarged regional lymph nodes. No distant metastasis. Impression: sigmoid colon cancer, c4b1a0.",44814637,36716164
+300832,302562,300099,2022-12-06,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300833,302564,300099,2022-12-18,Molecular pathology: KRAS wild type; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300834,302565,300099,2023-01-21,Discharge summary. Anterior resection (sigmoidectomy) (laparoscopic) on 2023-01-15 for sigmoid colon cancer. EBL 370 mL. Postoperative course uneventful. Discharged on POD 6.,44814641,36716213
+300835,302565,300099,2023-01-21,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 6.8 cm, gross type ulcerofungating. Depth of invasion: Serosa (visceral peritoneum). Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 1/22 positive. Pathologic stage pT4aN1aM0.",44814640,36716165
+300836,302566,300099,2023-03-04,SMILES oxaliplatin: O=C1O[Pt]2(OC1=O)NC1CCCCC1N2,32831,36716177
+300837,302566,300099,2023-03-04,SMILES fluorouracil: O=C1NC(=O)NC=C1F,32831,36716177
+300838,302582,300100,2020-12-02,"Colonoscopy: Ulceroinfiltrative mass at Rectum, 4.3 cm in size, occupying about 68% of the lumen. Multiple biopsies taken. Impression: Rectum cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177
+300839,302583,300100,2020-12-05,"Colon, Rectum, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated. Tumor budding: low.",44814640,36716165
+300840,302584,300100,2020-12-06,"CT abdomen and pelvis (contrast). Circumferential wall thickening of the rectum (4.3 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: rectum cancer, c300.",44814637,36716164
+300841,302584,300100,2020-12-06,"Rectal MRI. Tumor lower margin 7.07 cm from anal verge (4.31 cm from anorectal junction), located posterior. mrT3, mrN0. Shortest distance to mesorectal fascia 3.6 mm. EMVI positive. Mesorectal LN absent. Extramesorectal LN absent.",44814637,36716164
+300842,302585,300100,2020-12-07,"Immunohistochemistry (MMR proteins): MLH1 intact, MSH2 intact, MSH6 intact, PMS2 intact. Interpretation: MMR-proficient.",44814640,36716165
+300843,302588,300100,2020-12-19,Molecular pathology: KRAS G13D; NRAS wild type; BRAF wild type; MSI (PCR) MSS.,44814640,36716165
+300844,302589,300100,2021-01-09,SMILES capecitabine: CCCCCOC(=O)Nc1nc(=O)n(C2OC(C)C(O)C2O)cc1F,32831,36716177
+300845,302591,300100,2021-03-25,Rectal MRI after CCRT. Interval decrease of tumor. mrTRG 1. Residual tumor 7.07 cm from anal verge. MRF clear.,44814637,36716164
+300846,302592,300100,2021-04-10,Discharge summary. Low anterior resection (laparoscopic) on 2021-04-01 for rectum cancer. EBL 37 mL. Diverting ileostomy formed. Postoperative course uneventful. Discharged on POD 9.,44814641,36716213
+300847,302592,300100,2021-04-04,"Rectum, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 0.0 cm, gross type polypoid. Depth of invasion: No residual tumor. Lymphatic invasion absent, venous invasion absent, perineural invasion absent. Radial margin not involved. Lymph nodes: 0/13 positive. TME quality: complete. Pathologic stage ypT0N0M0.",44814640,36716165

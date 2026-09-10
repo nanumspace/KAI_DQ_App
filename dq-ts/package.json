@@ -1,0 +1,30 @@
+{
+  "name": "kai-dq-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "K-AI 코호트 데이터 품질 검증 엔진 (TypeScript 이식)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "engine": "tsx src/cli.ts",
+    "verify": "tsx src/verify.ts",
+    "compare": "tsx src/compare.ts",
+    "run-all": "tsx src/run_all.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@duckdb/node-api": "^1.5.5-r.4",
+    "csv-parse": "^7.0.2",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
+  }
+}

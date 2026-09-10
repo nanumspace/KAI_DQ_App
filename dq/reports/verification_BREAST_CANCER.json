@@ -1,0 +1,254 @@
+{
+ "cohort": "BREAST_CANCER",
+ "clean": {
+  "rules": 463,
+  "violations": 0,
+  "failed_rules": 0,
+  "false_positive_rate": 0.0
+ },
+ "dirty": {
+  "rules": 463,
+  "violations": 154,
+  "failed_rules": 52
+ },
+ "faults_total": 110,
+ "faults_detected": 110,
+ "recall": 1.0,
+ "fault_types": 34,
+ "fault_types_fully_detected": 34,
+ "missed": [],
+ "by_type": [
+  {
+   "fault_type": "AE_BEFORE_ANTP",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "AGE_AT_INDEX_MISMATCH",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "ALIAS_COLUMN",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "BMI_MISMATCH",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "CODELIST",
+   "n": 9,
+   "detected": 9,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "COHORT_CONDITION_MISSING",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DEATH_DATE_MISMATCH",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DRUG_END_BEFORE_START",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DUPLICATE_RECORD",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "EVENT_AFTER_DEATH",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FK_ORPHAN",
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FREQ_WITHOUT_DAYS",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FUTURE_DATE",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "GROUP_ANCHOR_NULL",
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "LINE_GAP",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "MEASUREMENT_IMPLAUSIBLE",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "MEASUREMENT_NO_VALUE",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "MENOPAUSE_LOGIC",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "MISSING_COLUMN",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PATH_BEFORE_SURGERY",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PATTERN",
+   "n": 4,
+   "detected": 4,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PERSON_INVARIANT",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PK_DUPLICATE",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "POS_LN_GT_TOTAL",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "RANGE",
+   "n": 4,
+   "detected": 4,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_NULL",
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "RT_DOSE_MISMATCH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "SERIOUS_AE_INCOMPLETE",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "TNM_CONCAT_MISMATCH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "TYPE_DATE",
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "TYPE_NUMBER",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "UNKNOWN_COLUMN",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_END_BEFORE_START",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_PERSON_MISMATCH",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  }
+ ],
+ "by_category": [
+  {
+   "category": "Completeness",
+   "n": 23,
+   "detected": 23,
+   "recall": 1.0
+  },
+  {
+   "category": "Conformance",
+   "n": 42,
+   "detected": 42,
+   "recall": 1.0
+  },
+  {
+   "category": "Plausibility",
+   "n": 45,
+   "detected": 45,
+   "recall": 1.0
+  }
+ ],
+ "collateral_rules": [
+  "SEM-BC-001",
+  "SEM-COM-006",
+  "SEM-COM-015",
+  "SEM-COM-024",
+  "SEM-COM-028",
+  "SEM-COM-030"
+ ]
+}

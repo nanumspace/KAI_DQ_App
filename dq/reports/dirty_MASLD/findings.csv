@@ -1,0 +1,146 @@
+﻿rule_id,rule_name,category,severity,table,field,row_key,person_id,detail
+ST-0002,PERSON 컬럼 구성,Conformance,error,PERSON,extra_col,,,명세에 없는 컬럼: extra_col (경고)
+ST-0005,PERSON.gender_concept_id 필수,Completeness,error,PERSON,gender_concept_id,400036,400036,gender_concept_id NULL
+ST-0005,PERSON.gender_concept_id 필수,Completeness,error,PERSON,gender_concept_id,400061,400061,gender_concept_id NULL
+ST-0005,PERSON.gender_concept_id 필수,Completeness,error,PERSON,gender_concept_id,400089,400089,gender_concept_id NULL
+ST-0007,PERSON.gender_concept_id 코드표,Conformance,warning,PERSON,gender_concept_id,400033,400033,gender_concept_id=9999 코드표(OMOP.gender_concept_id) 밖
+ST-0007,PERSON.gender_concept_id 코드표,Conformance,warning,PERSON,gender_concept_id,400049,400049,gender_concept_id=9999 코드표(OMOP.gender_concept_id) 밖
+ST-0007,PERSON.gender_concept_id 코드표,Conformance,warning,PERSON,gender_concept_id,400082,400082,gender_concept_id=9999 코드표(OMOP.gender_concept_id) 밖
+ST-0034,VISIT_OCCURRENCE.visit_start_date 필수,Completeness,error,VISIT_OCCURRENCE,visit_start_date,400629,400045,visit_start_date NULL
+ST-0034,VISIT_OCCURRENCE.visit_start_date 필수,Completeness,error,VISIT_OCCURRENCE,visit_start_date,400831,400061,visit_start_date NULL
+ST-0034,VISIT_OCCURRENCE.visit_start_date 필수,Completeness,error,VISIT_OCCURRENCE,visit_start_date,401336,400098,visit_start_date NULL
+ST-0035,VISIT_OCCURRENCE.visit_start_date 타입(date),Conformance,error,VISIT_OCCURRENCE,visit_start_date,400583,400041,visit_start_date='2024/13/40' 은 date 아님
+ST-0035,VISIT_OCCURRENCE.visit_start_date 타입(date),Conformance,error,VISIT_OCCURRENCE,visit_start_date,400735,400053,visit_start_date='2024/13/40' 은 date 아님
+ST-0035,VISIT_OCCURRENCE.visit_start_date 타입(date),Conformance,error,VISIT_OCCURRENCE,visit_start_date,400972,400071,visit_start_date='2024/13/40' 은 date 아님
+ST-0065,DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,400124,400007,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0065,DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,401044,400048,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0065,DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,402292,400098,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0101,DRUG_EXPOSURE.antp_id 비항암 코호트 NULL,Conformance,error,DRUG_EXPOSURE,antp_id,400993,400045,antp_id=1 (이 코호트에서는 NULL 이어야 함)
+ST-0101,DRUG_EXPOSURE.antp_id 비항암 코호트 NULL,Conformance,error,DRUG_EXPOSURE,antp_id,401678,400071,antp_id=1 (이 코호트에서는 NULL 이어야 함)
+ST-0101,DRUG_EXPOSURE.antp_id 비항암 코호트 NULL,Conformance,error,DRUG_EXPOSURE,antp_id,402065,400090,antp_id=1 (이 코호트에서는 NULL 이어야 함)
+ST-0114,CONDITION_OCCURRENCE.condition_start_date 타입(date),Conformance,error,CONDITION_OCCURRENCE,condition_start_date,400011,400004,condition_start_date='2023-02-30' 은 date 아님
+ST-0114,CONDITION_OCCURRENCE.condition_start_date 타입(date),Conformance,error,CONDITION_OCCURRENCE,condition_start_date,400086,400027,condition_start_date='2023-02-30' 은 date 아님
+ST-0114,CONDITION_OCCURRENCE.condition_start_date 타입(date),Conformance,error,CONDITION_OCCURRENCE,condition_start_date,400140,400045,condition_start_date='2023-02-30' 은 date 아님
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,405321,400032,PK 중복: 405321
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,407907,400034,PK 중복: 407907
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,405797,400035,PK 중복: 405797
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,405321,400050,PK 중복: 405321
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,405797,400055,PK 중복: 405797
+ST-0121,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,407907,400074,PK 중복: 407907
+ST-0136,MEASUREMENT.value_as_number 타입(float),Conformance,error,MEASUREMENT,value_as_number,400499,400006,value_as_number='N/A' 은 float 아님
+ST-0136,MEASUREMENT.value_as_number 타입(float),Conformance,error,MEASUREMENT,value_as_number,404386,400041,value_as_number='N/A' 은 float 아님
+ST-0136,MEASUREMENT.value_as_number 타입(float),Conformance,error,MEASUREMENT,value_as_number,410011,400095,value_as_number='N/A' 은 float 아님
+ST-0146,OBSERVATION 컬럼 구성,Conformance,error,OBSERVATION,value_as_string,,,컬럼 누락: value_as_string
+ST-0177,NOTE.note_date 미래 날짜 금지,Plausibility,error,NOTE,note_date,400201,400048,note_date=2030-01-01 미래 날짜
+ST-0177,NOTE.note_date 미래 날짜 금지,Plausibility,error,NOTE,note_date,400285,400066,note_date=2030-01-01 미래 날짜
+ST-0177,NOTE.note_date 미래 날짜 금지,Plausibility,error,NOTE,note_date,400355,400080,note_date=2030-01-01 미래 날짜
+ST-0658,MASLD.person_id -> PERSON.person_id 참조무결성,Conformance,error,MASLD,person_id,401382,888888888,person_id=888888888 가 PERSON.person_id 에 없음
+ST-0658,MASLD.person_id -> PERSON.person_id 참조무결성,Conformance,error,MASLD,person_id,405248,888888888,person_id=888888888 가 PERSON.person_id 에 없음
+ST-0658,MASLD.person_id -> PERSON.person_id 참조무결성,Conformance,error,MASLD,person_id,406305,888888888,person_id=888888888 가 PERSON.person_id 에 없음
+ST-0679,MASLD.fib4_score 범위,Plausibility,warning,MASLD,fib4_score,401667,400021,"fib4_score=1500 범위 [0,50] 밖"
+ST-0679,MASLD.fib4_score 범위,Plausibility,warning,MASLD,fib4_score,404222,400053,"fib4_score=1500 범위 [0,50] 밖"
+ST-0681,MASLD.apri_score 범위,Plausibility,warning,MASLD,apri_score,402049,400026,"apri_score=1300 범위 [0,30] 밖"
+ST-0681,MASLD.apri_score 범위,Plausibility,warning,MASLD,apri_score,407334,400090,"apri_score=1300 범위 [0,30] 밖"
+ST-0739,MASLD 그룹 'score' anchor 날짜,Completeness,error,MASLD,exam_gnrx_ymd,406104,400074,"['fib4_score', 'exam_gnrx_idx_nm', 'exam_gnrx_rslt_vl'] 값 있으나 anchor exam_gnrx_ymd NULL"
+ST-0740,MASLD 그룹 'imex' anchor 날짜,Completeness,error,MASLD,imex_ymd,404659,400059,"['imex_rslt_cont', 'lver_fbrs_grnm', 'imex_kncd'] 값 있으나 anchor imex_ymd NULL"
+ST-0741,MASLD 그룹 'hist' anchor 날짜,Completeness,error,MASLD,rcrd_ymd,406334,400077,"['drnk_dtrn_ycnt', 'drnk_nt', 'drnk_qty'] 값 있으나 anchor rcrd_ymd NULL"
+ST-0742,MASLD 그룹 'anth' anchor 날짜,Completeness,error,MASLD,anth_rcrd_ymd,400600,400009,"['ht_msrm_vl', 'wt_msrm_vl', 'bmi_vl'] 값 있으나 anchor anth_rcrd_ymd NULL"
+ST-0743,MASLD 그룹 'oprt' anchor 날짜,Completeness,error,MASLD,oprt_ymd,407025,400085,"['oprt_kncd', 'oprt_knnm'] 값 있으나 anchor oprt_ymd NULL"
+ST-0744,MASLD 그룹 'proc' anchor 날짜,Completeness,error,MASLD,procedure_occurrence_crtn_dt,401250,400017,['care_site_id'] 값 있으나 anchor procedure_occurrence_crtn_dt NULL
+ST-0746,MASLD 환자 불변 필드 일관성,Plausibility,warning,MASLD,date_of_birth,,400006,"date_of_birth 값이 환자 내에서 다름: ['1950-01-01', '1967-07-21']"
+ST-0746,MASLD 환자 불변 필드 일관성,Plausibility,warning,MASLD,date_of_birth,,400015,"date_of_birth 값이 환자 내에서 다름: ['1950-01-01', '1973-06-11']"
+ST-0746,MASLD 환자 불변 필드 일관성,Plausibility,warning,MASLD,date_of_birth,,400018,"date_of_birth 값이 환자 내에서 다름: ['1950-01-01', '1956-12-16']"
+ST-0746,MASLD 환자 불변 필드 일관성,Plausibility,warning,MASLD,date_of_birth,,888888888,"date_of_birth 값이 환자 내에서 다름: ['1956-12-16', '1968-10-19', '1969-05-26']"
+ST-1054,ADVERSE_EVENT 컬럼 구성,Conformance,error,ADVERSE_EVENT,antp_therapy_id,,,별칭 컬럼 antp_therapy_id 를 antp_id 로 해석함 (경고)
+ST-1084,ADVERSE_EVENT.severity_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,severity_concept_id,400010,400050,severity_concept_id=7 코드표(OMOP.severity_concept_id) 밖
+ST-1084,ADVERSE_EVENT.severity_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,severity_concept_id,400012,400084,severity_concept_id=7 코드표(OMOP.severity_concept_id) 밖
+ST-1084,ADVERSE_EVENT.severity_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,severity_concept_id,400014,400100,severity_concept_id=7 코드표(OMOP.severity_concept_id) 밖
+SEM-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,400186,400016,visit_end_date 2000-01-01 < visit_start_date 2026-05-09
+SEM-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,400508,400037,visit_end_date 2000-01-01 < visit_start_date 2021-05-04
+SEM-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,401368,400099,visit_end_date 2000-01-01 < visit_start_date 2021-10-15
+SEM-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,PERSON,,MEASUREMENT:402284,400022,이벤트일 2026-08-30 > death_date 2025-07-29
+SEM-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,PERSON,,MEASUREMENT:402330,400023,이벤트일 2026-08-30 > death_date 2024-10-01
+SEM-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,PERSON,,MEASUREMENT:404807,400045,이벤트일 2026-08-30 > death_date 2024-09-16
+SEM-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,PERSON,,NOTE:400355,400080,이벤트일 2030-01-01 > death_date 2022-12-23
+SEM-COM-005,이벤트-방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MEASUREMENT:400465,400001,visit 400056 의 person_id=400005
+SEM-COM-005,이벤트-방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MEASUREMENT:401066,400001,visit 400128 의 person_id=400012
+SEM-COM-005,이벤트-방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MEASUREMENT:403754,400001,visit 400489 의 person_id=400035
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,PROCEDURE_OCCURRENCE:400110,400037,이벤트일 2021-05-04 가 방문기간 2021-05-04~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401577,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401578,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401579,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401580,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401581,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401582,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401583,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401584,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401585,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401586,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401587,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401588,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401589,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401590,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401591,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:401592,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:402284,400022,이벤트일 2026-08-30 가 방문기간 2024-06-02~2024-06-02 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:402330,400023,이벤트일 2026-08-30 가 방문기간 2022-05-11~2022-05-11 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,MEASUREMENT:404807,400045,이벤트일 2026-08-30 가 방문기간 2021-08-04~2021-08-04 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:400329,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:400330,400016,이벤트일 2026-05-09 가 방문기간 2026-05-09~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:400794,400037,이벤트일 2021-05-04 가 방문기간 2021-05-04~2000-01-01 밖
+SEM-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,VISIT_OCCURRENCE,,DRUG_EXPOSURE:402358,400099,이벤트일 2021-10-15 가 방문기간 2021-10-15~2000-01-01 밖
+SEM-COM-007,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,400271,400015,end < start
+SEM-COM-007,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,400376,400018,end < start
+SEM-COM-007,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,402297,400098,end < start
+SEM-COM-008,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,400152,400009,"frequency_per_day 있음, days_supply 없음"
+SEM-COM-008,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,401825,400078,"frequency_per_day 있음, days_supply 없음"
+SEM-COM-008,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,401826,400078,"frequency_per_day 있음, days_supply 없음"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,400499,400006,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,401883,400019,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,402451,400024,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,404386,400041,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,404971,400046,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-009,검사 결과값 존재,Completeness,error,MEASUREMENT,,410011,400095,"value_as_number, value_as_concept_id 모두 NULL"
+SEM-COM-011,검사항목별 타당 범위,Plausibility,warning,MEASUREMENT,,407927,400074,ALT=99999.0 (타당범위 0.0~5000.0)
+SEM-COM-011,검사항목별 타당 범위,Plausibility,warning,MEASUREMENT,,408918,400082,Body weight=99999.0 (타당범위 20.0~250.0)
+SEM-COM-011,검사항목별 타당 범위,Plausibility,warning,MEASUREMENT,,409703,400091,Triglyceride=99999.0 (타당범위 10.0~5000.0)
+SEM-COM-012,age_at_index 와 index date 일치,Plausibility,error,"CONDITION_OCCURRENCE,PERSON",,400025,400025,"age_at_index=73, index_date=2024-07-13, year_of_birth=1966"
+SEM-COM-012,age_at_index 와 index date 일치,Plausibility,error,"CONDITION_OCCURRENCE,PERSON",,400028,400028,"age_at_index=78, index_date=2019-03-29, year_of_birth=1956"
+SEM-COM-012,age_at_index 와 index date 일치,Plausibility,error,"CONDITION_OCCURRENCE,PERSON",,400069,400069,"age_at_index=67, index_date=2021-06-23, year_of_birth=1968"
+SEM-COM-013,코호트 포함 조건,Completeness,error,"CONDITION_OCCURRENCE,PERSON,VISIT_OCCURRENCE",,400001,400001,코호트 정의 진단 없음
+SEM-COM-013,코호트 포함 조건,Completeness,error,"CONDITION_OCCURRENCE,PERSON,VISIT_OCCURRENCE",,400002,400002,코호트 정의 진단 없음
+SEM-COM-015,특화 테이블 고아 환자,Conformance,error,PERSON,,MASLD:888888888,888888888,PERSON 에 없는 person_id
+SEM-COM-017,중대한 이상사례 조건부 필수 / 치명 결과와 사망 일치,Completeness,error,"ADVERSE_EVENT,PERSON",,400003,400020,is_serious=1 인데 seriousness_concept_id 없음
+SEM-COM-017,중대한 이상사례 조건부 필수 / 치명 결과와 사망 일치,Completeness,error,"ADVERSE_EVENT,PERSON",,400009,400045,is_serious=1 인데 seriousness_concept_id 없음
+SEM-COM-017,중대한 이상사례 조건부 필수 / 치명 결과와 사망 일치,Completeness,error,"ADVERSE_EVENT,PERSON",,400012,400084,is_serious=1 인데 seriousness_concept_id 없음
+SEM-COM-023,중복 이벤트 레코드,Plausibility,warning,MEASUREMENT,,CONDITION_OCCURRENCE:46273476@2022-05-11,400023,2건 중복
+SEM-COM-023,중복 이벤트 레코드,Plausibility,warning,MEASUREMENT,,CONDITION_OCCURRENCE:320128@2020-07-25,400040,2건 중복
+SEM-COM-023,중복 이벤트 레코드,Plausibility,warning,MEASUREMENT,,CONDITION_OCCURRENCE:4058680@2023-11-23,400055,2건 중복
+SEM-COM-029,특화 테이블 death_date 와 PERSON 일치,Conformance,error,PERSON,,MASLD:403706,400046,MASLD.death_date=2024-01-01 <> PERSON.death_date=NULL
+SEM-COM-029,특화 테이블 death_date 와 PERSON 일치,Conformance,error,PERSON,,MASLD:405284,400065,MASLD.death_date=2024-01-01 <> PERSON.death_date=NULL
+SEM-COM-029,특화 테이블 death_date 와 PERSON 일치,Conformance,error,PERSON,,MASLD:407110,400087,MASLD.death_date=2024-01-01 <> PERSON.death_date=NULL
+SEM-COM-030,특화 테이블 방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MASLD:401382,888888888,visit 400216 의 person_id=400018
+SEM-COM-030,특화 테이블 방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MASLD:405248,888888888,visit 400892 의 person_id=400065
+SEM-COM-030,특화 테이블 방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,MASLD:406305,888888888,visit 401057 의 person_id=400077
+SEM-CA-004,BMI = 체중 / 신장^2,Plausibility,warning,MASLD,,MASLD:402375,400030,bmi_vl=19.9 vs 계산값 22.2
+SEM-CA-004,BMI = 체중 / 신장^2,Plausibility,warning,MASLD,,MASLD:405889,400071,bmi_vl=19.9 vs 계산값 23.5
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:401667,400021,fib4_score=1500.0 vs 재계산 1.39
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:406088,400074,fib4_score=2.57 vs 재계산 0.07
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:404222,400053,fib4_score=1500.0 vs 재계산 2.67
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:406086,400074,fib4_score=2.57 vs 재계산 0.07
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:406087,400074,fib4_score=2.57 vs 재계산 0.09
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:400202,400003,fib4_score=0.77 vs 재계산 1.11
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:406577,400079,fib4_score=15.68 vs 재계산 4.56
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:402330,400029,fib4_score=5.03 vs 재계산 1.01
+SEM-MA-001,FIB-4 재계산 일치,Plausibility,warning,"MEASUREMENT,PERSON",,MASLD:406279,400076,fib4_score=4.16 vs 재계산 0.72
+SEM-MA-002,지표 산출용 나이 = 검사일 기준 만 나이,Plausibility,warning,PERSON,,MASLD:400202,400003,"age=66, exam 2023-11-02, birth 1977"
+SEM-MA-002,지표 산출용 나이 = 검사일 기준 만 나이,Plausibility,warning,PERSON,,MASLD:406087,400074,"age=81, exam 2024-10-04, birth 1963"
+SEM-MA-003,음주량이 MASLD 정의 임계 미만,Plausibility,warning,PERSON,,MASLD:406217,400076,주당 알코올 4186.0g
+SEM-MA-003,음주량이 MASLD 정의 임계 미만,Plausibility,warning,PERSON,,MASLD:406845,400082,주당 알코올 4186.0g
+SEM-MA-004,예후 척도 명칭과 점수 컬럼 일치,Conformance,warning,MASLD,,MASLD:401667,400021,FIB-4 결과값 1.39 이 점수 컬럼과 불일치
+SEM-MA-004,예후 척도 명칭과 점수 컬럼 일치,Conformance,warning,MASLD,,MASLD:402049,400026,APRI 결과값 0.42 이 점수 컬럼과 불일치
+SEM-MA-004,예후 척도 명칭과 점수 컬럼 일치,Conformance,warning,MASLD,,MASLD:402330,400029,FIB-4 결과값 1.01 이 점수 컬럼과 불일치
+SEM-MA-004,예후 척도 명칭과 점수 컬럼 일치,Conformance,warning,MASLD,,MASLD:404222,400053,FIB-4 결과값 2.67 이 점수 컬럼과 불일치
+SEM-MA-004,예후 척도 명칭과 점수 컬럼 일치,Conformance,warning,MASLD,,MASLD:406279,400076,FIB-4 결과값 0.72 이 점수 컬럼과 불일치
+SEM-MA-004,예후 척도 명칭과 점수 컬럼 일치,Conformance,warning,MASLD,,MASLD:406577,400079,FIB-4 결과값 4.56 이 점수 컬럼과 불일치
+SEM-MA-004,예후 척도 명칭과 점수 컬럼 일치,Conformance,warning,MASLD,,MASLD:407334,400090,APRI 결과값 0.47 이 점수 컬럼과 불일치

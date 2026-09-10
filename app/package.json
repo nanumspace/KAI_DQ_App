@@ -1,0 +1,96 @@
+{
+  "name": "kai-quality-validator",
+  "productName": "Quality Validator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "K-AI 질환별 코호트 데이터 품질검증 프로그램",
+  "license": "Apache-2.0",
+  "main": "./out/main/index.js",
+  "author": "K-AI 코호트 구축 TF",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "smoke": "electron-vite build && KAI_SMOKE=1 electron .",
+    "dist:mac": "electron-vite build && electron-builder --mac",
+    "dist:win": "electron-vite build && electron-builder --win"
+  },
+  "dependencies": {
+    "@duckdb/node-api": "^1.5.5-r.4",
+    "csv-parse": "^7.0.2",
+    "xlsx": "^0.18.5",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.0",
+    "electron-vite": "^4.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "recharts": "^3.0.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0"
+  },
+  "build": {
+    "appId": "kr.kai.quality-validator",
+    "productName": "Quality Validator",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**"
+    ],
+    "asarUnpack": [
+      "node_modules/@duckdb/**"
+    ],
+    "extraResources": [
+      {
+        "from": "../spec",
+        "to": "kai/spec",
+        "filter": [
+          "*.yaml"
+        ]
+      },
+      {
+        "from": "../rules",
+        "to": "kai/rules",
+        "filter": [
+          "*.yaml"
+        ]
+      },
+      {
+        "from": "../synth/output/clean",
+        "to": "kai/samples",
+        "filter": [
+          "**/*.csv"
+        ]
+      }
+    ],
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.medical"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "allowScripts": {
+    "electron@39.8.10": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true
+  }
+}

@@ -34,6 +34,9 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: app/package-lock.json
+      # 앱은 ../dq-ts/src 를 별칭으로 가져오므로 엔진 의존성도 설치해야 한다
+      - run: npm ci
+        working-directory: dq-ts
       - run: npm ci
         working-directory: app
       # --publish never: electron-builder 가 스스로 게시하지 않게 한다. 첨부는 아래 단계가 한다.

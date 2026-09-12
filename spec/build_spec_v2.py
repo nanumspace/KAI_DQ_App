@@ -31,7 +31,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "spec"))
 from v2_field_names import FIELD_NAMES, UNITS, CODELIST_OVERRIDE, TYPE_OVERRIDE  # noqa: E402
 from v2_omop_map import CONCEPT_ID_BASE, OMOP_TABLES, SEED_CONCEPTS, FORM_MAP  # noqa: E402
-from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, LOINC_SOURCE, LOINC_FIELD_CODES,  # noqa: E402
+from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, SNOMED_SCALES, LOINC_SOURCE, LOINC_FIELD_CODES,  # noqa: E402
                                PFT_ITEMS, ALCOHOL_ITEMS, COMORBIDITY_ITEMS, DRUG_CLASS_ITEMS)
 
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -242,7 +242,10 @@ def snomed_domain(cid, tag, fallback):
 concept_sets = collections.OrderedDict()
 for cid_, cl in codelists.items():
     dom = next((d for p, d in CS_DOMAIN.items() if cid_.startswith(p)), "Meas Value")
-    parent = concept(f"CS:{cid_}", cl["kor"], cid_, dom, "KAI", "Value set", f"KAI-CS-{cid_}", "C", cl.get("standard"))
+    # 2.2: 척도 개념이 있으면 코드표 자신(=필드 메타)이 그 코드를 단다. 값에는 붙이지 않는다.
+    scale = SNOMED_SCALES.get(cid_)
+    pvoc, pcls, pcode = ("SNOMED", "Scale", scale[0]) if scale else ("KAI", "Value set", f"KAI-CS-{cid_}")
+    parent = concept(f"CS:{cid_}", cl["kor"], cid_, dom, pvoc, pcls, pcode, "C", scale[1] if scale else cl.get("standard"))
     concept_sets[cid_] = dict(concept_set_id=cid_, kor=cl["kor"], parent_concept_id=parent, note=cl.get("note"), items=[])
     for v in cl["values"]:
         voc, code = ("SNOMED", v["snomed"]) if v.get("snomed") else ("KAI", f"KAI-{cid_}-{v['code']}")
@@ -275,6 +278,8 @@ for (_cl, _code), (_sid, _tag) in SNOMED_CODES.items(): _by_set[_cl][_sid].appen
 for _cl, _m in _by_set.items():
     for _sid, _codes in _m.items():
         if len(_codes) > 1: warnings.append(f"{_cl}: {', '.join(sorted(_codes))} 가 같은 SNOMED 코드 {_sid} 로 매핑됨 — 값이 구분되지 않는다")
+for _sc in SNOMED_SCALES:
+    if _sc not in codelists: warnings.append(f"SNOMED_SCALES 의 {_sc} 에 해당하는 코드표가 없다 — 척도가 어디에도 붙지 않는다")
 for (_cl, _code) in SNOMED_CODES:
     if _cl in VALUE_SETS and _code not in {x[0] for x in VALUE_SETS[_cl]}:
         warnings.append(f"{_cl}: 코드표에 없는 값 {_code} 가 SNOMED_CODES 에 있다")
@@ -446,7 +451,9 @@ def dump(obj, fn):
         yaml.dump(json.loads(json.dumps(obj, ensure_ascii=False, default=lambda o: sorted(o) if isinstance(o, set) else str(o))), fh, Dumper=D, allow_unicode=True, sort_keys=False, width=140)
 def clean(f):
     o = collections.OrderedDict()
-    for k in ("name", "kor", "type", "value_kind", "tier", "required", "key", "ref", "event_date", "codelist", "vocabulary", "unit", "pattern", "standard", "concept_id", "derived_score", "desc", "target"):
+    # 2.2: 코드표에 척도가 붙어 있으면 필드에서도 보이게 한다(값이 아니라 "이 필드가 무슨 척도인가").
+    if f.get("codelist") in SNOMED_SCALES: f["scale"] = f"SNOMED:{SNOMED_SCALES[f['codelist']][0]} {SNOMED_SCALES[f['codelist']][1]}"
+    for k in ("name", "kor", "type", "value_kind", "tier", "required", "key", "ref", "event_date", "codelist", "scale", "vocabulary", "unit", "pattern", "standard", "concept_id", "derived_score", "desc", "target"):
         v = f.get(k)
         if v not in (None, False, "", []): o[k] = v
     o["cohorts"] = sorted(f["cohorts"])

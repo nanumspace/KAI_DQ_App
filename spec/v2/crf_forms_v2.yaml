@@ -452,6 +452,7 @@ forms:
       value_kind: 닫힌 범주
       tier: 필수
       codelist: STAGE_GROUP_AJCC8
+      scale: SNOMED:897275008 American Joint Committee on Cancer, Cancer Staging Manual, 8th edition neoplasm staging system
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000387
       desc: 체계·판·임상/병리 구분 필드 동반
@@ -4414,6 +4415,7 @@ forms:
       value_kind: 닫힌 범주
       tier: 필수
       codelist: RCB_CLASS
+      scale: SNOMED:445050009 Residual cancer burden index
       standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
       concept_id: 10000000567
       target:
@@ -4651,6 +4653,7 @@ forms:
       value_kind: 닫힌 범주
       tier: 필수
       codelist: DEAUVILLE
+      scale: SNOMED:708895006 Deauville five point scale
       standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
       concept_id: 10000000578
       target:
@@ -4977,6 +4980,7 @@ forms:
       value_kind: 닫힌 범주
       tier: 권고
       codelist: CTCAE_GRADE
+      scale: SNOMED:711434002 Common Terminology Criteria for Adverse Events
       concept_id: 10000000589
       desc: 이상사례의 중증도를 나타내는 코드값이다.
       target:
@@ -5435,6 +5439,7 @@ forms:
       value_kind: 닫힌 범주
       tier: 필수
       codelist: CL_IMAGING_DIAGNOSTIC_CLASSIFICATION
+      scale: SNOMED:1348266008 Breast Imaging and Reporting and Data System
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000604
       desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
@@ -6060,6 +6065,7 @@ forms:
       value_kind: 닫힌 범주
       tier: 필수
       codelist: CL_IMAGING_DIAGNOSTIC_CLASSIFICATION
+      scale: SNOMED:1348266008 Breast Imaging and Reporting and Data System
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000634
       desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
@@ -6077,6 +6083,7 @@ forms:
       value_kind: 닫힌 범주
       tier: 필수
       codelist: BIRADS_DENSITY
+      scale: SNOMED:1348266008 Breast Imaging and Reporting and Data System
       standard: SNOMED (BI-RADS density)
       concept_id: 10000000635
       target:
@@ -7034,6 +7041,7 @@ forms:
       value_kind: 닫힌 범주
       tier: 필수
       codelist: CHILD_PUGH
+      scale: SNOMED:3191000175106 Child-Pugh score
       standard: SNOMED
       concept_id: 10000000678
       derived_score: true

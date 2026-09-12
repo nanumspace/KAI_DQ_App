@@ -456,6 +456,26 @@ SNOMED_CODES = {
 # 과거력 자체를 가리키는 개념이라 의미가 맞지만, OMOP 로 내보낼 때 domain 이 Condition 이 아니라
 # Observation 으로 잡히는 것이 표준이므로 3단계(적재기)에서 domain 재지정을 검토한다.
 
+# ================================================================ 척도(assessment scale) — 값이 아니라 코드표·필드를 설명한다
+# BI-RADS 처럼 범주(0~6) 하나하나를 가리키는 SNOMED 개념은 없는데 "그 필드가 무슨 척도인가"를 가리키는
+# 개념은 있는 경우가 있다. 이런 개념은 값 집합의 항목이 아니라 코드표 자신(=필드의 메타)에 붙인다.
+# key: codelist_id -> (SNOMED concept_id, 영문명). <<273249006 |Assessment scales| 하위에서 확인했다.
+SNOMED_SCALES = {
+    "CL_IMAGING_DIAGNOSTIC_CLASSIFICATION": ("1348266008", "Breast Imaging and Reporting and Data System"),
+    "BIRADS_DENSITY": ("1348266008", "Breast Imaging and Reporting and Data System"),  # 유방 밀도 범주도 BI-RADS 체계다
+    "ECOG": ("273437007", "ECOG scale for physical assessment"),
+    "DEAUVILLE": ("708895006", "Deauville five point scale"),
+    "CTCAE_GRADE": ("711434002", "Common Terminology Criteria for Adverse Events"),
+    "CHILD_PUGH": ("3191000175106", "Child-Pugh score"),
+    "RCB_CLASS": ("445050009", "Residual cancer burden index"),
+    "STAGE_GROUP_AJCC8": ("897275008", "American Joint Committee on Cancer, Cancer Staging Manual, 8th edition neoplasm staging system"),
+}
+# 찾았으나 붙이지 않은 것:
+#   Clavien-Dindo 분류(789278003) — 대응하는 코드표가 아직 없다(합병증 "등급" 필드가 없다).
+#   Lugano 분류 — SNOMED 것은 성인 호지킨·소아 호지킨처럼 질환별로 나뉘어 있어(1297085001 등)
+#   호지킨·비호지킨을 함께 쓰는 STAGE_LUGANO 에 그대로 붙이면 범위가 좁아진다.
+# 없는 것: RECIST, METAVIR, NAS(NAFLD 활성도), Wagner, 당뇨망막병증 중증도, CKD 병기.
+
 # ================================================================ LOINC (로컬 파일에서 grep 으로 확인)
 LOINC_SOURCE = "/Users/min/Research/standard_terminology/LOINC/Loinc_2.80/LoincTableCore/LoincTableCore.csv (2.80)"
 # 개별 FIELD concept(측정값)에 표준 코드를 부여. key: 필드명 -> (loinc_code, 영문명)

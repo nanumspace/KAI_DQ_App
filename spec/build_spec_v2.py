@@ -250,6 +250,16 @@ SPECIAL_SETS = {
     "PFT_ITEM": ("폐기능검사 항목", "Measurement", [(c, ko, en, ("LOINC", code)) for c, ko, en, code in PFT_ITEMS], lambda v: v, f"LOINC 2.80 로컬 파일에서 확인 ({LOINC_SOURCE})"),
     "ALCOHOL": ("음주 이력 항목", "Observation", [(c, ko, en, ("LOINC", code)) for c, ko, en, code in ALCOHOL_ITEMS], lambda v: v, f"LOINC 2.80 로컬 파일에서 확인 ({LOINC_SOURCE})"),
 }
+# 한 코드표 안에서 두 값이 같은 SNOMED 코드로 뭉치면 그 둘을 데이터에서 구분할 수 없다. 승격 전에 걸러낸다.
+_by_set = collections.defaultdict(lambda: collections.defaultdict(list))
+for (_cl, _code), _sid in SNOMED_CODES.items(): _by_set[_cl][_sid].append(_code)
+for _cl, _m in _by_set.items():
+    for _sid, _codes in _m.items():
+        if len(_codes) > 1: warnings.append(f"{_cl}: {', '.join(sorted(_codes))} 가 같은 SNOMED 코드 {_sid} 로 매핑됨 — 값이 구분되지 않는다")
+for (_cl, _code) in SNOMED_CODES:
+    if _cl in VALUE_SETS and _code not in {x[0] for x in VALUE_SETS[_cl]}:
+        warnings.append(f"{_cl}: 코드표에 없는 값 {_code} 가 SNOMED_CODES 에 있다")
+
 for cs_id, (kor, dom, items, _adapt, note) in SPECIAL_SETS.items():
     parent = concept(f"CS:{cs_id}", kor, cs_id, dom, "KAI", "Value set", f"KAI-CS-{cs_id}", "C")
     concept_sets[cs_id] = dict(concept_set_id=cs_id, kor=kor, parent_concept_id=parent, note=note, items=[])

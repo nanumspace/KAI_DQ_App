@@ -265,8 +265,76 @@ SNOMED_CODES = {
     ("CL_SURGICAL_SPECIMEN_LATERALITY", "BILATERAL"): "51440002",
     ("CL_SURGICAL_SPECIMEN_LATERALITY", "NA"): "385432009",
 
-    # 나머지 값 집합(생검 방법·병리 등급·진단 아형 등)의 SNOMED 승격은 다음 단계에서 이어서 채운다.
-    # 예: ("CL_BIOPSY_METHOD", "CORE"): "<확인한 concept_id>",
+    # ---- 생검 방법 (procedure). <<86273004 |Biopsy| 를 ECL 로 펼쳐 방법별로 확인.
+    ("CL_BIOPSY_METHOD", "CORE"): "9911007",                 # Core needle biopsy
+    ("CL_BIOPSY_METHOD", "FNA"): "48635004",                 # Fine needle biopsy (동의어 Fine needle aspiration)
+    ("CL_BIOPSY_METHOD", "EXCISION"): "8889005",             # Excisional biopsy
+    ("CL_BIOPSY_METHOD", "INCISION"): "70871006",            # Incisional biopsy
+    ("CL_BIOPSY_METHOD", "PUNCH"): "68660007",               # Punch biopsy
+    ("CL_BIOPSY_METHOD", "ENDOSCOPIC"): "53767003",          # Endoscopic biopsy
+    ("CL_BIOPSY_METHOD", "EBUS"): "1389225003",              # Transbronchial needle aspiration biopsy using endobronchial ultrasound guidance
+    ("CL_BIOPSY_METHOD", "VACUUM"): "786883001",             # Vacuum assisted biopsy
+    ("CL_BIOPSY_METHOD", "SURGICAL"): "119283008",           # Open biopsy — "수술적 생검"에 가장 가까운 상위 개념
+    # IMAGE_GUIDED: SNOMED 의 영상유도 생검은 전부 방법·부위가 붙은 하위 개념뿐이고
+    # (예: 442787002 은 세침흡인 전용) 부위 없는 일반 개념이 없어 KAI 로 남긴다.
+
+    # ---- 검체 적정성 (finding)
+    ("CL_BIOPSY_ADEQUACY", "ADEQUATE"): "125152006",         # Specimen satisfactory for evaluation
+    ("CL_BIOPSY_ADEQUACY", "INADEQUATE"): "125154007",       # Specimen unsatisfactory for evaluation
+    ("CL_BIOPSY_ADEQUACY", "NONDIAGNOSTIC"): "112631006",    # Specimen unsatisfactory for diagnosis
+
+    # ---- 조직학적 분화도 (qualifier value). 두 코드표가 같은 G1~G4 를 쓴다. GX(평가 불가)는 행정값이라 KAI.
+    ("CL_BIOPSY_DIFFERENTIATION", "WD"): "1155701009",       # G1: Well differentiated histologic grade
+    ("CL_BIOPSY_DIFFERENTIATION", "MD"): "1155703007",       # G2: Moderately differentiated histologic grade
+    ("CL_BIOPSY_DIFFERENTIATION", "PD"): "1155704001",       # G3: Poorly differentiated histologic grade
+    ("CL_BIOPSY_DIFFERENTIATION", "UD"): "1155702002",       # G4: Undifferentiated histologic grade
+    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G1"): "1155701009",
+    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G2"): "1155703007",
+    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G3"): "1155704001",
+    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G4"): "1155702002",
+
+    # ---- 조직형 (morphologic abnormality). 팀 결정: 아형 필드는 진단명(disorder)이 아니라
+    #      조직형 계층을 쓴다(OMOP Oncology 의 ICD-O-3 조직형과 결이 맞다). <<108369006 |Neoplasm| 하위에서 확인.
+    ("CL_DIAGNOSIS_SUBTYPE", "ADENO_NOS"): "1187332001",     # Adenocarcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "MUCINOUS"): "72495009",        # Mucinous adenocarcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "SIGNET_RING"): "87737001",     # Signet ring cell carcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "NEUROENDOCRINE"): "1286767006",  # Neuroendocrine carcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "SCC"): "1162767002",           # Squamous cell carcinoma
+
+    ("CL_HISTOLOGIC_SUBTYPE", "DLBCL"): "1172695008",        # Diffuse large B cell lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "FL"): "55150002",             # Follicular lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "MCL"): "74654000",            # Malignant mantle cell lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "MZL"): "128803008",           # Marginal zone B-cell lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "BL"): "77381001",             # Burkitt lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "CHL"): "762691001",           # Classical Hodgkin lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "PTCL_NOS"): "1163404000",     # Peripheral T-cell lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "ALCL"): "53237008",           # Anaplastic large cell lymphoma, T cell and null cell type
+    ("CL_HISTOLOGIC_SUBTYPE", "NKTCL"): "128805001",         # NK/T-cell lymphoma, nasal and nasal-type
+    # NLPHL(결절성 림프구우세형): 조직형 계층에 개념이 없다(disorder 만 존재) — 계층을 섞지 않으려고 KAI 로 남긴다.
+
+    ("CL_LYMPHOMA_CATEGORY", "HL"): "1163005009",            # Hodgkin lymphoma
+    # NHL_B·NHL_T: 조직형 계층의 Non-Hodgkin lymphoma(1172592001)는 B/T 를 나누지 않아 두 값이 한 concept 에
+    # 뭉친다. 계열은 CL_CELL_LINEAGE 로 따로 받으므로 여기서는 KAI 로 남긴다.
+
+    # ---- 폐선암 우세 아형 (IASLC/WHO). "우세 아형"은 패턴 우세도라 SNOMED 에 그대로 대응하는 개념이 적다.
+    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "PAPILLARY"): "4797003",       # Papillary adenocarcinoma
+    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "MICROPAPILLARY"): "733878002",  # Micropapillary adenocarcinoma
+    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "MUCINOUS"): "72495009",      # Mucinous adenocarcinoma
+    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "FETAL"): "128893004",        # Fetal adenocarcinoma
+    # LEPIDIC·ENTERIC: 조직형 계층에 개념이 없다.
+    # ACINAR: 검색되는 Acinar cell carcinoma(45410002)는 췌장·타액선 종양이라 폐 선방형과 다른 개체다.
+    # SOLID: Solid carcinoma(81920005)는 부위 불문 일반 개념이라 "고형 우세 선암"과 범위가 다르다.
+    # COLLOID: SNOMED 이 colloid 를 Mucinous adenocarcinoma 의 동의어로 두어 MUCINOUS 와 한 코드에 뭉친다.
+    # 넷 다 뜻이 어긋나거나 값끼리 충돌해 KAI 로 남긴다.
+
+    # ---- 절제연
+    ("CL_CRM_STATUS", "POSITIVE"): "384620009",              # Surgical circumferential margin involved by malignant neoplasm (0-1 mm) — 값 정의(≤1mm)와 일치
+    # CRM NEGATIVE: "침범 없음"에 해당하는 개념이 없다(침범 concept 만 존재).
+    # CL_RESECTION_MARGIN_STATUS·CL_RESIDUAL_TUMOR_R_CLASS 의 R0/R1/R2: SNOMED 의 절제연 개념
+    # (384689007 등)은 침범 여부만 말하고 현미경적/육안적을 나누지 않아 R1 과 R2 가 한 코드에 뭉친다.
+    # AJCC R 분류는 코드 자체가 표준이므로 KAI 로 유지한다.
+
+    # 나머지 값 집합(영상 소견·생식력·이상사례 조치 등)의 SNOMED 승격은 다음 단계에서 이어서 채운다.
 }
 # 주의: CL_DISTANT_METASTASIS_SITE 의 DISTANT_NODE 는 "원격 림프절"인데 SNOMED 에는 그 뜻의
 # 단일 부위 concept 이 없어 Structure of lymph node(59441001) 로만 매핑했다. 국소/원격 구분은

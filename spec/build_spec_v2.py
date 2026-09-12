@@ -32,6 +32,7 @@ sys.path.insert(0, os.path.join(ROOT, "spec"))
 from v2_field_names import FIELD_NAMES, UNITS, CODELIST_OVERRIDE, TYPE_OVERRIDE  # noqa: E402
 from v2_omop_map import CONCEPT_ID_BASE, OMOP_TABLES, SEED_CONCEPTS, FORM_MAP  # noqa: E402
 from v2_reference_tables import REFERENCE_TABLES, FIELD_REFERENCES, TABLE_REFERENCES  # noqa: E402
+from v2_legacy_triage import classify as triage_legacy, BUCKETS as LEGACY_BUCKETS  # noqa: E402
 from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, SNOMED_SCALES, LOINC_SOURCE, LOINC_FIELD_CODES,  # noqa: E402
                                PFT_ITEMS, ALCOHOL_ITEMS, COMORBIDITY_ITEMS, DRUG_CLASS_ITEMS)
 
@@ -517,7 +518,15 @@ legacy = collections.defaultdict(list)
 for r in V1FIELDS:
     key = f"{r['테이블']}.{r['필드']}"
     if r["처리"] in ("이동", "이관→코어") and key not in merged: legacy[r["목적지 테이블"]].append(dict(v1=key, kor=r.get("한글명") or "", desc=(r.get("설명") or "")[:120], type=r.get("타입"), action=r["처리"]))
-dump(dict(legacy=dict(legacy)), "legacy_fields_v2.yaml")
+# 2.2: 575줄을 그대로 내놓으면 검토할 수 없다. 다섯 묶음으로 나눠 사람이 볼 것만 남긴다.
+_v1_names = {t: {f["name"] for f in (T.get("fields") or [])} for t, T in V1.items()}
+_v1_desc = {f"{t}.{f['name']}": (f.get("desc") or "") for t, T in V1.items() for f in (T.get("fields") or [])}
+_v2_labels = ({f.get("kor") or "" for F in forms.values() for f in F["fields"].values()}
+              | {d.get("kor") or "" for d in derived}
+              | {c["concept_name_ko"] for c in concepts.values() if c["concept_class_id"] == "Value"})
+_rows = [(d, e["v1"]) for d, es in legacy.items() for e in es]
+triage = triage_legacy(_rows, _v1_names, _v1_desc, _v2_labels)
+dump(dict(legacy=dict(legacy), triage={b: triage[b] for b in LEGACY_BUCKETS}), "legacy_fields_v2.yaml")
 
 xw = Workbook(); H = Font(bold=True, color="FFFFFF"); HF = PatternFill("solid", fgColor="003B73"); WRAP = Alignment(wrap_text=True, vertical="top")
 def sheet(ws, header, rows, widths):
@@ -540,6 +549,8 @@ sheet(xw.create_sheet("CONCEPT"), ["concept_id", "한글", "영문", "domain", "
 sheet(xw.create_sheet("CONCEPT_SET"), ["값 집합", "한글", "concept_id", "코드", "라벨", "비고"], [[k, v["kor"], it["concept_id"], it["code"], it["label"], v.get("note") or ""] for k, v in concept_sets.items() for it in (v["items"] or [dict(concept_id="", code="", label="(비어 있음)")])], [26, 24, 14, 10, 30, 36])
 sheet(xw.create_sheet("파생변수"), ["변수", "한글", "코호트", "원천 테이블", "값 종류", "등급", "concept set", "표준", "메모"], [[d["name"], d["kor"], COHORT_KOR[d["cohort"]], d["source_table"], d["value_kind"], d["tier"], d.get("concept_set") or "", d.get("standard") or "", d.get("note") or ""] for d in derived], [28, 32, 10, 22, 14, 6, 20, 26, 40])
 sheet(xw.create_sheet("v1 미승격 필드"), ["목적지", "v1 필드", "한글", "타입", "처리", "설명"], [[d, e["v1"], e["kor"], e["type"], e["action"], e["desc"]] for d, es in legacy.items() for e in es], [22, 40, 28, 8, 12, 60])
+sheet(xw.create_sheet("v1 미승격 분류"), ["묶음", "목적지", "v1 필드", "설명", "v2 에서 찾은 비슷한 이름"],
+      [[b, r["dest"], r["v1"], r["desc"], r["match"]] for b in LEGACY_BUCKETS for r in triage[b]], [22, 20, 40, 60, 30])
 xw.save(os.path.join(OUT, "dictionary_v2.xlsx"))
 
 nfields = sum(len(F["fields"]) for F in forms.values()); tiers = collections.Counter(f["tier"] for F in forms.values() for f in F["fields"].values())
@@ -567,6 +578,18 @@ L += ["", "## 2.1 · 값 집합 채우기", "",
       "", "SNOMED 확인 대기(코드표별 미매핑 값 수 · 다음 단계에서 `SNOMED_CODES` 에 추가): "
       + (", ".join(f"{p} {n}/{len(VALUE_SETS[p])}" for p, n in sorted(((p, sum(1 for c, _ko, _en in vs if (p, c) not in SNOMED_CODES)) for p, vs in VALUE_SETS.items()), key=lambda x: -x[1]) if n) or "없음"),
       "", "여전히 비어 있는 값 집합(팀 검토 필요): " + (", ".join(still_empty) or "없음"),
-      "", "## v1 미승격 필드", ""] + [f"- {d}: {len(es)}개" for d, es in sorted(legacy.items(), key=lambda x: -len(x[1]))] + ["", "## 경고", ""] + [f"- {w}" for w in warnings]
+      "", "## v1 미승격 필드", "",
+      f"배치표가 옮기라고 한 v1 컬럼 {sum(len(v) for v in legacy.values())}개 중 어떤 v2 항목도 '현 명세 대응 필드'로 "
+      "지목하지 않은 것들이다. 이 수는 실제 누락이 아니라 대부분 기록·연결의 문제라서, 그대로 두면 검토할 수 없다. "
+      "다섯으로 나눈 결과는 아래와 같고 자세한 목록은 `legacy_fields_v2.yaml` 의 `triage` 에 있다.", "",
+      "| 묶음 | 수 | 뜻 |", "|---|---|---|",
+      f"| 키·외래키 | {len(triage['키·외래키'])} | 데이터 항목이 아니다 |",
+      f"| 코드·명칭 쌍의 명칭쪽 | {len(triage['코드·명칭 쌍의 명칭쪽'])} | v1 은 코드·명칭 두 컬럼, v2 는 concept_id 하나 — 구조가 흡수했다 |",
+      f"| v2 에 이미 대응 있음 | {len(triage['v2 에 이미 대응 있음'])} | 서식·파생변수·값집합에 같은 뜻이 있다. 배치표에 대응 필드를 적으면 빠진다 |",
+      f"| 부분 일치 | {len(triage['부분 일치'])} | 비슷한 것이 있으나 같은지 사람이 봐야 한다 |",
+      f"| 대응 없음 | {len(triage['대응 없음'])} | 실제 승격 후보. 임상 판단이 필요한 것은 이것뿐이다 |", "",
+      "분류는 낱말 겹침으로 하는 어림이다. '수술을 시행한 연월일'과 '수술일'처럼 뜻은 같은데 낱말이 어긋나면 "
+      "'대응 없음'으로 잘못 떨어지므로, 그 묶음은 승격할 목록이 아니라 **사람이 볼 목록**으로 읽어야 한다.", "",
+      "### 목적지별 원 분포", ""] + [f"- {d}: {len(es)}개" for d, es in sorted(legacy.items(), key=lambda x: -len(x[1]))] + ["", "## 경고", ""] + [f"- {w}" for w in warnings]
 open(os.path.join(OUT, "spec_v2_report.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
 print("\n".join(L[:15])); print(f"... 경고 {len(warnings)}건 → {OUT}")

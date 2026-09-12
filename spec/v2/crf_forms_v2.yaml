@@ -5028,7 +5028,7 @@ forms:
       type: integer
       value_kind: 닫힌 범주
       tier: 권고
-      codelist: CL_IS_SERIOUS
+      codelist: YN
       concept_id: 10000000591
       desc: 중대한 이상사례(SAE) 해당 여부를 나타내는 값이다.
       target:

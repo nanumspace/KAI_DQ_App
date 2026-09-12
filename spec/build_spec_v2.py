@@ -31,6 +31,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "spec"))
 from v2_field_names import FIELD_NAMES, UNITS, CODELIST_OVERRIDE, TYPE_OVERRIDE  # noqa: E402
 from v2_omop_map import CONCEPT_ID_BASE, OMOP_TABLES, SEED_CONCEPTS, FORM_MAP  # noqa: E402
+from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, LOINC_SOURCE, LOINC_FIELD_CODES,  # noqa: E402
+                               PFT_ITEMS, ALCOHOL_ITEMS, COMORBIDITY_ITEMS, DRUG_CLASS_ITEMS)
 
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
 XLSX = args[0] if args else os.path.join(ROOT, "internal/decisions/배치표_v0_20260912.xlsx")
@@ -191,8 +193,17 @@ for k, v in V1_CODES.get("embedded", {}).items():
 for F in forms.values():
     for f in F["fields"].values():
         if f.get("codelist") and "." in str(f["codelist"]) and f["codelist"] not in codelists: f["codelist"] = "CL_" + f["name"].upper()
+        if f.get("codelist") in ALIAS_CODELIST: f["codelist"] = ALIAS_CODELIST[f["codelist"]]  # 2.1: 새 값집합 대신 기존 값집합 재사용
 placeholder = sorted({f["codelist"] for F in forms.values() for f in F["fields"].values() if f.get("codelist") and str(f["codelist"]).startswith("CL_")})
-for p in placeholder: codelists[p] = dict(kor=p, standard=None, note="값 집합 미정의 · 2.1 에서 채움", values=[])
+# 2.1: 배치표에서 비었던 값 집합을 spec/v2_codelists_v21.py 의 정의로 채운다 (임상 표준 근거는 그 파일 주석 참고)
+filled_2_1 = sorted(set(VALUE_SETS) & set(placeholder))
+for p in placeholder:
+    if p in VALUE_SETS:
+        codelists[p] = dict(kor=codelists.get(p, {}).get("kor", p), standard=None, note="2.1 에서 채움 (spec/v2_codelists_v21.py)",
+                             values=[dict(code=c, label=ko, snomed=SNOMED_CODES.get((p, c))) for c, ko, en in VALUE_SETS[p]])
+    else:
+        codelists[p] = dict(kor=p, standard=None, note="값 집합 미정의 · 팀 검토 필요", values=[])
+still_empty = sorted(set(placeholder) - set(VALUE_SETS))
 
 # ================================================================ 3. K-AI 어휘 (concept_id ≥ 10,000,000,000, 등록부로 고정)
 reg_path = os.path.join(VOCAB, "concept_registry.json")
@@ -224,9 +235,35 @@ for F in forms.values():
         if f.get("key") or f.get("event_date"): continue
         dom = "Measurement" if f["value_kind"] == "수치" or (F["name"] in FORM_MAP and FORM_MAP[F["name"]].get("attr_default") == "MEASUREMENT") else "Observation"
         f["concept_id"] = concept(f"FIELD:{F['name']}:{f['name']}", f["kor"], f["name"], dom, "KAI", "Attribute", f"KAI-{F['name']}-{f['name']}", "S", f.get("standard"))
+# 2.1: 개별 검사값 FIELD concept 에 LOINC 코드를 부여한다 (로컬 LOINC 2.80 파일에서 확인한 것만)
+loinc_applied = []
+for F in forms.values():
+    for f in F["fields"].values():
+        code = LOINC_FIELD_CODES.get(f["name"])
+        if code and f.get("concept_id") in concepts:
+            c = concepts[f["concept_id"]]; c.update(vocabulary_id="LOINC", concept_class_id="Lab Test", concept_code=code[0], standard_hint=code[1])
+            loinc_applied.append((F["name"], f["name"], code[0]))
+# 2.1: 코어 파생 변수의 concept_set 4종(과거력·약물계열·폐기능·음주)을 실제 concept 목록으로 채운다.
+SPECIAL_SETS = {
+    "COMORBIDITY_SET": ("과거력 진단 목록", "Condition", COMORBIDITY_ITEMS, lambda code_std: ("SNOMED", code_std) if code_std else ("KAI", None), "SNOMED CT 로 확인 대기(MCP 연결 필요) · KCD 매핑은 병원 코드표 기준"),
+    "DRUG_CLASS_SET": ("약물 계열 목록", "Drug", [(c, ko, en, ("ATC", atc)) for c, ko, en, atc in DRUG_CLASS_ITEMS], lambda v: v, "ATC(WHO) 분류. 국내 약물코드 매핑은 처방 데이터 기준"),
+    "PFT_ITEM": ("폐기능검사 항목", "Measurement", [(c, ko, en, ("LOINC", code)) for c, ko, en, code in PFT_ITEMS], lambda v: v, f"LOINC 2.80 로컬 파일에서 확인 ({LOINC_SOURCE})"),
+    "ALCOHOL": ("음주 이력 항목", "Observation", [(c, ko, en, ("LOINC", code)) for c, ko, en, code in ALCOHOL_ITEMS], lambda v: v, f"LOINC 2.80 로컬 파일에서 확인 ({LOINC_SOURCE})"),
+}
+for cs_id, (kor, dom, items, _adapt, note) in SPECIAL_SETS.items():
+    parent = concept(f"CS:{cs_id}", kor, cs_id, dom, "KAI", "Value set", f"KAI-CS-{cs_id}", "C")
+    concept_sets[cs_id] = dict(concept_set_id=cs_id, kor=kor, parent_concept_id=parent, note=note, items=[])
+    for it in items:
+        if cs_id == "COMORBIDITY_SET":
+            code, ko, en, snomed_id = it[0], it[1], it[2], SNOMED_CODES.get((cs_id, it[0]))
+            voc, vcode = ("SNOMED", snomed_id) if snomed_id else ("KAI", f"KAI-{cs_id}-{code}")
+        else:
+            code, ko, en, (voc, vcode) = it
+        c = concept(f"CS:{cs_id}:{code}", ko, en, dom, voc, "Value", vcode, "S")
+        concept_sets[cs_id]["items"].append(dict(concept_id=c, code=code, label=ko))
 for d in derived:
     cs = d.get("concept_set")
-    if cs and cs not in concept_sets:
+    if cs and cs not in concept_sets and cs not in SPECIAL_SETS:
         parent = concept(f"CS:{cs}", cs, cs, "Condition" if "COMORBID" in cs else ("Drug" if "DRUG" in cs else "Observation"), "KAI", "Value set", f"KAI-CS-{cs}", "C")
         concept_sets[cs] = dict(concept_set_id=cs, kor=cs, parent_concept_id=parent, note="파생 변수용 concept 목록 · 2.1 에서 채움", items=[])
 json.dump(registry, open(reg_path, "w", encoding="utf-8"), ensure_ascii=False, indent=0)
@@ -235,7 +272,7 @@ def wcsv(fn, rows, cols):
         w = csv.DictWriter(fh, fieldnames=cols); w.writeheader()
         for r in rows: w.writerow({c: r.get(c, "") for c in cols})
 wcsv("CONCEPT.csv", concepts.values(), ["concept_id", "concept_name_ko", "concept_name_en", "domain_id", "vocabulary_id", "concept_class_id", "concept_code", "standard_concept", "standard_hint", "valid_start_date", "valid_end_date", "invalid_reason", "key"])
-wcsv("VOCABULARY.csv", [dict(vocabulary_id=v, vocabulary_name=n, license=l, vocabulary_version=ver) for v, n, l, ver in [("KAI", "K-AI 자체 어휘", "Apache-2.0", "2026.09"), ("SNOMED", "SNOMED CT", "SNOMED International 회원국 라이선스", "확인 필요"), ("LOINC", "LOINC", "무료", "확인 필요"), ("UCUM", "UCUM 단위", "무료", "2.1"), ("MedDRA", "MedDRA", "별도 라이선스", "확인 필요"), ("KCD", "한국표준질병사인분류", "공개", "8차"), ("EDI", "건강보험 EDI 코드", "공개", "확인 필요")]], ["vocabulary_id", "vocabulary_name", "license", "vocabulary_version"])
+wcsv("VOCABULARY.csv", [dict(vocabulary_id=v, vocabulary_name=n, license=l, vocabulary_version=ver) for v, n, l, ver in [("KAI", "K-AI 자체 어휘", "Apache-2.0", "2026.09"), ("SNOMED", "SNOMED CT", "SNOMED International 회원국 라이선스", "확인 필요"), ("LOINC", "LOINC", "무료(사용자 등록)", "2.80"), ("UCUM", "UCUM 단위", "무료", "2.1"), ("MedDRA", "MedDRA", "별도 라이선스", "확인 필요"), ("KCD", "한국표준질병사인분류", "공개", "8차"), ("EDI", "건강보험 EDI 코드", "공개", "확인 필요"), ("ATC", "WHO Anatomical Therapeutic Chemical", "공개", "2026")]], ["vocabulary_id", "vocabulary_name", "license", "vocabulary_version"])
 rel = []
 for cs in concept_sets.values():
     for it in cs["items"]: rel.append(dict(concept_id_1=it["concept_id"], concept_id_2=cs["parent_concept_id"], relationship_id="Is a"))
@@ -395,6 +432,10 @@ dump(spec, "kai_cdm_spec_v2.yaml")
 dump(dict(forms=collections.OrderedDict((n, dict(name=n, kor=F["kor"], grain=F["grain"], kind="OMOP 투영" if n in FORM_MAP else "확장 테이블 직접 저장",
      storage=list(dict.fromkeys([a["table"] for a in FORM_MAP[n]["anchors"]] + [FORM_MAP[n]["attr_default"]])) if n in FORM_MAP else [n], cohorts=sorted(F["cohorts"]), fields=[clean(f) for f in F["fields"].values()])) for n, F in forms.items())), "crf_forms_v2.yaml")
 dump(dict(cohorts=collections.OrderedDict((c, dict(kor=COHORT_KOR[c], omop_tables=list(OMOP_TABLES), extension_tables=[t for t in EXT_FORMS if c in forms[t]["cohorts"]], forms=[n for n, F in forms.items() if c in F["cohorts"]])) for c in ALL_COHORTS)), "cohort_profiles_v2.yaml")
+# 2.1: 코어 파생 검사값 변수(MEASUREMENT 로 직행하는 것)에도 LOINC 코드가 있으면 붙인다
+for d in derived:
+    code = LOINC_FIELD_CODES.get(d["name"])
+    if code: d["standard"] = f"LOINC {code[0]} ({code[1]})"
 dump(dict(derived=derived, derived_scores=scores), "derived_v2.yaml")
 merged = {h for F in forms.values() for f in F["fields"].values() for h in f["v1_hint"]}
 legacy = collections.defaultdict(list)
@@ -435,6 +476,17 @@ L = [f"# 사전 v2 변환 보고서 ({TODAY})", "", f"입력: `{os.path.relpath(
 for n, F in forms.items():
     st = (", ".join(dict.fromkeys([a["table"] for a in FORM_MAP[n]["anchors"]] + [FORM_MAP[n]["attr_default"]])) if n in FORM_MAP else f"{n} (확장 테이블)")
     L.append(f"| {n} | {F['grain']} | {len(F['fields'])} | {st} |")
-L += ["", "## 비어 있는 값 집합 (2.1 에서 채움)", "", ", ".join(k for k, v in concept_sets.items() if not v["items"]) or "없음", "", "## v1 미승격 필드", ""] + [f"- {d}: {len(es)}개" for d, es in sorted(legacy.items(), key=lambda x: -len(x[1]))] + ["", "## 경고", ""] + [f"- {w}" for w in warnings]
+L += ["", "## 2.1 · 값 집합 채우기", "",
+      f"이번 실행에서 {len(filled_2_1)}개 값 집합을 `spec/v2_codelists_v21.py` 로 채웠다(임상 표준 근거는 그 파일 주석). "
+      f"LOINC 는 로컬 파일({LOINC_SOURCE})에서 확인한 코드만 썼다. SNOMED CT 는 이번 실행 시점에 MCP 용어 서버가 연결되지 않아 "
+      f"`SNOMED_CODES` 딕셔너리가 비어 있고, 아래 값은 전부 임시 KAI 코드다 — 서버 연결 후 그 딕셔너리를 채우고 다시 실행하면 값 단위로 SNOMED 승격된다.",
+      "", f"채운 값 집합: {', '.join(filled_2_1) or '없음'}", "",
+      f"개별 검사값에 LOINC 코드를 부여한 필드 {len(loinc_applied)}개: " + ", ".join(f"{form}.{name}={code}" for form, name, code in loinc_applied),
+      "", "특수 목록(개별 값이 아니라 표준 개념 참조):",
+      "- COMORBIDITY_SET(과거력 진단): SNOMED CT 확인 대기, 현재 KAI 임시 코드",
+      "- DRUG_CLASS_SET(약물 계열): ATC 분류 적용(표준, MCP 불필요)",
+      f"- PFT_ITEM, ALCOHOL(검사 항목): LOINC 로컬 파일에서 확인",
+      "", "여전히 비어 있는 값 집합(팀 검토 필요): " + (", ".join(still_empty) or "없음"),
+      "", "## v1 미승격 필드", ""] + [f"- {d}: {len(es)}개" for d, es in sorted(legacy.items(), key=lambda x: -len(x[1]))] + ["", "## 경고", ""] + [f"- {w}" for w in warnings]
 open(os.path.join(OUT, "spec_v2_report.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
 print("\n".join(L[:15])); print(f"... 경고 {len(warnings)}건 → {OUT}")

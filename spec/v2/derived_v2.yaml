@@ -753,7 +753,7 @@ derived:
   value_kind: 수치
   tier: 필수
   concept_set: null
-  standard: LOINC
+  standard: LOINC 14959-1 (Microalbumin/Creatinine [Mass Ratio] in Urine)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: cgm_tir_percent
   kor: CGM 목표범위 내 시간 비율(TIR)
@@ -807,7 +807,7 @@ derived:
   value_kind: 수치
   tier: 필수
   concept_set: null
-  standard: LOINC
+  standard: LOINC 1558-6 (Fasting glucose [Mass/volume] in Serum or Plasma)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: fasting_insulin_uiu_ml
   kor: 공복 인슐린
@@ -816,7 +816,7 @@ derived:
   value_kind: 수치
   tier: 필수
   concept_set: null
-  standard: LOINC
+  standard: LOINC 20448-7 (Insulin [Units/volume] in Serum or Plasma)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: postprandial_glucose_mg_dl
   kor: 식후 혈당 농도 측정값
@@ -825,7 +825,7 @@ derived:
   value_kind: 수치
   tier: 보류
   concept_set: null
-  standard: LOINC
+  standard: LOINC 1521-4 (Glucose [Mass/volume] in Serum or Plasma --2 hours post meal)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: glycemic_variability
   kor: 혈당 변동성 지표
@@ -843,7 +843,7 @@ derived:
   value_kind: 수치
   tier: 필수
   concept_set: null
-  standard: LOINC
+  standard: LOINC 1521-4 (Glucose [Mass/volume] in Serum or Plasma --2 hours post meal)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: random_glucose_mg_dl
   kor: 임의 시점에 측정한 무작위 혈당값
@@ -852,7 +852,7 @@ derived:
   value_kind: 수치
   tier: 권고
   concept_set: null
-  standard: LOINC
+  standard: LOINC 2345-7 (Glucose [Mass/volume] in Serum or Plasma)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: hba1c_percent
   kor: 당화혈색소(HbA1c) 값
@@ -861,7 +861,7 @@ derived:
   value_kind: 수치
   tier: 필수
   concept_set: null
-  standard: LOINC
+  standard: LOINC 4548-4 (Hemoglobin A1c/Hemoglobin.total in Blood)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: c_peptide_ng_ml
   kor: C-펩타이드 농도값
@@ -870,7 +870,7 @@ derived:
   value_kind: 수치
   tier: 필수
   concept_set: null
-  standard: LOINC
+  standard: LOINC 1986-9 (C peptide [Mass/volume] in Serum or Plasma)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: homa_ir
   kor: 인슐린 저항성 지수(HOMA-IR)
@@ -879,7 +879,7 @@ derived:
   value_kind: 수치
   tier: 필수
   concept_set: null
-  standard: LOINC
+  standard: LOINC 47214-2 (Homeostasis model assessment (HOMA) in Serum or Plasma)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: homa_beta
   kor: 베타세포 기능 지수(HOMA-beta)
@@ -897,7 +897,7 @@ derived:
   value_kind: 수치
   tier: 권고
   concept_set: null
-  standard: LOINC
+  standard: LOINC 33805-3 (Fructosamine [Mass/volume] in Serum or Plasma)
   note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
 - name: insulin_use_yn
   kor: 인슐린 사용 여부

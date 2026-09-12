@@ -52,10 +52,19 @@
 uv run --with openpyxl --with pyyaml python spec/build_spec_v2.py [배치표.xlsx] [--out spec/v2]
 ```
 
-## 다음 단계 (2.1)
+## 2.1 · 값 집합 채우기 (완료분)
 
-- 비어 있는 값 집합의 값 채우기, 값마다 SNOMED/LOINC 코드를 용어 서버로 확인해 `concept_code` 에 기록.
+`spec/v2_codelists_v21.py` 가 값 집합과 표준 매핑의 원천입니다.
+
+- **값 집합 58개**를 임상 표준(AJCC 8판, WHO/ICC, RECIST 1.1, Lugano/Cheson, ITBCC 2016 종양출아, MERCURY mrTRG, EASL-EASD-EASO 2023 MASLD, NASH CRN, ICH E2B 등) 근거로 채웠습니다. 근거는 파일 안 주석에 항목별로 적었습니다.
+- **LOINC**: 로컬 파일(`/Users/min/Research/standard_terminology/LOINC/Loinc_2.80/LoincTableCore/LoincTableCore.csv`, 2.80판)에서 직접 확인한 코드만 썼습니다 — HbA1c, 공복/식후/OGTT 혈당, C-peptide, 공복 인슐린, HOMA, 프룩토사민, UACR, GAD 항체, Ki-67, PD-L1(개별 검사값), 그리고 PFT_ITEM(FEV1·FVC·FEV1/FVC·DLCO)·ALCOHOL(AUDIT 총점 등) 두 항목 목록.
+- **DRUG_CLASS_SET**(약물 계열 9종)은 WHO ATC 분류로 채웠습니다. ATC 는 안정된 국제 표준이라 용어 서버 확인 없이 적용했습니다.
+- **COMORBIDITY_SET**(과거력 진단 20종)은 값은 채웠지만 **SNOMED CT concept_id 는 비어 있습니다.** 이 세션에서 SNOMED 용어 서버(MCP) 연결이 끊겨 확인하지 못했습니다.
+- 값마다 `SNOMED_CODES` 딕셔너리(현재 비어 있음)에 `(코드표, 코드) → concept_id` 를 채우면 다음 실행에서 해당 값의 `vocabulary_id` 가 KAI → SNOMED 로 자동 승격됩니다.
+
+## 다음 단계 (2.2)
+
+- **SNOMED CT 승격**: `spec/v2_codelists_v21.py` 의 `SNOMED_CODES` 딕셔너리를 용어 서버(MCP)로 채운 뒤 재실행. 우선순위: COMORBIDITY_SET(과거력 20종) → 병리·검체 방법/부위 계열 → 나머지.
 - 열린 표준 코드(수술명·레지멘·MedDRA 용어·약제)의 참조표를 어휘에 적재.
-- 파생 변수의 concept set(과거력 진단 목록, 약물 계열 목록) 채우기.
 - v1 미승격 필드 575개 중 승격할 것 고르기.
 - 3단계: 규칙 생성기·가상데이터·엔진·앱을 v2 로 전환. 앱에 서식→레코드 변환 단계를 추가.

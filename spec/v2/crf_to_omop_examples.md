@@ -81,7 +81,7 @@ person_id=100001, antp_id=1, adverse_event_start_date=2022-05-02, adverse_event_
 - **EPISODE_EVENT** episode_id=7002, event_id=5002, episode_event_field_concept_id=10000000010
 - **MEASUREMENT** measurement_id=9011, person_id=100001, measurement_concept_id=10000000589, measurement_date=2022-05-02, measurement_type_concept_id=10000000001, value_as_concept_id=10000000171, value_source_value=2, measurement_event_id=5002, meas_event_field_concept_id=10000000010
 - **OBSERVATION** observation_id=8005, person_id=100001, observation_concept_id=10000000590, observation_date=2022-05-02, observation_type_concept_id=10000000001, value_as_concept_id=10000000178, value_source_value=가능, observation_event_id=5002, obs_event_field_concept_id=10000000010
-- **OBSERVATION** observation_id=8006, person_id=100001, observation_concept_id=10000000591, observation_date=2022-05-02, observation_type_concept_id=10000000001, value_as_concept_id=<concept: 0>, value_source_value=0, observation_event_id=5002, obs_event_field_concept_id=10000000010
+- **OBSERVATION** observation_id=8006, person_id=100001, observation_concept_id=10000000591, observation_date=2022-05-02, observation_type_concept_id=10000000001, value_as_concept_id=10000000191, value_source_value=0, observation_event_id=5002, obs_event_field_concept_id=10000000010
 
 ## FAMILY_HISTORY · 가족력 서식
 

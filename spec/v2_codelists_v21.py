@@ -4,10 +4,10 @@
 배치표(1단계)에서 만든 62개 빈 값 집합에 실제 값을 채운다. 두 가지 원천을 쓴다.
   - LOINC: 로컬 파일(/Users/min/Research/standard_terminology/LOINC/Loinc_2.80/LoincTableCore/LoincTableCore.csv)에서
     grep 으로 직접 확인한 코드만 LOINC_CODES/PFT_ITEMS/ALCOHOL_ITEMS 에 넣었다.
-  - SNOMED CT: MCP 용어 서버로 확인해야 한다. 이 파일을 만든 시점에는 서버가 연결되지 않아
-    VALUE_SETS 의 값에는 SNOMED 코드가 없다(전부 vocabulary=KAI). SNOMED_CODES 딕셔너리에
-    (코드표, 코드) → concept_id 형태로 채우면 build_spec_v2.py 가 그 값만 SNOMED 로 승격한다.
-    다음 세션에서 SNOMED MCP 로 채울 항목은 spec/v2/spec_v2_report.md 의 "SNOMED 확인 대기" 절에 나열된다.
+  - SNOMED CT: snowstorm MCP 용어 서버(snomedct/MAIN)로 항목을 검색해 FSN·활성 여부를 확인한 코드만 쓴다.
+    SNOMED_CODES 딕셔너리에 (코드표, 코드) → concept_id 로 넣으면 build_spec_v2.py 가 그 값만 SNOMED 로 승격한다.
+    2026-09-12 현재 COMORBIDITY_SET(과거력 진단 20종)이 채워졌고, VALUE_SETS 쪽 코드표는 아직 KAI 임시 코드다.
+    남은 항목은 spec/v2/spec_v2_report.md 의 "SNOMED 확인 대기" 절에 나열된다.
 
 값의 임상 근거는 각 절 주석에 표기했다(AJCC 8판, WHO/ICC, RECIST 1.1, Lugano/Cheson, ITBCC 2016, MERCURY, EASL-EASD-EASO 2023 MASLD 등).
 팀 검토 후 코드·라벨을 바꾸려면 이 파일만 고치고 build_spec_v2.py 를 다시 실행한다.
@@ -178,13 +178,39 @@ VALUE_SETS = {
 # 예/아니오(is_serious) 는 새 값을 만들지 않고 기존 YN 값 집합을 그대로 가리킨다.
 ALIAS_CODELIST = {"CL_IS_SERIOUS": "YN"}
 
-# ================================================================ SNOMED CT 매핑 (MCP 로 확인된 값만)
-# key: (codelist_id, code) -> SNOMED concept_id. 이 세션에서는 SNOMED CT 용어 서버 연결이 끊겨 비어 있다.
-# 다음 세션에서 mcp SNOMED 도구로 확인 후 채우면 build_spec_v2.py 가 해당 값의 vocabulary 를 KAI -> SNOMED 로 승격한다.
+# ================================================================ SNOMED CT 매핑 (MCP 용어 서버로 확인된 값만)
+# key: (codelist_id, code) -> SNOMED concept_id.
+# 2026-09-12 세션에서 snowstorm MCP(https://snomedbrowser.org/snowstorm/snomed-ct, 편집판 snomedct/MAIN)로
+# 항목별 검색(snowstorm_search_concepts)을 돌려 FSN·활성 여부를 눈으로 확인한 값만 넣는다.
+# build_spec_v2.py 가 여기 있는 값의 vocabulary 를 KAI -> SNOMED 로 승격한다.
 SNOMED_CODES = {
-    # 예시(연결 복구 후 다음 형식으로 추가):
-    # ("CL_BIOPSY_METHOD", "CORE"): "462092009",
+    # ---- COMORBIDITY_SET (과거력 진단 20종). 괄호 안은 확인한 FSN.
+    ("COMORBIDITY_SET", "HTN"): "38341003",                  # Hypertensive disorder, systemic arterial (disorder)
+    ("COMORBIDITY_SET", "T2DM"): "44054006",                 # Diabetes mellitus type 2 (disorder)
+    ("COMORBIDITY_SET", "DYSLIPIDEMIA"): "55822004",         # Hyperlipidemia (disorder)
+    ("COMORBIDITY_SET", "CVD"): "414545008",                 # Ischemic heart disease (disorder)
+    ("COMORBIDITY_SET", "CEREBROVASCULAR"): "62914000",      # Cerebrovascular disease (disorder)
+    ("COMORBIDITY_SET", "CKD"): "709044004",                 # Chronic kidney disease (disorder)
+    ("COMORBIDITY_SET", "PANCREATIC"): "3855007",            # Disorder of pancreas (disorder)
+    ("COMORBIDITY_SET", "HBV"): "61977001",                  # Chronic type B viral hepatitis (disorder)
+    ("COMORBIDITY_SET", "HCV"): "128302006",                 # Chronic hepatitis C (disorder)
+    ("COMORBIDITY_SET", "HIV"): "86406008",                  # Human immunodeficiency virus infection (disorder)
+    ("COMORBIDITY_SET", "TB"): "56717001",                   # Tuberculosis (disorder)
+    ("COMORBIDITY_SET", "HEART_DISEASE"): "56265001",        # Heart disease (disorder) — CVD(허혈성)보다 상위 개념
+    ("COMORBIDITY_SET", "OTHER_RESPIRATORY"): "50043002",    # Disorder of respiratory system (disorder)
+    ("COMORBIDITY_SET", "COLORECTAL_DISEASE"): "128524007",  # Disorder of colon (disorder)
+    ("COMORBIDITY_SET", "KIDNEY_DISEASE"): "90708001",       # Kidney disease (disorder) — CKD 를 포함하는 상위 개념
+    ("COMORBIDITY_SET", "LIVER_DISEASE"): "235856003",       # Disorder of liver (disorder)
+    ("COMORBIDITY_SET", "HYPOTHYROIDISM"): "40930008",       # Hypothyroidism (disorder)
+    ("COMORBIDITY_SET", "BARIATRIC_SURGERY_HX"): "608848006",  # History of bariatric surgical procedure (situation)
+    ("COMORBIDITY_SET", "HEREDITARY_CRC"): "315058005",      # Hereditary nonpolyposis colon cancer (disorder)
+    ("COMORBIDITY_SET", "CANCER_HX"): "266987004",           # History of malignant neoplasm (situation)
+    # 값 집합(VALUE_SETS) 쪽 SNOMED 승격은 다음 단계에서 이어서 채운다.
+    # 예: ("CL_BIOPSY_METHOD", "CORE"): "<확인한 concept_id>",
 }
+# 주의: BARIATRIC_SURGERY_HX·CANCER_HX 두 개는 (disorder) 가 아니라 (situation) 계층이다.
+# 과거력 자체를 가리키는 개념이라 의미가 맞지만, OMOP 로 내보낼 때 domain 이 Condition 이 아니라
+# Observation 으로 잡히는 것이 표준이므로 3단계(적재기)에서 domain 재지정을 검토한다.
 
 # ================================================================ LOINC (로컬 파일에서 grep 으로 확인)
 LOINC_SOURCE = "/Users/min/Research/standard_terminology/LOINC/Loinc_2.80/LoincTableCore/LoincTableCore.csv (2.80)"
@@ -219,7 +245,7 @@ ALCOHOL_ITEMS = [
 ]
 
 # ================================================================ 콤보 목록(개별 값이 아니라 표준 개념 참조) — SNOMED/ATC 확인 대기
-# COMORBIDITY_SET: 과거력 진단명 목록. SNOMED concept_id 는 MCP 확인 후 채운다(현재 None -> KAI 임시 코드).
+# COMORBIDITY_SET: 과거력 진단명 목록. 네 번째 자리는 쓰지 않고(None), 실제 SNOMED concept_id 는 위 SNOMED_CODES 에 둔다.
 COMORBIDITY_ITEMS = [
     ("HTN", "고혈압", "Hypertensive disorder", None), ("T2DM", "제2형 당뇨병", "Type 2 diabetes mellitus", None),
     ("DYSLIPIDEMIA", "이상지질혈증", "Hyperlipidemia", None), ("CVD", "심혈관질환", "Ischemic heart disease", None),

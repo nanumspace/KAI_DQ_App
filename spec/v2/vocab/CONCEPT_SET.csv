@@ -93,7 +93,7 @@ CL_TME_QUALITY,CL_TME_QUALITY,10000000367,2.1 에서 채움 (spec/v2_codelists_v
 CL_TUMOR_BUDDING_GRADE,CL_TUMOR_BUDDING_GRADE,10000000368,2.1 에서 채움 (spec/v2_codelists_v21.py)
 CL_VPI_GRADE,CL_VPI_GRADE,10000000369,2.1 에서 채움 (spec/v2_codelists_v21.py)
 CL_WATCH_AND_WAIT_STATUS,CL_WATCH_AND_WAIT_STATUS,10000000370,2.1 에서 채움 (spec/v2_codelists_v21.py)
-COMORBIDITY_SET,과거력 진단 목록,10000000732,SNOMED CT 로 확인 대기(MCP 연결 필요) · KCD 매핑은 병원 코드표 기준
+COMORBIDITY_SET,과거력 진단 목록,10000000732,"SNOMED CT(snowstorm MCP, snomedct/MAIN)로 항목별 확인 · KCD 매핑은 병원 코드표 기준"
 DRUG_CLASS_SET,약물 계열 목록,10000000735,ATC(WHO) 분류. 국내 약물코드 매핑은 처방 데이터 기준
 PFT_ITEM,폐기능검사 항목,10000000733,LOINC 2.80 로컬 파일에서 확인 (/Users/min/Research/standard_terminology/LOINC/Loinc_2.80/LoincTableCore/LoincTableCore.csv (2.80))
 ALCOHOL,음주 이력 항목,10000000734,LOINC 2.80 로컬 파일에서 확인 (/Users/min/Research/standard_terminology/LOINC/Loinc_2.80/LoincTableCore/LoincTableCore.csv (2.80))

@@ -245,7 +245,7 @@ for F in forms.values():
             loinc_applied.append((F["name"], f["name"], code[0]))
 # 2.1: 코어 파생 변수의 concept_set 4종(과거력·약물계열·폐기능·음주)을 실제 concept 목록으로 채운다.
 SPECIAL_SETS = {
-    "COMORBIDITY_SET": ("과거력 진단 목록", "Condition", COMORBIDITY_ITEMS, lambda code_std: ("SNOMED", code_std) if code_std else ("KAI", None), "SNOMED CT 로 확인 대기(MCP 연결 필요) · KCD 매핑은 병원 코드표 기준"),
+    "COMORBIDITY_SET": ("과거력 진단 목록", "Condition", COMORBIDITY_ITEMS, lambda code_std: ("SNOMED", code_std) if code_std else ("KAI", None), "SNOMED CT(snowstorm MCP, snomedct/MAIN)로 항목별 확인 · KCD 매핑은 병원 코드표 기준"),
     "DRUG_CLASS_SET": ("약물 계열 목록", "Drug", [(c, ko, en, ("ATC", atc)) for c, ko, en, atc in DRUG_CLASS_ITEMS], lambda v: v, "ATC(WHO) 분류. 국내 약물코드 매핑은 처방 데이터 기준"),
     "PFT_ITEM": ("폐기능검사 항목", "Measurement", [(c, ko, en, ("LOINC", code)) for c, ko, en, code in PFT_ITEMS], lambda v: v, f"LOINC 2.80 로컬 파일에서 확인 ({LOINC_SOURCE})"),
     "ALCOHOL": ("음주 이력 항목", "Observation", [(c, ko, en, ("LOINC", code)) for c, ko, en, code in ALCOHOL_ITEMS], lambda v: v, f"LOINC 2.80 로컬 파일에서 확인 ({LOINC_SOURCE})"),
@@ -478,14 +478,19 @@ for n, F in forms.items():
     L.append(f"| {n} | {F['grain']} | {len(F['fields'])} | {st} |")
 L += ["", "## 2.1 · 값 집합 채우기", "",
       f"이번 실행에서 {len(filled_2_1)}개 값 집합을 `spec/v2_codelists_v21.py` 로 채웠다(임상 표준 근거는 그 파일 주석). "
-      f"LOINC 는 로컬 파일({LOINC_SOURCE})에서 확인한 코드만 썼다. SNOMED CT 는 이번 실행 시점에 MCP 용어 서버가 연결되지 않아 "
-      f"`SNOMED_CODES` 딕셔너리가 비어 있고, 아래 값은 전부 임시 KAI 코드다 — 서버 연결 후 그 딕셔너리를 채우고 다시 실행하면 값 단위로 SNOMED 승격된다.",
+      f"LOINC 는 로컬 파일({LOINC_SOURCE})에서 확인한 코드만 썼다. SNOMED CT 는 snowstorm MCP 용어 서버(snomedct/MAIN)에서 "
+      f"항목을 검색해 FSN·활성 여부를 확인한 {len(SNOMED_CODES)}개만 `SNOMED_CODES` 에 넣었고, 나머지 값은 아직 임시 KAI 코드다 "
+      f"— 그 딕셔너리를 더 채우고 다시 실행하면 값 단위로 SNOMED 승격된다.",
       "", f"채운 값 집합: {', '.join(filled_2_1) or '없음'}", "",
       f"개별 검사값에 LOINC 코드를 부여한 필드 {len(loinc_applied)}개: " + ", ".join(f"{form}.{name}={code}" for form, name, code in loinc_applied),
       "", "특수 목록(개별 값이 아니라 표준 개념 참조):",
-      "- COMORBIDITY_SET(과거력 진단): SNOMED CT 확인 대기, 현재 KAI 임시 코드",
+      f"- COMORBIDITY_SET(과거력 진단 {len(COMORBIDITY_ITEMS)}종): SNOMED CT 적용 "
+      f"{sum(1 for k in SNOMED_CODES if k[0] == 'COMORBIDITY_SET')}종(snowstorm MCP 확인). "
+      "History of bariatric surgical procedure(608848006)·History of malignant neoplasm(266987004) 두 개는 (situation) 계층이라 적재 시 domain 재지정 검토 필요",
       "- DRUG_CLASS_SET(약물 계열): ATC 분류 적용(표준, MCP 불필요)",
       f"- PFT_ITEM, ALCOHOL(검사 항목): LOINC 로컬 파일에서 확인",
+      "", "SNOMED 확인 대기(값 집합 단위, 다음 세션에서 `SNOMED_CODES` 에 추가): "
+      + (", ".join(sorted(p for p in VALUE_SETS if not any(k[0] == p for k in SNOMED_CODES))) or "없음"),
       "", "여전히 비어 있는 값 집합(팀 검토 필요): " + (", ".join(still_empty) or "없음"),
       "", "## v1 미승격 필드", ""] + [f"- {d}: {len(es)}개" for d, es in sorted(legacy.items(), key=lambda x: -len(x[1]))] + ["", "## 경고", ""] + [f"- {w}" for w in warnings]
 open(os.path.join(OUT, "spec_v2_report.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")

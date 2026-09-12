@@ -179,148 +179,151 @@ VALUE_SETS = {
 ALIAS_CODELIST = {"CL_IS_SERIOUS": "YN"}
 
 # ================================================================ SNOMED CT 매핑 (MCP 용어 서버로 확인된 값만)
-# key: (codelist_id, code) -> SNOMED concept_id.
+# key: (codelist_id, code) -> (SNOMED concept_id, SNOMED 계층=semantic tag).
+# 계층을 함께 적는 이유: OMOP domain 은 값이 '무엇인가'에 따라 정해지는데, 그 판단 근거가 계층이다.
+# build_spec_v2.py 의 SNOMED_TAG_DOMAIN 이 계층 -> domain 을 맡는다. 새 매핑을 넣을 때 계층을
+# 빠뜨리거나 모르는 값을 쓰면 빌드가 경고를 낸다.
 # 2026-09-12 세션에서 snowstorm MCP(https://snomedbrowser.org/snowstorm/snomed-ct, 편집판 snomedct/MAIN)로
 # 항목별 검색(snowstorm_search_concepts)을 돌려 FSN·활성 여부를 눈으로 확인한 값만 넣는다.
 # build_spec_v2.py 가 여기 있는 값의 vocabulary 를 KAI -> SNOMED 로 승격한다.
 SNOMED_CODES = {
     # ---- COMORBIDITY_SET (과거력 진단 20종). 괄호 안은 확인한 FSN.
-    ("COMORBIDITY_SET", "HTN"): "38341003",                  # Hypertensive disorder, systemic arterial (disorder)
-    ("COMORBIDITY_SET", "T2DM"): "44054006",                 # Diabetes mellitus type 2 (disorder)
-    ("COMORBIDITY_SET", "DYSLIPIDEMIA"): "55822004",         # Hyperlipidemia (disorder)
-    ("COMORBIDITY_SET", "CVD"): "414545008",                 # Ischemic heart disease (disorder)
-    ("COMORBIDITY_SET", "CEREBROVASCULAR"): "62914000",      # Cerebrovascular disease (disorder)
-    ("COMORBIDITY_SET", "CKD"): "709044004",                 # Chronic kidney disease (disorder)
-    ("COMORBIDITY_SET", "PANCREATIC"): "3855007",            # Disorder of pancreas (disorder)
-    ("COMORBIDITY_SET", "HBV"): "61977001",                  # Chronic type B viral hepatitis (disorder)
-    ("COMORBIDITY_SET", "HCV"): "128302006",                 # Chronic hepatitis C (disorder)
-    ("COMORBIDITY_SET", "HIV"): "86406008",                  # Human immunodeficiency virus infection (disorder)
-    ("COMORBIDITY_SET", "TB"): "56717001",                   # Tuberculosis (disorder)
-    ("COMORBIDITY_SET", "HEART_DISEASE"): "56265001",        # Heart disease (disorder) — CVD(허혈성)보다 상위 개념
-    ("COMORBIDITY_SET", "OTHER_RESPIRATORY"): "50043002",    # Disorder of respiratory system (disorder)
-    ("COMORBIDITY_SET", "COLORECTAL_DISEASE"): "128524007",  # Disorder of colon (disorder)
-    ("COMORBIDITY_SET", "KIDNEY_DISEASE"): "90708001",       # Kidney disease (disorder) — CKD 를 포함하는 상위 개념
-    ("COMORBIDITY_SET", "LIVER_DISEASE"): "235856003",       # Disorder of liver (disorder)
-    ("COMORBIDITY_SET", "HYPOTHYROIDISM"): "40930008",       # Hypothyroidism (disorder)
-    ("COMORBIDITY_SET", "BARIATRIC_SURGERY_HX"): "608848006",  # History of bariatric surgical procedure (situation)
-    ("COMORBIDITY_SET", "HEREDITARY_CRC"): "315058005",      # Hereditary nonpolyposis colon cancer (disorder)
-    ("COMORBIDITY_SET", "CANCER_HX"): "266987004",           # History of malignant neoplasm (situation)
+    ("COMORBIDITY_SET", "HTN"): ("38341003", "disorder"),                  # Hypertensive disorder, systemic arterial (disorder)
+    ("COMORBIDITY_SET", "T2DM"): ("44054006", "disorder"),                 # Diabetes mellitus type 2 (disorder)
+    ("COMORBIDITY_SET", "DYSLIPIDEMIA"): ("55822004", "disorder"),         # Hyperlipidemia (disorder)
+    ("COMORBIDITY_SET", "CVD"): ("414545008", "disorder"),                 # Ischemic heart disease (disorder)
+    ("COMORBIDITY_SET", "CEREBROVASCULAR"): ("62914000", "disorder"),      # Cerebrovascular disease (disorder)
+    ("COMORBIDITY_SET", "CKD"): ("709044004", "disorder"),                 # Chronic kidney disease (disorder)
+    ("COMORBIDITY_SET", "PANCREATIC"): ("3855007", "disorder"),            # Disorder of pancreas (disorder)
+    ("COMORBIDITY_SET", "HBV"): ("61977001", "disorder"),                  # Chronic type B viral hepatitis (disorder)
+    ("COMORBIDITY_SET", "HCV"): ("128302006", "disorder"),                 # Chronic hepatitis C (disorder)
+    ("COMORBIDITY_SET", "HIV"): ("86406008", "disorder"),                  # Human immunodeficiency virus infection (disorder)
+    ("COMORBIDITY_SET", "TB"): ("56717001", "disorder"),                   # Tuberculosis (disorder)
+    ("COMORBIDITY_SET", "HEART_DISEASE"): ("56265001", "disorder"),        # Heart disease (disorder) — CVD(허혈성)보다 상위 개념
+    ("COMORBIDITY_SET", "OTHER_RESPIRATORY"): ("50043002", "disorder"),    # Disorder of respiratory system (disorder)
+    ("COMORBIDITY_SET", "COLORECTAL_DISEASE"): ("128524007", "disorder"),  # Disorder of colon (disorder)
+    ("COMORBIDITY_SET", "KIDNEY_DISEASE"): ("90708001", "disorder"),       # Kidney disease (disorder) — CKD 를 포함하는 상위 개념
+    ("COMORBIDITY_SET", "LIVER_DISEASE"): ("235856003", "disorder"),       # Disorder of liver (disorder)
+    ("COMORBIDITY_SET", "HYPOTHYROIDISM"): ("40930008", "disorder"),       # Hypothyroidism (disorder)
+    ("COMORBIDITY_SET", "BARIATRIC_SURGERY_HX"): ("608848006", "situation"),  # History of bariatric surgical procedure (situation)
+    ("COMORBIDITY_SET", "HEREDITARY_CRC"): ("315058005", "disorder"),      # Hereditary nonpolyposis colon cancer (disorder)
+    ("COMORBIDITY_SET", "CANCER_HX"): ("266987004", "situation"),           # History of malignant neoplasm (situation)
     # ---- 해부학 부위 (body structure). 폐엽·대장 분절은 여러 코드표가 같은 concept 을 공유한다.
     #      폐: <<39607008 |Lung structure| 를 ECL 로 펼쳐 "lobe of lung" 으로 걸러 확인.
-    ("CL_PRIMARY_SITE", "RUL"): "42400003",                  # Structure of upper lobe of right lung
-    ("CL_PRIMARY_SITE", "RML"): "72481006",                  # Structure of middle lobe of right lung
-    ("CL_PRIMARY_SITE", "RLL"): "266005",                    # Structure of lower lobe of right lung
-    ("CL_PRIMARY_SITE", "LUL"): "44714003",                  # Structure of upper lobe of left lung
-    ("CL_PRIMARY_SITE", "LLL"): "41224006",                  # Structure of lower lobe of left lung
-    ("CL_PRIMARY_SITE", "MAIN_BRONCHUS"): "102297006",       # Main bronchus structure
+    ("CL_PRIMARY_SITE", "RUL"): ("42400003", "body structure"),                  # Structure of upper lobe of right lung
+    ("CL_PRIMARY_SITE", "RML"): ("72481006", "body structure"),                  # Structure of middle lobe of right lung
+    ("CL_PRIMARY_SITE", "RLL"): ("266005", "body structure"),                    # Structure of lower lobe of right lung
+    ("CL_PRIMARY_SITE", "LUL"): ("44714003", "body structure"),                  # Structure of upper lobe of left lung
+    ("CL_PRIMARY_SITE", "LLL"): ("41224006", "body structure"),                  # Structure of lower lobe of left lung
+    ("CL_PRIMARY_SITE", "MAIN_BRONCHUS"): ("102297006", "body structure"),       # Main bronchus structure
     # OVERLAPPING·UNSPECIFIED 는 부위가 아니라 기재 상태라 KAI 코드로 남긴다.
 
     #      대장: <<245425000 |Region of colon| 를 펼쳐 분절 concept 을 확인(맹장·직장은 이 하위가 아니라 따로 조회).
-    ("CL_BIOPSY_SITE_DETAIL", "RUL"): "42400003",            # Structure of upper lobe of right lung
-    ("CL_BIOPSY_SITE_DETAIL", "RML"): "72481006",            # Structure of middle lobe of right lung
-    ("CL_BIOPSY_SITE_DETAIL", "RLL"): "266005",              # Structure of lower lobe of right lung
-    ("CL_BIOPSY_SITE_DETAIL", "LUL"): "44714003",            # Structure of upper lobe of left lung
-    ("CL_BIOPSY_SITE_DETAIL", "LLL"): "41224006",            # Structure of lower lobe of left lung
-    ("CL_BIOPSY_SITE_DETAIL", "CECUM"): "32713005",          # Cecum structure
-    ("CL_BIOPSY_SITE_DETAIL", "ASC_COLON"): "9040008",       # Ascending colon structure
-    ("CL_BIOPSY_SITE_DETAIL", "HEP_FLEX"): "48338005",       # Structure of right colic flexure (간만곡부)
-    ("CL_BIOPSY_SITE_DETAIL", "TRANS_COLON"): "485005",      # Transverse colon structure
-    ("CL_BIOPSY_SITE_DETAIL", "SPL_FLEX"): "72592005",       # Structure of left colic flexure (비만곡부)
-    ("CL_BIOPSY_SITE_DETAIL", "DESC_COLON"): "32622004",     # Descending colon structure
-    ("CL_BIOPSY_SITE_DETAIL", "SIGMOID"): "60184004",        # Sigmoid colon structure
-    ("CL_BIOPSY_SITE_DETAIL", "RECTUM"): "34402009",         # Rectum structure
+    ("CL_BIOPSY_SITE_DETAIL", "RUL"): ("42400003", "body structure"),            # Structure of upper lobe of right lung
+    ("CL_BIOPSY_SITE_DETAIL", "RML"): ("72481006", "body structure"),            # Structure of middle lobe of right lung
+    ("CL_BIOPSY_SITE_DETAIL", "RLL"): ("266005", "body structure"),              # Structure of lower lobe of right lung
+    ("CL_BIOPSY_SITE_DETAIL", "LUL"): ("44714003", "body structure"),            # Structure of upper lobe of left lung
+    ("CL_BIOPSY_SITE_DETAIL", "LLL"): ("41224006", "body structure"),            # Structure of lower lobe of left lung
+    ("CL_BIOPSY_SITE_DETAIL", "CECUM"): ("32713005", "body structure"),          # Cecum structure
+    ("CL_BIOPSY_SITE_DETAIL", "ASC_COLON"): ("9040008", "body structure"),       # Ascending colon structure
+    ("CL_BIOPSY_SITE_DETAIL", "HEP_FLEX"): ("48338005", "body structure"),       # Structure of right colic flexure (간만곡부)
+    ("CL_BIOPSY_SITE_DETAIL", "TRANS_COLON"): ("485005", "body structure"),      # Transverse colon structure
+    ("CL_BIOPSY_SITE_DETAIL", "SPL_FLEX"): ("72592005", "body structure"),       # Structure of left colic flexure (비만곡부)
+    ("CL_BIOPSY_SITE_DETAIL", "DESC_COLON"): ("32622004", "body structure"),     # Descending colon structure
+    ("CL_BIOPSY_SITE_DETAIL", "SIGMOID"): ("60184004", "body structure"),        # Sigmoid colon structure
+    ("CL_BIOPSY_SITE_DETAIL", "RECTUM"): ("34402009", "body structure"),         # Rectum structure
 
-    ("CL_DISTANT_METASTASIS_SITE", "LIVER"): "10200004",     # Liver structure
-    ("CL_DISTANT_METASTASIS_SITE", "LUNG"): "39607008",      # Lung structure
-    ("CL_DISTANT_METASTASIS_SITE", "BONE"): "272673000",     # Bone structure
-    ("CL_DISTANT_METASTASIS_SITE", "BRAIN"): "12738006",     # Brain structure
-    ("CL_DISTANT_METASTASIS_SITE", "ADRENAL"): "23451007",   # Adrenal structure
-    ("CL_DISTANT_METASTASIS_SITE", "PERITONEUM"): "15425007",  # Structure of serous membrane of peritoneum
-    ("CL_DISTANT_METASTASIS_SITE", "DISTANT_NODE"): "59441001",  # Structure of lymph node — "원격"은 부위 concept 에 담기지 않는다(주 참조)
+    ("CL_DISTANT_METASTASIS_SITE", "LIVER"): ("10200004", "body structure"),     # Liver structure
+    ("CL_DISTANT_METASTASIS_SITE", "LUNG"): ("39607008", "body structure"),      # Lung structure
+    ("CL_DISTANT_METASTASIS_SITE", "BONE"): ("272673000", "body structure"),     # Bone structure
+    ("CL_DISTANT_METASTASIS_SITE", "BRAIN"): ("12738006", "body structure"),     # Brain structure
+    ("CL_DISTANT_METASTASIS_SITE", "ADRENAL"): ("23451007", "body structure"),   # Adrenal structure
+    ("CL_DISTANT_METASTASIS_SITE", "PERITONEUM"): ("15425007", "body structure"),  # Structure of serous membrane of peritoneum
+    ("CL_DISTANT_METASTASIS_SITE", "DISTANT_NODE"): ("59441001", "body structure"),  # Structure of lymph node — "원격"은 부위 concept 에 담기지 않는다(주 참조)
 
-    ("CL_EXTRANODAL_SITES", "GI"): "122865005",              # Gastrointestinal tract structure
-    ("CL_EXTRANODAL_SITES", "BONE_MARROW"): "14016003",      # Bone marrow structure
-    ("CL_EXTRANODAL_SITES", "CNS"): "21483005",              # Structure of central nervous system
-    ("CL_EXTRANODAL_SITES", "SKIN"): "39937001",             # Skin structure
-    ("CL_EXTRANODAL_SITES", "LUNG"): "39607008",             # Lung structure
-    ("CL_EXTRANODAL_SITES", "LIVER"): "10200004",            # Liver structure
-    ("CL_EXTRANODAL_SITES", "BONE"): "272673000",            # Bone structure
-    ("CL_EXTRANODAL_SITES", "TESTIS"): "40689003",           # Testis structure
+    ("CL_EXTRANODAL_SITES", "GI"): ("122865005", "body structure"),              # Gastrointestinal tract structure
+    ("CL_EXTRANODAL_SITES", "BONE_MARROW"): ("14016003", "body structure"),      # Bone marrow structure
+    ("CL_EXTRANODAL_SITES", "CNS"): ("21483005", "body structure"),              # Structure of central nervous system
+    ("CL_EXTRANODAL_SITES", "SKIN"): ("39937001", "body structure"),             # Skin structure
+    ("CL_EXTRANODAL_SITES", "LUNG"): ("39607008", "body structure"),             # Lung structure
+    ("CL_EXTRANODAL_SITES", "LIVER"): ("10200004", "body structure"),            # Liver structure
+    ("CL_EXTRANODAL_SITES", "BONE"): ("272673000", "body structure"),            # Bone structure
+    ("CL_EXTRANODAL_SITES", "TESTIS"): ("40689003", "body structure"),           # Testis structure
 
-    ("CL_PRIMARY_INVOLVED_SITE", "NODAL"): "59441001",       # Structure of lymph node
-    ("CL_PRIMARY_INVOLVED_SITE", "MEDIASTINAL"): "72410000",  # Mediastinal structure
-    ("CL_PRIMARY_INVOLVED_SITE", "WALDEYER"): "17861009",    # Structure of pharyngeal lymphoid ring (발다이어고리)
-    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_GI"): "122865005",   # Gastrointestinal tract structure
-    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_SKIN"): "39937001",  # Skin structure
-    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_CNS"): "21483005",   # Structure of central nervous system
-    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_BONE"): "272673000",  # Bone structure
+    ("CL_PRIMARY_INVOLVED_SITE", "NODAL"): ("59441001", "body structure"),       # Structure of lymph node
+    ("CL_PRIMARY_INVOLVED_SITE", "MEDIASTINAL"): ("72410000", "body structure"),  # Mediastinal structure
+    ("CL_PRIMARY_INVOLVED_SITE", "WALDEYER"): ("17861009", "body structure"),    # Structure of pharyngeal lymphoid ring (발다이어고리)
+    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_GI"): ("122865005", "body structure"),   # Gastrointestinal tract structure
+    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_SKIN"): ("39937001", "body structure"),  # Skin structure
+    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_CNS"): ("21483005", "body structure"),   # Structure of central nervous system
+    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_BONE"): ("272673000", "body structure"),  # Bone structure
 
     # ---- 측성 (qualifier value). 두 코드표가 같은 값을 쓴다.
-    ("CL_BIOPSY_LATERALITY", "RIGHT"): "24028007",           # Right (qualifier value)
-    ("CL_BIOPSY_LATERALITY", "LEFT"): "7771000",             # Left (qualifier value)
-    ("CL_BIOPSY_LATERALITY", "BILATERAL"): "51440002",       # Right and left (qualifier value) — 동의어 Bilateral
-    ("CL_BIOPSY_LATERALITY", "NA"): "385432009",             # Not applicable (qualifier value)
-    ("CL_SURGICAL_SPECIMEN_LATERALITY", "RIGHT"): "24028007",
-    ("CL_SURGICAL_SPECIMEN_LATERALITY", "LEFT"): "7771000",
-    ("CL_SURGICAL_SPECIMEN_LATERALITY", "BILATERAL"): "51440002",
-    ("CL_SURGICAL_SPECIMEN_LATERALITY", "NA"): "385432009",
+    ("CL_BIOPSY_LATERALITY", "RIGHT"): ("24028007", "qualifier value"),           # Right (qualifier value)
+    ("CL_BIOPSY_LATERALITY", "LEFT"): ("7771000", "qualifier value"),             # Left (qualifier value)
+    ("CL_BIOPSY_LATERALITY", "BILATERAL"): ("51440002", "qualifier value"),       # Right and left (qualifier value) — 동의어 Bilateral
+    ("CL_BIOPSY_LATERALITY", "NA"): ("385432009", "qualifier value"),             # Not applicable (qualifier value)
+    ("CL_SURGICAL_SPECIMEN_LATERALITY", "RIGHT"): ("24028007", "qualifier value"),
+    ("CL_SURGICAL_SPECIMEN_LATERALITY", "LEFT"): ("7771000", "qualifier value"),
+    ("CL_SURGICAL_SPECIMEN_LATERALITY", "BILATERAL"): ("51440002", "qualifier value"),
+    ("CL_SURGICAL_SPECIMEN_LATERALITY", "NA"): ("385432009", "qualifier value"),
 
     # ---- 생검 방법 (procedure). <<86273004 |Biopsy| 를 ECL 로 펼쳐 방법별로 확인.
-    ("CL_BIOPSY_METHOD", "CORE"): "9911007",                 # Core needle biopsy
-    ("CL_BIOPSY_METHOD", "FNA"): "48635004",                 # Fine needle biopsy (동의어 Fine needle aspiration)
-    ("CL_BIOPSY_METHOD", "EXCISION"): "8889005",             # Excisional biopsy
-    ("CL_BIOPSY_METHOD", "INCISION"): "70871006",            # Incisional biopsy
-    ("CL_BIOPSY_METHOD", "PUNCH"): "68660007",               # Punch biopsy
-    ("CL_BIOPSY_METHOD", "ENDOSCOPIC"): "53767003",          # Endoscopic biopsy
-    ("CL_BIOPSY_METHOD", "EBUS"): "1389225003",              # Transbronchial needle aspiration biopsy using endobronchial ultrasound guidance
-    ("CL_BIOPSY_METHOD", "VACUUM"): "786883001",             # Vacuum assisted biopsy
-    ("CL_BIOPSY_METHOD", "SURGICAL"): "119283008",           # Open biopsy — "수술적 생검"에 가장 가까운 상위 개념
+    ("CL_BIOPSY_METHOD", "CORE"): ("9911007", "procedure"),                 # Core needle biopsy
+    ("CL_BIOPSY_METHOD", "FNA"): ("48635004", "procedure"),                 # Fine needle biopsy (동의어 Fine needle aspiration)
+    ("CL_BIOPSY_METHOD", "EXCISION"): ("8889005", "procedure"),             # Excisional biopsy
+    ("CL_BIOPSY_METHOD", "INCISION"): ("70871006", "procedure"),            # Incisional biopsy
+    ("CL_BIOPSY_METHOD", "PUNCH"): ("68660007", "procedure"),               # Punch biopsy
+    ("CL_BIOPSY_METHOD", "ENDOSCOPIC"): ("53767003", "procedure"),          # Endoscopic biopsy
+    ("CL_BIOPSY_METHOD", "EBUS"): ("1389225003", "procedure"),              # Transbronchial needle aspiration biopsy using endobronchial ultrasound guidance
+    ("CL_BIOPSY_METHOD", "VACUUM"): ("786883001", "procedure"),             # Vacuum assisted biopsy
+    ("CL_BIOPSY_METHOD", "SURGICAL"): ("119283008", "procedure"),           # Open biopsy — "수술적 생검"에 가장 가까운 상위 개념
     # IMAGE_GUIDED: SNOMED 의 영상유도 생검은 전부 방법·부위가 붙은 하위 개념뿐이고
     # (예: 442787002 은 세침흡인 전용) 부위 없는 일반 개념이 없어 KAI 로 남긴다.
 
     # ---- 검체 적정성 (finding)
-    ("CL_BIOPSY_ADEQUACY", "ADEQUATE"): "125152006",         # Specimen satisfactory for evaluation
-    ("CL_BIOPSY_ADEQUACY", "INADEQUATE"): "125154007",       # Specimen unsatisfactory for evaluation
-    ("CL_BIOPSY_ADEQUACY", "NONDIAGNOSTIC"): "112631006",    # Specimen unsatisfactory for diagnosis
+    ("CL_BIOPSY_ADEQUACY", "ADEQUATE"): ("125152006", "finding"),         # Specimen satisfactory for evaluation
+    ("CL_BIOPSY_ADEQUACY", "INADEQUATE"): ("125154007", "finding"),       # Specimen unsatisfactory for evaluation
+    ("CL_BIOPSY_ADEQUACY", "NONDIAGNOSTIC"): ("112631006", "finding"),    # Specimen unsatisfactory for diagnosis
 
     # ---- 조직학적 분화도 (qualifier value). 두 코드표가 같은 G1~G4 를 쓴다. GX(평가 불가)는 행정값이라 KAI.
-    ("CL_BIOPSY_DIFFERENTIATION", "WD"): "1155701009",       # G1: Well differentiated histologic grade
-    ("CL_BIOPSY_DIFFERENTIATION", "MD"): "1155703007",       # G2: Moderately differentiated histologic grade
-    ("CL_BIOPSY_DIFFERENTIATION", "PD"): "1155704001",       # G3: Poorly differentiated histologic grade
-    ("CL_BIOPSY_DIFFERENTIATION", "UD"): "1155702002",       # G4: Undifferentiated histologic grade
-    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G1"): "1155701009",
-    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G2"): "1155703007",
-    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G3"): "1155704001",
-    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G4"): "1155702002",
+    ("CL_BIOPSY_DIFFERENTIATION", "WD"): ("1155701009", "qualifier value"),       # G1: Well differentiated histologic grade
+    ("CL_BIOPSY_DIFFERENTIATION", "MD"): ("1155703007", "qualifier value"),       # G2: Moderately differentiated histologic grade
+    ("CL_BIOPSY_DIFFERENTIATION", "PD"): ("1155704001", "qualifier value"),       # G3: Poorly differentiated histologic grade
+    ("CL_BIOPSY_DIFFERENTIATION", "UD"): ("1155702002", "qualifier value"),       # G4: Undifferentiated histologic grade
+    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G1"): ("1155701009", "qualifier value"),
+    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G2"): ("1155703007", "qualifier value"),
+    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G3"): ("1155704001", "qualifier value"),
+    ("CL_SURGICAL_HISTOLOGIC_GRADE", "G4"): ("1155702002", "qualifier value"),
 
     # ---- 조직형 (morphologic abnormality). 팀 결정: 아형 필드는 진단명(disorder)이 아니라
     #      조직형 계층을 쓴다(OMOP Oncology 의 ICD-O-3 조직형과 결이 맞다). <<108369006 |Neoplasm| 하위에서 확인.
-    ("CL_DIAGNOSIS_SUBTYPE", "ADENO_NOS"): "1187332001",     # Adenocarcinoma
-    ("CL_DIAGNOSIS_SUBTYPE", "MUCINOUS"): "72495009",        # Mucinous adenocarcinoma
-    ("CL_DIAGNOSIS_SUBTYPE", "SIGNET_RING"): "87737001",     # Signet ring cell carcinoma
-    ("CL_DIAGNOSIS_SUBTYPE", "NEUROENDOCRINE"): "1286767006",  # Neuroendocrine carcinoma
-    ("CL_DIAGNOSIS_SUBTYPE", "SCC"): "1162767002",           # Squamous cell carcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "ADENO_NOS"): ("1187332001", "morphologic abnormality"),     # Adenocarcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "MUCINOUS"): ("72495009", "morphologic abnormality"),        # Mucinous adenocarcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "SIGNET_RING"): ("87737001", "morphologic abnormality"),     # Signet ring cell carcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "NEUROENDOCRINE"): ("1286767006", "morphologic abnormality"),  # Neuroendocrine carcinoma
+    ("CL_DIAGNOSIS_SUBTYPE", "SCC"): ("1162767002", "morphologic abnormality"),           # Squamous cell carcinoma
 
-    ("CL_HISTOLOGIC_SUBTYPE", "DLBCL"): "1172695008",        # Diffuse large B cell lymphoma
-    ("CL_HISTOLOGIC_SUBTYPE", "FL"): "55150002",             # Follicular lymphoma
-    ("CL_HISTOLOGIC_SUBTYPE", "MCL"): "74654000",            # Malignant mantle cell lymphoma
-    ("CL_HISTOLOGIC_SUBTYPE", "MZL"): "128803008",           # Marginal zone B-cell lymphoma
-    ("CL_HISTOLOGIC_SUBTYPE", "BL"): "77381001",             # Burkitt lymphoma
-    ("CL_HISTOLOGIC_SUBTYPE", "CHL"): "762691001",           # Classical Hodgkin lymphoma
-    ("CL_HISTOLOGIC_SUBTYPE", "PTCL_NOS"): "1163404000",     # Peripheral T-cell lymphoma
-    ("CL_HISTOLOGIC_SUBTYPE", "ALCL"): "53237008",           # Anaplastic large cell lymphoma, T cell and null cell type
-    ("CL_HISTOLOGIC_SUBTYPE", "NKTCL"): "128805001",         # NK/T-cell lymphoma, nasal and nasal-type
+    ("CL_HISTOLOGIC_SUBTYPE", "DLBCL"): ("1172695008", "morphologic abnormality"),        # Diffuse large B cell lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "FL"): ("55150002", "morphologic abnormality"),             # Follicular lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "MCL"): ("74654000", "morphologic abnormality"),            # Malignant mantle cell lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "MZL"): ("128803008", "morphologic abnormality"),           # Marginal zone B-cell lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "BL"): ("77381001", "morphologic abnormality"),             # Burkitt lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "CHL"): ("762691001", "morphologic abnormality"),           # Classical Hodgkin lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "PTCL_NOS"): ("1163404000", "morphologic abnormality"),     # Peripheral T-cell lymphoma
+    ("CL_HISTOLOGIC_SUBTYPE", "ALCL"): ("53237008", "morphologic abnormality"),           # Anaplastic large cell lymphoma, T cell and null cell type
+    ("CL_HISTOLOGIC_SUBTYPE", "NKTCL"): ("128805001", "morphologic abnormality"),         # NK/T-cell lymphoma, nasal and nasal-type
     # NLPHL(결절성 림프구우세형): 조직형 계층에 개념이 없다(disorder 만 존재) — 계층을 섞지 않으려고 KAI 로 남긴다.
 
-    ("CL_LYMPHOMA_CATEGORY", "HL"): "1163005009",            # Hodgkin lymphoma
+    ("CL_LYMPHOMA_CATEGORY", "HL"): ("1163005009", "morphologic abnormality"),            # Hodgkin lymphoma
     # NHL_B·NHL_T: 조직형 계층의 Non-Hodgkin lymphoma(1172592001)는 B/T 를 나누지 않아 두 값이 한 concept 에
     # 뭉친다. 계열은 CL_CELL_LINEAGE 로 따로 받으므로 여기서는 KAI 로 남긴다.
 
     # ---- 폐선암 우세 아형 (IASLC/WHO). "우세 아형"은 패턴 우세도라 SNOMED 에 그대로 대응하는 개념이 적다.
-    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "PAPILLARY"): "4797003",       # Papillary adenocarcinoma
-    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "MICROPAPILLARY"): "733878002",  # Micropapillary adenocarcinoma
-    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "MUCINOUS"): "72495009",      # Mucinous adenocarcinoma
-    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "FETAL"): "128893004",        # Fetal adenocarcinoma
+    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "PAPILLARY"): ("4797003", "morphologic abnormality"),       # Papillary adenocarcinoma
+    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "MICROPAPILLARY"): ("733878002", "morphologic abnormality"),  # Micropapillary adenocarcinoma
+    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "MUCINOUS"): ("72495009", "morphologic abnormality"),      # Mucinous adenocarcinoma
+    ("CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE", "FETAL"): ("128893004", "morphologic abnormality"),        # Fetal adenocarcinoma
     # LEPIDIC·ENTERIC: 조직형 계층에 개념이 없다.
     # ACINAR: 검색되는 Acinar cell carcinoma(45410002)는 췌장·타액선 종양이라 폐 선방형과 다른 개체다.
     # SOLID: Solid carcinoma(81920005)는 부위 불문 일반 개념이라 "고형 우세 선암"과 범위가 다르다.
@@ -328,105 +331,105 @@ SNOMED_CODES = {
     # 넷 다 뜻이 어긋나거나 값끼리 충돌해 KAI 로 남긴다.
 
     # ---- 절제연
-    ("CL_CRM_STATUS", "POSITIVE"): "384620009",              # Surgical circumferential margin involved by malignant neoplasm (0-1 mm) — 값 정의(≤1mm)와 일치
+    ("CL_CRM_STATUS", "POSITIVE"): ("384620009", "finding"),              # Surgical circumferential margin involved by malignant neoplasm (0-1 mm) — 값 정의(≤1mm)와 일치
     # CRM NEGATIVE: "침범 없음"에 해당하는 개념이 없다(침범 concept 만 존재).
     # CL_RESECTION_MARGIN_STATUS·CL_RESIDUAL_TUMOR_R_CLASS 의 R0/R1/R2: SNOMED 의 절제연 개념
     # (384689007 등)은 침범 여부만 말하고 현미경적/육안적을 나누지 않아 R1 과 R2 가 한 코드에 뭉친다.
     # AJCC R 분류는 코드 자체가 표준이므로 KAI 로 유지한다.
 
     # ---- 직장암 MRI T4b 침범 장기 (body structure)
-    ("CL_MRI_T4B_INVADED_ORGAN", "PROSTATE"): "41216001",        # Structure of prostate
-    ("CL_MRI_T4B_INVADED_ORGAN", "SEMINAL_VESICLE"): "64739004",  # Seminal vesicle structure
-    ("CL_MRI_T4B_INVADED_ORGAN", "VAGINA"): "76784001",          # Vaginal structure
-    ("CL_MRI_T4B_INVADED_ORGAN", "UTERUS"): "35039007",          # Uterine structure
-    ("CL_MRI_T4B_INVADED_ORGAN", "BLADDER"): "89837001",         # Urinary bladder structure
-    ("CL_MRI_T4B_INVADED_ORGAN", "SACRUM"): "54735007",          # Bone structure of sacrum
+    ("CL_MRI_T4B_INVADED_ORGAN", "PROSTATE"): ("41216001", "body structure"),        # Structure of prostate
+    ("CL_MRI_T4B_INVADED_ORGAN", "SEMINAL_VESICLE"): ("64739004", "body structure"),  # Seminal vesicle structure
+    ("CL_MRI_T4B_INVADED_ORGAN", "VAGINA"): ("76784001", "body structure"),          # Vaginal structure
+    ("CL_MRI_T4B_INVADED_ORGAN", "UTERUS"): ("35039007", "body structure"),          # Uterine structure
+    ("CL_MRI_T4B_INVADED_ORGAN", "BLADDER"): ("89837001", "body structure"),         # Urinary bladder structure
+    ("CL_MRI_T4B_INVADED_ORGAN", "SACRUM"): ("54735007", "body structure"),          # Bone structure of sacrum
     # PELVIC_SIDEWALL(골반측벽): 골반강·복막강 개념만 있고 "측벽" 자체를 가리키는 부위 concept 이 없다.
 
     # ---- 결절 영상 유형
-    ("CL_NODULE_RADIOLOGIC_TYPE", "GGN"): "1217294009",          # Ground glass lung opacity
+    ("CL_NODULE_RADIOLOGIC_TYPE", "GGN"): ("1217294009", "finding"),          # Ground glass lung opacity
     # SOLID·PART_SOLID: 결절의 고형 성분 정도를 말하는 개념이 없다(간유리음영만 있다).
 
     # ---- 폐경 상태 (finding)
-    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "PRE"): "22636003",    # Premenopausal state
-    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "PERI"): "161541000119104",  # Perimenopausal state
-    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "POST"): "76498008",   # Postmenopausal state
+    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "PRE"): ("22636003", "finding"),    # Premenopausal state
+    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "PERI"): ("161541000119104", "finding"),  # Perimenopausal state
+    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "POST"): ("76498008", "finding"),   # Postmenopausal state
 
     # ---- 항암 후 월경 (finding)
-    ("CL_MENSES_REGULARITY_AFTER_CHEMO", "IRREGULAR"): "80182007",  # Irregular periods
-    ("CL_MENSES_REGULARITY_AFTER_CHEMO", "AMENORRHEA"): "14302001",  # Amenorrhea
+    ("CL_MENSES_REGULARITY_AFTER_CHEMO", "IRREGULAR"): ("80182007", "finding"),  # Irregular periods
+    ("CL_MENSES_REGULARITY_AFTER_CHEMO", "AMENORRHEA"): ("14302001", "finding"),  # Amenorrhea
     # REGULAR: 검색되는 248965005 는 "월경 규칙성 소견"이라는 상위 개념이지 "규칙적"이라는 값이 아니다.
 
     # ---- 임신 결과
-    ("CL_PREGNANCY_OUTCOME", "LIVE_BIRTH"): "281050002",         # Livebirth
-    ("CL_PREGNANCY_OUTCOME", "STILLBIRTH"): "237364002",         # Stillbirth
-    ("CL_PREGNANCY_OUTCOME", "MISCARRIAGE"): "17369002",         # Miscarriage (동의어 Spontaneous abortion)
-    ("CL_PREGNANCY_OUTCOME", "INDUCED_ABORTION"): "57797005",    # Induced termination of pregnancy
-    ("CL_PREGNANCY_OUTCOME", "ECTOPIC"): "34801009",             # Ectopic pregnancy
-    ("CL_PREGNANCY_OUTCOME", "ONGOING"): "77386006",             # Pregnancy
+    ("CL_PREGNANCY_OUTCOME", "LIVE_BIRTH"): ("281050002", "finding"),         # Livebirth
+    ("CL_PREGNANCY_OUTCOME", "STILLBIRTH"): ("237364002", "finding"),         # Stillbirth
+    ("CL_PREGNANCY_OUTCOME", "MISCARRIAGE"): ("17369002", "disorder"),         # Miscarriage (동의어 Spontaneous abortion)
+    ("CL_PREGNANCY_OUTCOME", "INDUCED_ABORTION"): ("57797005", "disorder"),    # Induced termination of pregnancy
+    ("CL_PREGNANCY_OUTCOME", "ECTOPIC"): ("34801009", "disorder"),             # Ectopic pregnancy
+    ("CL_PREGNANCY_OUTCOME", "ONGOING"): ("77386006", "finding"),             # Pregnancy
 
     # ---- 수정 방법 (procedure)
-    ("CL_CONCEPTION_METHOD", "IVF"): "52637005",                 # Test tube ovum fertilization
-    ("CL_CONCEPTION_METHOD", "IUI"): "265064001",                # Intrauterine artificial insemination
+    ("CL_CONCEPTION_METHOD", "IVF"): ("52637005", "procedure"),                 # Test tube ovum fertilization
+    ("CL_CONCEPTION_METHOD", "IUI"): ("265064001", "procedure"),                # Intrauterine artificial insemination
     # NATURAL: 후보가 1300203003 "자연 수정으로 생긴 임신"(finding)뿐이라 시술(procedure)인 다른 값들과
     # 의미 층이 어긋난다. 한 코드표에 finding 과 procedure 를 섞지 않으려고 KAI 로 남긴다.
 
     # ---- 가임력 보존 (procedure)
-    ("CL_FERTILITY_PRESERVATION_TYPE", "OOCYTE"): "440645004",   # Cryopreservation of oocyte
-    ("CL_FERTILITY_PRESERVATION_TYPE", "OVARIAN_TISSUE"): "439790009",  # Cryopreservation of ovarian tissue
+    ("CL_FERTILITY_PRESERVATION_TYPE", "OOCYTE"): ("440645004", "procedure"),   # Cryopreservation of oocyte
+    ("CL_FERTILITY_PRESERVATION_TYPE", "OVARIAN_TISSUE"): ("439790009", "procedure"),  # Cryopreservation of ovarian tissue
     # EMBRYO(배아 동결보존): 개념이 없다. GNRH_AGONIST 는 시술이 아니라 약물 요법이라 약물 계열로 받는다.
 
     # ---- 혼인 상태 (finding)
-    ("CL_MARITAL_STATUS_DETAIL", "NEVER_MARRIED"): "125725006",  # Marital status: single, never married
-    ("CL_MARITAL_STATUS_DETAIL", "MARRIED"): "87915002",         # Married
-    ("CL_MARITAL_STATUS_DETAIL", "DIVORCED"): "20295000",        # Divorced
-    ("CL_MARITAL_STATUS_DETAIL", "WIDOWED"): "33553000",         # Widowed
+    ("CL_MARITAL_STATUS_DETAIL", "NEVER_MARRIED"): ("125725006", "finding"),  # Marital status: single, never married
+    ("CL_MARITAL_STATUS_DETAIL", "MARRIED"): ("87915002", "finding"),         # Married
+    ("CL_MARITAL_STATUS_DETAIL", "DIVORCED"): ("20295000", "finding"),        # Divorced
+    ("CL_MARITAL_STATUS_DETAIL", "WIDOWED"): ("33553000", "finding"),         # Widowed
     # SEPARATED(별거): 후보가 430617007 "가집행 판결에 의한 법적 별거"뿐이라 사실상의 별거까지 담는
     # 우리 값보다 좁다.
 
     # ---- 세포 계열 (cell)
-    ("CL_CELL_LINEAGE", "B_CELL"): "112130006",                  # B lymphocyte
-    ("CL_CELL_LINEAGE", "T_CELL"): "57184004",                   # T lymphocyte
-    ("CL_CELL_LINEAGE", "NK_CELL"): "259717003",                 # Natural killer cell
-    ("CL_CELL_LINEAGE", "HRS"): "32915009",                      # Reed-Sternberg cell
+    ("CL_CELL_LINEAGE", "B_CELL"): ("112130006", "cell"),                  # B lymphocyte
+    ("CL_CELL_LINEAGE", "T_CELL"): ("57184004", "cell"),                   # T lymphocyte
+    ("CL_CELL_LINEAGE", "NK_CELL"): ("259717003", "cell"),                 # Natural killer cell
+    ("CL_CELL_LINEAGE", "HRS"): ("32915009", "cell"),                      # Reed-Sternberg cell
 
     # ---- 진단 상태 (qualifier value). 셋 다 <<36692007 |Known| 계열이라 층이 일관된다.
-    ("CL_DIAGNOSIS_STATUS", "CONFIRMED"): "410605003",           # Confirmed present
-    ("CL_DIAGNOSIS_STATUS", "SUSPECTED"): "415684004",           # Suspected
-    ("CL_DIAGNOSIS_STATUS", "EXCLUDED"): "410516002",            # Known absent
+    ("CL_DIAGNOSIS_STATUS", "CONFIRMED"): ("410605003", "qualifier value"),           # Confirmed present
+    ("CL_DIAGNOSIS_STATUS", "SUSPECTED"): ("415684004", "qualifier value"),           # Suspected
+    ("CL_DIAGNOSIS_STATUS", "EXCLUDED"): ("410516002", "qualifier value"),            # Known absent
     # RECURRENT(재발성): 후보 58184002 는 qualifier 가 아니라 disorder 라 위 셋과 층이 다르다.
 
     # ---- 임상 종양 소견. 이 코드표는 한 축의 열거가 아니라 여러 종류의 임상 양상을 모은 것이라
     #      finding 과 disorder 가 섞이는 것이 값의 성격 자체다(수정 방법처럼 한 축을 재는 경우와 다르다).
-    ("CL_CLINICAL_TUMOR_FEATURE", "PALPABLE"): "443607001",      # Palpable mass (finding)
-    ("CL_CLINICAL_TUMOR_FEATURE", "INFLAMMATORY"): "254840009",  # Inflammatory carcinoma of breast (disorder)
-    ("CL_CLINICAL_TUMOR_FEATURE", "OBSTRUCTION"): "81060008",    # Intestinal obstruction (disorder)
-    ("CL_CLINICAL_TUMOR_FEATURE", "PERFORATION"): "56905009",    # Perforation of intestine (disorder)
-    ("CL_CLINICAL_TUMOR_FEATURE", "BLEEDING"): "74474003",       # Gastrointestinal hemorrhage (disorder)
+    ("CL_CLINICAL_TUMOR_FEATURE", "PALPABLE"): ("443607001", "finding"),      # Palpable mass (finding)
+    ("CL_CLINICAL_TUMOR_FEATURE", "INFLAMMATORY"): ("254840009", "disorder"),  # Inflammatory carcinoma of breast (disorder)
+    ("CL_CLINICAL_TUMOR_FEATURE", "OBSTRUCTION"): ("81060008", "disorder"),    # Intestinal obstruction (disorder)
+    ("CL_CLINICAL_TUMOR_FEATURE", "PERFORATION"): ("56905009", "disorder"),    # Perforation of intestine (disorder)
+    ("CL_CLINICAL_TUMOR_FEATURE", "BLEEDING"): ("74474003", "disorder"),       # Gastrointestinal hemorrhage (disorder)
     # NONPALPABLE(비촉지)·SKIN_INVOLVEMENT(피부·흉벽 침범): 대응 개념이 없다.
     # INCIDENTAL(우연 발견): 검색되는 것이 전립선 전용 소견뿐이다.
 
     # ---- 합병증 처치 (procedure)
-    ("CL_COMPLICATION_TREATMENT", "MEDICAL"): "416608005",       # Drug therapy
-    ("CL_COMPLICATION_TREATMENT", "ENDOSCOPIC"): "363687006",    # Endoscopic procedure
+    ("CL_COMPLICATION_TREATMENT", "MEDICAL"): ("416608005", "procedure"),       # Drug therapy
+    ("CL_COMPLICATION_TREATMENT", "ENDOSCOPIC"): ("363687006", "procedure"),    # Endoscopic procedure
     # DRAINAGE: 경피적 배액은 부위별 개념(간·복수·담낭…)만 있고 부위 없는 일반 개념이 없다.
     # REOPERATION: 후보 261554009 는 procedure 가 아니라 qualifier value 라 나머지와 층이 어긋난다.
     # OBSERVATION(보존적 관찰): 대응 개념이 없다.
 
     # ---- DCIS 핵등급 (finding). 유방 DCIS 전용 개념이 세 등급 모두 있다.
-    ("CL_DCIS_NUCLEAR_GRADE", "LOW"): "369781009",               # DCIS nuclear pleomorphism, grade 1
-    ("CL_DCIS_NUCLEAR_GRADE", "INTERMEDIATE"): "369782002",      # DCIS nuclear pleomorphism, grade 2
-    ("CL_DCIS_NUCLEAR_GRADE", "HIGH"): "369783007",              # DCIS nuclear pleomorphism, grade 3
+    ("CL_DCIS_NUCLEAR_GRADE", "LOW"): ("369781009", "finding"),               # DCIS nuclear pleomorphism, grade 1
+    ("CL_DCIS_NUCLEAR_GRADE", "INTERMEDIATE"): ("369782002", "finding"),      # DCIS nuclear pleomorphism, grade 2
+    ("CL_DCIS_NUCLEAR_GRADE", "HIGH"): ("369783007", "finding"),              # DCIS nuclear pleomorphism, grade 3
 
     # ---- 검체 부위 구분 (body structure)
-    ("CL_BIOPSY_SITE", "REGIONAL_NODE"): "312500006",            # Regional lymph node structure
-    ("CL_SURGICAL_SPECIMEN_SITE", "REGIONAL_NODE"): "312500006",
+    ("CL_BIOPSY_SITE", "REGIONAL_NODE"): ("312500006", "body structure"),            # Regional lymph node structure
+    ("CL_SURGICAL_SPECIMEN_SITE", "REGIONAL_NODE"): ("312500006", "body structure"),
     # PRIMARY(원발 부위)·DISTANT(원격 전이 부위): SNOMED 의 원발·전이 개념(372087000 등)은 부위가
     # 아니라 진단(disorder)이라 "어느 부위에서 뗀 검체인가"라는 이 필드의 뜻과 맞지 않는다.
     # MARGIN(절제연): 절제연을 가리키는 부위 concept 이 없다.
 
     # ---- 경과관찰
-    ("CL_WATCH_AND_WAIT_STATUS", "ONGOING"): "424313000",        # Active surveillance (regime/therapy)
+    ("CL_WATCH_AND_WAIT_STATUS", "ONGOING"): ("424313000", "regime/therapy"),        # Active surveillance (regime/therapy)
     # REGROWTH·CONVERTED_SURGERY·SUSTAINED_CCR: 경과의 상태를 가리키는 개념이 없다.
 
     # ---- 아직 KAI 로 남는 것들(확인 결과 대응 개념이 없거나 값이 뭉친다)

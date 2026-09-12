@@ -186,10 +186,10 @@ for c in CODES:
     if c.get("비고"): cl["note"] = c["비고"]
     val = str(c["값(코드·라벨)"]).strip(); code, _, label = val.partition(" ")
     if not label or not re.match(r"^([0-9]+|[A-Z0-9+\-/.]{1,5}|[a-z]{1,3})$", code): code, label = re.sub(r"\s+", "_", val), val
-    cl["values"].append(dict(code=code, label=label, snomed=(str(c["SNOMED/표준 ID"]).strip() if c.get("SNOMED/표준 ID") else None)))
+    cl["values"].append(dict(code=code, label=label, snomed=(str(c["SNOMED/표준 ID"]).strip() if c.get("SNOMED/표준 ID") else None), snomed_tag=None))
 for k, v in V1_CODES.get("embedded", {}).items():
     t, f = k.split(".", 1)
-    if t in KEEP_V1: codelists[f"{t}.{f}"] = dict(kor=f, standard=None, note="v1 내장 코드표", values=[dict(code=str(a), label=str(b), snomed=None) for a, b in v.items()])
+    if t in KEEP_V1: codelists[f"{t}.{f}"] = dict(kor=f, standard=None, note="v1 내장 코드표", values=[dict(code=str(a), label=str(b), snomed=None, snomed_tag=None) for a, b in v.items()])
 for F in forms.values():
     for f in F["fields"].values():
         if f.get("codelist") and "." in str(f["codelist"]) and f["codelist"] not in codelists: f["codelist"] = "CL_" + f["name"].upper()
@@ -200,7 +200,8 @@ filled_2_1 = sorted(set(VALUE_SETS) & set(placeholder))
 for p in placeholder:
     if p in VALUE_SETS:
         codelists[p] = dict(kor=codelists.get(p, {}).get("kor", p), standard=None, note="2.1 에서 채움 (spec/v2_codelists_v21.py)",
-                             values=[dict(code=c, label=ko, snomed=SNOMED_CODES.get((p, c))) for c, ko, en in VALUE_SETS[p]])
+                             values=[dict(code=c, label=ko, snomed=(SNOMED_CODES.get((p, c)) or (None, None))[0],
+                                          snomed_tag=(SNOMED_CODES.get((p, c)) or (None, None))[1]) for c, ko, en in VALUE_SETS[p]])
     else:
         codelists[p] = dict(kor=p, standard=None, note="값 집합 미정의 · 팀 검토 필요", values=[])
 still_empty = sorted(set(placeholder) - set(VALUE_SETS))
@@ -221,6 +222,23 @@ for ucum in sorted({f["unit"] for F in forms.values() for f in F["fields"].value
 CS_DOMAIN = {"STAGE": "Modifier", "TNM": "Modifier", "ECOG": "Observation", "RESPONSE": "Measurement", "DEAUVILLE": "Measurement", "RCB": "Modifier", "CTCAE": "Measurement", "AE_": "Observation", "YN": "Meas Value",
              "FAMILY": "Observation", "DISCHARGE": "Visit", "SMOKING": "Observation", "SURG": "Procedure", "RT_": "Procedure", "BIOMARKER": "Meas Value", "BIRADS": "Measurement", "FIBROSIS": "Modifier", "NAS": "Modifier",
              "CHILD": "Measurement", "CKD": "Condition", "DR_": "Condition", "WAGNER": "Condition", "DM_": "Condition", "RISK": "Measurement", "SCT": "Procedure"}
+# 2.2: SNOMED 매핑 값의 domain 은 코드표가 아니라 값 자신의 성격(SNOMED 계층)에서 나온다.
+# 코드표 단위로 domain 을 주면 폐엽·생검방법 같은 값까지 그 코드표의 domain(대개 Meas Value)을 물려받는다.
+SNOMED_TAG_DOMAIN = {
+    "body structure": "Spec Anatomic Site", "disorder": "Condition", "situation": "Observation",
+    "procedure": "Procedure", "regime/therapy": "Procedure", "qualifier value": "Meas Value",
+    "morphologic abnormality": "Condition",  # OMOP Oncology 가 조직형을 진단 개념과 함께 쓰는 것에 맞춘다
+    "cell": "Observation", "finding": "Observation",
+}
+# finding 중 질환·증상을 가리키는 것은 Observation 이 아니라 Condition 이다.
+# (검체 적정성·혼인 상태처럼 질환이 아닌 상태를 가리키는 finding 은 위 표대로 Observation.)
+CONDITION_FINDINGS = {"80182007", "14302001", "443607001"}  # 불규칙 월경, 무월경, 촉지되는 종괴
+def snomed_domain(cid, tag, fallback):
+    if tag not in SNOMED_TAG_DOMAIN:
+        warnings.append(f"SNOMED 계층 '{tag}' 에 대한 domain 규칙이 없다 (concept {cid}) — 코드표 domain 을 그대로 쓴다")
+        return fallback
+    return "Condition" if (tag == "finding" and cid in CONDITION_FINDINGS) else SNOMED_TAG_DOMAIN[tag]
+
 concept_sets = collections.OrderedDict()
 for cid_, cl in codelists.items():
     dom = next((d for p, d in CS_DOMAIN.items() if cid_.startswith(p)), "Meas Value")
@@ -228,7 +246,8 @@ for cid_, cl in codelists.items():
     concept_sets[cid_] = dict(concept_set_id=cid_, kor=cl["kor"], parent_concept_id=parent, note=cl.get("note"), items=[])
     for v in cl["values"]:
         voc, code = ("SNOMED", v["snomed"]) if v.get("snomed") else ("KAI", f"KAI-{cid_}-{v['code']}")
-        c = concept(f"CS:{cid_}:{v['code']}", v["label"], v["label"], dom, voc, "Value", code, "S")
+        vdom = snomed_domain(v["snomed"], v["snomed_tag"], dom) if v.get("snomed") else dom
+        c = concept(f"CS:{cid_}:{v['code']}", v["label"], v["label"], vdom, voc, "Value", code, "S")
         concept_sets[cid_]["items"].append(dict(concept_id=c, code=v["code"], label=v["label"]))
 for F in forms.values():
     for f in F["fields"].values():
@@ -252,7 +271,7 @@ SPECIAL_SETS = {
 }
 # 한 코드표 안에서 두 값이 같은 SNOMED 코드로 뭉치면 그 둘을 데이터에서 구분할 수 없다. 승격 전에 걸러낸다.
 _by_set = collections.defaultdict(lambda: collections.defaultdict(list))
-for (_cl, _code), _sid in SNOMED_CODES.items(): _by_set[_cl][_sid].append(_code)
+for (_cl, _code), (_sid, _tag) in SNOMED_CODES.items(): _by_set[_cl][_sid].append(_code)
 for _cl, _m in _by_set.items():
     for _sid, _codes in _m.items():
         if len(_codes) > 1: warnings.append(f"{_cl}: {', '.join(sorted(_codes))} 가 같은 SNOMED 코드 {_sid} 로 매핑됨 — 값이 구분되지 않는다")
@@ -264,12 +283,14 @@ for cs_id, (kor, dom, items, _adapt, note) in SPECIAL_SETS.items():
     parent = concept(f"CS:{cs_id}", kor, cs_id, dom, "KAI", "Value set", f"KAI-CS-{cs_id}", "C")
     concept_sets[cs_id] = dict(concept_set_id=cs_id, kor=kor, parent_concept_id=parent, note=note, items=[])
     for it in items:
+        idom = dom
         if cs_id == "COMORBIDITY_SET":
-            code, ko, en, snomed_id = it[0], it[1], it[2], SNOMED_CODES.get((cs_id, it[0]))
-            voc, vcode = ("SNOMED", snomed_id) if snomed_id else ("KAI", f"KAI-{cs_id}-{code}")
+            code, ko, en, hit = it[0], it[1], it[2], SNOMED_CODES.get((cs_id, it[0]))
+            voc, vcode = ("SNOMED", hit[0]) if hit else ("KAI", f"KAI-{cs_id}-{code}")
+            if hit: idom = snomed_domain(hit[0], hit[1], dom)
         else:
             code, ko, en, (voc, vcode) = it
-        c = concept(f"CS:{cs_id}:{code}", ko, en, dom, voc, "Value", vcode, "S")
+        c = concept(f"CS:{cs_id}:{code}", ko, en, idom, voc, "Value", vcode, "S")
         concept_sets[cs_id]["items"].append(dict(concept_id=c, code=code, label=ko))
 for d in derived:
     cs = d.get("concept_set")

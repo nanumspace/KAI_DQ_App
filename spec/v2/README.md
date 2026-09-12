@@ -74,9 +74,34 @@ python3 -m venv .venv && .venv/bin/pip install -r spec/requirements.txt
 - 한 코드표 안에서 두 값이 같은 SNOMED 코드로 매핑되면 그 둘을 데이터에서 구분할 수 없으므로, `build_spec_v2.py` 가 이를 경고로 잡습니다.
 - 값 293개 기준: 매핑 135, 행정값(기타·해당없음·평가 불가 등) 28, 사유를 적고 남긴 미매핑 132.
 
+## 2.2 · domain 재지정 (완료분)
+
+값의 OMOP `domain_id` 는 그 값이 **무엇인가**에 따라 정해집니다. 그런데 이전에는 코드표 단위로 domain 을 주고 값이 그것을 물려받아서, 폐엽·생검 방법 같은 값까지 코드표의 domain(대개 `Meas Value`)을 달고 있었습니다 — SNOMED 매핑 155개 중 134개가 그랬습니다.
+
+그래서 `SNOMED_CODES` 의 값을 `(concept_id, SNOMED 계층)` 으로 바꾸고, `build_spec_v2.py` 의 `SNOMED_TAG_DOMAIN` 이 계층에서 domain 을 유도하도록 했습니다. 계층을 빠뜨리거나 모르는 값을 쓰면 빌드가 경고합니다.
+
+| SNOMED 계층 | domain | 수 |
+|---|---|---|
+| body structure | `Spec Anatomic Site` | 49 |
+| disorder | `Condition` | 18 |
+| situation | `Observation` | 2 |
+| qualifier value | `Meas Value` | 19 |
+| morphologic abnormality | `Condition` | 19 |
+| finding | `Observation` (질환·증상을 가리키면 `Condition`) | 17 |
+| procedure · regime/therapy | `Procedure` | 16 |
+| cell | `Observation` | 4 |
+
+결과적으로 SNOMED concept 의 domain 은 `Condition` 51, `Spec Anatomic Site` 49, `Observation` 25, `Meas Value` 19, `Procedure` 16 입니다.
+
+판단이 들어간 곳은 세 군데이며, OMOP 어휘(Athena)를 내려받아 적재할 때 대조해 확인할 값입니다.
+
+- **조직형(morphologic abnormality) → `Condition`**: OMOP Oncology 가 조직형을 진단 개념과 함께 쓰는 것에 맞췄습니다.
+- **finding 중 질환·증상은 `Condition`**: 불규칙 월경(80182007)·무월경(14302001)·촉지되는 종괴(443607001) 셋입니다. 검체 적정성·혼인 상태처럼 질환이 아닌 상태를 가리키는 finding 은 `Observation` 으로 두었습니다.
+- **폐경 상태**는 `Observation` 으로 두었습니다. 생리적 상태이지 질환이 아니라고 보았으나, `Condition` 으로 보는 견해도 있습니다.
+
 ## 다음 단계 (2.2)
 
-- **(situation) 계층 두 건의 domain 재지정**: 비만대사수술 과거력(608848006)·암 과거력(266987004)은 disorder 가 아니라 situation 이라 OMOP domain 이 Condition 이 아니라 Observation 입니다. 3단계 적재기에서 처리합니다.
+- **(완료) domain 재지정**: 아래 2.2 절 참고.
 - **필드 수준 척도 메타**: BI-RADS 는 범주(0~6) 값 concept 이 없는 대신 척도 concept(1348266008)이 있습니다. 값이 아니라 "이 필드가 무슨 척도인가"를 말하므로 값 집합이 아닌 필드 메타 자리에 붙여야 합니다.
 - 열린 표준 코드(수술명·레지멘·MedDRA 용어·약제)의 참조표를 어휘에 적재.
 - v1 미승격 필드 575개 중 승격할 것 고르기.

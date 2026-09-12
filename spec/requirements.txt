@@ -1,0 +1,12 @@
+# spec/ 의 명세 생성기(build_spec.py, build_spec_v2.py)가 쓰는 외부 패키지.
+# 표준 라이브러리 외에는 이 둘뿐이며, et-xmlfile 은 openpyxl 이 알아서 끌어온다.
+#
+#   python3 -m venv .venv && .venv/bin/pip install -r spec/requirements.txt
+#   .venv/bin/python spec/build_spec_v2.py
+#
+# uv 를 쓴다면 설치 없이 바로 실행해도 된다:
+#
+#   uv run --with-requirements spec/requirements.txt python spec/build_spec_v2.py
+#
+openpyxl==3.1.5
+PyYAML==6.0.3

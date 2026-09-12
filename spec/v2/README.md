@@ -48,8 +48,17 @@
 
 원천은 1단계 배치표(`internal/decisions/배치표_v0_YYYYMMDD.xlsx`, 비공개), `spec/v2_field_names.py`(항목 → 영문 필드명·단위·코드표·타입), `spec/v2_omop_map.py`(OMOP 테이블 정의, 어휘 씨앗, 서식→레코드 규칙)입니다.
 
+필요한 외부 패키지는 `spec/requirements.txt` 에 있습니다(openpyxl, PyYAML 둘뿐).
+
 ```bash
-uv run --with openpyxl --with pyyaml python spec/build_spec_v2.py [배치표.xlsx] [--out spec/v2]
+uv run --with-requirements spec/requirements.txt python spec/build_spec_v2.py [배치표.xlsx] [--out spec/v2]
+```
+
+uv 가 없으면 가상환경을 만들어 씁니다.
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r spec/requirements.txt
+.venv/bin/python spec/build_spec_v2.py [배치표.xlsx] [--out spec/v2]
 ```
 
 ## 2.1 · 값 집합 채우기 (완료분)
@@ -59,12 +68,16 @@ uv run --with openpyxl --with pyyaml python spec/build_spec_v2.py [배치표.xls
 - **값 집합 58개**를 임상 표준(AJCC 8판, WHO/ICC, RECIST 1.1, Lugano/Cheson, ITBCC 2016 종양출아, MERCURY mrTRG, EASL-EASD-EASO 2023 MASLD, NASH CRN, ICH E2B 등) 근거로 채웠습니다. 근거는 파일 안 주석에 항목별로 적었습니다.
 - **LOINC**: 로컬 파일(`/Users/min/Research/standard_terminology/LOINC/Loinc_2.80/LoincTableCore/LoincTableCore.csv`, 2.80판)에서 직접 확인한 코드만 썼습니다 — HbA1c, 공복/식후/OGTT 혈당, C-peptide, 공복 인슐린, HOMA, 프룩토사민, UACR, GAD 항체, Ki-67, PD-L1(개별 검사값), 그리고 PFT_ITEM(FEV1·FVC·FEV1/FVC·DLCO)·ALCOHOL(AUDIT 총점 등) 두 항목 목록.
 - **DRUG_CLASS_SET**(약물 계열 9종)은 WHO ATC 분류로 채웠습니다. ATC 는 안정된 국제 표준이라 용어 서버 확인 없이 적용했습니다.
-- **COMORBIDITY_SET**(과거력 진단 20종)은 값은 채웠지만 **SNOMED CT concept_id 는 비어 있습니다.** 이 세션에서 SNOMED 용어 서버(MCP) 연결이 끊겨 확인하지 못했습니다.
-- 값마다 `SNOMED_CODES` 딕셔너리(현재 비어 있음)에 `(코드표, 코드) → concept_id` 를 채우면 다음 실행에서 해당 값의 `vocabulary_id` 가 KAI → SNOMED 로 자동 승격됩니다.
+- **SNOMED CT**: snowstorm 용어 서버(MCP, `snomedct`/`MAIN`)에서 항목을 검색해 FSN·활성 여부를 눈으로 확인한 코드만 `SNOMED_CODES` 에 넣었습니다. `(코드표, 코드) → concept_id` 를 넣으면 그 값의 `vocabulary_id` 가 KAI → SNOMED 로 승격됩니다. 현재 **155개**(과거력 진단 20종 + 값 집합 135개)이며, SNOMED 코드를 가진 concept 은 164개입니다.
+- 매핑하지 **않은** 값도 이유를 파일 주석에 적었습니다. 크게 네 갈래입니다. ① 대응 개념이 아예 없음(Borrmann 육안형, ITBCC 종양출아, mrTRG, VPI, NASH CRN, BI-RADS 범주, ICH E2B 조치·결과 — 모두 코드 자체가 출판된 표준이라 교환에 지장이 없습니다), ② 시술 개념만 있고 값 개념이 없음(병기 방법, TME 질, IMA 결찰 수준), ③ 부위별 개념만 있고 일반 개념이 없음(경피적 배액, 복강 세척액 세포검사, 영상유도 생검), ④ 후보가 우리 값보다 넓거나 좁음(NHL B/T 계열, 별거).
+- **원칙 하나**: 한 코드표 안에서 값들의 의미 층(finding·procedure·qualifier·disorder)이 섞이면 승격하지 않았습니다. 다만 임상 종양 소견처럼 코드표 자체가 여러 종류의 임상 양상을 모은 것이면 섞이는 것이 값의 성격이므로 예외로 두었습니다.
+- 한 코드표 안에서 두 값이 같은 SNOMED 코드로 매핑되면 그 둘을 데이터에서 구분할 수 없으므로, `build_spec_v2.py` 가 이를 경고로 잡습니다.
+- 값 293개 기준: 매핑 135, 행정값(기타·해당없음·평가 불가 등) 28, 사유를 적고 남긴 미매핑 132.
 
 ## 다음 단계 (2.2)
 
-- **SNOMED CT 승격**: `spec/v2_codelists_v21.py` 의 `SNOMED_CODES` 딕셔너리를 용어 서버(MCP)로 채운 뒤 재실행. 우선순위: COMORBIDITY_SET(과거력 20종) → 병리·검체 방법/부위 계열 → 나머지.
+- **(situation) 계층 두 건의 domain 재지정**: 비만대사수술 과거력(608848006)·암 과거력(266987004)은 disorder 가 아니라 situation 이라 OMOP domain 이 Condition 이 아니라 Observation 입니다. 3단계 적재기에서 처리합니다.
+- **필드 수준 척도 메타**: BI-RADS 는 범주(0~6) 값 concept 이 없는 대신 척도 concept(1348266008)이 있습니다. 값이 아니라 "이 필드가 무슨 척도인가"를 말하므로 값 집합이 아닌 필드 메타 자리에 붙여야 합니다.
 - 열린 표준 코드(수술명·레지멘·MedDRA 용어·약제)의 참조표를 어휘에 적재.
 - v1 미승격 필드 575개 중 승격할 것 고르기.
 - 3단계: 규칙 생성기·가상데이터·엔진·앱을 v2 로 전환. 앱에 서식→레코드 변환 단계를 추가.

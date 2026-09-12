@@ -205,9 +205,72 @@ SNOMED_CODES = {
     ("COMORBIDITY_SET", "BARIATRIC_SURGERY_HX"): "608848006",  # History of bariatric surgical procedure (situation)
     ("COMORBIDITY_SET", "HEREDITARY_CRC"): "315058005",      # Hereditary nonpolyposis colon cancer (disorder)
     ("COMORBIDITY_SET", "CANCER_HX"): "266987004",           # History of malignant neoplasm (situation)
-    # 값 집합(VALUE_SETS) 쪽 SNOMED 승격은 다음 단계에서 이어서 채운다.
+    # ---- 해부학 부위 (body structure). 폐엽·대장 분절은 여러 코드표가 같은 concept 을 공유한다.
+    #      폐: <<39607008 |Lung structure| 를 ECL 로 펼쳐 "lobe of lung" 으로 걸러 확인.
+    ("CL_PRIMARY_SITE", "RUL"): "42400003",                  # Structure of upper lobe of right lung
+    ("CL_PRIMARY_SITE", "RML"): "72481006",                  # Structure of middle lobe of right lung
+    ("CL_PRIMARY_SITE", "RLL"): "266005",                    # Structure of lower lobe of right lung
+    ("CL_PRIMARY_SITE", "LUL"): "44714003",                  # Structure of upper lobe of left lung
+    ("CL_PRIMARY_SITE", "LLL"): "41224006",                  # Structure of lower lobe of left lung
+    ("CL_PRIMARY_SITE", "MAIN_BRONCHUS"): "102297006",       # Main bronchus structure
+    # OVERLAPPING·UNSPECIFIED 는 부위가 아니라 기재 상태라 KAI 코드로 남긴다.
+
+    #      대장: <<245425000 |Region of colon| 를 펼쳐 분절 concept 을 확인(맹장·직장은 이 하위가 아니라 따로 조회).
+    ("CL_BIOPSY_SITE_DETAIL", "RUL"): "42400003",            # Structure of upper lobe of right lung
+    ("CL_BIOPSY_SITE_DETAIL", "RML"): "72481006",            # Structure of middle lobe of right lung
+    ("CL_BIOPSY_SITE_DETAIL", "RLL"): "266005",              # Structure of lower lobe of right lung
+    ("CL_BIOPSY_SITE_DETAIL", "LUL"): "44714003",            # Structure of upper lobe of left lung
+    ("CL_BIOPSY_SITE_DETAIL", "LLL"): "41224006",            # Structure of lower lobe of left lung
+    ("CL_BIOPSY_SITE_DETAIL", "CECUM"): "32713005",          # Cecum structure
+    ("CL_BIOPSY_SITE_DETAIL", "ASC_COLON"): "9040008",       # Ascending colon structure
+    ("CL_BIOPSY_SITE_DETAIL", "HEP_FLEX"): "48338005",       # Structure of right colic flexure (간만곡부)
+    ("CL_BIOPSY_SITE_DETAIL", "TRANS_COLON"): "485005",      # Transverse colon structure
+    ("CL_BIOPSY_SITE_DETAIL", "SPL_FLEX"): "72592005",       # Structure of left colic flexure (비만곡부)
+    ("CL_BIOPSY_SITE_DETAIL", "DESC_COLON"): "32622004",     # Descending colon structure
+    ("CL_BIOPSY_SITE_DETAIL", "SIGMOID"): "60184004",        # Sigmoid colon structure
+    ("CL_BIOPSY_SITE_DETAIL", "RECTUM"): "34402009",         # Rectum structure
+
+    ("CL_DISTANT_METASTASIS_SITE", "LIVER"): "10200004",     # Liver structure
+    ("CL_DISTANT_METASTASIS_SITE", "LUNG"): "39607008",      # Lung structure
+    ("CL_DISTANT_METASTASIS_SITE", "BONE"): "272673000",     # Bone structure
+    ("CL_DISTANT_METASTASIS_SITE", "BRAIN"): "12738006",     # Brain structure
+    ("CL_DISTANT_METASTASIS_SITE", "ADRENAL"): "23451007",   # Adrenal structure
+    ("CL_DISTANT_METASTASIS_SITE", "PERITONEUM"): "15425007",  # Structure of serous membrane of peritoneum
+    ("CL_DISTANT_METASTASIS_SITE", "DISTANT_NODE"): "59441001",  # Structure of lymph node — "원격"은 부위 concept 에 담기지 않는다(주 참조)
+
+    ("CL_EXTRANODAL_SITES", "GI"): "122865005",              # Gastrointestinal tract structure
+    ("CL_EXTRANODAL_SITES", "BONE_MARROW"): "14016003",      # Bone marrow structure
+    ("CL_EXTRANODAL_SITES", "CNS"): "21483005",              # Structure of central nervous system
+    ("CL_EXTRANODAL_SITES", "SKIN"): "39937001",             # Skin structure
+    ("CL_EXTRANODAL_SITES", "LUNG"): "39607008",             # Lung structure
+    ("CL_EXTRANODAL_SITES", "LIVER"): "10200004",            # Liver structure
+    ("CL_EXTRANODAL_SITES", "BONE"): "272673000",            # Bone structure
+    ("CL_EXTRANODAL_SITES", "TESTIS"): "40689003",           # Testis structure
+
+    ("CL_PRIMARY_INVOLVED_SITE", "NODAL"): "59441001",       # Structure of lymph node
+    ("CL_PRIMARY_INVOLVED_SITE", "MEDIASTINAL"): "72410000",  # Mediastinal structure
+    ("CL_PRIMARY_INVOLVED_SITE", "WALDEYER"): "17861009",    # Structure of pharyngeal lymphoid ring (발다이어고리)
+    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_GI"): "122865005",   # Gastrointestinal tract structure
+    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_SKIN"): "39937001",  # Skin structure
+    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_CNS"): "21483005",   # Structure of central nervous system
+    ("CL_PRIMARY_INVOLVED_SITE", "EXTRANODAL_BONE"): "272673000",  # Bone structure
+
+    # ---- 측성 (qualifier value). 두 코드표가 같은 값을 쓴다.
+    ("CL_BIOPSY_LATERALITY", "RIGHT"): "24028007",           # Right (qualifier value)
+    ("CL_BIOPSY_LATERALITY", "LEFT"): "7771000",             # Left (qualifier value)
+    ("CL_BIOPSY_LATERALITY", "BILATERAL"): "51440002",       # Right and left (qualifier value) — 동의어 Bilateral
+    ("CL_BIOPSY_LATERALITY", "NA"): "385432009",             # Not applicable (qualifier value)
+    ("CL_SURGICAL_SPECIMEN_LATERALITY", "RIGHT"): "24028007",
+    ("CL_SURGICAL_SPECIMEN_LATERALITY", "LEFT"): "7771000",
+    ("CL_SURGICAL_SPECIMEN_LATERALITY", "BILATERAL"): "51440002",
+    ("CL_SURGICAL_SPECIMEN_LATERALITY", "NA"): "385432009",
+
+    # 나머지 값 집합(생검 방법·병리 등급·진단 아형 등)의 SNOMED 승격은 다음 단계에서 이어서 채운다.
     # 예: ("CL_BIOPSY_METHOD", "CORE"): "<확인한 concept_id>",
 }
+# 주의: CL_DISTANT_METASTASIS_SITE 의 DISTANT_NODE 는 "원격 림프절"인데 SNOMED 에는 그 뜻의
+# 단일 부위 concept 이 없어 Structure of lymph node(59441001) 로만 매핑했다. 국소/원격 구분은
+# 부위 concept 이 아니라 병기 필드에서 읽어야 한다.
 # 주의: BARIATRIC_SURGERY_HX·CANCER_HX 두 개는 (disorder) 가 아니라 (situation) 계층이다.
 # 과거력 자체를 가리키는 개념이라 의미가 맞지만, OMOP 로 내보낼 때 domain 이 Condition 이 아니라
 # Observation 으로 잡히는 것이 표준이므로 3단계(적재기)에서 domain 재지정을 검토한다.

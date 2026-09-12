@@ -489,8 +489,8 @@ L += ["", "## 2.1 · 값 집합 채우기", "",
       "History of bariatric surgical procedure(608848006)·History of malignant neoplasm(266987004) 두 개는 (situation) 계층이라 적재 시 domain 재지정 검토 필요",
       "- DRUG_CLASS_SET(약물 계열): ATC 분류 적용(표준, MCP 불필요)",
       f"- PFT_ITEM, ALCOHOL(검사 항목): LOINC 로컬 파일에서 확인",
-      "", "SNOMED 확인 대기(값 집합 단위, 다음 세션에서 `SNOMED_CODES` 에 추가): "
-      + (", ".join(sorted(p for p in VALUE_SETS if not any(k[0] == p for k in SNOMED_CODES))) or "없음"),
+      "", "SNOMED 확인 대기(코드표별 미매핑 값 수 · 다음 단계에서 `SNOMED_CODES` 에 추가): "
+      + (", ".join(f"{p} {n}/{len(VALUE_SETS[p])}" for p, n in sorted(((p, sum(1 for c, _ko, _en in vs if (p, c) not in SNOMED_CODES)) for p, vs in VALUE_SETS.items()), key=lambda x: -x[1]) if n) or "없음"),
       "", "여전히 비어 있는 값 집합(팀 검토 필요): " + (", ".join(still_empty) or "없음"),
       "", "## v1 미승격 필드", ""] + [f"- {d}: {len(es)}개" for d, es in sorted(legacy.items(), key=lambda x: -len(x[1]))] + ["", "## 경고", ""] + [f"- {w}" for w in warnings]
 open(os.path.join(OUT, "spec_v2_report.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")

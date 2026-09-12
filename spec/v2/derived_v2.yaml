@@ -1,0 +1,1198 @@
+derived:
+- name: smoking_history_yn
+  kor: 흡연력 여부
+  cohort: LUNG_CANCER
+  source_table: OBSERVATION
+  value_kind: 예/아니오
+  tier: 필수
+  concept_set: SMOKING_STATUS
+  standard: SNOMED/LOINC 72166-2
+  note: null
+- name: current_smoker_yn
+  kor: 현재 흡연 여부
+  cohort: LUNG_CANCER
+  source_table: OBSERVATION
+  value_kind: 예/아니오
+  tier: 필수
+  concept_set: SMOKING_STATUS
+  standard: SNOMED/LOINC 72166-2
+  note: null
+- name: cigarettes_per_day
+  kor: 1일 평균 흡연량
+  cohort: LUNG_CANCER
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: SMOKING_STATUS
+  standard: SNOMED/LOINC 72166-2
+  note: null
+- name: smoking_years
+  kor: 총 흡연기간
+  cohort: LUNG_CANCER
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: SMOKING_STATUS
+  standard: SNOMED/LOINC 72166-2
+  note: null
+- name: quit_smoking_year
+  kor: 마지막 금연 시작 연도
+  cohort: LUNG_CANCER
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: SMOKING_STATUS
+  standard: SNOMED/LOINC 72166-2
+  note: null
+- name: ecog_score
+  kor: 활동능력(ECOG) 점수
+  cohort: LUNG_CANCER
+  source_table: OBSERVATION
+  value_kind: 닫힌 범주
+  tier: 필수
+  concept_set: ECOG
+  standard: SNOMED 42289x00x (grade 0~5)
+  note: 시점별 반복. 평가일 필요
+- name: hx_other_respiratory_yn
+  kor: 과거 기타 호흡기질환 여부
+  cohort: LUNG_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_other_respiratory_detail
+  kor: 과거 기타 호흡기질환 내용
+  cohort: LUNG_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: SNOMED/KCD
+  note: null
+- name: hx_any_yn
+  kor: 과거 병력 여부
+  cohort: LUNG_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_heart_disease_yn
+  kor: 과거 심장질환 여부
+  cohort: LUNG_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_tuberculosis_yn
+  kor: 과거 결핵 여부
+  cohort: LUNG_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_cancer_yn
+  kor: 과거 암 병력 여부
+  cohort: LUNG_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: bronchoscopy_date
+  kor: 기관지내시경 검사 시행일
+  cohort: LUNG_CANCER
+  source_table: PROCEDURE_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 권고
+  concept_set: null
+  standard: EDI/SNOMED procedure
+  note: 검사명·시행일은 PROCEDURE 로. 구조화 판독값은 질환 표
+- name: bronchoscopy_name
+  kor: 기관지내시경 검사명
+  cohort: LUNG_CANCER
+  source_table: PROCEDURE_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: EDI/SNOMED procedure
+  note: 검사명·시행일은 PROCEDURE 로. 구조화 판독값은 질환 표
+- name: imaging_name
+  kor: 영상검사명
+  cohort: LUNG_CANCER
+  source_table: PROCEDURE_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: EDI/SNOMED procedure
+  note: 검사명·시행일은 PROCEDURE 로. 구조화 판독값은 질환 표
+- name: pft_item
+  kor: 폐기능검사 항목
+  cohort: LUNG_CANCER
+  source_table: MEASUREMENT
+  value_kind: 닫힌 범주
+  tier: 필수
+  concept_set: PFT_ITEM
+  standard: LOINC (FEV1, FVC, DLCO)
+  note: null
+- name: pft_value
+  kor: 폐기능검사 결과값
+  cohort: LUNG_CANCER
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: PFT_ITEM
+  standard: LOINC (FEV1, FVC, DLCO)
+  note: null
+- name: death_date
+  kor: 사망일
+  cohort: LUNG_CANCER
+  source_table: DEATH
+  value_kind: 날짜
+  tier: 필수
+  concept_set: null
+  standard: OMOP DEATH
+  note: null
+- name: admission_discharge_date
+  kor: 입/퇴원일
+  cohort: LUNG_CANCER
+  source_table: VISIT_OCCURRENCE
+  value_kind: 날짜
+  tier: 보류
+  concept_set: null
+  standard: OMOP VISIT
+  note: null
+- name: discharge_status
+  kor: 퇴원 시 환자 상태
+  cohort: LUNG_CANCER
+  source_table: VISIT_OCCURRENCE
+  value_kind: 닫힌 범주
+  tier: 보류
+  concept_set: DISCHARGE_STATUS
+  standard: SNOMED (discharge disposition)
+  note: null
+- name: ecog_score
+  kor: 활동능력(ECOG) 점수
+  cohort: BREAST_CANCER
+  source_table: OBSERVATION
+  value_kind: 닫힌 범주
+  tier: 필수
+  concept_set: ECOG
+  standard: SNOMED 42289x00x (grade 0~5)
+  note: 시점별 반복. 평가일 필요
+- name: hx_any_yn
+  kor: 과거 병력 여부
+  cohort: BREAST_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_hypertension_yn
+  kor: 과거 고혈압 여부
+  cohort: BREAST_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_diabetes_yn
+  kor: 과거 당뇨병 여부
+  cohort: BREAST_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_liver_disease_yn
+  kor: 과거 간질환 여부
+  cohort: BREAST_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_tuberculosis_yn
+  kor: 과거 결핵 여부
+  cohort: BREAST_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_cancer_yn
+  kor: 과거 암 병력 여부
+  cohort: BREAST_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_cancer_type
+  kor: 과거 암 병력의 암종
+  cohort: BREAST_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: SNOMED/KCD
+  note: null
+- name: imaging_name
+  kor: 영상검사명
+  cohort: BREAST_CANCER
+  source_table: PROCEDURE_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: EDI/SNOMED procedure
+  note: 검사명·시행일은 PROCEDURE 로. 구조화 판독값은 질환 표
+- name: death_date
+  kor: 사망일
+  cohort: BREAST_CANCER
+  source_table: DEATH
+  value_kind: 날짜
+  tier: 필수
+  concept_set: null
+  standard: OMOP DEATH
+  note: null
+- name: admission_discharge_date
+  kor: 입/퇴원일
+  cohort: BREAST_CANCER
+  source_table: VISIT_OCCURRENCE
+  value_kind: 날짜
+  tier: 권고
+  concept_set: null
+  standard: OMOP VISIT
+  note: null
+- name: discharge_status
+  kor: 퇴원 시 환자 상태
+  cohort: BREAST_CANCER
+  source_table: VISIT_OCCURRENCE
+  value_kind: 닫힌 범주
+  tier: 권고
+  concept_set: DISCHARGE_STATUS
+  standard: SNOMED (discharge disposition)
+  note: null
+- name: ecog_score
+  kor: 활동능력(ECOG) 점수
+  cohort: COLORECTAL_CANCER
+  source_table: OBSERVATION
+  value_kind: 닫힌 범주
+  tier: 필수
+  concept_set: ECOG
+  standard: SNOMED 42289x00x (grade 0~5)
+  note: 시점별 반복. 평가일 필요
+- name: hx_abdominal_surgery_yn
+  kor: 과거 복부 수술 여부
+  cohort: COLORECTAL_CANCER
+  source_table: PROCEDURE_OCCURRENCE
+  value_kind: 예/아니오
+  tier: 보류
+  concept_set: null
+  standard: EDI/SNOMED procedure
+  note: 과거 수술은 PROCEDURE 존재로 파생
+- name: hx_abdominal_surgery_type
+  kor: 과거 복부 수술 종류
+  cohort: COLORECTAL_CANCER
+  source_table: PROCEDURE_OCCURRENCE
+  value_kind: 닫힌 범주
+  tier: 보류
+  concept_set: null
+  standard: EDI/SNOMED procedure
+  note: 과거 수술은 PROCEDURE 존재로 파생
+- name: hx_colorectal_disease_yn
+  kor: 과거 대장 질환 여부
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_kidney_disease_yn
+  kor: 과거 신장 질환 여부
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 권고
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_hypertension_yn
+  kor: 과거 고혈압 여부
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 권고
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_diabetes_yn
+  kor: 과거 당뇨병 여부
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 권고
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_liver_disease_yn
+  kor: 과거 간질환 여부
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 권고
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_tuberculosis_yn
+  kor: 과거 결핵 여부
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 보류
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_cancer_yn
+  kor: 과거 암 병력 여부
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_cancer_type
+  kor: 과거 암 병력의 암종
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: SNOMED/KCD
+  note: null
+- name: hereditary_crc_yn
+  kor: 유전성 대장암 여부
+  cohort: COLORECTAL_CANCER
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: imaging_name
+  kor: 영상검사명
+  cohort: COLORECTAL_CANCER
+  source_table: PROCEDURE_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 보류
+  concept_set: null
+  standard: EDI/SNOMED procedure
+  note: 검사명·시행일은 PROCEDURE 로. 구조화 판독값은 질환 표
+- name: imaging_findings_text
+  kor: 영상검사 결과 소견
+  cohort: COLORECTAL_CANCER
+  source_table: NOTE
+  value_kind: 텍스트
+  tier: 보류
+  concept_set: null
+  standard: null
+  note: 판독문 원문
+- name: death_date
+  kor: 사망일
+  cohort: COLORECTAL_CANCER
+  source_table: DEATH
+  value_kind: 날짜
+  tier: 필수
+  concept_set: null
+  standard: OMOP DEATH
+  note: null
+- name: admission_discharge_date
+  kor: 입/퇴원일
+  cohort: COLORECTAL_CANCER
+  source_table: VISIT_OCCURRENCE
+  value_kind: 날짜
+  tier: 보류
+  concept_set: null
+  standard: OMOP VISIT
+  note: null
+- name: discharge_status
+  kor: 퇴원 시 환자 상태
+  cohort: COLORECTAL_CANCER
+  source_table: VISIT_OCCURRENCE
+  value_kind: 닫힌 범주
+  tier: 보류
+  concept_set: DISCHARGE_STATUS
+  standard: SNOMED (discharge disposition)
+  note: null
+- name: exercise_duration_months
+  kor: 총 운동기간
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 권고
+  concept_set: null
+  standard: SNOMED
+  note: null
+- name: exercise_sessions_per_week
+  kor: 주 평균 운동횟수
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: SNOMED
+  note: null
+- name: exercise_minutes_per_session
+  kor: 1회당 운동시간
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: SNOMED
+  note: null
+- name: drinking_years
+  kor: 총 음주기간
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: ALCOHOL
+  standard: SNOMED/LOINC
+  note: null
+- name: drinking_days_per_month
+  kor: 월평균 음주횟수
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 보류
+  concept_set: ALCOHOL
+  standard: SNOMED/LOINC
+  note: null
+- name: alcohol_amount_per_occasion
+  kor: 평균 음주량
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: ALCOHOL
+  standard: SNOMED/LOINC
+  note: null
+- name: audit_score
+  kor: 알코올 사용장애 선별점수(AUDIT)
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: ALCOHOL
+  standard: SNOMED/LOINC
+  note: null
+- name: smoking_years
+  kor: 총 흡연기간
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: SMOKING_STATUS
+  standard: SNOMED/LOINC 72166-2
+  note: null
+- name: cigarettes_per_day
+  kor: 1일 평균 흡연량
+  cohort: MASLD
+  source_table: OBSERVATION
+  value_kind: 수치
+  tier: 필수
+  concept_set: SMOKING_STATUS
+  standard: SNOMED/LOINC 72166-2
+  note: null
+- name: hx_t2dm_yn
+  kor: 과거 제2형 당뇨병 여부
+  cohort: MASLD
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_hypertension_yn
+  kor: 과거 고혈압 여부
+  cohort: MASLD
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_dyslipidemia_yn
+  kor: 과거 이상지질혈증 여부
+  cohort: MASLD
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_cardiovascular_yn
+  kor: 과거 심혈관질환 여부
+  cohort: MASLD
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 보류
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_hypothyroidism_yn
+  kor: 과거 갑상선기능저하증 여부
+  cohort: MASLD
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 권고
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_viral_hepatitis_yn
+  kor: 과거 만성 바이러스간염(B형·C형) 여부
+  cohort: MASLD
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_bariatric_surgery_yn
+  kor: 과거 비만대사수술 여부
+  cohort: MASLD
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: imaging_name
+  kor: 영상검사명
+  cohort: MASLD
+  source_table: PROCEDURE_OCCURRENCE
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: EDI/SNOMED procedure
+  note: 검사명·시행일은 PROCEDURE 로. 구조화 판독값은 질환 표
+- name: imaging_findings_text
+  kor: 영상검사 결과 소견
+  cohort: MASLD
+  source_table: NOTE
+  value_kind: 텍스트
+  tier: 필수
+  concept_set: null
+  standard: null
+  note: 판독문 원문
+- name: score_input_lab_date
+  kor: 예후 판단척도 산출 시 사용된 혈액검사 시행일
+  cohort: MASLD
+  source_table: MEASUREMENT
+  value_kind: 날짜
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: 점수 산출 입력값은 MEASUREMENT 원값
+- name: score_input_lab_name
+  kor: 예후 판단척도 산출 시 사용된 혈액검사명
+  cohort: MASLD
+  source_table: MEASUREMENT
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: 점수 산출 입력값은 MEASUREMENT 원값
+- name: score_input_lab_value
+  kor: 예후 판단척도 산출 시 사용된 혈액검사 결과값
+  cohort: MASLD
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: 점수 산출 입력값은 MEASUREMENT 원값
+- name: death_date
+  kor: 사망일
+  cohort: MASLD
+  source_table: DEATH
+  value_kind: 날짜
+  tier: 필수
+  concept_set: null
+  standard: OMOP DEATH
+  note: null
+- name: admission_discharge_date
+  kor: 입/퇴원일
+  cohort: MASLD
+  source_table: VISIT_OCCURRENCE
+  value_kind: 날짜
+  tier: 권고
+  concept_set: null
+  standard: OMOP VISIT
+  note: null
+- name: hx_hypertension_yn
+  kor: 과거 고혈압 여부
+  cohort: DIABETES
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_dyslipidemia_yn
+  kor: 과거 이상지질혈증 여부
+  cohort: DIABETES
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_cardiovascular_yn
+  kor: 과거 심혈관질환 여부
+  cohort: DIABETES
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_cerebrovascular_yn
+  kor: 과거 뇌혈관질환 여부
+  cohort: DIABETES
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_ckd_yn
+  kor: 과거 만성콩팥병 여부
+  cohort: DIABETES
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hx_pancreatic_disease_yn
+  kor: 과거 췌장질환 여부
+  cohort: DIABETES
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: sensory_ncv_m_s
+  kor: 감각신경 전도속도(sensory nerve conduction velocity)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 보류
+  concept_set: null
+  standard: LOINC (일부)
+  note: 기능검사 수치는 MEASUREMENT
+- name: vpt_volt
+  kor: 진동감각역치(VPT)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 보류
+  concept_set: null
+  standard: LOINC (일부)
+  note: 기능검사 수치는 MEASUREMENT
+- name: abi
+  kor: 발목-상완 지수(ABI)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 보류
+  concept_set: null
+  standard: LOINC (일부)
+  note: 기능검사 수치는 MEASUREMENT
+- name: bcva
+  kor: 최대교정시력(BCVA)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 보류
+  concept_set: null
+  standard: LOINC (일부)
+  note: 기능검사 수치는 MEASUREMENT
+- name: central_macular_thickness_um
+  kor: 중심 황반 두께(OCT)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 권고
+  concept_set: null
+  standard: LOINC (일부)
+  note: 기능검사 수치는 MEASUREMENT
+- name: uacr_mg_g
+  kor: 요 알부민/크레아티닌 비(UACR)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: cgm_tir_percent
+  kor: CGM 목표범위 내 시간 비율(TIR)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: cgm_tar_percent
+  kor: CGM 고혈당 시간 비율(TAR)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 보류
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: cgm_tbr_percent
+  kor: CGM 저혈당 시간 비율(TBR)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: cgm_mean_glucose_mg_dl
+  kor: CGM 평균 혈당
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: cgm_titr_percent
+  kor: CGM tight range(70-140 mg/dL) 체류 시간 비율
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 보류
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: fpg_mg_dl
+  kor: 공복 혈장 포도당(FPG) 측정값
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: fasting_insulin_uiu_ml
+  kor: 공복 인슐린
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: postprandial_glucose_mg_dl
+  kor: 식후 혈당 농도 측정값
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 보류
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: glycemic_variability
+  kor: 혈당 변동성 지표
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: ogtt_2h_glucose_mg_dl
+  kor: 경구당부하검사 2시간 혈당값
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: random_glucose_mg_dl
+  kor: 임의 시점에 측정한 무작위 혈당값
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 권고
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: hba1c_percent
+  kor: 당화혈색소(HbA1c) 값
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: c_peptide_ng_ml
+  kor: C-펩타이드 농도값
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: homa_ir
+  kor: 인슐린 저항성 지수(HOMA-IR)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: homa_beta
+  kor: 베타세포 기능 지수(HOMA-beta)
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 필수
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: fructosamine_umol_l
+  kor: 프룩토사민값
+  cohort: DIABETES
+  source_table: MEASUREMENT
+  value_kind: 수치
+  tier: 권고
+  concept_set: null
+  standard: LOINC
+  note: CGM 요약은 집계기간 필드 동반(DIABETES_CRF 검토)
+- name: insulin_use_yn
+  kor: 인슐린 사용 여부
+  cohort: DIABETES
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: total_daily_insulin_units
+  kor: 1일 총 인슐린 투여량
+  cohort: DIABETES
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: metformin_use_yn
+  kor: 메트포르민 사용 여부
+  cohort: DIABETES
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: sglt2i_use_yn
+  kor: SGLT2 억제제 사용 여부
+  cohort: DIABETES
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: glp1ra_use_yn
+  kor: GLP-1 수용체 작용제 사용 여부
+  cohort: DIABETES
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: dpp4i_use_yn
+  kor: DPP-4 억제제 사용 여부
+  cohort: DIABETES
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: death_date
+  kor: 사망일
+  cohort: DIABETES
+  source_table: DEATH
+  value_kind: 날짜
+  tier: 필수
+  concept_set: null
+  standard: OMOP DEATH
+  note: null
+- name: admission_discharge_date
+  kor: 입/퇴원일
+  cohort: DIABETES
+  source_table: VISIT_OCCURRENCE
+  value_kind: 날짜
+  tier: 보류
+  concept_set: null
+  standard: OMOP VISIT
+  note: null
+- name: ecog_score
+  kor: 활동능력(ECOG) 점수
+  cohort: LYMPHOMA
+  source_table: OBSERVATION
+  value_kind: 닫힌 범주
+  tier: 필수
+  concept_set: ECOG
+  standard: SNOMED 42289x00x (grade 0~5)
+  note: 시점별 반복. 평가일 필요
+- name: hx_heart_disease_yn
+  kor: 과거 심장질환 여부
+  cohort: LYMPHOMA
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hbv_status
+  kor: B형간염 감염 상태
+  cohort: LYMPHOMA
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hcv_status
+  kor: C형간염 감염 상태
+  cohort: LYMPHOMA
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: hiv_status
+  kor: HIV 감염 상태
+  cohort: LYMPHOMA
+  source_table: CONDITION_OCCURRENCE
+  value_kind: 예/아니오→진단
+  tier: 필수
+  concept_set: COMORBIDITY_SET
+  standard: SNOMED/KCD
+  note: 지정 과거력 목록(코호트별)을 CONDITION 존재 여부로 파생
+- name: anti_cd20_yn
+  kor: Anti-CD20 치료 이력 여부
+  cohort: LYMPHOMA
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: anthracycline_yn
+  kor: Anthracycline 치료 이력 여부
+  cohort: LYMPHOMA
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: btk_inhibitor_yn
+  kor: BTK 억제제 치료 이력 여부
+  cohort: LYMPHOMA
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: checkpoint_inhibitor_yn
+  kor: 면역관문억제제 치료 이력 여부
+  cohort: LYMPHOMA
+  source_table: DRUG_EXPOSURE
+  value_kind: 예/아니오→약물
+  tier: 필수
+  concept_set: DRUG_CLASS_SET
+  standard: ATC/국내 약물코드
+  note: 약물 계열 사용 여부는 DRUG_EXPOSURE 에서 파생
+- name: admission_discharge_date
+  kor: 입/퇴원일
+  cohort: LYMPHOMA
+  source_table: VISIT_OCCURRENCE
+  value_kind: 날짜
+  tier: 권고
+  concept_set: null
+  standard: OMOP VISIT
+  note: null
+- name: death_date
+  kor: 사망일
+  cohort: LYMPHOMA
+  source_table: DEATH
+  value_kind: 날짜
+  tier: 필수
+  concept_set: null
+  standard: OMOP DEATH
+  note: null
+- name: death_cause
+  kor: 사망 원인
+  cohort: LYMPHOMA
+  source_table: DEATH
+  value_kind: 열린 표준 코드
+  tier: 필수
+  concept_set: null
+  standard: SNOMED/KCD
+  note: null
+derived_scores:
+- name: prognostic_score_type
+  kor: 대사이상지방간 예후 판단척도 종류
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: prognostic_score_value
+  kor: 대사이상지방간 예후 판단척도 산식에 따른 산출 결과 값
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: elf_score
+  kor: ELF 섬유화 점수
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: fib4_index
+  kor: FIB-4 지수
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: nfs_score
+  kor: NAFLD 섬유화 점수(NFS)
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: apri_score
+  kor: APRI 점수
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: pro_c3_ng_ml
+  kor: 혈청 PRO-C3
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: nis4_score
+  kor: NIS4 점수
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: meld_score
+  kor: MELD(Model for End-stage Liver Disease) 점수
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: child_pugh_class
+  kor: Child-Pugh(간기능 중증도) 등급
+  table: MASLD_ASSESSMENT
+  cohort: MASLD
+- name: hba1c_target_met_yn
+  kor: HbA1c 7% 미만 목표 달성 여부
+  table: DIABETES_EVENT
+  cohort: DIABETES
+- name: ckd_stage
+  kor: 만성콩팥병(CKD) 병기
+  table: DIABETES_EVENT
+  cohort: DIABETES
+- name: dka_yn
+  kor: 당뇨병성 케톤산증(DKA) 발생 여부
+  table: DIABETES_EVENT
+  cohort: DIABETES
+- name: retinopathy_severity
+  kor: 당뇨병성 망막병증 중증도 등급
+  table: DIABETES_EVENT
+  cohort: DIABETES
+- name: macular_edema_yn
+  kor: 당뇨병성 황반부종 여부
+  table: DIABETES_EVENT
+  cohort: DIABETES
+- name: peripheral_neuropathy_yn
+  kor: 당뇨병성 말초신경병증 여부
+  table: DIABETES_EVENT
+  cohort: DIABETES
+- name: foot_ulcer_yn
+  kor: 당뇨병성 족부궤양 여부
+  table: DIABETES_EVENT
+  cohort: DIABETES
+- name: prognostic_index_date
+  kor: 예후지수 산정 기준일
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: ipi_score
+  kor: IPI 총점
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: ipi_risk_group
+  kor: IPI 위험군
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: aaipi_score
+  kor: 연령보정 IPI(aaIPI) 총점
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: nccn_ipi_score
+  kor: NCCN-IPI 총점
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: flipi_score
+  kor: FLIPI 총점
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: flipi2_score
+  kor: FLIPI2 총점
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: mipi_score
+  kor: MIPI 점수
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: mipi_c_risk_group
+  kor: MIPI-c 위험군
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: ips_score
+  kor: 호지킨림프종 IPS 총점
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: pit_score
+  kor: 말초T세포림프종 PIT 총점
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA
+- name: gelf_high_burden_yn
+  kor: GELF 고종양부담 충족 여부
+  table: LYMPHOMA_ASSESSMENT
+  cohort: LYMPHOMA

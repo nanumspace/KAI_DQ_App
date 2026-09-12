@@ -1,0 +1,3472 @@
+legacy:
+  ANTP_THERAPY:
+  - v1: LUNG_CANCER.antp_id
+    kor: ''
+    desc: ANTP 테이블에 대한 외래키이다.
+    type: integer
+    group: patient
+    action: 이동
+  - v1: BREAST_CANCER.antp_id
+    kor: ''
+    desc: ANTP 테이블에 대한 외래키이다.
+    type: integer
+    group: patient
+    action: 이동
+  - v1: COLORECTAL_CANCER.antp_id
+    kor: ''
+    desc: ANTP_THERAPY 테이블에 대한 외래키이다.
+    type: integer
+    group: patient
+    action: 이동
+  - v1: MASLD.antp_id
+    kor: ''
+    desc: ANTP_THERAPY 테이블에 대한 외래키이다.
+    type: integer
+    group: patient
+    action: 이동
+  - v1: LYMPHOMA.current_line_of_therapy
+    kor: ''
+    desc: 현재 항암요법의 치료 line 번호이다.
+    type: integer
+    group: tx
+    action: 이동
+  - v1: LYMPHOMA.treatment_regimen
+    kor: ''
+    desc: 림프종 항암요법 또는 면역화학요법의 레지멘명이다.
+    type: varchar
+    group: tx
+    action: 이동
+  - v1: LYMPHOMA.treatment_start_date
+    kor: ''
+    desc: 해당 치료 line의 시작일이다.
+    type: date
+    group: tx
+    action: 이동
+  - v1: LYMPHOMA.treatment_end_date
+    kor: ''
+    desc: 해당 치료 line의 종료일이다.
+    type: date
+    group: tx
+    action: 이동
+  - v1: LYMPHOMA.prior_anthracycline_therapy_yn
+    kor: ''
+    desc: anthracycline 포함 치료 이력 여부이다.
+    type: integer
+    group: tx
+    action: 이동
+  - v1: LYMPHOMA.response_assessment_timepoint
+    kor: ''
+    desc: '반응평가 시점이다. 예: baseline, interim PET2, end of treatment, follow-up.'
+    type: varchar
+    group: resp
+    action: 이동
+  LUNG_CRF:
+  - v1: LUNG_CANCER.file_id
+    kor: ''
+    desc: 이미지 및 영상 파일에 대한 외래키이다.
+    type: integer
+    group: patient
+    action: 이동
+  - v1: LUNG_CANCER.imex_ymd
+    kor: ''
+    desc: 영상검사를 시행한 연월일이다.
+    type: date
+    group: imex
+    action: 이동
+  - v1: LUNG_CANCER.imex_smct_cd
+    kor: ''
+    desc: 영상검사에 매핑된 SNOMED CT 코드값으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: LUNG_CANCER.imex_smct_nm
+    kor: ''
+    desc: 영상검사에 매핑된 SNOMED CT 명칭으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
+    type: varchar
+    group: imex
+    action: 이동
+  PATHOLOGY_REPORT:
+  - v1: LUNG_CANCER.histologic_diagnosis_source_value
+    kor: ''
+    desc: 원발 진단(조직형)의 명칭으로, 원천에서 자유 기입된 값이다.
+    type: varchar
+    group: patient
+    action: 이동
+  - v1: LUNG_CANCER.cur_smok_yn_noans_spcd
+    kor: ''
+    desc: 현재 흡연 여부 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.cur_smok_yn_noans_spnm
+    kor: ''
+    desc: 현재 흡연 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.shis_yn_noans_spcd
+    kor: ''
+    desc: 흡연력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.shis_yn_noans_spnm
+    kor: ''
+    desc: 흡연력 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.smok_qty
+    kor: ''
+    desc: 1일 평균 흡연량(갑/일)이다.
+    type: float
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.smok_dtrn_ycnt
+    kor: ''
+    desc: 총 흡연기간(년 수)이다.
+    type: integer
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.nsmk_strt_yr
+    kor: ''
+    desc: 마지막 금연 시작 연도이다.
+    type: integer
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_etc_rptd_yn_noans_spcd
+    kor: ''
+    desc: 과거 기타 호흡기질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_etc_rptd_yn_noans_spnm
+    kor: ''
+    desc: 과거 기타 호흡기질환 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_etc_rptd_cont_cd
+    kor: ''
+    desc: 과거 기타 호흡기질환의 내용을 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_cads_yn_noans_spcd
+    kor: ''
+    desc: 과거 심장질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_cads_yn_noans_spnm
+    kor: ''
+    desc: 과거 심장질환 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.bpsy_lung_site_dtlc_cd
+    kor: ''
+    desc: 생체검사를 시행한 폐의 상세 위치를 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: LUNG_CANCER.bpsy_mthd_kncd
+    kor: ''
+    desc: 생체검사 시행 방법을 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: LUNG_CANCER.htlg_diag_nm
+    kor: ''
+    desc: 생체검사에 따른 조직학적 진단 명칭이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: LUNG_CANCER.htlg_dfgd_cd
+    kor: ''
+    desc: 생체검사에 따른 조직학적 분화도를 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: LUNG_CANCER.imem_ymd
+    kor: ''
+    desc: 면역조직화학병리 검사를 시행한 연월일이다.
+    type: date
+    group: imem
+    action: 이동
+  - v1: LUNG_CANCER.imem_kncd
+    kor: ''
+    desc: 면역조직화학병리 검사를 나타내는 코드값이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: LUNG_CANCER.imem_opn_cd
+    kor: ''
+    desc: 면역조직화학병리 검사소견을 나타내는 코드값이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: LUNG_CANCER.imem_opn_nm
+    kor: ''
+    desc: 면역조직화학병리 검사소견 명칭이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: LUNG_CANCER.imem_rslt_vl
+    kor: ''
+    desc: 면역조직화학병리 검사 결과값이다.
+    type: float
+    group: imem
+    action: 이동
+  - v1: LUNG_CANCER.imem_rslt_unit_cd
+    kor: ''
+    desc: 면역조직화학병리 검사 결과값의 단위를 나타내는 코드값이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: LUNG_CANCER.imem_rslt_unit_nm
+    kor: ''
+    desc: 면역조직화학병리 검사 결과값의 단위 명칭이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: LUNG_CANCER.mlem_ymd
+    kor: ''
+    desc: 분자병리 검사를 시행한 연월일이다.
+    type: date
+    group: mlem
+    action: 이동
+  - v1: LUNG_CANCER.mlem_knnm
+    kor: ''
+    desc: 분자병리 검사 종류 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: LUNG_CANCER.mlem_mtcd
+    kor: ''
+    desc: 분자병리 검사 방법을 나타내는 코드값이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: LUNG_CANCER.mlem_mtnm
+    kor: ''
+    desc: 분자병리 검사 방법 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: LUNG_CANCER.mlem_rslt_cd
+    kor: ''
+    desc: 분자병리 검사 결과를 나타내는 코드값이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: LUNG_CANCER.mlem_rslt_nm
+    kor: ''
+    desc: 분자병리 검사 결과 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: LUNG_CANCER.srgc_ptem_rslt_tumr_cnt
+    kor: ''
+    desc: 병리 검사에서 확인된 종양의 개수이다.
+    type: integer
+    group: sgpt
+    action: 이동
+  - v1: LUNG_CANCER.mhis_yn_noans_spcd
+    kor: ''
+    desc: 과거 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_tb_yn_noans_spcd
+    kor: ''
+    desc: 과거 결핵 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_tb_yn_noans_spnm
+    kor: ''
+    desc: 과거 결핵 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_cncr_yn_noans_spcd
+    kor: ''
+    desc: 과거 암 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.mhis_cncr_yn_noans_spnm
+    kor: ''
+    desc: 과거 암 병력 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.etc_mhis_yn_noans_spcd
+    kor: ''
+    desc: 과거 기타질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.etc_mhis_yn_noans_spnm
+    kor: ''
+    desc: 과거 기타질환 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.ecog_cd
+    kor: ''
+    desc: 암 환자의 기능 상태 지수 코드값으로 5가지의 점수로 환자의 기능 상태 표현한다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.ecog_nm
+    kor: ''
+    desc: 암 환자의 기능 상태 지수 명칭으로 5가지의 점수로 환자의 기능 상태 표현한다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: LUNG_CANCER.bpsy_ymd
+    kor: ''
+    desc: 생체검사를 시행한 연월일이다.
+    type: date
+    group: bpsy
+    action: 이동
+  - v1: LUNG_CANCER.bpsy_spnm
+    kor: ''
+    desc: 생체검사 대상 부위 또는 검체 구분 명칭이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: LUNG_CANCER.bpsy_cd
+    kor: ''
+    desc: 생체검사를 실시한 부위 또는 검체를 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: LUNG_CANCER.bpsy_nm
+    kor: ''
+    desc: 생체검사를 실시한 부위 또는 검체 명칭이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: BREAST_CANCER.bpsy_site_cd
+    kor: ''
+    desc: 생체검사를 시행한 부위를 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: BREAST_CANCER.bpsy_site_latr_cd
+    kor: ''
+    desc: 생체검사를 시행한 부위의 편측성을 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: BREAST_CANCER.bpsy_site_latr_nm
+    kor: ''
+    desc: 생체검사를 시행한 부위의 편측성 명칭이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: BREAST_CANCER.mlem_rslt_knnm
+    kor: ''
+    desc: 분자병리 검사 결과 구분 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.mlem_rslt_vl
+    kor: ''
+    desc: 분자병리 검사 결과 구분에 따른 결과값으로 소수점 2자리까지 기재한다.
+    type: float
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.lvin_ex_yn_spcd
+    kor: ''
+    desc: 종양의 림프관·혈관 침윤 여부를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.sgpt_micf_ex_yn_spcd
+    kor: ''
+    desc: 미세석회화 여부를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.incn_asso_ex_yn_spcd
+    kor: ''
+    desc: 상피내암 동반 여부를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.resi_tumr_cd
+    kor: ''
+    desc: Residual Tumor을 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.pstv_slnd_cnt
+    kor: ''
+    desc: 암 침윤이 확인된 감시림프절 개수이다.
+    type: integer
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.bpsy_mthd_kncd
+    kor: ''
+    desc: 생체검사 방법을 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: BREAST_CANCER.htlg_diag_nm
+    kor: ''
+    desc: 생체검사에 따른 조직학적 진단 명칭이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: BREAST_CANCER.imem_ymd
+    kor: ''
+    desc: 면역조직화학병리 검사를 시행한 연월일이다.
+    type: date
+    group: imem
+    action: 이동
+  - v1: BREAST_CANCER.imem_kncd
+    kor: ''
+    desc: 면역조직화학병리 검사를 나타내는 코드값이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: BREAST_CANCER.imem_opn_cd
+    kor: ''
+    desc: 면역조직화학병리 검사소견을 나타내는 코드값이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: BREAST_CANCER.imem_opn_nm
+    kor: ''
+    desc: 면역조직화학병리 검사소견 명칭이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: BREAST_CANCER.imem_rslt_vl
+    kor: ''
+    desc: 면역조직화학병리 검사 결과값이다.
+    type: float
+    group: imem
+    action: 이동
+  - v1: BREAST_CANCER.imem_rslt_unit_cd
+    kor: ''
+    desc: 면역조직화학병리 검사 결과값의 단위를 나타내는 코드값이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: BREAST_CANCER.imem_rslt_unit_nm
+    kor: ''
+    desc: 면역조직화학병리 검사 결과값의 단위 명칭이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: BREAST_CANCER.mlem_ymd
+    kor: ''
+    desc: 분자병리 검사를 시행한 연월일이다.
+    type: date
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.mlem_kncd
+    kor: ''
+    desc: 분자병리 검사 종류를 나타내는 코드값이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.mlem_knnm
+    kor: ''
+    desc: 분자병리 검사 종류 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.mlem_mtcd
+    kor: ''
+    desc: 분자병리 검사 방법을 나타내는 코드값이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.mlem_mtnm
+    kor: ''
+    desc: 분자병리 검사 방법 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.mlem_rslt_cd
+    kor: ''
+    desc: 분자병리 검사 결과를 나타내는 코드값이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.mlem_rslt_nm
+    kor: ''
+    desc: 분자병리 검사 결과 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: BREAST_CANCER.mhis_htn_yn_noans_spcd
+    kor: ''
+    desc: 과거 고혈압 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_htn_yn_noans_spnm
+    kor: ''
+    desc: 과거 고혈압 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_dbt_yn_noans_spcd
+    kor: ''
+    desc: 과거 당뇨병 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_dbt_yn_noans_spnm
+    kor: ''
+    desc: 과거 당뇨 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_lvds_yn_noans_spcd
+    kor: ''
+    desc: 과거 간질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_lvds_yn_noans_spnm
+    kor: ''
+    desc: 과거 간질환 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_cncr_yn_noans_spcd
+    kor: ''
+    desc: 과거 암 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_cncr_yn_noans_spnm
+    kor: ''
+    desc: 과거 암 병력 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_cncr_kncd
+    kor: ''
+    desc: 과거 암 병력 중 암종을 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_cncr_knnm
+    kor: ''
+    desc: 과거 암 병력 중 암종 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_yn_noans_spcd
+    kor: ''
+    desc: 과거 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_yn_noans_spnm
+    kor: ''
+    desc: 과거 병력 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_tb_yn_noans_spcd
+    kor: ''
+    desc: 과거 결핵 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.mhis_tb_yn_noans_spnm
+    kor: ''
+    desc: 과거 결핵 여부를 나타내는 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.etc_mhis_yn_noans_spcd
+    kor: ''
+    desc: 과거 기타질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.etc_mhis_yn_noans_spnm
+    kor: ''
+    desc: 과거 기타질환 여부를 나타내는 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.ecog_cd
+    kor: ''
+    desc: 암 환자의 기능 상태 지수 코드값으로 5가지의 점수로 환자의 기능 상태 표현한다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.ecog_nm
+    kor: ''
+    desc: 암 환자의 기능 상태 지수 명칭으로 5가지의 점수로 환자의 기능 상태 표현한다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: BREAST_CANCER.bpsy_ymd
+    kor: ''
+    desc: 생체검사를 시행한 연월일이다.
+    type: date
+    group: bpsy
+    action: 이동
+  - v1: BREAST_CANCER.rcrd_ymd
+    kor: ''
+    desc: 건강정보 기록 연월일로 입원기록지 또는 간호초기평가에서 추출하는 경우 입원일을 기준으로 한다.
+    type: date
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_cncr_kind_etc_cont
+    kor: ''
+    desc: 과거 암 병력 중 암종이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_clrc_diss_clsf_etc_cont
+    kor: ''
+    desc: 과거 대장 질환이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.t4b_inva_orgn_clsf_etc_cont
+    kor: ''
+    desc: MRI 판독 결과 T4B에서 침윤된 장기가 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.imem_rslt_cont
+    kor: ''
+    desc: 병리과 전문의의 면역조직화학병리 판독 최종 결론 내용이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: COLORECTAL_CANCER.mlem_rslt_cont
+    kor: ''
+    desc: 병리과 전문의의 분자병리 판독 최종 결론 내용이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: COLORECTAL_CANCER.bpsy_rslt_cont
+    kor: ''
+    desc: 생체검사 전체 결과 내용이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: COLORECTAL_CANCER.impt_read_ymd
+    kor: ''
+    desc: 면역조직화학병리 조직을 판독한 연월일이다.
+    type: date
+    group: imem
+    action: 이동
+  - v1: COLORECTAL_CANCER.mlpt_read_ymd
+    kor: ''
+    desc: 분자병리 조직을 판독한 연월일이다.
+    type: date
+    group: mlem
+    action: 이동
+  - v1: COLORECTAL_CANCER.etc_mhis_diss_cont
+    kor: ''
+    desc: 과거 기타질환이 있는 경우 해당 질환 내용이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.bpsy_read_ymd
+    kor: ''
+    desc: 생체검사 조직을 판독한 연월일이다.
+    type: date
+    group: bpsy
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_clrc_diss_spcd
+    kor: ''
+    desc: 과거 대장 질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_clrc_diss_spnm
+    kor: ''
+    desc: 과거 대장 질환 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_ht_diss_yn_noans_spcd
+    kor: ''
+    desc: 과거 신장 질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_ht_diss_yn_noans_spnm
+    kor: ''
+    desc: 과거 신장 질환 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.ohad_hstr_yn_noans_spcd
+    kor: ''
+    desc: 타병원 진단 후 전원 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.ohad_hstr_yn_noans_spnm
+    kor: ''
+    desc: 타병원 진단 후 전원 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.dsch_stcd
+    kor: ''
+    desc: 퇴원 시 환자의 상태를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.dsch_stnm
+    kor: ''
+    desc: 퇴원 시 환자의 상태 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.t4b_inva_orgn_spcd
+    kor: ''
+    desc: MRI 판독 결과 T4b에서 침윤된 장기를 나타내는 코드값이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.tumr_emvi_ex_yn_spnm
+    kor: ''
+    desc: MRI 판독 결과 장벽외 혈관침윤(EMVI) 내용이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.tumr_msrt_ln_mtst_ex_yn_spnm
+    kor: ''
+    desc: MRI 판독 결과 직장 간내 림프절전이(Mesorectal lymph node spread 내용) 명칭이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.tumr_exms_ln_mtst_ex_yn_spnm
+    kor: ''
+    desc: MRI 판독 결과 직장 간외 림프절전이(Extramesorectal lymph node spread 내용) 명칭이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.mlem_opn_cd
+    kor: ''
+    desc: 분자병리 검사소견을 나타내는 코드값이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: COLORECTAL_CANCER.mlem_opn_nm
+    kor: ''
+    desc: 분자병리 검사소견 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: COLORECTAL_CANCER.bpsy_site_cd
+    kor: ''
+    desc: 생체검사시 조직을 획득한 부위를 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: COLORECTAL_CANCER.htlg_grcd
+    kor: ''
+    desc: 생체검사에 따른 조직학적 분화도를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.gros_tpcd
+    kor: ''
+    desc: Gross type 분류를 나타내는 코드(major)값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.lymp_inva_ex_yn_spcd
+    kor: ''
+    desc: 종양의 림프성 침윤 여부를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.vasc_inva_ex_yn_spcd
+    kor: ''
+    desc: 종양의 혈관 침윤 여부를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.nerv_prex_ex_yn_spcd
+    kor: ''
+    desc: 신경주위 침윤 여부를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.inva_dgre_cd
+    kor: ''
+    desc: 침윤의 정도를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.inva_dgre_nm
+    kor: ''
+    desc: 침윤의 정도 명칭이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.bpsy_mthd_kncd
+    kor: ''
+    desc: 생체검사를 시행한 방법을 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: COLORECTAL_CANCER.bpsy_mthd_knnm
+    kor: ''
+    desc: 생체검사를 시행한 방법 명칭이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: COLORECTAL_CANCER.htlg_diag_cd
+    kor: ''
+    desc: 생체검사에 따른 조직학적 진단을 나타내는 코드값이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: COLORECTAL_CANCER.htlg_diag_nm
+    kor: ''
+    desc: 생체검사에 따른 조직학적 진단 명칭이다.
+    type: varchar
+    group: bpsy
+    action: 이동
+  - v1: COLORECTAL_CANCER.imem_ymd
+    kor: ''
+    desc: 면역조직화학병리 검사를 시행한 연월일이다.
+    type: date
+    group: imem
+    action: 이동
+  - v1: COLORECTAL_CANCER.imem_kncd
+    kor: ''
+    desc: 면역조직화학병리 검사를 나타내는 코드값이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: COLORECTAL_CANCER.imem_opn_cd
+    kor: ''
+    desc: 면역조직화학병리 검사소견을 나타내는 코드값이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: COLORECTAL_CANCER.imem_opn_nm
+    kor: ''
+    desc: 면역조직화학병리 검사소견 명칭이다.
+    type: varchar
+    group: imem
+    action: 이동
+  - v1: COLORECTAL_CANCER.mlem_ymd
+    kor: ''
+    desc: 분자병리 검사를 시행한 연월일이다.
+    type: date
+    group: mlem
+    action: 이동
+  - v1: COLORECTAL_CANCER.mlem_knnm
+    kor: ''
+    desc: 분자병리 검사 종류 명칭이다.
+    type: varchar
+    group: mlem
+    action: 이동
+  - v1: COLORECTAL_CANCER.srgc_ptem_rslt_tumr_cnt
+    kor: ''
+    desc: 병리 검사에서 확인된 종양의 개수이다.
+    type: integer
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.tumr_hght_vl
+    kor: ''
+    desc: 종양의 높이 크기(cm)이다.
+    type: float
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_htn_yn_noans_spcd
+    kor: ''
+    desc: 과거 고혈압 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_htn_yn_noans_spnm
+    kor: ''
+    desc: 과거 고혈압 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_dbt_yn_noans_spcd
+    kor: ''
+    desc: 과거 당뇨 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_dbt_yn_noans_spnm
+    kor: ''
+    desc: 과거 당뇨 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_lvds_yn_noans_spcd
+    kor: ''
+    desc: 과거 간질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_lvds_yn_noans_spnm
+    kor: ''
+    desc: 과거 간질환 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_cncr_kncd
+    kor: ''
+    desc: 과거 암 병력 중 암종을 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_cncr_knnm
+    kor: ''
+    desc: 과거 암 병력 중 암종 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_yn_noans_spcd
+    kor: ''
+    desc: 과거 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_yn_noans_spnm
+    kor: ''
+    desc: 과거 병력 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_tb_yn_noans_spcd
+    kor: ''
+    desc: 과거 결핵 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_tb_yn_noans_spnm
+    kor: ''
+    desc: 과거 결핵 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_cncr_yn_noans_spcd
+    kor: ''
+    desc: 과거 암 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_cncr_yn_noans_spnm
+    kor: ''
+    desc: 과거 암 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.etc_mhis_yn_noans_spcd
+    kor: ''
+    desc: 과거 기타질환 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.etc_mhis_yn_noans_spnm
+    kor: ''
+    desc: 과거 기타질환 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.ecog_cd
+    kor: ''
+    desc: 암 환자의 기능 상태 지수 코드값으로 5가지의 점수로 환자의 기능 상태 표현한다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.ecog_nm
+    kor: ''
+    desc: 암 환자의 기능 상태 지수 명칭으로 5가지의 점수로 환자의 기능 상태 표현한다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.bpsy_ymd
+    kor: ''
+    desc: 생체검사를 시행한 연월일이다.
+    type: date
+    group: bpsy
+    action: 이동
+  - v1: COLORECTAL_CANCER.rcrd_ymd
+    kor: ''
+    desc: 건강정보 기록 연월일로 입원기록지 또는 간호초기평가에서 추출하는 경우 입원일을 기준으로 한다.
+    type: date
+    group: hist
+    action: 이동
+  - v1: MASLD.lver_fbrs_grnm
+    kor: ''
+    desc: 주위 간실질의 간섬유화 등급명칭이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: MASLD.drnk_dtrn_ycnt
+    kor: ''
+    desc: 총 음주기간(년)이다.
+    type: integer
+    group: hist
+    action: 이동
+  - v1: MASLD.drnk_nt
+    kor: ''
+    desc: 월평균 음주횟수(회/월)이다.
+    type: float
+    group: hist
+    action: 이동
+  - v1: MASLD.drnk_qty
+    kor: ''
+    desc: 평균 음주량(병/회)이다.
+    type: float
+    group: hist
+    action: 이동
+  - v1: MASLD.shis_yn_noans_spcd
+    kor: ''
+    desc: 흡연력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: MASLD.smok_dtrn_ycnt
+    kor: ''
+    desc: 총 흡연기간(년 수)이다.
+    type: integer
+    group: hist
+    action: 이동
+  - v1: MASLD.smok_qty
+    kor: ''
+    desc: 1일 평균 흡연량(갑/일)이다.
+    type: float
+    group: hist
+    action: 이동
+  - v1: MASLD.exercise_ycnt
+    kor: ''
+    desc: 총 운동기간(년)이다.
+    type: float
+    group: hist
+    action: 이동
+  - v1: MASLD.exercise_nt
+    kor: ''
+    desc: 한 주 평균 운동횟수(회/주)이다.
+    type: float
+    group: hist
+    action: 이동
+  - v1: MASLD.exercise_tm
+    kor: ''
+    desc: 1회당 총 운동시간(분)이다.
+    type: integer
+    group: hist
+    action: 이동
+  - v1: MASLD.rcrd_ymd
+    kor: ''
+    desc: 건강정보 기록 연월일로 입원기록지 또는 간호초기평가에서 추출하는 경우 입원일을 기준으로 한다.
+    type: date
+    group: hist
+    action: 이동
+  - v1: LYMPHOMA.file_id
+    kor: ''
+    desc: PET/CT, CT, MRI 또는 병리 이미지 파일의 외래키이다.
+    type: integer
+    group: patient
+    action: 이동
+  - v1: LYMPHOMA.histologic_subtype_source_value
+    kor: ''
+    desc: 조직학적 아형의 원천 진단명 또는 원천 코드이다.
+    type: varchar
+    group: dx
+    action: 이동
+  - v1: LYMPHOMA.biopsy_date
+    kor: ''
+    desc: 확진 또는 재평가를 위한 조직 생검 시행일이다.
+    type: date
+    group: biopsy
+    action: 이동
+  - v1: LYMPHOMA.biopsy_method
+    kor: ''
+    desc: '생검 방법이다. 예: excisional, incisional, core needle, bone marrow biopsy.'
+    type: varchar
+    group: biopsy
+    action: 이동
+  - v1: LYMPHOMA.nodal_regions_involved_count
+    kor: ''
+    desc: 침범된 림프절 영역의 개수이다.
+    type: integer
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.ihc_test_date
+    kor: ''
+    desc: 면역조직화학검사 시행일이다.
+    type: date
+    group: ihc
+    action: 이동
+  - v1: LYMPHOMA.cd3_result
+    kor: ''
+    desc: CD3 면역조직화학 또는 유세포검사 결과이다.
+    type: varchar
+    group: ihc
+    action: 이동
+  SURGERY:
+  - v1: LUNG_CANCER.stage_iv_diagnosis_date
+    kor: ''
+    desc: 'Stage IV로 진단된 날짜이다. 조기 폐암(early lung cancer)으로 수술한 경우에는 재발한 날짜(≈ days_to_recurrence)를 기입하며, Stage IV 환자는 최초 진단 날짜와 동일하게 '
+    type: date
+    group: patient
+    action: 이동
+  - v1: LUNG_CANCER.opls_detl_loca_cd
+    kor: ''
+    desc: 수술을 시행한 폐의 상세 위치를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: LUNG_CANCER.htlg_diag_nm_po
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 조직학적 진단 명칭이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: LUNG_CANCER.oprt_ymd
+    kor: ''
+    desc: 수술을 시행한 연월일이다.
+    type: date
+    group: oprt
+    action: 이동
+  - v1: LUNG_CANCER.oprt_kncd
+    kor: ''
+    desc: 수술을 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드 또는 EDI 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: LUNG_CANCER.oprt_knnm
+    kor: ''
+    desc: 수술 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: LUNG_CANCER.oprt_prps_cd
+    kor: ''
+    desc: 수술 목적을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: LUNG_CANCER.oprt_site_cd
+    kor: ''
+    desc: 수술 부위를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: LUNG_CANCER.oprt_mtcd
+    kor: ''
+    desc: 폐암 수술 방법을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: LUNG_CANCER.srgc_ptem_ymd
+    kor: ''
+    desc: 수술 후 외과병리를 시행한 연월일이다.
+    type: date
+    group: sgpt
+    action: 이동
+  - v1: LUNG_CANCER.sgpt_hvst_site_cd
+    kor: ''
+    desc: 수술 후 외과병리 조직 채취 부위를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: LUNG_CANCER.afop_path_t_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 병리학적 T 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: LUNG_CANCER.afop_path_n_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 병리학적 N 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: LUNG_CANCER.afop_path_m_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 병리학적 M 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: LUNG_CANCER.clnc_t_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 T 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: LUNG_CANCER.clnc_n_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 N 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: LUNG_CANCER.clnc_m_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 M 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: BREAST_CANCER.repr_clcd
+    kor: ''
+    desc: 재건·성형술 분류를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.sgpt_exam_site_latr_cd
+    kor: ''
+    desc: 수술 후 외과병리 조직 채취 부위의 편측성을 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.htlg_grnm
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 조직학적 등급(Histologic Grade) 명칭이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.srmg_rlct_cd
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 수술절제면 암조직 잔존 상태를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.htlg_diag_cd_po
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 조직학적 진단을 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.htlg_diag_nm_po
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 조직학적 진단 명칭이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.oprt_ymd
+    kor: ''
+    desc: 수술을 시행한 연월일이다.
+    type: date
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.oprt_kncd
+    kor: ''
+    desc: 수술을 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.oprt_knnm
+    kor: ''
+    desc: 수술 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.oprt_prps_cd
+    kor: ''
+    desc: 수술 목적을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.oprt_site_cd
+    kor: ''
+    desc: 수술 부위를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.oprt_mtcd
+    kor: ''
+    desc: 유방암 수술방법을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.srgc_ptem_ymd
+    kor: ''
+    desc: 수술 후 외과병리를 시행한 연월일이다.
+    type: date
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.sgpt_hvst_site_cd
+    kor: ''
+    desc: 수술 후 외과병리 조직 채취 부위를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.tumr_max_diam_vl
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 종양의 최대직경 값(cm)이다.
+    type: float
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.afop_path_t_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 T 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.afop_path_n_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 N 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.afop_path_m_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 M 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: BREAST_CANCER.afop_asmt_item_cd
+    kor: ''
+    desc: 수술치료 후 평가내용을 기재하는 항목 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.afop_asmt_item_nm
+    kor: ''
+    desc: 수술치료 후 평가내용을 기재하는 항목 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: BREAST_CANCER.clnc_t_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 T 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: BREAST_CANCER.clnc_n_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 N 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: BREAST_CANCER.clnc_m_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 M 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: COLORECTAL_CANCER.ostm_frsn_clsf_etc_cont
+    kor: ''
+    desc: 수술 시 장루형성 이유가 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.inap_dsnt_mtst_site_etc_cont
+    kor: ''
+    desc: 복강내 원격전이 부위가 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.anes_mthd_etc_cont
+    kor: ''
+    desc: 문합 방법이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.anes_mthd_detl_clsf_etc_cont
+    kor: ''
+    desc: 문합방법 세부내용이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.afop_asmt_item_etc_cont
+    kor: ''
+    desc: 수술치료평가 또는 mRECIST 항목이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.etc_ostm_rest_loca_detl_cont
+    kor: ''
+    desc: 기타 장루 복원 위치에 대한 상세내용이다.
+    type: varchar
+    group: ostm_reop
+    action: 이동
+  - v1: COLORECTAL_CANCER.sgpt_read_ymd
+    kor: ''
+    desc: 수술 후 외과병리 조직을 판독한 연월일이다.
+    type: date
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_absg_yn_noans_spcd
+    kor: ''
+    desc: 과거 복부 수술여부를 나타내는 코드값이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.mhis_absg_yn_noans_spnm
+    kor: ''
+    desc: 과거 복부 수술 여부 명칭이다.
+    type: varchar
+    group: hist
+    action: 이동
+  - v1: COLORECTAL_CANCER.oprt_tumr_loca_cd
+    kor: ''
+    desc: 수술 시 확인한 종양 위치를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.lapr_conv_resn_spcd
+    kor: ''
+    desc: 비개복수술 시행중 개복수술로 전화되었을때 사유를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.lapr_conv_resn_spnm
+    kor: ''
+    desc: 비개복수술 시행중 개복수술로 전화되었을때 사유 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.ostm_frmt_yn_unid_spcd
+    kor: ''
+    desc: 수술 시 장루형성 여부를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.ostm_frsn_spcd
+    kor: ''
+    desc: 수술 시 장루형성 이유를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.ima_ligt_loca_spcd
+    kor: ''
+    desc: IMA (Inferior mesenteric artery) ligation 위치를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.inap_dsnt_mtst_site_cd
+    kor: ''
+    desc: 복강내 원격전이 부위를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.spfl_mobl_yn_unid_spcd
+    kor: ''
+    desc: splenic flexure mobilization(비장굴곡 가동화) 여부를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.curdg_nm
+    kor: ''
+    desc: 근치도(암조직의 절제 정도) 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.anes_mtcd
+    kor: ''
+    desc: 문합 방법을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.anes_mthd_detl_spcd
+    kor: ''
+    desc: 문합방법 세부내용을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.anes_mthd_detl_spnm
+    kor: ''
+    desc: 문합방법 세부내용 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.ebl_qty_spnm
+    kor: ''
+    desc: 수술 시 추정실혈량(Estimated blood loss) 구분 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.ebl_qty
+    kor: ''
+    desc: 수술 시 추정실혈량(Estimated blood loss) (ml) 값이다.
+    type: float
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.ostm_reop_ymd
+    kor: ''
+    desc: 장루 복원 수술을 시행한 연월일이다.
+    type: date
+    group: ostm_reop
+    action: 이동
+  - v1: COLORECTAL_CANCER.ostm_reop_spcd
+    kor: ''
+    desc: 장루 복원 수술을 나타내는 코드값이다.
+    type: varchar
+    group: ostm_reop
+    action: 이동
+  - v1: COLORECTAL_CANCER.ostm_reop_spnm
+    kor: ''
+    desc: 장루 복원 수술 명칭이다.
+    type: varchar
+    group: ostm_reop
+    action: 이동
+  - v1: COLORECTAL_CANCER.ostm_reop_loca_spcd
+    kor: ''
+    desc: 장루 복원 수술 위치를 나타내는 코드값이다.
+    type: varchar
+    group: ostm_reop
+    action: 이동
+  - v1: COLORECTAL_CANCER.sgpt_tumr_loca_spnm
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 종양 위치 명칭이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.radi_rsmg_invl_yn_spcd
+    kor: ''
+    desc: 수술후 외과병리 검사에서 확인된 radial 또는 circumferential margin 의 상태를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.tme_qlt_dgre_spcd
+    kor: ''
+    desc: TME (Total mesorectal excision, 전직장간막절제술) 육안적 완전도를 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.afoc_trtm_mtcd
+    kor: ''
+    desc: 합병증에 대한 치료방법을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.htlg_diag_cd_po
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 조직학적 진단을 나타내는 코드값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.htlg_diag_nm_po
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 조직학적 진단 명칭이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.oprt_ymd
+    kor: ''
+    desc: 수술을 시행한 연월일이다.
+    type: date
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.oprt_kncd
+    kor: ''
+    desc: 주된 수술 코드로 병원에서 사용하는 LOCAL 코드, EDI 코드 등을 기준으로 한다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.oprt_knnm
+    kor: ''
+    desc: 주된 수술 명칭으로 병원에서 사용하는 LOCAL 코드, EDI 코드 등을 기준으로 한다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.oprt_prps_cd
+    kor: ''
+    desc: 수술목적을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.oprt_prps_nm
+    kor: ''
+    desc: 수술목적 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.oprt_mtcd
+    kor: ''
+    desc: 대장암 수술방법을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.srgc_ptem_ymd
+    kor: ''
+    desc: 수술 후 외과병리를 시행한 연월일이다.
+    type: date
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.tumr_max_diam_vl
+    kor: ''
+    desc: 수술 후 외과병리를 통해 확인된 종양의 최대직경 값(cm)이다.
+    type: float
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.afop_path_t_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 T 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.afop_path_n_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 N 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.afop_path_m_stag_vl
+    kor: ''
+    desc: 수술 후 외과병리 기록지의 M 병기값이다.
+    type: varchar
+    group: sgpt
+    action: 이동
+  - v1: COLORECTAL_CANCER.afop_asmt_item_cd
+    kor: ''
+    desc: 수술치료 후 평가내용을 기재하는 항목을 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.afop_asmt_item_nm
+    kor: ''
+    desc: 수술치료 후 평가내용을 기재하는 항목 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: COLORECTAL_CANCER.clnc_t_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 T 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: COLORECTAL_CANCER.clnc_n_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 N 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: COLORECTAL_CANCER.clnc_m_stag_vl
+    kor: ''
+    desc: 수술 전 검사 결과에 따른 임상 M 병기값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: MASLD.oprt_knnm
+    kor: ''
+    desc: 간이식 수술 종류 명칭이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  - v1: LYMPHOMA.stem_cell_transplant_type
+    kor: ''
+    desc: '조혈모세포이식 유형이다. 예: autologous, allogeneic.'
+    type: varchar
+    group: sct
+    action: 이동
+  CONDITION_OCCURRENCE:
+  - v1: LUNG_CANCER.lucn_diag_knnm
+    kor: ''
+    desc: 진단명을 나타내는 KCD 진단명으로 LUCN_DIAG_KNCD에 해당하는 진단명을 수집한다.
+    type: varchar
+    group: patient
+    action: 이관→코어
+  - v1: LUNG_CANCER.diag_cd
+    kor: ''
+    desc: 원내 진단코드를 나타내는 코드값이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: LUNG_CANCER.diag_nm
+    kor: ''
+    desc: 원내 진단명이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: LUNG_CANCER.diag_kcd_cd
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단코드로 KCD 코드값이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: LUNG_CANCER.diag_kcd_nm
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단명이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: LUNG_CANCER.diag_smct_cd
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단코드를 나타내는 코드값이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: LUNG_CANCER.diag_smct_nm
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단명이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: LUNG_CANCER.cexm_ymd
+    kor: ''
+    desc: 진단검사를 시행한 연월일이다.
+    type: date
+    group: cexm
+    action: 이관→코어
+  - v1: LUNG_CANCER.cexm_kncd
+    kor: ''
+    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: LUNG_CANCER.cexm_knnm
+    kor: ''
+    desc: 진단검사 명칭이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: LUNG_CANCER.cexm_loinc_cd
+    kor: ''
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: LUNG_CANCER.cexm_loinc_nm
+    kor: ''
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 명칭이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: LUNG_CANCER.imex_kncd
+    kor: ''
+    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: LUNG_CANCER.imex_knnm
+    kor: ''
+    desc: 영상검사 명칭이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: BREAST_CANCER.brcn_diag_kncd
+    kor: ''
+    desc: 유방암 진단 구분을 나타내는 KCD 코드값(C50, D05, 기타암 및 기타질환)이다.
+    type: varchar
+    group: patient
+    action: 이관→코어
+  - v1: BREAST_CANCER.brcn_diag_knnm
+    kor: ''
+    desc: 유방암 진단 구분을 나타내는 KCD 명칭(C50, D05, 기타암 및 기타질환)이다.
+    type: varchar
+    group: patient
+    action: 이관→코어
+  - v1: BREAST_CANCER.diag_smct_cd
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단코드값이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: BREAST_CANCER.diag_smct_nm
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단명이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: BREAST_CANCER.cexm_ymd
+    kor: ''
+    desc: 진단검사를 시행한 연월일이다.
+    type: date
+    group: cexm
+    action: 이관→코어
+  - v1: BREAST_CANCER.cexm_kncd
+    kor: ''
+    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: BREAST_CANCER.cexm_knnm
+    kor: ''
+    desc: 진단검사 명칭이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: BREAST_CANCER.cexm_loinc_cd
+    kor: ''
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: BREAST_CANCER.cexm_loinc_nm
+    kor: ''
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 명칭이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: BREAST_CANCER.imex_kncd
+    kor: ''
+    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: BREAST_CANCER.imex_knnm
+    kor: ''
+    desc: 영상검사 명칭이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.clcn_diag_knnm
+    kor: ''
+    desc: 진단명을 나타내는 KCD 진단명으로 CLCN_DIAG_KNCD에 해당하는 진단명을 수집한다.
+    type: varchar
+    group: patient
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.diag_cd
+    kor: ''
+    desc: 원내 진단코드를 나타내는 코드값이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.diag_nm
+    kor: ''
+    desc: 원내 진단명이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.diag_kcd_cd
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단코드로 KCD 코드값이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.diag_kcd_nm
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단명이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.diag_smct_cd
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위로 들어가는 세부 진단코드값이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.diag_smct_nm
+    kor: ''
+    desc: 암, 기타암, 기타질환 종류명 하위로 들어가는 세부 진단명이다.
+    type: varchar
+    group: diag
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cexm_ymd
+    kor: ''
+    desc: 진단검사를 시행한 연월일이다.
+    type: date
+    group: cexm
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cexm_kncd
+    kor: ''
+    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cexm_knnm
+    kor: ''
+    desc: 진단검사 명칭이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cexm_loinc_cd
+    kor: ''
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cexm_loinc_nm
+    kor: ''
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 명칭이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.imex_kncd
+    kor: ''
+    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.imex_knnm
+    kor: ''
+    desc: 영상검사 명칭이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: MASLD.imex_kncd
+    kor: ''
+    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: MASLD.imex_knnm
+    kor: ''
+    desc: 영상검사 명칭이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: LYMPHOMA.diagnosis_date
+    kor: ''
+    desc: 림프종을 최초로 확진한 날짜이다.
+    type: date
+    group: dx
+    action: 이관→코어
+  - v1: LYMPHOMA.hbv_status
+    kor: ''
+    desc: B형간염 관련 검사 및 활동성 감염 상태이다.
+    type: varchar
+    group: patient
+    action: 이관→코어
+  - v1: LYMPHOMA.hcv_status
+    kor: ''
+    desc: C형간염 관련 검사 및 활동성 감염 상태이다.
+    type: varchar
+    group: patient
+    action: 이관→코어
+  - v1: LYMPHOMA.hiv_status
+    kor: ''
+    desc: HIV 검사 및 감염 상태이다.
+    type: varchar
+    group: patient
+    action: 이관→코어
+  BIOMARKER:
+  - v1: LUNG_CANCER.lung_tumr_prmr_loca_cd
+    kor: ''
+    desc: 폐 종양의 위치(Primary)를 나타내는 코드값이다.
+    type: varchar
+    group: patient
+    action: 이동
+  - v1: LUNG_CANCER.gmt_ymd
+    kor: ''
+    desc: 유전자 돌연변이검사를 시행한 연월일이다.
+    type: date
+    group: gmt
+    action: 이동
+  - v1: LUNG_CANCER.gmt_gene_kncd
+    kor: ''
+    desc: 유전자 돌연변이검사를 시행한 유전자 종류를 나타내는 코드값이다.
+    type: varchar
+    group: gmt
+    action: 이동
+  - v1: LUNG_CANCER.gmt_gene_knnm
+    kor: ''
+    desc: 유전자 돌연변이검사를 시행한 유전자 종류 명칭이다.
+    type: varchar
+    group: gmt
+    action: 이동
+  - v1: LUNG_CANCER.drug_prsc_ymd
+    kor: ''
+    desc: 약제를 처방한 연월일이다.
+    type: date
+    group: drug
+    action: 이동
+  - v1: LUNG_CANCER.drug_prsc_capa
+    kor: ''
+    desc: 처방된 약제의 1회 투여 용량이다.
+    type: float
+    group: drug
+    action: 이동
+  - v1: LUNG_CANCER.drug_prsc_capa_unit_cd
+    kor: ''
+    desc: 처방된 약제의 1회 투여 용량 단위를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이동
+  - v1: LUNG_CANCER.drug_prsc_capa_unit_nm
+    kor: ''
+    desc: 처방된 약제의 1회 투여 용량 단위 명칭이다.
+    type: varchar
+    group: drug
+    action: 이동
+  - v1: LUNG_CANCER.drug_prsc_dcnt
+    kor: ''
+    desc: 약제 처방일수이다.
+    type: integer
+    group: drug
+    action: 이동
+  - v1: LUNG_CANCER.clnc_tumr_prty_cd
+    kor: ''
+    desc: 임상 종양특성을 나타내는 코드값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: LUNG_CANCER.clnc_tumr_prty_nm
+    kor: ''
+    desc: 임상 종양특성 명칭이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: BREAST_CANCER.fertility_treatment_type
+    kor: ''
+    desc: 가임력 보존 치료 종류를 나타내는 코드값이다. 1=GnRHa, 2=난자 동결, 3=배아 동결, 4=기타, 5=GnRHa+동결
+    type: integer
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.fertility_treatment_type_other
+    kor: ''
+    desc: fertility_treatment_type가 4(기타)인 경우 치료 종류를 직접 기입한 값이다.
+    type: varchar
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.menstrual_regularity_after_treatment
+    kor: ''
+    desc: 항암 후 월경 규칙성을 나타내는 코드값이다. 1=Regular, 2=Irregular, 3=NA
+    type: integer
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.pregnancy_attempt_start_date
+    kor: ''
+    desc: 치료 후 임신 시도를 시작한 날짜이다.
+    type: date
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.pregnancy_outcome
+    kor: ''
+    desc: 임신 결과를 나타내는 코드값이다. 1=Chemical preg, 2=Clinical preg, 3=Abortion, 4=Live birth
+    type: integer
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.bfpr_yn_noans_spcd
+    kor: ''
+    desc: 모유수유 경험 여부를 나타내는 코드값이다.
+    type: varchar
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.gmvx_ymd
+    kor: ''
+    desc: 생식세포 변이검사를 시행한 연월일이다.
+    type: date
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.gmvx_mtcd
+    kor: ''
+    desc: 생식세포 변이검사 방법을 나타내는 코드값이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.gmvx_gene_kncd
+    kor: ''
+    desc: 생식세포 변이검사를 시행한 유전자 종류를 나타내는 코드값이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.pavr_detect_yn_spcd
+    kor: ''
+    desc: Pathogenic Variant 검출 여부를 나타내는 코드값이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.uncl_varnt_detect_yn_spcd
+    kor: ''
+    desc: Unclassified Variant 검출 여부를 나타내는 코드값이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.dna_vainf_b_cd
+    kor: ''
+    desc: DNA 변이 정보 B를 나타내는 코드값이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.dna_vainf_b_nm
+    kor: ''
+    desc: DNA 변이 정보 B 명칭이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.dna_vainf_c_cd
+    kor: ''
+    desc: DNA 변이 정보 C를 나타내는 코드값이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.dna_vainf_c_nm
+    kor: ''
+    desc: DNA 변이 정보 C 명칭이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.amsn_vainf_a_nm
+    kor: ''
+    desc: 아미노산 변이 정보 A 명칭이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.amsn_vainf_b_vl
+    kor: ''
+    desc: 아미노산 변이 정보 B 값이다.
+    type: float
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.amsn_vainf_c_cd
+    kor: ''
+    desc: 아미노산 변이 정보 C를 나타내는 코드값이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.amsn_vainf_c_nm
+    kor: ''
+    desc: 아미노산 변이 정보 C 명칭이다.
+    type: varchar
+    group: gmvx
+    action: 이동
+  - v1: BREAST_CANCER.gnrx_ymd
+    kor: ''
+    desc: 예후예측 유전자 발현검사를 시행한 연월일이다.
+    type: date
+    group: gnrx
+    action: 이동
+  - v1: BREAST_CANCER.gnrx_kncd
+    kor: ''
+    desc: 예후예측 유전자 발현검사 종류를 나타내는 코드값이다.
+    type: varchar
+    group: gnrx
+    action: 이동
+  - v1: BREAST_CANCER.gnrx_rslt_knnm
+    kor: ''
+    desc: 예후예측 유전자 발현검사 결과 구분 명칭이다.
+    type: varchar
+    group: gnrx
+    action: 이동
+  - v1: BREAST_CANCER.gnrx_rslt_cont
+    kor: ''
+    desc: 예후예측 유전자 발현검사 결과 구분에 따른 결과 내용이다.
+    type: varchar
+    group: gnrx
+    action: 이동
+  - v1: BREAST_CANCER.drug_prsc_ymd
+    kor: ''
+    desc: 약제를 처방한 연월일이다.
+    type: date
+    group: drug
+    action: 이동
+  - v1: BREAST_CANCER.drug_prsc_capa
+    kor: ''
+    desc: 처방된 약제의 1회 투여 용량이다.
+    type: float
+    group: drug
+    action: 이동
+  - v1: BREAST_CANCER.drug_prsc_capa_unit_cd
+    kor: ''
+    desc: 처방된 약제 용량 단위를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이동
+  - v1: BREAST_CANCER.drug_prsc_capa_unit_nm
+    kor: ''
+    desc: 처방된 약제 용량 단위 명칭이다.
+    type: varchar
+    group: drug
+    action: 이동
+  - v1: BREAST_CANCER.drug_prsc_dcnt
+    kor: ''
+    desc: 약제 처방일수이다.
+    type: integer
+    group: drug
+    action: 이동
+  - v1: BREAST_CANCER.clnc_tumr_prty_cd
+    kor: ''
+    desc: 임상 종양특성을 나타내는 코드값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: BREAST_CANCER.clnc_tumr_prty_nm
+    kor: ''
+    desc: 임상 종양특성 명칭이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: COLORECTAL_CANCER.frnt_prtm_tumr_rltn_etc_cont
+    kor: ''
+    desc: MRI 판독 결과 종양과 전방복막의 관계가 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.tumr_ansp_exts_cont
+    kor: ''
+    desc: MRI 판독 결과 Circumferential tumor location에 대한 내용이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.frnt_prtm_tumr_rlcd
+    kor: ''
+    desc: MRI 판독 결과 종양과 전방복막의 관계를 나타내는 코드값이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.tumr_circ_loca_spnm
+    kor: ''
+    desc: MRI 판독 결과 종양의 환상 위치(Circumferential tumor location 내용) 명칭이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.drug_prsc_ymd
+    kor: ''
+    desc: 약제를 처방한 연월일이다.
+    type: date
+    group: drug
+    action: 이동
+  - v1: COLORECTAL_CANCER.drug_prsc_capa
+    kor: ''
+    desc: 처방된 약제의 1회 투여 용량이다.
+    type: float
+    group: drug
+    action: 이동
+  - v1: COLORECTAL_CANCER.drug_prsc_capa_unit_cd
+    kor: ''
+    desc: 처방된 약제 용량 단위를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이동
+  - v1: COLORECTAL_CANCER.drug_prsc_capa_unit_nm
+    kor: ''
+    desc: 처방된 약제 용량 단위 명칭이다.
+    type: varchar
+    group: drug
+    action: 이동
+  - v1: COLORECTAL_CANCER.drug_prsc_dcnt
+    kor: ''
+    desc: 약제 처방일수이다.
+    type: integer
+    group: drug
+    action: 이동
+  - v1: COLORECTAL_CANCER.clnc_tumr_prty_cd
+    kor: ''
+    desc: 임상 종양특성을 나타내는 코드값이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: COLORECTAL_CANCER.clnc_tumr_prty_nm
+    kor: ''
+    desc: 임상 종양특성 명칭이다.
+    type: varchar
+    group: stag
+    action: 이동
+  - v1: MASLD.lrs_score
+    kor: ''
+    desc: LiverRisk score 산출 결과값 Calculator https://www.liverriskscore.com/multicalc
+    type: float
+    group: score
+    action: 이동
+  - v1: MASLD.exam_gnrx_ymd
+    kor: ''
+    desc: 예후 판단척도 산출 시 사용된 혈액검사 시행연월일이다.
+    type: date
+    group: score
+    action: 이동
+  - v1: MASLD.exam_gnrx_input_nm
+    kor: ''
+    desc: 예후 판단척도 산출 시 사용된 혈액검사 항목 명칭이다.
+    type: varchar
+    group: score
+    action: 이동
+  - v1: MASLD.exam_gnrx_input_nm_vl
+    kor: ''
+    desc: 예후 판단척도 산출 시 사용된 혈액검사 결과값이다.
+    type: float
+    group: score
+    action: 이동
+  - v1: MASLD.procedure_occurrence_crtn_dt
+    kor: ''
+    desc: 행위처방 데이터 생성일시이다.
+    type: timestamp
+    group: proc
+    action: 이동
+  - v1: MASLD.drug_prsc_ymd
+    kor: ''
+    desc: 약제 처방 연월일이다.
+    type: date
+    group: drug
+    action: 이동
+  - v1: LYMPHOMA.lymphoma_group
+    kor: ''
+    desc: '림프종 대분류이다. 예: Hodgkin lymphoma, non-Hodgkin lymphoma.'
+    type: varchar
+    group: dx
+    action: 이동
+  - v1: LYMPHOMA.classification_version
+    kor: ''
+    desc: 진단에 사용한 WHO 또는 ICC 분류체계와 버전이다.
+    type: varchar
+    group: dx
+    action: 이동
+  - v1: LYMPHOMA.unexplained_fever_yn
+    kor: ''
+    desc: 감염 등 다른 원인으로 설명되지 않는 발열 여부이다.
+    type: integer
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.cd19_result
+    kor: ''
+    desc: CD19 발현 결과이다. CAR-T 또는 표적치료 전후 시점을 함께 구분한다.
+    type: varchar
+    group: ihc
+    action: 이동
+  - v1: LYMPHOMA.cd20_result
+    kor: ''
+    desc: CD20 발현 결과이다.
+    type: varchar
+    group: ihc
+    action: 이동
+  - v1: LYMPHOMA.cd22_result
+    kor: ''
+    desc: CD22 발현 결과이다.
+    type: varchar
+    group: ihc
+    action: 이동
+  - v1: LYMPHOMA.cd30_result
+    kor: ''
+    desc: CD30 발현 결과이다.
+    type: varchar
+    group: ihc
+    action: 이동
+  - v1: LYMPHOMA.molecular_test_method
+    kor: ''
+    desc: '분자·세포유전검사 방법이다. 예: FISH, PCR, karyotyping, NGS.'
+    type: varchar
+    group: mol
+    action: 이동
+  - v1: LYMPHOMA.clonality_test_result
+    kor: ''
+    desc: 면역글로불린 또는 T-cell receptor 유전자 재배열 기반 클론성 검사 결과이다.
+    type: varchar
+    group: mol
+    action: 이동
+  - v1: LYMPHOMA.ipi_risk_group
+    kor: ''
+    desc: IPI 위험군이다.
+    type: varchar
+    group: prog
+    action: 이동
+  - v1: LYMPHOMA.mipi_c_risk_group
+    kor: ''
+    desc: Ki-67을 반영한 MIPI-c 위험군이다.
+    type: varchar
+    group: prog
+    action: 이동
+  - v1: LYMPHOMA.hodgkin_ips_score
+    kor: ''
+    desc: 진행성 Hodgkin lymphoma의 International Prognostic Score(IPS)이다.
+    type: integer
+    group: prog
+    action: 이동
+  - v1: LYMPHOMA.pit_score
+    kor: ''
+    desc: 말초 T세포 림프종의 Prognostic Index for T-cell lymphoma(PIT) 점수이다.
+    type: integer
+    group: prog
+    action: 이동
+  - v1: LYMPHOMA.prior_anti_cd20_therapy_yn
+    kor: ''
+    desc: rituximab, obinutuzumab 등 anti-CD20 치료 이력 여부이다.
+    type: integer
+    group: tx
+    action: 이동
+  - v1: LYMPHOMA.prior_btk_inhibitor_therapy_yn
+    kor: ''
+    desc: BTK 억제제 치료 이력 여부이다.
+    type: integer
+    group: tx
+    action: 이동
+  - v1: LYMPHOMA.prior_checkpoint_inhibitor_yn
+    kor: ''
+    desc: PD-1/PD-L1 등 면역관문억제제 치료 이력 여부이다.
+    type: integer
+    group: tx
+    action: 이동
+  - v1: LYMPHOMA.response_criteria
+    kor: ''
+    desc: '적용한 반응평가 기준이다. 예: Lugano 2014, LYRIC, Cheson.'
+    type: varchar
+    group: resp
+    action: 이동
+  - v1: LYMPHOMA.anatomic_response
+    kor: ''
+    desc: '해부학적 반응이다. 예: CR, PR, SD, PD.'
+    type: varchar
+    group: resp
+    action: 이동
+  - v1: LYMPHOMA.progression_date
+    kor: ''
+    desc: 질병 진행을 최초 확인한 날짜이다.
+    type: date
+    group: outcome
+    action: 이동
+  STAGING:
+  - v1: LUNG_CANCER.otog_mtst_site_cd
+    kor: ''
+    desc: 영상검사를 통해 확인된 타장기 전이 부위를 나타내는 코드값이다.
+    type: varchar
+    group: patient
+    action: 이동
+  - v1: LUNG_CANCER.mtdg_ymd
+    kor: ''
+    desc: 암 전이 진단 연월일이다.
+    type: date
+    group: mtst
+    action: 이동
+  - v1: LUNG_CANCER.mtst_site_nm
+    kor: ''
+    desc: 전이암 부위를 나타내는 명칭(원격 전이 정보)이다.
+    type: varchar
+    group: mtst
+    action: 이동
+  - v1: LUNG_CANCER.diag_stag_rcrd_ymd
+    kor: ''
+    desc: 진단 병기 정보 기록 연월일이다.
+    type: date
+    group: stag
+    action: 이동
+  - v1: BREAST_CANCER.boms_yn_unid_spcd
+    kor: ''
+    desc: 영상검사 판독 결과 전신 전이 여부를 나타내는 코드값이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: BREAST_CANCER.boms_yn_unid_spnm
+    kor: ''
+    desc: 영상검사 판독 결과 전신 전이 여부 명칭이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: BREAST_CANCER.mtdg_ymd
+    kor: ''
+    desc: 암 전이 진단 연월일이다.
+    type: date
+    group: mtst
+    action: 이동
+  - v1: BREAST_CANCER.mtst_site_nm
+    kor: ''
+    desc: 전이암 부위를 나타내는 명칭(원격 전이 정보)이다.
+    type: varchar
+    group: mtst
+    action: 이동
+  - v1: BREAST_CANCER.diag_stag_rcrd_ymd
+    kor: ''
+    desc: 진단 병기 정보 기록 연월일이다.
+    type: date
+    group: stag
+    action: 이동
+  - v1: COLORECTAL_CANCER.mtst_site_etc_cont
+    kor: ''
+    desc: 전이암 부위가 2개 이상이거나 기타인 경우의 상세 내용이다.
+    type: varchar
+    group: mtst
+    action: 이동
+  - v1: COLORECTAL_CANCER.mtdg_ymd
+    kor: ''
+    desc: 암 전이 진단 연월일이다.
+    type: date
+    group: mtst
+    action: 이동
+  - v1: COLORECTAL_CANCER.diag_stag_rcrd_ymd
+    kor: ''
+    desc: 진단 병기 정보 기록 연월일이다.
+    type: date
+    group: stag
+    action: 이동
+  - v1: LYMPHOMA.stage_assessment_date
+    kor: ''
+    desc: 림프종 병기를 평가한 날짜이다.
+    type: date
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.ann_arbor_lugano_stage
+    kor: ''
+    desc: Ann Arbor/Lugano 병기값이다. I, II, III, IV로 기록한다.
+    type: varchar
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.stage_suffix
+    kor: ''
+    desc: 병기 수식자이다. A, B, E, S 또는 복합값을 기록한다.
+    type: varchar
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.staging_method
+    kor: ''
+    desc: '병기 결정에 사용한 방법이다. 예: PET/CT, CT, MRI, bone marrow assessment.'
+    type: varchar
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.extranodal_involvement_yn
+    kor: ''
+    desc: 결절외 침범 여부이다. 1=Yes, 0=No.
+    type: integer
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.extranodal_site_count
+    kor: ''
+    desc: 침범된 결절외 장기 또는 부위의 개수이다.
+    type: integer
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.extranodal_sites
+    kor: ''
+    desc: 결절외 침범 부위를 구분자로 연결한 원천값이다. 반복 관찰로 적재하는 것을 우선한다.
+    type: varchar
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.b_symptom_yn
+    kor: ''
+    desc: 림프종 B symptom 존재 여부이다.
+    type: integer
+    group: stage
+    action: 이동
+  - v1: LYMPHOMA.target_lesion_count
+    kor: ''
+    desc: 반응평가에 선택한 표적 병변의 개수이다.
+    type: integer
+    group: stage
+    action: 이동
+  MEASUREMENT:
+  - v1: LUNG_CANCER.plex_ymd
+    kor: ''
+    desc: 폐기능 검사를 시행한 연월일이다.
+    type: date
+    group: plex
+    action: 이관→코어
+  - v1: LUNG_CANCER.plex_spcd
+    kor: ''
+    desc: 폐기능 검사 구분을 나타내는 코드값이다.
+    type: varchar
+    group: plex
+    action: 이관→코어
+  - v1: LUNG_CANCER.plex_spnm
+    kor: ''
+    desc: 폐기능 검사 구분 명칭이다.
+    type: varchar
+    group: plex
+    action: 이관→코어
+  - v1: LUNG_CANCER.plex_kncd
+    kor: ''
+    desc: 폐기능 검사를 나타내는 코드값이다.
+    type: varchar
+    group: plex
+    action: 이관→코어
+  - v1: LUNG_CANCER.plex_knnm
+    kor: ''
+    desc: 폐기능 검사 명칭이다.
+    type: varchar
+    group: plex
+    action: 이관→코어
+  - v1: LUNG_CANCER.plex_rslt_vl
+    kor: ''
+    desc: 폐기능 검사 결과값이다.
+    type: float
+    group: plex
+    action: 이관→코어
+  - v1: LUNG_CANCER.anth_rcrd_ymd
+    kor: ''
+    desc: 신체계측정보 기록 연월일이다.
+    type: date
+    group: anth
+    action: 이관→코어
+  - v1: LUNG_CANCER.ht_msrm_vl
+    kor: ''
+    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: LUNG_CANCER.wt_msrm_vl
+    kor: ''
+    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: LUNG_CANCER.bmi_vl
+    kor: ''
+    desc: 신체질량지수로 환자의 신장과 체중의 비율을 사용해 계산(체중/(신장)²)하며, 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: LUNG_CANCER.cexm_rslt_cont
+    kor: ''
+    desc: 진단검사 결과 내용이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: LUNG_CANCER.cexm_rslt_unit_cont
+    kor: ''
+    desc: 진단검사 결과값의 단위이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: BREAST_CANCER.imex_rslt_diag_clnm
+    kor: ''
+    desc: 영상검사 결과 진단적 분류(Diagnostic Classification) 명칭이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: BREAST_CANCER.anth_rcrd_ymd
+    kor: ''
+    desc: 신체계측정보 기록 연월일이다.
+    type: date
+    group: anth
+    action: 이관→코어
+  - v1: BREAST_CANCER.ht_msrm_vl
+    kor: ''
+    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: BREAST_CANCER.wt_msrm_vl
+    kor: ''
+    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: BREAST_CANCER.bmi_vl
+    kor: ''
+    desc: 신체질량지수로 환자의 신장과 체중의 비율을 사용해 계산(체중/(신장)²)하며, 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: BREAST_CANCER.cexm_rslt_cont
+    kor: ''
+    desc: 진단검사 결과 내용이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: BREAST_CANCER.cexm_rslt_unit_cont
+    kor: ''
+    desc: 진단검사 결과값의 단위이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.imex_rslt_cont
+    kor: ''
+    desc: 영상검사 결과 내용이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.anth_rcrd_ymd
+    kor: ''
+    desc: 신체계측정보 기록 연월일이다.
+    type: date
+    group: anth
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.ht_msrm_vl
+    kor: ''
+    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.wt_msrm_vl
+    kor: ''
+    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.bmi_vl
+    kor: ''
+    desc: 신체질량지수로 환자의 신장과 체중의 비율을 사용해 계산(체중/(신장)²)하며, 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cexm_rslt_cont
+    kor: ''
+    desc: 진단검사 결과 내용이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cexm_rslt_unit_cont
+    kor: ''
+    desc: 진단검사 결과값의 단위이다.
+    type: varchar
+    group: cexm
+    action: 이관→코어
+  - v1: MASLD.safe_score
+    kor: ''
+    desc: 'SAFE 스코어 산출 결과값 Formula = (2.97 × age) + (5.99 × BMI [BMI > 40은 40으로 설정])  + (62.85 × diabetes [없으면 0, 있으면 1] + (154.85 '
+    type: float
+    group: score
+    action: 이관→코어
+  - v1: MASLD.imex_rslt_cont
+    kor: ''
+    desc: 영상검사 결과 내용이다.
+    type: varchar
+    group: imex
+    action: 이관→코어
+  - v1: MASLD.anth_rcrd_ymd
+    kor: ''
+    desc: 신체계측정보 기록 연월일이다.
+    type: date
+    group: anth
+    action: 이관→코어
+  - v1: MASLD.ht_msrm_vl
+    kor: ''
+    desc: 신장값(cm)으로 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: MASLD.wt_msrm_vl
+    kor: ''
+    desc: 체중값(kg)으로 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  - v1: MASLD.bmi_vl
+    kor: ''
+    desc: 신체질량지수로 환자의 신장과 체중의 비율을 사용해 계산(체중/(신장)²)하며, 소수점 1자리까지 표기한다.
+    type: float
+    group: anth
+    action: 이관→코어
+  PROCEDURE_OCCURRENCE:
+  - v1: LUNG_CANCER.brex_ymd
+    kor: ''
+    desc: 기관지내시경 검사를 시행한 연월일이다.
+    type: date
+    group: brex
+    action: 이관→코어
+  - v1: LUNG_CANCER.brex_kncd
+    kor: ''
+    desc: 기관지내시경 검사를 나타내는 코드값이다.
+    type: varchar
+    group: brex
+    action: 이관→코어
+  - v1: LUNG_CANCER.brex_knnm
+    kor: ''
+    desc: 기관지내시경 검사 명칭이다.
+    type: varchar
+    group: brex
+    action: 이관→코어
+  DRUG_EXPOSURE:
+  - v1: LUNG_CANCER.drug_clcd
+    kor: ''
+    desc: 처방된 약제의 분류를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: LUNG_CANCER.drug_clnm
+    kor: ''
+    desc: 처방된 약제의 분류 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: LUNG_CANCER.drin_cd
+    kor: ''
+    desc: 약제 주성분을 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: LUNG_CANCER.drin_nm
+    kor: ''
+    desc: 약제 주성분 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: LUNG_CANCER.drug_rxnm_cd
+    kor: ''
+    desc: 약제의 RxNorm 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: LUNG_CANCER.drug_rxnm_nm
+    kor: ''
+    desc: 약제의 RxNorm 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: LUNG_CANCER.drug_injc_pth_cd
+    kor: ''
+    desc: 약제 투여경로를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: LUNG_CANCER.drug_injc_pth_nm
+    kor: ''
+    desc: 약제 투여경로 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: BREAST_CANCER.drug_clcd
+    kor: ''
+    desc: 처방된 약제 분류를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: BREAST_CANCER.drug_clnm
+    kor: ''
+    desc: 처방된 약제 분류 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: BREAST_CANCER.drin_cd
+    kor: ''
+    desc: 약제 주성분을 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: BREAST_CANCER.drin_nm
+    kor: ''
+    desc: 약제 주성분 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: BREAST_CANCER.drug_rxnm_cd
+    kor: ''
+    desc: 약제의 RxNorm 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: BREAST_CANCER.drug_rxnm_nm
+    kor: ''
+    desc: 약제의 RxNorm 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: BREAST_CANCER.drug_injc_pth_cd
+    kor: ''
+    desc: 약제 투여경로를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: BREAST_CANCER.drug_injc_pth_nm
+    kor: ''
+    desc: 약제 투여경로 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drug_mdct_dtrn_mcnt
+    kor: ''
+    desc: 환자에게 처방된 약제 투약기간(개월)이다.
+    type: float
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drug_clcd
+    kor: ''
+    desc: 처방된 약제 분류를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drug_clnm
+    kor: ''
+    desc: 처방된 약제 분류 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drin_cd
+    kor: ''
+    desc: 약제 주성분을 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drin_nm
+    kor: ''
+    desc: 약제 주성분 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drug_rxnm_cd
+    kor: ''
+    desc: 약제의 RxNorm 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drug_rxnm_nm
+    kor: ''
+    desc: 약제의 RxNorm 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drug_injc_pth_cd
+    kor: ''
+    desc: 약제 투여경로를 나타내는 코드값이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.drug_injc_pth_nm
+    kor: ''
+    desc: 약제 투여경로 명칭이다.
+    type: varchar
+    group: drug
+    action: 이관→코어
+  RADIOTHERAPY:
+  - v1: LUNG_CANCER.rdt_prsc_ymd
+    kor: ''
+    desc: 방사선치료를 처방한 연월일이다.
+    type: date
+    group: rdt
+    action: 이동
+  - v1: LUNG_CANCER.rdt_kncd
+    kor: ''
+    desc: 방사선치료를 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드 또는 EDI 코드값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: LUNG_CANCER.rdt_prps_cd
+    kor: ''
+    desc: 방사선치료 목적을 나타내는 코드값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: LUNG_CANCER.rdt_site_cd
+    kor: ''
+    desc: 방사선치료 부위를 나타내는 코드값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: BREAST_CANCER.rdt_prsc_ymd
+    kor: ''
+    desc: 방사선치료를 처방한 연월일이다.
+    type: date
+    group: rdt
+    action: 이동
+  - v1: BREAST_CANCER.rdt_kncd
+    kor: ''
+    desc: 방사선치료를 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드 또는 EDI 코드 값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: BREAST_CANCER.rdt_prps_cd
+    kor: ''
+    desc: 방사선치료 목적을 나타내는 코드값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: BREAST_CANCER.rdt_site_cd
+    kor: ''
+    desc: 방사선치료 부위를 나타내는 코드값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: BREAST_CANCER.rd_totl_gy
+    kor: ''
+    desc: 방사선 부위별 총선량 값(Gy)이다.
+    type: float
+    group: rdt
+    action: 이동
+  - v1: COLORECTAL_CANCER.rdt_kncd
+    kor: ''
+    desc: 방사선치료 코드값으로 병원에서 사용하는 LOCAL 코드, EDI 코드값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: COLORECTAL_CANCER.rdt_knnm
+    kor: ''
+    desc: 방사선치료 명칭이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: COLORECTAL_CANCER.rdt_prps_cd
+    kor: ''
+    desc: 방사선치료 목적을 나타내는 코드값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: COLORECTAL_CANCER.rdt_site_cd
+    kor: ''
+    desc: 방사선치료 부위를 나타내는 코드값이다.
+    type: varchar
+    group: rdt
+    action: 이동
+  - v1: LYMPHOMA.radiotherapy_site
+    kor: ''
+    desc: 방사선치료 부위이다.
+    type: varchar
+    group: tx
+    action: 이동
+  RESPONSE_ASSESSMENT:
+  - v1: LUNG_CANCER.rldg_ymd
+    kor: ''
+    desc: 암 재발을 진단한 연월일이다.
+    type: date
+    group: rlps
+    action: 이동
+  - v1: LUNG_CANCER.rlps_site_cd
+    kor: ''
+    desc: 재발암 부위를 나타내는 코드값이다.
+    type: varchar
+    group: rlps
+    action: 이동
+  - v1: LUNG_CANCER.rlps_site_nm
+    kor: ''
+    desc: 재발암 부위 명칭이다.
+    type: varchar
+    group: rlps
+    action: 이동
+  - v1: BREAST_CANCER.rldg_ymd
+    kor: ''
+    desc: 암 재발을 진단한 연월일이다.
+    type: date
+    group: rlps
+    action: 이동
+  - v1: BREAST_CANCER.rlps_site_cd
+    kor: ''
+    desc: 재발암 부위를 나타내는 코드값이다.
+    type: varchar
+    group: rlps
+    action: 이동
+  - v1: BREAST_CANCER.rlps_site_nm
+    kor: ''
+    desc: 재발암 부위 명칭이다.
+    type: varchar
+    group: rlps
+    action: 이동
+  - v1: COLORECTAL_CANCER.tumr_rspn_grnm
+    kor: ''
+    desc: MRI 판독 결과 종양반응등급(Radiologic tumor regression grade) 명칭이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.rldg_ymd
+    kor: ''
+    desc: 암 재발을 진단한 연월일이다.
+    type: date
+    group: rlps
+    action: 이동
+  - v1: COLORECTAL_CANCER.rlps_site_cd
+    kor: ''
+    desc: 재발암 부위를 나타내는 코드값이다.
+    type: varchar
+    group: rlps
+    action: 이동
+  - v1: COLORECTAL_CANCER.rlps_site_nm
+    kor: ''
+    desc: 재발암 부위 명칭이다.
+    type: varchar
+    group: rlps
+    action: 이동
+  - v1: LYMPHOMA.deauville_score
+    kor: ''
+    desc: FDG PET 기반 Deauville 5-point score(1-5)이다.
+    type: integer
+    group: resp
+    action: 이동
+  - v1: LYMPHOMA.last_followup_date
+    kor: ''
+    desc: 생존 및 질환 상태를 마지막으로 확인한 날짜이다.
+    type: date
+    group: fu
+    action: 이동
+  VISIT_OCCURRENCE:
+  - v1: LUNG_CANCER.dsch_ymd
+    kor: ''
+    desc: 퇴원 연월일로 외래 방문 시 visit_start_date와 동일하게 설정한다.
+    type: date
+    group: dsch
+    action: 이관→코어
+  - v1: BREAST_CANCER.dsch_ymd
+    kor: ''
+    desc: 퇴원연월일으로 외래 방문 시 visit_start_date와 동일한 기준으로 한다.
+    type: date
+    group: dsch
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.dsch_ymd
+    kor: ''
+    desc: 퇴원연월일으로 외래 방문 시 visit_start_date와 동일한 기준으로 한다.
+    type: date
+    group: dsch
+    action: 이관→코어
+  FAMILY_HISTORY:
+  - v1: LUNG_CANCER.fmht_rcrd_ymd
+    kor: ''
+    desc: 가족력 기록 연월일이다.
+    type: date
+    group: fmht
+    action: 이동
+  - v1: LUNG_CANCER.fmht_yn_noans_spcd
+    kor: ''
+    desc: 가족력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: LUNG_CANCER.pt_fm_rlcd
+    kor: ''
+    desc: 가족력 존재 시 가족과의 관계를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: LUNG_CANCER.fmhs_cncr_yn_noans_spcd
+    kor: ''
+    desc: 가족의 암 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: LUNG_CANCER.fmht_cncr_kncd
+    kor: ''
+    desc: 가족의 암 병력 존재 시 암종을 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: LUNG_CANCER.fmhs_etc_yn_noans_spcd
+    kor: ''
+    desc: 가족의 기타 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: LUNG_CANCER.fmhs_etc_yn_noans_spnm
+    kor: ''
+    desc: 가족의 기타 병력 여부 명칭이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: BREAST_CANCER.fmht_rcrd_ymd
+    kor: ''
+    desc: 가족력 기록 연월일이다.
+    type: date
+    group: fmht
+    action: 이동
+  - v1: BREAST_CANCER.fmht_yn_noans_spcd
+    kor: ''
+    desc: 가족력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: BREAST_CANCER.fmht_yn_noans_spnm
+    kor: ''
+    desc: 가족력 여부를 나타내는 명칭이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: BREAST_CANCER.pt_fm_rlcd
+    kor: ''
+    desc: 가족력 존재 시 가족과의 관계를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: BREAST_CANCER.pt_fm_rlnm
+    kor: ''
+    desc: 가족력 존재 시 가족과의 관계를 나타내는 명칭이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: BREAST_CANCER.fmhs_cncr_yn_noans_spcd
+    kor: ''
+    desc: 가족의 암 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: BREAST_CANCER.fmht_cncr_kncd
+    kor: ''
+    desc: 가족의 암 병력 존재 시 암종을 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmht_cncr_kind_etc_cont
+    kor: ''
+    desc: 가족의 암 병력 중 암종이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmht_here_clcn_clsf_etc_cont
+    kor: ''
+    desc: 유전성 대장암이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.pt_fmrl_etc_cont
+    kor: ''
+    desc: 가족관계가 기타인 경우 해당 내용이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmhs_etc_cont
+    kor: ''
+    desc: 가족의 기타 병력 내용이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmht_here_clcn_spcd
+    kor: ''
+    desc: 유전성 대장암 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmht_here_clcn_spnm
+    kor: ''
+    desc: 유전성 대장암 여부 명칭이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmht_rcrd_ymd
+    kor: ''
+    desc: 가족력 기록 연월일이다.
+    type: date
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmht_yn_noans_spcd
+    kor: ''
+    desc: 가족력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.pt_fm_rlcd
+    kor: ''
+    desc: 가족력 존재 시 가족과의 관계를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.pt_fm_rlnm
+    kor: ''
+    desc: 가족력 존재 시 가족과의 관계를 나타내는 명칭이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmhs_cncr_yn_noans_spcd
+    kor: ''
+    desc: 가족의 암 병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmht_cncr_kncd
+    kor: ''
+    desc: 가족의 암 병력 존재 시 암종을 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmhs_etc_yn_noans_spcd
+    kor: ''
+    desc: 가족의 기타병력 여부를 나타내는 코드값이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  - v1: COLORECTAL_CANCER.fmhs_etc_yn_noans_spnm
+    kor: ''
+    desc: 가족의 기타병력 여부 명칭이다.
+    type: varchar
+    group: fmht
+    action: 이동
+  OBSERVATION:
+  - v1: LUNG_CANCER.cc_rcrd_ymd
+    kor: ''
+    desc: 기록 연월일이다.
+    type: date
+    group: cc
+    action: 이관→코어
+  - v1: BREAST_CANCER.cc_rcrd_ymd
+    kor: ''
+    desc: 기록연월일이다.
+    type: date
+    group: cc
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cc_cont
+    kor: ''
+    desc: 입원 시 주증상에 대한 상세 내용이다.
+    type: varchar
+    group: cc
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cc_src_spcd
+    kor: ''
+    desc: 주증상 출처(기록지)를 구분하는 코드값이다.
+    type: varchar
+    group: cc
+    action: 이관→코어
+  - v1: COLORECTAL_CANCER.cc_rcrd_ymd
+    kor: ''
+    desc: 기록 연월일이다.
+    type: date
+    group: cc
+    action: 이관→코어
+  BREAST_CRF:
+  - v1: BREAST_CANCER.file_id
+    kor: ''
+    desc: 이미지 및 영상 파일에 대한 외래키이다.
+    type: integer
+    group: patient
+    action: 이동
+  - v1: BREAST_CANCER.method_of_conception
+    kor: ''
+    desc: 임신 방법을 나타내는 코드값이다. 1=자연임신, 2=배란유도, 3=인공수정, 4=시험관, 5=난자 공여
+    type: integer
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.obtr_rcrd_ymd
+    kor: ''
+    desc: 기록 연월일이다.
+    type: date
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.marg_yn_noans_spcd
+    kor: ''
+    desc: 결혼 여부를 나타내는 코드값이다.
+    type: varchar
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.marg_yn_noans_spnm
+    kor: ''
+    desc: 결혼 여부에 대한 명칭이다.
+    type: varchar
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.marg_detl_cd
+    kor: ''
+    desc: 결혼 여부가 무응답이 아닌 경우의 상세 구분을 나타내는 내용이다.
+    type: varchar
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.marg_detl_nm
+    kor: ''
+    desc: 결혼 여부가 무응답이 아닌 경우의 상세내용이다.
+    type: varchar
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.hrt_impl_mcnt
+    kor: ''
+    desc: 폐경 후 호르몬 대체요법(HRT)을 시행한 기간(개월)이다.
+    type: integer
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.meno_yn_noans_spcd
+    kor: ''
+    desc: 폐경 여부를 나타내는 코드값이다.
+    type: varchar
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.meno_yn_noans_spnm
+    kor: ''
+    desc: 폐경 여부 명칭이다.
+    type: varchar
+    group: obtr
+    action: 이동
+  - v1: BREAST_CANCER.brst_dens_clcd
+    kor: ''
+    desc: Mammography 결과의 Breast Density를 나타내는 코드값이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: BREAST_CANCER.brst_dens_clnm
+    kor: ''
+    desc: Mammography 결과의 Breast Density 명칭이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: BREAST_CANCER.micf_yn_unid_spcd
+    kor: ''
+    desc: Mammography 결과의 Microcalcification 여부를 나타내는 코드값이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: BREAST_CANCER.micf_yn_unid_spnm
+    kor: ''
+    desc: Mammography 결과의 Microcalcification 여부 명칭이다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: BREAST_CANCER.imex_ymd
+    kor: ''
+    desc: 영상검사를 시행한 연월일이다.
+    type: date
+    group: imex
+    action: 이동
+  - v1: BREAST_CANCER.imex_smct_cd
+    kor: ''
+    desc: 영상검사에 매핑된 SNOMED CT 코드값으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: BREAST_CANCER.imex_smct_nm
+    kor: ''
+    desc: 영상검사에 매핑된 SNOMED CT 명칭으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
+    type: varchar
+    group: imex
+    action: 이동
+  ADVERSE_EVENT:
+  - v1: COLORECTAL_CANCER.bwpf_yn_unid_spcd
+    kor: ''
+    desc: 장천공 여부를 나타내는 코드값이다.
+    type: varchar
+    group: patient
+    action: 이동
+  - v1: COLORECTAL_CANCER.inob_yn_unid_spcd
+    kor: ''
+    desc: 장폐색 여부를 나타내는 코드값이다.
+    type: varchar
+    group: patient
+    action: 이동
+  - v1: COLORECTAL_CANCER.obst_trtm_spcd
+    kor: ''
+    desc: 수술 전 폐색치료 여부를 나타내는 코드값이다.
+    type: varchar
+    group: oprt
+    action: 이동
+  COLORECTAL_CRF:
+  - v1: COLORECTAL_CANCER.imex_ymd
+    kor: ''
+    desc: 영상검사를 시행한 연월일이다.
+    type: date
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.imex_smct_cd
+    kor: ''
+    desc: 영상검사에 매핑된 SNOMED CT 코드값으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
+    type: varchar
+    group: imex
+    action: 이동
+  - v1: COLORECTAL_CANCER.imex_smct_nm
+    kor: ''
+    desc: 영상검사에 매핑된 SNOMED CT 명칭으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
+    type: varchar
+    group: imex
+    action: 이동
+  MASLD_CRF:
+  - v1: MASLD.file_id
+    kor: ''
+    desc: 이미지/영상 파일 ID
+    type: integer
+    group: patient
+    action: 이동
+  - v1: MASLD.imex_ymd
+    kor: ''
+    desc: 영상검사 시행 연월일이다.
+    type: date
+    group: imex
+    action: 이동
+  LYMPHOMA_CRF:
+  - v1: LYMPHOMA.diagnosis_status
+    kor: ''
+    desc: '진단 상태이다. 예: newly diagnosed, relapsed, refractory, transformed.'
+    type: varchar
+    group: dx
+    action: 이동
+  - v1: LYMPHOMA.transformation_from_subtype
+    kor: ''
+    desc: 전환 이전의 림프종 아형이다.
+    type: varchar
+    group: transf
+    action: 이동
+  - v1: LYMPHOMA.transformation_to_subtype
+    kor: ''
+    desc: 전환 후 확진된 림프종 아형이다.
+    type: varchar
+    group: transf
+    action: 이동
+  - v1: LYMPHOMA.transformation_date
+    kor: ''
+    desc: 조직학적 전환을 확진한 날짜이다.
+    type: date
+    group: transf
+    action: 이동
+  - v1: LYMPHOMA.pet_suvmax
+    kor: ''
+    desc: 대표 또는 최고 대사활성 병변의 SUVmax이다.
+    type: float
+    group: pet
+    action: 이동
+  - v1: LYMPHOMA.car_t_product_source_value
+    kor: ''
+    desc: CAR-T 제품명 또는 기관 원천값이다.
+    type: varchar
+    group: cart
+    action: 이동
+  - v1: LYMPHOMA.leukapheresis_date
+    kor: ''
+    desc: CAR-T 제조 등을 위한 백혈구성분채집일이다.
+    type: date
+    group: cart
+    action: 이동
+  DEATH:
+  - v1: LYMPHOMA.cause_of_death
+    kor: ''
+    desc: 사망 원인이다. 원자료가 있는 경우 표준 개념과 원천값을 함께 보존한다.
+    type: varchar
+    group: fu
+    action: 이관→코어

@@ -35,6 +35,10 @@ python dq/engine.py --cohort LUNG_CANCER --data synth/output/dirty/LUNG_CANCER -
 python dq/verify.py --cohort LUNG_CANCER
 ```
 
+## 사전 v2 (재설계 초안)
+
+`spec/v2/` 는 전문가 자문을 반영해 재설계한 데이터 모델 초안입니다(한 테이블 = 행 단위 하나, 코어 단일 원천, 코드표 + 표준 매핑). 원천은 비공개 배치표와 `spec/v2_field_names.py` 이며, `spec/build_spec_v2.py` 가 명세·코드표·파생 변수·팀 배포용 사전·보고서를 재생성합니다. 자세한 구조는 `spec/v2/README.md` 에 있습니다. 규칙·가상데이터·앱은 아직 v1 명세를 읽습니다.
+
 ## TypeScript 엔진
 
 ```bash

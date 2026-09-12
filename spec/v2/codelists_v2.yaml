@@ -1,0 +1,1245 @@
+codelists:
+  STAGE_SYSTEM:
+    kor: 병기 체계
+    standard: SNOMED tumor staging system
+    note: null
+    values:
+    - code: AJCC
+      label: AJCC
+      snomed: null
+    - code: Lugano
+      label: Lugano
+      snomed: null
+    - code: Ann
+      label: Arbor
+      snomed: null
+    - code: FIGO
+      label: FIGO
+      snomed: null
+    - code: 기타
+      label: 기타
+      snomed: null
+  STAGE_EDITION:
+    kor: 병기 판
+    standard: null
+    note: 체계와 함께 저장
+    values:
+    - code: '7'
+      label: '7'
+      snomed: null
+    - code: '8'
+      label: '8'
+      snomed: null
+    - code: '9'
+      label: '9'
+      snomed: null
+  STAGE_CONTEXT:
+    kor: 병기 구분
+    standard: SNOMED (clinical/pathological stage)
+    note: null
+    values:
+    - code: c
+      label: 임상
+      snomed: null
+    - code: p
+      label: 병리
+      snomed: null
+    - code: yc
+      label: 선행치료 후 임상
+      snomed: null
+    - code: yp
+      label: 선행치료 후 병리
+      snomed: null
+    - code: r
+      label: 재병기
+      snomed: null
+  STAGE_GROUP_AJCC8:
+    kor: AJCC 8판 병기군
+    standard: SNOMED 1222802001 (IIIA 확인됨) 등 qualifier 계열 · OMOP Cancer Modifier
+    note: 값별 SNOMED ID 는 2단계에서 용어 서버로 일괄 확인
+    values:
+    - code: '0'
+      label: '0'
+      snomed: null
+    - code: IA
+      label: IA
+      snomed: null
+    - code: IA1
+      label: IA1
+      snomed: null
+    - code: IA2
+      label: IA2
+      snomed: null
+    - code: IA3
+      label: IA3
+      snomed: null
+    - code: IB
+      label: IB
+      snomed: null
+    - code: IIA
+      label: IIA
+      snomed: null
+    - code: IIB
+      label: IIB
+      snomed: null
+    - code: IIIA
+      label: IIIA
+      snomed: null
+    - code: IIIB
+      label: IIIB
+      snomed: null
+    - code: IIIC
+      label: IIIC
+      snomed: null
+    - code: IVA
+      label: IVA
+      snomed: null
+    - code: IVB
+      label: IVB
+      snomed: null
+    - code: IVC
+      label: IVC
+      snomed: null
+    - code: IV
+      label: IV
+      snomed: null
+  STAGE_LUGANO:
+    kor: Lugano/Ann Arbor 병기
+    standard: SNOMED (일부) · 자체
+    note: null
+    values:
+    - code: I
+      label: I
+      snomed: null
+    - code: IE
+      label: IE
+      snomed: null
+    - code: II
+      label: II
+      snomed: null
+    - code: IIE
+      label: IIE
+      snomed: null
+    - code: II
+      label: bulky
+      snomed: null
+    - code: III
+      label: III
+      snomed: null
+    - code: IV
+      label: IV
+      snomed: null
+  STAGE_MODIFIER:
+    kor: 병기 수식자
+    standard: 자체
+    note: null
+    values:
+    - code: A
+      label: A
+      snomed: null
+    - code: B
+      label: B
+      snomed: null
+    - code: E
+      label: E
+      snomed: null
+    - code: S
+      label: S
+      snomed: null
+    - code: X
+      label: X
+      snomed: null
+  TNM_T:
+    kor: T
+    standard: SNOMED (T category qualifier)
+    note: 질환별 허용값 부분집합
+    values:
+    - code: TX
+      label: TX
+      snomed: null
+    - code: T0
+      label: T0
+      snomed: null
+    - code: Tis
+      label: Tis
+      snomed: null
+    - code: T1
+      label: T1
+      snomed: null
+    - code: T1a
+      label: T1a
+      snomed: null
+    - code: T1b
+      label: T1b
+      snomed: null
+    - code: T1c
+      label: T1c
+      snomed: null
+    - code: T2
+      label: T2
+      snomed: null
+    - code: T2a
+      label: T2a
+      snomed: null
+    - code: T2b
+      label: T2b
+      snomed: null
+    - code: T3
+      label: T3
+      snomed: null
+    - code: T4
+      label: T4
+      snomed: null
+    - code: T4a
+      label: T4a
+      snomed: null
+    - code: T4b
+      label: T4b
+      snomed: null
+  TNM_N:
+    kor: N
+    standard: SNOMED
+    note: null
+    values:
+    - code: NX
+      label: NX
+      snomed: null
+    - code: N0
+      label: N0
+      snomed: null
+    - code: N1
+      label: N1
+      snomed: null
+    - code: N1a
+      label: N1a
+      snomed: null
+    - code: N1b
+      label: N1b
+      snomed: null
+    - code: N1c
+      label: N1c
+      snomed: null
+    - code: N2
+      label: N2
+      snomed: null
+    - code: N2a
+      label: N2a
+      snomed: null
+    - code: N2b
+      label: N2b
+      snomed: null
+    - code: N3
+      label: N3
+      snomed: null
+  TNM_M:
+    kor: M
+    standard: SNOMED
+    note: null
+    values:
+    - code: MX
+      label: MX
+      snomed: null
+    - code: M0
+      label: M0
+      snomed: null
+    - code: M1
+      label: M1
+      snomed: null
+    - code: M1a
+      label: M1a
+      snomed: null
+    - code: M1b
+      label: M1b
+      snomed: null
+    - code: M1c
+      label: M1c
+      snomed: null
+  ECOG:
+    kor: ECOG 활동능력
+    standard: SNOMED 422894000 (grade 2 확인됨), 0~5 계열
+    note: null
+    values:
+    - code: '0'
+      label: '0'
+      snomed: null
+    - code: '1'
+      label: '1'
+      snomed: null
+    - code: '2'
+      label: '2'
+      snomed: null
+    - code: '3'
+      label: '3'
+      snomed: null
+    - code: '4'
+      label: '4'
+      snomed: null
+    - code: '5'
+      label: '5'
+      snomed: null
+  RESPONSE_CRITERIA:
+    kor: 반응평가 기준
+    standard: 자체
+    note: null
+    values:
+    - code: RECIST
+      label: '1.1'
+      snomed: null
+    - code: iRECIST
+      label: iRECIST
+      snomed: null
+    - code: Lugano
+      label: '2014'
+      snomed: null
+    - code: Cheson
+      label: '2007'
+      snomed: null
+    - code: Deauville
+      label: Deauville
+      snomed: null
+    - code: RCB
+      label: RCB
+      snomed: null
+    - code: pCR
+      label: pCR
+      snomed: null
+    - code: mRECIST
+      label: mRECIST
+      snomed: null
+    - code: 기타
+      label: 기타
+      snomed: null
+  RESPONSE:
+    kor: 반응 판정
+    standard: SNOMED (partial remission 등 일부) · 자체
+    note: RECIST 값은 SNOMED 미확인
+    values:
+    - code: CR
+      label: CR
+      snomed: null
+    - code: PR
+      label: PR
+      snomed: null
+    - code: SD
+      label: SD
+      snomed: null
+    - code: PD
+      label: PD
+      snomed: null
+    - code: NE
+      label: NE
+      snomed: null
+  DEAUVILLE:
+    kor: Deauville 5점
+    standard: SNOMED 708896007 (척도) · 값별 확인 필요
+    note: null
+    values:
+    - code: '1'
+      label: '1'
+      snomed: null
+    - code: '2'
+      label: '2'
+      snomed: null
+    - code: '3'
+      label: '3'
+      snomed: null
+    - code: '4'
+      label: '4'
+      snomed: null
+    - code: '5'
+      label: '5'
+      snomed: null
+    - code: X
+      label: X
+      snomed: null
+  RCB_CLASS:
+    kor: RCB 등급
+    standard: SNOMED 1407080009 계열 (class 1 = 1407083006 확인됨)
+    note: null
+    values:
+    - code: '0'
+      label: (pCR)
+      snomed: null
+    - code: I
+      label: I
+      snomed: null
+    - code: II
+      label: II
+      snomed: null
+    - code: III
+      label: III
+      snomed: null
+  CTCAE_GRADE:
+    kor: CTCAE 등급
+    standard: CTCAE v5 (OMOP 어휘 CTCAE) · SNOMED 없음
+    note: null
+    values:
+    - code: '1'
+      label: '1'
+      snomed: null
+    - code: '2'
+      label: '2'
+      snomed: null
+    - code: '3'
+      label: '3'
+      snomed: null
+    - code: '4'
+      label: '4'
+      snomed: null
+    - code: '5'
+      label: '5'
+      snomed: null
+  AE_CAUSALITY:
+    kor: 인과성
+    standard: WHO-UMC
+    note: 현 명세 유지
+    values:
+    - code: 확실
+      label: 확실
+      snomed: null
+    - code: '2'
+      label: 상당히 확실
+      snomed: null
+    - code: 가능
+      label: 가능
+      snomed: null
+    - code: '4'
+      label: 가능성 적음
+      snomed: null
+    - code: '5'
+      label: 평가 불가
+      snomed: null
+    - code: '6'
+      label: 관련 없음
+      snomed: null
+  AE_SERIOUSNESS:
+    kor: 중대성
+    standard: ICH E2A
+    note: null
+    values:
+    - code: 사망
+      label: 사망
+      snomed: null
+    - code: '2'
+      label: 생명 위협
+      snomed: null
+    - code: 입원·연장
+      label: 입원·연장
+      snomed: null
+    - code: 장애
+      label: 장애
+      snomed: null
+    - code: '5'
+      label: 선천 기형
+      snomed: null
+    - code: '6'
+      label: 기타 중요
+      snomed: null
+  YN:
+    kor: 예/아니오
+    standard: SNOMED (yes/no/unknown)
+    note: 모름 허용 여부 결정
+    values:
+    - code: '1'
+      label: 예
+      snomed: null
+    - code: '0'
+      label: 아니오
+      snomed: null
+    - code: '9'
+      label: 모름
+      snomed: null
+  FAMILY_RELATION:
+    kor: 가족 관계
+    standard: SNOMED family member 계열
+    note: null
+    values:
+    - code: 부
+      label: 부
+      snomed: null
+    - code: 모
+      label: 모
+      snomed: null
+    - code: 형제
+      label: 형제
+      snomed: null
+    - code: 자매
+      label: 자매
+      snomed: null
+    - code: 자녀
+      label: 자녀
+      snomed: null
+    - code: 조부모
+      label: 조부모
+      snomed: null
+    - code: '7'
+      label: 기타 2촌 이내
+      snomed: null
+    - code: '8'
+      label: 3촌 이상
+      snomed: null
+  DISCHARGE_STATUS:
+    kor: 퇴원 시 상태
+    standard: SNOMED discharge disposition
+    note: VISIT_OCCURRENCE discharge_to_concept_id
+    values:
+    - code: 호전
+      label: 호전
+      snomed: null
+    - code: 미호전
+      label: 미호전
+      snomed: null
+    - code: 사망
+      label: 사망
+      snomed: null
+    - code: 전원
+      label: 전원
+      snomed: null
+    - code: '5'
+      label: 자의 퇴원
+      snomed: null
+    - code: 기타
+      label: 기타
+      snomed: null
+  SMOKING_STATUS:
+    kor: 흡연 상태
+    standard: SNOMED 77176002/8517006/266919005
+    note: null
+    values:
+    - code: 현재
+      label: 현재
+      snomed: null
+    - code: 과거
+      label: 과거
+      snomed: null
+    - code: 비흡연
+      label: 비흡연
+      snomed: null
+  SURG_PURPOSE:
+    kor: 수술 목적
+    standard: 자체
+    note: null
+    values:
+    - code: 근치
+      label: 근치
+      snomed: null
+    - code: 고식
+      label: 고식
+      snomed: null
+    - code: 진단
+      label: 진단
+      snomed: null
+    - code: 예방
+      label: 예방
+      snomed: null
+    - code: 재건
+      label: 재건
+      snomed: null
+    - code: 이식
+      label: 이식
+      snomed: null
+  SURG_APPROACH:
+    kor: 수술 접근
+    standard: SNOMED approach
+    note: null
+    values:
+    - code: 개복
+      label: 개복
+      snomed: null
+    - code: 복강경
+      label: 복강경
+      snomed: null
+    - code: 로봇
+      label: 로봇
+      snomed: null
+    - code: 흉강경
+      label: 흉강경
+      snomed: null
+    - code: 내시경
+      label: 내시경
+      snomed: null
+    - code: 전환(비개복→개복)
+      label: 전환(비개복→개복)
+      snomed: null
+  RT_PURPOSE:
+    kor: 방사선 목적
+    standard: 자체
+    note: null
+    values:
+    - code: 근치
+      label: 근치
+      snomed: null
+    - code: 보조
+      label: 보조
+      snomed: null
+    - code: 선행
+      label: 선행
+      snomed: null
+    - code: 고식
+      label: 고식
+      snomed: null
+    - code: 예방적
+      label: 예방적
+      snomed: null
+  BIOMARKER_RESULT:
+    kor: 바이오마커 정성 결과
+    standard: SNOMED (positive/negative/equivocal)
+    note: 정량은 값+단위
+    values:
+    - code: 양성
+      label: 양성
+      snomed: null
+    - code: 음성
+      label: 음성
+      snomed: null
+    - code: 불명확
+      label: 불명확
+      snomed: null
+    - code: 미시행
+      label: 미시행
+      snomed: null
+    - code: '5'
+      label: 부적절 검체
+      snomed: null
+  BIRADS_DENSITY:
+    kor: 유방 밀도
+    standard: SNOMED BI-RADS density
+    note: null
+    values:
+    - code: A
+      label: A
+      snomed: null
+    - code: B
+      label: B
+      snomed: null
+    - code: C
+      label: C
+      snomed: null
+    - code: D
+      label: D
+      snomed: null
+  FIBROSIS_STAGE:
+    kor: 섬유화 병기 (NASH CRN)
+    standard: 자체 (SNOMED METAVIR 일부)
+    note: null
+    values:
+    - code: F0
+      label: F0
+      snomed: null
+    - code: F1
+      label: F1
+      snomed: null
+    - code: F1a
+      label: F1a
+      snomed: null
+    - code: F1b
+      label: F1b
+      snomed: null
+    - code: F1c
+      label: F1c
+      snomed: null
+    - code: F2
+      label: F2
+      snomed: null
+    - code: F3
+      label: F3
+      snomed: null
+    - code: F4
+      label: F4
+      snomed: null
+  NAS_STEATOSIS:
+    kor: 지방증 등급
+    standard: 자체
+    note: 소엽 염증 0~3, 풍선변성 0~2 별도
+    values:
+    - code: '0'
+      label: '0'
+      snomed: null
+    - code: '1'
+      label: '1'
+      snomed: null
+    - code: '2'
+      label: '2'
+      snomed: null
+    - code: '3'
+      label: '3'
+      snomed: null
+  CHILD_PUGH:
+    kor: Child-Pugh
+    standard: SNOMED
+    note: null
+    values:
+    - code: A
+      label: A
+      snomed: null
+    - code: B
+      label: B
+      snomed: null
+    - code: C
+      label: C
+      snomed: null
+  CKD_STAGE:
+    kor: CKD 병기
+    standard: SNOMED
+    note: null
+    values:
+    - code: G1
+      label: G1
+      snomed: null
+    - code: G2
+      label: G2
+      snomed: null
+    - code: G3a
+      label: G3a
+      snomed: null
+    - code: G3b
+      label: G3b
+      snomed: null
+    - code: G4
+      label: G4
+      snomed: null
+    - code: G5
+      label: G5
+      snomed: null
+  DR_SEVERITY:
+    kor: 당뇨망막병증 등급
+    standard: SNOMED
+    note: null
+    values:
+    - code: 없음
+      label: 없음
+      snomed: null
+    - code: '2'
+      label: 경증 NPDR
+      snomed: null
+    - code: '3'
+      label: 중등도 NPDR
+      snomed: null
+    - code: '4'
+      label: 중증 NPDR
+      snomed: null
+    - code: PDR
+      label: PDR
+      snomed: null
+  WAGNER:
+    kor: Wagner 등급
+    standard: SNOMED
+    note: null
+    values:
+    - code: '0'
+      label: '0'
+      snomed: null
+    - code: '1'
+      label: '1'
+      snomed: null
+    - code: '2'
+      label: '2'
+      snomed: null
+    - code: '3'
+      label: '3'
+      snomed: null
+    - code: '4'
+      label: '4'
+      snomed: null
+    - code: '5'
+      label: '5'
+      snomed: null
+  DM_TYPE:
+    kor: 당뇨병 유형
+    standard: SNOMED/KCD
+    note: null
+    values:
+    - code: 1형
+      label: 1형
+      snomed: null
+    - code: 2형
+      label: 2형
+      snomed: null
+    - code: 임신성
+      label: 임신성
+      snomed: null
+    - code: '4'
+      label: 기타 특정형
+      snomed: null
+    - code: 미분류
+      label: 미분류
+      snomed: null
+  RISK_GROUP:
+    kor: 예후지수 위험군
+    standard: 자체
+    note: IPI/FLIPI/MIPI 공통
+    values:
+    - code: 저위험
+      label: 저위험
+      snomed: null
+    - code: 저중간
+      label: 저중간
+      snomed: null
+    - code: 고중간
+      label: 고중간
+      snomed: null
+    - code: 고위험
+      label: 고위험
+      snomed: null
+  SCT_TYPE:
+    kor: 조혈모세포이식 유형
+    standard: SNOMED
+    note: null
+    values:
+    - code: 자가
+      label: 자가
+      snomed: null
+    - code: '2'
+      label: 동종 형제
+      snomed: null
+    - code: '3'
+      label: 동종 비혈연
+      snomed: null
+    - code: 반일치
+      label: 반일치
+      snomed: null
+    - code: 제대혈
+      label: 제대혈
+      snomed: null
+  ANTP_THERAPY.treatment_intent_type:
+    kor: treatment_intent_type
+    standard: null
+    note: v1 내장 코드표
+    values:
+    - code: '1'
+      label: Neoadjuvant
+      snomed: null
+    - code: '2'
+      label: Adjuvant
+      snomed: null
+    - code: '3'
+      label: Palliative
+      snomed: null
+    - code: '4'
+      label: Maintenance
+      snomed: null
+    - code: '5'
+      label: Definitive
+      snomed: null
+    - code: '6'
+      label: Salvage
+      snomed: null
+  ANTP_THERAPY.drug_category:
+    kor: drug_category
+    standard: null
+    note: v1 내장 코드표
+    values:
+    - code: '1'
+      label: 세포독성항암제
+      snomed: null
+    - code: '2'
+      label: 표적치료제
+      snomed: null
+    - code: '3'
+      label: 호르몬치료제
+      snomed: null
+    - code: '4'
+      label: 항체-약물 접합체
+      snomed: null
+    - code: '5'
+      label: 면역항암제
+      snomed: null
+    - code: '6'
+      label: 기타
+      snomed: null
+  common:
+    COMMON.yn01:
+      '1': 'Yes'
+      '0': 'No'
+  omop:
+    OMOP.gender_concept_id:
+      '8507': MALE
+      '8532': FEMALE
+    OMOP.visit_concept_id:
+      '9201': Inpatient Visit
+      '9202': Outpatient Visit
+      '9203': Emergency Room Visit
+      '262': Emergency Room and Inpatient Visit
+    OMOP.visit_type_concept_id:
+      '32817': EHR
+      '32879': Registry
+      '32810': Claim
+    OMOP.procedure_type_concept_id:
+      '32817': EHR
+      '32879': Registry
+      '32810': Claim
+    OMOP.condition_type_concept_id:
+      '32817': EHR
+      '32879': Registry
+      '32810': Claim
+      '32840': EHR problem list
+    OMOP.measurement_type_concept_id:
+      '32817': EHR
+      '32856': Lab
+      '32879': Registry
+    OMOP.observation_type_concept_id:
+      '32817': EHR
+      '32879': Registry
+    OMOP.note_type_concept_id:
+      '32817': EHR
+      '44814637': Radiology report
+      '44814640': Pathology report
+      '44814641': Discharge summary
+      '44814645': Outpatient note
+      '32831': EHR note
+    OMOP.note_class_concept_id:
+      '36716164': Radiology note
+      '36716165': Pathology note
+      '36716213': Discharge summary
+      '36716177': Progress note
+      '44814641': Discharge summary
+      '3040218': Oncology note
+    OMOP.adverse_event_type_concept_id:
+      '32817': EHR
+      '32879': Registry
+    OMOP.amount_unit_concept_id:
+      '8576': mg
+      '8587': mL
+      '9655': ug
+      '8510': unit
+      '8718': IU
+      '9551': mg/m2
+      '8504': mg/kg
+      '8573': mmol
+    OMOP.unit_concept_id:
+      '8576': mg
+      '8587': mL
+      '8840': mg/dL
+      '8753': mmol/L
+      '8554': '%'
+      '8645': U/L
+      '8848': 10^3/uL
+      '8961': 10^3/mm3
+      '8582': cm
+      '9529': kg
+      '9531': kg/m2
+      '8876': mmHg
+      '8713': g/dL
+      '8555': ng/mL
+      '8847': 10^6/uL
+      '8629': ug/L
+      '8749': umol/L
+      '9550': mL/min/1.73m2
+      '8636': ng/mL
+      '8859': mg/L
+      '9435': ug/dL
+      '8641': mIU/mL
+    OMOP.numerator_unit_concept_id:
+      '8576': mg
+      '9655': ug
+      '8718': IU
+      '8510': unit
+    OMOP.denominator_unit_concept_id:
+      '8587': mL
+      '8576': mg
+      '8582': cm
+      '9529': kg
+    OMOP.severity_concept_id:
+      '1': CTCAE Grade 1
+      '2': CTCAE Grade 2
+      '3': CTCAE Grade 3
+      '4': CTCAE Grade 4
+      '5': CTCAE Grade 5
+    OMOP.causality_concept_id:
+      '1': Certain
+      '2': Probable
+      '3': Possible
+      '4': Unlikely
+      '5': Unrelated
+      '6': Unassessable
+    OMOP.seriousness_concept_id:
+      '1': Death
+      '2': Life-threatening
+      '3': Hospitalization
+      '4': Disability
+      '5': Congenital anomaly
+      '6': Other medically important
+    OMOP.outcome_concept_id:
+      '1': Recovered
+      '2': Recovering
+      '3': Not recovered
+      '4': Recovered with sequelae
+      '5': Fatal
+      '6': Unknown
+    OMOP.action_taken_concept_id:
+      '1': None
+      '2': Dose reduced
+      '3': Interrupted
+      '4': Withdrawn
+      '5': Not applicable
+      '6': Unknown
+  CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE:
+    kor: CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_ANASTOMOSIS_METHOD:
+    kor: CL_ANASTOMOSIS_METHOD
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_BALLOONING_GRADE:
+    kor: CL_BALLOONING_GRADE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_BIOPSY_ADEQUACY:
+    kor: CL_BIOPSY_ADEQUACY
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_BIOPSY_DIFFERENTIATION:
+    kor: CL_BIOPSY_DIFFERENTIATION
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_BIOPSY_LATERALITY:
+    kor: CL_BIOPSY_LATERALITY
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_BIOPSY_METHOD:
+    kor: CL_BIOPSY_METHOD
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_BIOPSY_SITE:
+    kor: CL_BIOPSY_SITE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_BIOPSY_SITE_DETAIL:
+    kor: CL_BIOPSY_SITE_DETAIL
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_CELL_LINEAGE:
+    kor: CL_CELL_LINEAGE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_CLINICAL_TUMOR_FEATURE:
+    kor: CL_CLINICAL_TUMOR_FEATURE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_COMPLICATION_TREATMENT:
+    kor: CL_COMPLICATION_TREATMENT
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_CONCEPTION_METHOD:
+    kor: CL_CONCEPTION_METHOD
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_CRM_STATUS:
+    kor: CL_CRM_STATUS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_DCIS_NUCLEAR_GRADE:
+    kor: CL_DCIS_NUCLEAR_GRADE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_DIAGNOSIS_STATUS:
+    kor: CL_DIAGNOSIS_STATUS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_DIAGNOSIS_SUBTYPE:
+    kor: CL_DIAGNOSIS_SUBTYPE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_DISTANT_METASTASIS_SITE:
+    kor: CL_DISTANT_METASTASIS_SITE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_EXTRANODAL_SITES:
+    kor: CL_EXTRANODAL_SITES
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_FERTILITY_PRESERVATION_TYPE:
+    kor: CL_FERTILITY_PRESERVATION_TYPE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_GROSS_TYPE:
+    kor: CL_GROSS_TYPE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_HISTOLOGIC_SUBTYPE:
+    kor: CL_HISTOLOGIC_SUBTYPE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_IMAGING_DIAGNOSTIC_CLASSIFICATION:
+    kor: CL_IMAGING_DIAGNOSTIC_CLASSIFICATION
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_IMA_LIGATION_LEVEL:
+    kor: CL_IMA_LIGATION_LEVEL
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_INVASION_DEPTH:
+    kor: CL_INVASION_DEPTH
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_LOBULAR_INFLAMMATION_GRADE:
+    kor: CL_LOBULAR_INFLAMMATION_GRADE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_LYMPHOMA_CATEGORY:
+    kor: CL_LYMPHOMA_CATEGORY
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MARITAL_STATUS_DETAIL:
+    kor: CL_MARITAL_STATUS_DETAIL
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MASLD_DIAGNOSIS_BASIS:
+    kor: CL_MASLD_DIAGNOSIS_BASIS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS:
+    kor: CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MENSES_REGULARITY_AFTER_CHEMO:
+    kor: CL_MENSES_REGULARITY_AFTER_CHEMO
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MRI_ANTERIOR_PERITONEAL_RELATION:
+    kor: CL_MRI_ANTERIOR_PERITONEAL_RELATION
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MRI_CIRCUMFERENTIAL_EXTENT:
+    kor: CL_MRI_CIRCUMFERENTIAL_EXTENT
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MRI_CIRCUMFERENTIAL_LOCATION:
+    kor: CL_MRI_CIRCUMFERENTIAL_LOCATION
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MRI_T4B_INVADED_ORGAN:
+    kor: CL_MRI_T4B_INVADED_ORGAN
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_MRI_TUMOR_REGRESSION_GRADE:
+    kor: CL_MRI_TUMOR_REGRESSION_GRADE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_NODULE_RADIOLOGIC_TYPE:
+    kor: CL_NODULE_RADIOLOGIC_TYPE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_PERITONEAL_CYTOLOGY_RESULT:
+    kor: CL_PERITONEAL_CYTOLOGY_RESULT
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_PREGNANCY_OUTCOME:
+    kor: CL_PREGNANCY_OUTCOME
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_PRIMARY_INVOLVED_SITE:
+    kor: CL_PRIMARY_INVOLVED_SITE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_PRIMARY_SIDEDNESS:
+    kor: CL_PRIMARY_SIDEDNESS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_PRIMARY_SITE:
+    kor: CL_PRIMARY_SITE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_RESECTION_COMPLETENESS:
+    kor: CL_RESECTION_COMPLETENESS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_RESECTION_MARGIN_STATUS:
+    kor: CL_RESECTION_MARGIN_STATUS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_RESIDUAL_TUMOR_R_CLASS:
+    kor: CL_RESIDUAL_TUMOR_R_CLASS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_STAGING_METHOD:
+    kor: CL_STAGING_METHOD
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_STOMA_REASON:
+    kor: CL_STOMA_REASON
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_SURGICAL_HISTOLOGIC_GRADE:
+    kor: CL_SURGICAL_HISTOLOGIC_GRADE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_SURGICAL_SPECIMEN_LATERALITY:
+    kor: CL_SURGICAL_SPECIMEN_LATERALITY
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_SURGICAL_SPECIMEN_SITE:
+    kor: CL_SURGICAL_SPECIMEN_SITE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_TME_QUALITY:
+    kor: CL_TME_QUALITY
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_TUMOR_BUDDING_GRADE:
+    kor: CL_TUMOR_BUDDING_GRADE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_VPI_GRADE:
+    kor: CL_VPI_GRADE
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []
+  CL_WATCH_AND_WAIT_STATUS:
+    kor: CL_WATCH_AND_WAIT_STATUS
+    standard: null
+    note: 값 집합 미정의 · 2.1 에서 채움
+    values: []

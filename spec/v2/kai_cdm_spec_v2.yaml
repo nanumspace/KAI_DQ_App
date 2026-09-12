@@ -1,0 +1,7297 @@
+meta:
+  name: K-AI 질환별 코호트 CDM 명세
+  version: 2.0.0-draft
+  source: 배치표_v0_20260912.xlsx
+  generated_by: spec/build_spec_v2.py
+  generated_at: '2026-09-12'
+  principles:
+  - 한 테이블 = 행 단위 하나
+  - 코어 8개(+DEATH)가 검사·약물·시술·진단·방문·사망의 유일한 원천
+  - 확장 표에 코어 컬럼 복사 금지, FK 로만 연결
+  - 닫힌 범주는 사업단 코드표에서 선택, 명세가 표준 매핑 보유
+  - tier 는 완전성 규칙의 근거, required 는 키·사건일에만
+layers:
+  core:
+  - PERSON
+  - DEATH
+  - VISIT_OCCURRENCE
+  - CONDITION_OCCURRENCE
+  - PROCEDURE_OCCURRENCE
+  - DRUG_EXPOSURE
+  - MEASUREMENT
+  - OBSERVATION
+  - NOTE
+  common:
+  - COHORT_INDEX
+  - STAGING
+  - PATHOLOGY_REPORT
+  - PATHOLOGY_TUMOR
+  - BIOMARKER
+  - SURGERY
+  - RADIOTHERAPY
+  - ANTP_THERAPY
+  - RESPONSE_ASSESSMENT
+  - ADVERSE_EVENT
+  - FAMILY_HISTORY
+  disease:
+  - LUNG_EXAM
+  - BREAST_BASELINE
+  - BREAST_EXAM
+  - COLORECTAL_EXAM
+  - COLORECTAL_SURGERY_DETAIL
+  - MASLD_EXAM
+  - MASLD_ASSESSMENT
+  - MASLD_EVENT
+  - DIABETES_BASELINE
+  - DIABETES_EVENT
+  - LYMPHOMA_ASSESSMENT
+  - LYMPHOMA_EVENT
+  - LYMPHOMA_EXAM
+tables:
+  PERSON:
+    name: PERSON
+    layer: 코어
+    kor: 환자
+    grain: 환자 1
+    pk: person_id
+    parent: null
+    desc: OMOP 표준. 성별·출생연도·코호트 index 나이
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: person_id
+      kor: person_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: PK
+      standard: OMOP
+      desc: 개인에 대한 고유 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: gender_concept_id
+      kor: gender_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.gender_concept_id
+      standard: OMOP
+      desc: 성별 정보를 나타내는 표준 Concept 식별자이다. CONCEPT 테이블을 참조하며, 성별 정보를 표준화된 형태로 관리하기 위해 사용된다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: year_of_birth
+      kor: year_of_birth
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      range:
+      - 1900
+      - 2026
+      desc: 출생 연도이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: month_of_birth
+      kor: month_of_birth
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - 1
+      - 12
+      desc: 출생 월이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: day_of_birth
+      kor: day_of_birth
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - 1
+      - 31
+      desc: 출생 일이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: age_at_index
+      kor: age_at_index
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      range:
+      - 0
+      - 110
+      desc: 인덱스 날짜(index date) 기준 대상자의 만 나이이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: care_site_id
+      kor: care_site_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: FK_EXTERNAL
+      ref: CARE_SITE
+      standard: OMOP
+      desc: CARE_SITE 테이블에서 참조된 PERSON의 주요 진료소를 나타내는 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: observation_period_start_date
+      kor: observation_period_start_date
+      type: date
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      desc: 해당 대상자에 대해 데이터 수집이 가능하다고 판단되는 관찰기간의 시작일이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+  DEATH:
+    name: DEATH
+    layer: 코어
+    kor: 사망
+    grain: 환자 1
+    pk: person_id
+    parent: PERSON
+    desc: OMOP 표준. 사망일·사망 원인 concept. 현 명세의 death_date 를 여기로 분리
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: person_id
+      kor: 사망 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: death_date
+      kor: 사망일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      standard: OMOP DEATH
+      desc: v1 PERSON.death_date 를 이관
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - PERSON.death_date
+    - name: death_type_concept_id
+      kor: 사망 정보 출처
+      type: integer
+      value_kind: 열린 표준 코드
+      tier: 권고
+      standard: OMOP DEATH
+      desc: OMOP type concept
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: cause_concept_id
+      kor: 사망 원인 concept
+      type: integer
+      value_kind: 열린 표준 코드
+      tier: 권고
+      standard: OMOP DEATH
+      desc: SNOMED
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: cause_source_value
+      kor: 사망 원인 원천값
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 권고
+      standard: OMOP DEATH
+      desc: KCD 등
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+  VISIT_OCCURRENCE:
+    name: VISIT_OCCURRENCE
+    layer: 코어
+    kor: 방문
+    grain: 방문 1
+    pk: visit_occurrence_id
+    parent: PERSON
+    desc: 입·퇴원일, 방문 유형, 퇴원 시 상태(discharge_to)
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: visit_occurrence_id
+      kor: visit_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: PK
+      standard: OMOP
+      desc: 개인의 의료기관 방문 또는 진료 에피소드를 고유하게 식별하기 위한 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: person_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: FK
+      ref: PERSON.person_id
+      standard: OMOP
+      desc: 방문이 기록된 사람에 대한 외래키 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_concept_id
+      kor: visit_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.visit_concept_id
+      standard: OMOP
+      desc: 방문 유형을 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Visit Domain Concept을 참조하는 외래키(Foreign Key)이다. 예) 외래 = 00000000
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_start_date
+      kor: visit_start_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 방문 시작 날짜이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_end_date
+      kor: visit_end_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 방문 종료 날짜이다. 다만 아래의 경우 visit_start_date와 visit_ end_date를 동일하게 입력한다. 1. 방문이 동일한 날짜에 이루어진 경우  2. 퇴원일을 확인하기 어려운 경우
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_type_concept_id
+      kor: visit_type_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.visit_type_concept_id
+      standard: OMOP
+      desc: 방문 기록이 생성된 원천 데이터의 유형을 나타내는 표준 Concept 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: discharge_to_concept_id
+      kor: 퇴원 시 상태
+      type: integer
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: DISCHARGE_STATUS
+      standard: OMOP discharge_to
+      desc: 자문 항목 '퇴원 시 환자 상태'
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      also:
+      - 퇴원 시 환자 상태
+  CONDITION_OCCURRENCE:
+    name: CONDITION_OCCURRENCE
+    layer: 코어
+    kor: 진단
+    grain: 진단 1
+    pk: condition_occurrence_id
+    parent: VISIT
+    desc: 코호트 정의 진단, 과거력, 동반질환, 합병증 진단. 원발 부위·편측성은 modifier 로
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: condition_occurrence_id
+      kor: condition_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: PK
+      standard: OMOP
+      desc: 질환 발생 이벤트에 대한고유 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_occurrence_id
+      kor: visit_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      standard: OMOP
+      desc: 해당 질환이 확인된 방문 기록을 참조하는 식별자로, VISIT_OCCURRENCE 테이블을 참조하는 외래키(Foreign Key)이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: person_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: FK
+      ref: PERSON.person_id
+      standard: OMOP
+      desc: 질환에 대한 조건이 기록된 사람에 대한 외래키 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: condition_concept_id
+      kor: condition_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 질환 상태를 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Condition Domain Concept을 참조하는 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: condition_start_date
+      kor: condition_start_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 질환 발생의 시작 날짜이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: condition_type_concept_id
+      kor: condition_type_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.condition_type_concept_id
+      standard: OMOP
+      desc: 질환 정보가 기록된 원천 데이터의 유형, 표준화 수준 및 발생 유형을 나타내는 표준 Concept 식별자이다. 질환 기록의 출처와 생성 방식을 구분하기 위해 사용된다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+  PROCEDURE_OCCURRENCE:
+    name: PROCEDURE_OCCURRENCE
+    layer: 코어
+    kor: 시술·검사 시행
+    grain: 시술 1
+    pk: procedure_occurrence_id
+    parent: VISIT
+    desc: 영상검사·내시경·수술·방사선의 시행 사실(EDI 코드). 구조화된 세부는 확장 표
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: procedure_occurrence_id
+      kor: procedure_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: PK
+      standard: OMOP
+      desc: 각 처치 발생에 대한 고유 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_occurrence_id
+      kor: visit_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      standard: OMOP
+      desc: 처치가 수행된 방문 기록을 참조하는 식별자로, VISIT_OCCURRENCE 테이블을 참조하는 외래키(Foreign Key)이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: person_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: FK
+      ref: PERSON.person_id
+      standard: OMOP
+      desc: 처치를 받은 사람에 대한 외래키 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: procedure_concept_id
+      kor: procedure_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 처치를 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Procedure Domain Concept을 참조하는 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: procedure_date
+      kor: procedure_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 처치가 수행된 날짜이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: procedure_type_concept_id
+      kor: procedure_type_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.procedure_type_concept_id
+      standard: OMOP
+      desc: 처치 기록이 생성된 원천 데이터의 유형을 나타내는 표준 Concept 식별자이다. 표준 용어체계의 Concept을 참조하며, 해당 정보의 출처와 생성 방식을 구분하기 위해 사용된다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+  DRUG_EXPOSURE:
+    name: DRUG_EXPOSURE
+    layer: 코어
+    kor: 약물
+    grain: 처방 1
+    pk: drug_exposure_id
+    parent: VISIT
+    desc: 개별 약제. 약물 계열 사용 여부·항암 사이클은 여기서 파생
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: drug_exposure_id
+      kor: drug_exposure_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: PK
+      standard: OMOP
+      desc: 약물 사용 이벤트에 대한 고유 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_occurrence_id
+      kor: visit_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      standard: OMOP
+      desc: 약물 투여가 시작된 방문 기록을 참조하는 식별자로, VISIT_OCCURRENCE 테이블을 참조하는 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: person_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: FK
+      ref: PERSON.person_id
+      standard: OMOP
+      desc: 약물을 섭취한 사람에 대한 외래키 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: antp_id
+      kor: antp_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      key: FK
+      ref: ANTP_THERAPY.antp_id
+      standard: OMOP
+      desc: ANTP 테이블과 연결되는 외래키 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: note_id
+      kor: note_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      key: FK
+      ref: NOTE.note_id
+      standard: OMOP
+      desc: 노트에 대한 고유 식별자이다. AI 학습용 의약품의 화학 구조식 (Smiles code)은 Note 레코드로 매핑한다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: drug_concept_id
+      kor: drug_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 약물 정보를 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Drug Domain Concept을 참조하는 외래키(Foreign Key)이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: drug_exposure_start_date
+      kor: drug_exposure_start_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 약물 사용 시작 날짜이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: drug_exposure_end_date
+      kor: drug_exposure_end_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 약물 사용 종료 날짜이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: days_supply
+      kor: days_supply
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - 0
+      - 400
+      desc: 약물의 총 처방 일수이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: amount_unit_concept_id
+      kor: amount_unit_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      codelist: OMOP.amount_unit_concept_id
+      standard: OMOP
+      desc: 약물의 용량 단위를 나타내는 concept ID 이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: amount_value
+      kor: amount_value
+      type: float
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - 0
+      - 100000
+      desc: 약물의 단일 용량 값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: quantity
+      kor: quantity
+      type: float
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - 0
+      - 100000
+      desc: '원처방·조제·투여 기록에 기재된 약물의 양(정제 등: 개수, 액제: 투여·조제 총량, 주사 등: 투여된 성분량)이다.'
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: numerator_value
+      kor: numerator_value
+      type: float
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      desc: 분자 함량 값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: numerator_unit_concept_id
+      kor: numerator_unit_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      codelist: OMOP.numerator_unit_concept_id
+      standard: OMOP
+      desc: 분자 함량 측정 단위를 나타내는 concept_id 이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: denominator_value
+      kor: denominator_value
+      type: float
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      desc: 분모 함량 값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: denominator_unit_concept_id
+      kor: denominator_unit_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      codelist: OMOP.denominator_unit_concept_id
+      standard: OMOP
+      desc: 분모 함량 측정 단위를 나타내는 concept_id 이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: frequency_per_day
+      kor: frequency_per_day
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - 1
+      - 24
+      desc: 1일 투여 횟수를 나타낸다. 매일 투여하는 경우 days_supply 값이 반드시 입력되어야 한다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: dosing_interval_day
+      kor: dosing_interval_day
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - 1
+      - 180
+      desc: 투여 간격(일)을 나타낸다. 투여 간격이 1일을 초과하는 경우 dosing_number 값이 반드시 입력되어야 한다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: dosing_number
+      kor: dosing_number
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - 1
+      - 500
+      desc: 총 투여 횟수이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+  MEASUREMENT:
+    name: MEASUREMENT
+    layer: 코어
+    kor: 검사값
+    grain: 검사 × 시점
+    pk: measurement_id
+    parent: VISIT
+    desc: 혈액·소변 검사, 활력징후, 체성분, 폐기능·CGM 요약 수치, 종양표지자(LOINC + UCUM)
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: measurement_id
+      kor: measurement_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: PK
+      standard: OMOP
+      desc: 측정(검사) 기록에 대한 고유 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_occurrence_id
+      kor: visit_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      standard: OMOP
+      desc: 측정(Measurement)이 수행되거나 기록된 방문 정보를 참조하는 식별자로, VISIT_OCCURRENCE 테이블을 참조하는 외래키(Foreign Key)이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: person_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: FK
+      ref: PERSON.person_id
+      standard: OMOP
+      desc: 측정이 수행된 사람에 대한 외래키 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: measurement_concept_id
+      kor: measurement_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 측정 항목을 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Measurement Domain Concept을 참조하는 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: measurement_date
+      kor: measurement_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 측정이 수행된 날짜이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: measurement_type_concept_id
+      kor: measurement_type_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.measurement_type_concept_id
+      standard: OMOP
+      desc: 측정 정보가 생성된 원천 데이터의 유형 또는 출처(Provenance)를 나타내는 표준 Concept 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: value_as_number
+      kor: value_as_number
+      type: float
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - -1000000
+      - 1000000
+      desc: 측정값이 정량적일 때 기록되는 값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: value_as_concept_id
+      kor: value_as_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      desc: 측정 결과가 범주형 값인 경우 해당 결과를 나타내는 표준 Concept 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: unit_concept_id
+      kor: unit_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      codelist: OMOP.unit_concept_id
+      standard: OMOP
+      desc: 측정 결과의 단위를 나타내는 표준 Concept 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: range_low
+      kor: range_low
+      type: float
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - -1000000
+      - 1000000
+      desc: 측정값이 정상 범위 내 최저값을 나타낸다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: range_high
+      kor: range_high
+      type: float
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - -1000000
+      - 1000000
+      desc: 측정값의 정상 범위 내 최고값을 나타낸다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: unit_source_value
+      kor: unit_source_value
+      type: varchar
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      desc: 원천 데이터에 존재하는 단위기준 값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: value_source_value
+      kor: value_source_value
+      type: varchar
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      desc: 원천 데이터에 기록된 측정 결과의 원본 값으로 value_as_number 또는 value_as_concept_id로 변환되기 전의 원본 결과 정보를 나타낸다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+  OBSERVATION:
+    name: OBSERVATION
+    layer: 코어
+    kor: 관찰
+    grain: 관찰 1
+    pk: observation_id
+    parent: VISIT
+    desc: 생활습관(흡연·음주·운동), ECOG, 결혼·출산 등 사회·생식력 항목(SNOMED value)
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: observation_id
+      kor: observation_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: PK
+      standard: OMOP
+      desc: 관찰에 대한 고유 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_occurrence_id
+      kor: visit_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      standard: OMOP
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: person_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: FK
+      ref: PERSON.person_id
+      standard: OMOP
+      desc: 관찰이 기록된 사람에 대한 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: observation_concept_id
+      kor: observation_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 관찰된 임상적 사실을 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Observation Concept을 참조하는 외래키(Foreign Key)이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: observation_date
+      kor: observation_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 관찰이 이루어진 날짜이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: observation_type_concept_id
+      kor: observation_type_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.observation_type_concept_id
+      standard: OMOP
+      desc: 관찰 정보의 기록 유형 또는 원천 데이터의 출처를 나타내는 표준 Concept 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: value_as_number
+      kor: value_as_number
+      type: float
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      range:
+      - -1000000
+      - 1000000
+      desc: 관찰 결과가 수치형(Numeric)인 경우 해당 값을 저장한다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: value_as_string
+      kor: value_as_string
+      type: varchar
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      desc: 관찰 결과가 자유 형식의 텍스트(Verbatim Text)인 경우 해당 문자열 값을 저장한다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: unit_concept_id
+      kor: unit_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      codelist: OMOP.unit_concept_id
+      standard: OMOP
+      desc: 수치형 관찰 결과의 측정 단위를 나타내는 표준 Concept 식별자이다. 표준 용어체계에 정의된 단위를 참조한다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+  NOTE:
+    name: NOTE
+    layer: 코어
+    kor: 판독문·기록
+    grain: 기록 1
+    pk: note_id
+    parent: VISIT
+    desc: 판독문·병리 원문. 구조화된 값의 원천 근거
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: note_id
+      kor: note_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: PK
+      standard: OMOP
+      desc: 노트(Note)에 대한 고유 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_occurrence_id
+      kor: visit_occurrence_id
+      type: integer
+      value_kind: 코어
+      tier: 권고
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      standard: OMOP
+      desc: 노트가 작성된 방문 정보를 참조하는 값으로, VISIT_OCCURRENCE 테이블을 참조하는 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: person_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      key: FK
+      ref: PERSON.person_id
+      standard: OMOP
+      desc: 노트와 관련된 사람에 대한 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: note_date
+      kor: note_date
+      type: date
+      value_kind: 코어
+      tier: 필수
+      required: true
+      standard: OMOP
+      desc: 노트가 작성된 날짜를 나타낸다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: note_text
+      kor: note_text
+      type: text
+      value_kind: 코어
+      tier: 권고
+      standard: OMOP
+      desc: 노트의 원문 내용을 저장한다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: note_type_concept_id
+      kor: note_type_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.note_type_concept_id
+      standard: OMOP
+      desc: 노트의 유형을 나타내는 표준 Concept 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: note_class_concept_id
+      kor: note_class_concept_id
+      type: integer
+      value_kind: 코어
+      tier: 필수
+      required: true
+      codelist: OMOP.note_class_concept_id
+      standard: OMOP
+      desc: 노트의 분류(Class)를 나타내는 표준 Concept 식별자이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+  COHORT_INDEX:
+    name: COHORT_INDEX
+    layer: 공통 확장
+    kor: 코호트 인덱스
+    grain: 환자 1
+    pk: person_id
+    parent: PERSON
+    desc: 코호트 진입일(index date), 진단 등록일, 최초 진단일, 코호트 정의 진단 FK, 최종 추적일·상태
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: person_id
+      kor: 코호트 인덱스 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: index_date
+      kor: 코호트 진입일 (기준일)
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: diagnosis_registered_date
+      kor: 진단정보 등록일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - MASLD
+      v1_hint:
+      - LUNG_CANCER.diag_rgst_ymd
+      - BREAST_CANCER.diag_rgst_ymd
+      - COLORECTAL_CANCER.diag_rgst_ymd
+      - DIABETES.condition_type_concept_id
+    - name: diagnosis_name
+      kor: 진단명
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      vocabulary: SNOMED/ICD-O-3/KCD
+      standard: SNOMED/ICD-O-3/KCD
+      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - MASLD
+      v1_hint:
+      - LUNG_CANCER.lucn_diag_kncd
+      - COLORECTAL_CANCER.clcn_diag_kncd
+    - name: diagnosis_subtype
+      kor: 세부 진단명
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_DIAGNOSIS_SUBTYPE
+      standard: SNOMED/ICD-O-3/KCD
+      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.bpsy_rctm_dtl_site_cont
+    - name: masld_diagnosis_basis
+      kor: MASLD/MASH 진단 근거 기준
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_MASLD_DIAGNOSIS_BASIS
+      standard: SNOMED/ICD-O-3/KCD
+      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
+      cohorts:
+      - MASLD
+    - name: diabetes_type
+      kor: 당뇨병 유형
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: DM_TYPE
+      standard: SNOMED/ICD-O-3/KCD
+      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
+      cohorts:
+      - DIABETES
+      v1_hint:
+      - DIABETES.dm_id
+    - name: age_at_diagnosis
+      kor: 당뇨병 최초 진단 시 나이
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: disease_duration_years
+      kor: 당뇨병 유병 기간
+      type: float
+      value_kind: 수치
+      tier: 필수
+      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: gestational_diabetes_yn
+      kor: 임신성 당뇨병 해당 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/ICD-O-3/KCD
+      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
+      cohorts:
+      - DIABETES
+    - name: first_diagnosis_date
+      kor: 최초 림프종 진단일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
+      cohorts:
+      - LYMPHOMA
+    - name: diagnosis_status
+      kor: 진단 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_DIAGNOSIS_STATUS
+      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.condition_occurrence_id
+    - name: lymphoma_category
+      kor: 림프종 대분류
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_LYMPHOMA_CATEGORY
+      standard: SNOMED/ICD-O-3/KCD
+      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.lym_id
+    - name: cell_lineage
+      kor: 종양 세포 계열
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_CELL_LINEAGE
+      standard: SNOMED/ICD-O-3/KCD
+      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cell_lineage
+    - name: histologic_subtype
+      kor: WHO/ICC 기준 조직학적 아형
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_HISTOLOGIC_SUBTYPE
+      standard: SNOMED/ICD-O-3/KCD
+      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.histologic_subtype
+    - name: last_disease_status
+      kor: 최종 추적 시 질환 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: LAST_STATUS
+      standard: SNOMED
+      desc: 최종 추적일·질환 상태·생존 상태
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.disease_status_at_last_followup
+    - name: last_followup_date
+      kor: 최종 추적관찰일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED
+      desc: 최종 추적일·질환 상태·생존 상태
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.disease_status_at_last_followup
+    - name: last_vital_status
+      kor: 최종 추적 시 생존 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: LAST_STATUS
+      standard: SNOMED
+      desc: 최종 추적일·질환 상태·생존 상태
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.vital_status
+  STAGING:
+    name: STAGING
+    layer: 공통 확장
+    kor: 진단·병기 평가
+    grain: 환자 × 판정 시점 × 체계
+    pk: staging_id
+    parent: COHORT_INDEX
+    desc: 체계(AJCC/Lugano/Ann Arbor), 판, 임상/병리/재병기 구분, T·N·M, 병기군, 원격 전이 여부·부위·진단일
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - LUNG_CANCER
+    - LYMPHOMA
+    fields:
+    - name: staging_id
+      kor: 진단·병기 평가 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: initial_clinical_stage
+      kor: 초진 시 임상 병기
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: STAGE_GROUP_AJCC8
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - BREAST_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.clinical_stage
+    - name: stage_iv_diagnosis_date
+      kor: 4기 진단일(수술 환자는 재발일)
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LUNG_CANCER
+    - name: primary_site
+      kor: 폐 종양 원발 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_PRIMARY_SITE
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LUNG_CANCER
+    - name: clinical_tnm
+      kor: 수술 전 검사 결과에 따른 임상 TNM 병기값
+      type: varchar
+      value_kind: 패턴
+      tier: 필수
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      pattern: ^(y?c)?T(is|0|X|[1-4][a-c]?)N([0-3][a-c]?|X)M(0|1[a-c]?|X)$
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.clnc_tnm_stag_vl
+      - BREAST_CANCER.clnc_tnm_stag_vl
+      - COLORECTAL_CANCER.clnc_tnm_stag_vl
+    - name: clinical_tumor_feature
+      kor: 임상 종양 특성
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_CLINICAL_TUMOR_FEATURE
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+    - name: pathologic_tnm
+      kor: 수술 후 외과 병리 기록지의 TNM 병기값
+      type: varchar
+      value_kind: 패턴
+      tier: 필수
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      pattern: ^(y?p)?T(is|0|X|[1-4][a-c]?)N([0-3][a-c]?|X)M(0|1[a-c]?|X)$
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.afop_path_tnm_stag_vl
+      - BREAST_CANCER.afop_path_tnm_stag_vl
+      - COLORECTAL_CANCER.afop_path_tnm_stag_vl
+    - name: imaging_distant_metastasis_yn
+      kor: 영상 판독상 원격 전이 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - BREAST_CANCER
+      - LUNG_CANCER
+    - name: distant_metastasis_date
+      kor: 원격 전이 진단일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.mtst_site_cd
+      - BREAST_CANCER.mtst_site_cd
+      - COLORECTAL_CANCER.mtst_site_cd
+    - name: distant_metastasis_site
+      kor: 원격 전이 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_DISTANT_METASTASIS_SITE
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.otog_mtst_site_nm
+      - BREAST_CANCER.mtst_site_cd
+      - COLORECTAL_CANCER.mtst_site_nm
+    - name: post_surgery_assessment
+      kor: 수술치료 후 평가 내용
+      type: text
+      value_kind: 텍스트
+      tier: 필수
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+    - name: primary_sidedness
+      kor: 원발종양 편측성
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_PRIMARY_SIDEDNESS
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: intraabdominal_metastasis_site
+      kor: 복강내 원격전이 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: MET_SITE
+      standard: SNOMED
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.inap_dsnt_mtst_site_nm
+    - name: pci_score
+      kor: 복막암지수(PCI)
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: staging_date
+      kor: 병기 평가일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.observation_id
+    - name: staging_system
+      kor: 병기 분류체계
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: STAGE_SYSTEM
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.observation_id
+    - name: stage_group
+      kor: Ann Arbor/Lugano 병기
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: STAGE_LUGANO
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.stage_system
+    - name: stage_modifier
+      kor: 병기 수식자
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: STAGE_MODIFIER
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.observation_id
+    - name: staging_method
+      kor: 병기 결정 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_STAGING_METHOD
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+    - name: primary_involved_site
+      kor: 림프종 원발 침범 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_PRIMARY_INVOLVED_SITE
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.primary_disease_site
+    - name: nodal_regions_involved
+      kor: 침범 림프절 영역 수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+    - name: extranodal_yn
+      kor: 결절외 침범 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.primary_disease_site
+    - name: extranodal_sites_count
+      kor: 침범 결절외 장기 수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.primary_disease_site
+    - name: extranodal_sites
+      kor: 결절외 침범 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_EXTRANODAL_SITES
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.primary_disease_site
+    - name: spleen_involvement_yn
+      kor: 비장 침범 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.spleen_involvement_yn
+    - name: bone_marrow_involvement_yn
+      kor: 골수 침범 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bone_marrow_involvement_yn
+    - name: bone_marrow_involvement_percent
+      kor: 골수 내 림프종 침범 비율
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: '%'
+      standard: SNOMED
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bone_marrow_involvement_pct
+    - name: cns_involvement_yn
+      kor: 중추신경계 침범 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cns_involvement_yn
+    - name: bulky_disease_yn
+      kor: Bulky disease 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bulky_disease_yn
+    - name: bulky_threshold_cm
+      kor: Bulky disease 판정에 적용한 최대 직경 기준(cm)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: cm
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bulky_disease_threshold_cm
+    - name: largest_lesion_diameter_cm
+      kor: 기준 시점의 가장 큰 병변 장경(cm)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: cm
+      standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
+      desc: 체계·판·임상/병리 구분 필드 동반
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.largest_lesion_diameter_cm
+  PATHOLOGY_REPORT:
+    name: PATHOLOGY_REPORT
+    layer: 공통 확장
+    kor: 병리 보고서
+    grain: 검체(보고서) 1
+    pk: pathology_report_id
+    parent: PROCEDURE
+    desc: 검체 채취 방법·부위·편측성·적정성, 조직학적 진단명·분화도·등급, 절제연, 림프절 수, 침윤(LVI/PNI/VPI/STAS), 근치도
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: pathology_report_id
+      kor: 병리 보고서 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: procedure_occurrence_id
+      kor: PROCEDURE 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE 연결
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: specimen_date
+      kor: 검체 채취일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: biopsy_method
+      kor: 생체검사 시행 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_BIOPSY_METHOD
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      also:
+      - 생체검사 방법
+      v1_hint:
+      - LUNG_CANCER.bpsy_mthd_knnm
+      - BREAST_CANCER.bpsy_mthd_knnm
+    - name: biopsy_site
+      kor: 생체검사 대상 부위 or 검체
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_BIOPSY_SITE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      also:
+      - 생체검사 실시 부위 or 검체
+      - 생체검사 시행 부위
+      - 생체검사 시행 부위
+      - 생체검사 부위
+      v1_hint:
+      - LUNG_CANCER.bpsy_spcd
+      - LUNG_CANCER.bpsy_spcd
+    - name: biopsy_site_detail
+      kor: 생체검사 시행 폐 상세 위치
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_BIOPSY_SITE_DETAIL
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      also:
+      - 생체검사 결장 종양 세부위치
+      v1_hint:
+      - LUNG_CANCER.bpsy_lung_site_dtlc_nm
+      - COLORECTAL_CANCER.bpsy_cotm_dtlc_spnm
+    - name: surgical_specimen_site
+      kor: 수술 후 외과병리 조직 채취 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_SURGICAL_SPECIMEN_SITE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      also:
+      - 수술 후 외과병리 조직 채취부위
+      v1_hint:
+      - LUNG_CANCER.sgpt_hvst_site_nm
+      - BREAST_CANCER.sgpt_hvst_site_nm
+      - COLORECTAL_CANCER.sgpt_hvst_site_cont
+    - name: biopsy_histologic_diagnosis
+      kor: 생체검사에 따른 조직학적 진단명
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: SNOMED (일부) · 자체 어휘
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.htlg_diag_cd
+      - BREAST_CANCER.htlg_diag_cd
+      - COLORECTAL_CANCER.htlg_grad_etc_cont
+    - name: biopsy_differentiation
+      kor: 생체검사 조직학적 분화도
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_BIOPSY_DIFFERENTIATION
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.htlg_dfgd_nm
+      - COLORECTAL_CANCER.htlg_grnm
+    - name: surgical_histologic_diagnosis
+      kor: 수술 후 외과병리를 통해 확인된 조직학적 진단명
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: SNOMED (일부) · 자체 어휘
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.htlg_diag_cd_po
+      - BREAST_CANCER.htlg_grcd
+      - COLORECTAL_CANCER.htlg_diag_etc_cont
+    - name: primary_histology
+      kor: 원발 조직형 진단명
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: SNOMED (일부) · 자체 어휘
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.histologic_diagnosis
+    - name: adenocarcinoma_predominant_subtype
+      kor: 폐선암 우세 조직아형
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - LUNG_CANCER
+    - name: stas_yn
+      kor: 기강내 종양전파(STAS) 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - LUNG_CANCER
+    - name: vpi_grade
+      kor: 장측흉막침범(VPI) 정도
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_VPI_GRADE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - LUNG_CANCER
+    - name: obstructive_pneumonia_atelectasis_yn
+      kor: 폐쇄후 폐렴 or 무기폐 동반 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - LUNG_CANCER
+    - name: sentinel_nodes_examined
+      kor: 절제된 감시림프절 개수
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED (observable)
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.slnd_totl_cnt
+    - name: sentinel_nodes_positive
+      kor: 침윤된 감시림프절 개수
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED (observable)
+      cohorts:
+      - BREAST_CANCER
+    - name: lymph_nodes_examined
+      kor: 절제된 림프절 개수
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED (observable)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      v1_hint:
+      - BREAST_CANCER.totl_ln_cnt
+      - COLORECTAL_CANCER.totl_ln_cnt
+    - name: lymph_nodes_positive
+      kor: 침윤된 림프절 개수
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED (observable)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      v1_hint:
+      - BREAST_CANCER.pstv_ln_cnt
+      - COLORECTAL_CANCER.pstv_ln_cnt
+    - name: biopsy_laterality
+      kor: 생체검사 부위 편측성
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_BIOPSY_LATERALITY
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+    - name: surgical_specimen_laterality
+      kor: 수술 후 병리 조직 채취 부위 편측성
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_SURGICAL_SPECIMEN_LATERALITY
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.sgpt_exam_site_latr_nm
+    - name: microcalcification_yn
+      kor: 미세석회화 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.sgpt_micf_ex_yn_spnm
+    - name: surgical_histologic_grade
+      kor: 수술 후 외과병리를 통해 확인된 조직학적 등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_SURGICAL_HISTOLOGIC_GRADE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.htlg_grcd
+    - name: dcis_nuclear_grade
+      kor: 관상피내암(DCIS) 핵등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_DCIS_NUCLEAR_GRADE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+    - name: in_situ_component_yn
+      kor: 상피내암 동반 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.incn_asso_ex_yn_spnm
+    - name: til_percent
+      kor: 기질 종양침윤림프구(TIL) 비율
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: '%'
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+    - name: inflammatory_breast_cancer_yn
+      kor: 염증성 유방암 해당 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+    - name: lymphovascular_invasion_yn
+      kor: 종양의 림프관·혈관 침윤 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.lvin_ex_yn_spnm
+    - name: resection_margin_status
+      kor: 수술절제면 암조직 잔존 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_RESECTION_MARGIN_STATUS
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.srmg_rlct_nm
+    - name: residual_tumor_r_class
+      kor: 잔존종양(Residual Tumor) 분류
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_RESIDUAL_TUMOR_R_CLASS
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.resi_tumr_nm
+    - name: mammographic_microcalcification_yn
+      kor: 유방촬영술상 미세석회화 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.sgpt_micf_ex_yn_spnm
+    - name: biopsy_rectum_site_detail
+      kor: 생체검사 직장 세부 부위 상세
+      type: text
+      value_kind: 텍스트
+      tier: 보류
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.bpsy_rctm_dtl_site_cont
+    - name: surgical_tumor_site
+      kor: 수술 후 외과병리 종양 위치
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: TUMOR_SITE
+      standard: SNOMED
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.oprt_tumr_loca_nm
+    - name: gross_type
+      kor: Gross type 분류 명칭
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_GROSS_TYPE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.gros_tpnm
+    - name: peritoneal_cytology_result
+      kor: 복강세척 세포검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: CL_PERITONEAL_CYTOLOGY_RESULT
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: immunoscore
+      kor: 종양 내 T세포 침윤 정량화 면역점수
+      type: integer
+      value_kind: 수치
+      tier: 보류
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: tumor_deposits_yn
+      kor: 종양침착(tumor deposits, N1c) 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: tumor_budding_grade
+      kor: 종양출아등급(tumor budding)
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_TUMOR_BUDDING_GRADE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: resection_completeness
+      kor: 근치도(절제 정도)
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_RESECTION_COMPLETENESS
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.curdg_cd
+    - name: lymphatic_invasion_yn
+      kor: 림프관 침윤 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.lymp_inva_ex_yn_spnm
+    - name: vascular_invasion_yn
+      kor: 혈관 침윤 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.vasc_inva_ex_yn_spnm
+    - name: perineural_invasion_yn
+      kor: 신경주위 침윤 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.nerv_prex_ex_yn_spnm
+    - name: invasion_depth
+      kor: 종양 침윤 깊이 정도
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_INVASION_DEPTH
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: crm_status
+      kor: 수술후 외과병리 검사에서 확인된 radial 또는 circumferential margin 의 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_CRM_STATUS
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.radi_rsmg_invl_yn_spnm
+    - name: tme_quality
+      kor: 전직장간막절제술(TME) 육안적 완전도
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_TME_QUALITY
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tme_qlt_dgre_spnm
+    - name: biopsy_adequacy
+      kor: 간 생체검사 검체 적정성
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_BIOPSY_ADEQUACY
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - LYMPHOMA
+      - MASLD
+      also:
+      - 생체검사 검체 적절성 결과
+      v1_hint:
+      - LYMPHOMA.biopsy_specimen_adequacy
+    - name: liver_fibrosis_grade_name
+      kor: 간실질 섬유화 등급명
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: SNOMED (일부) · 자체 어휘
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - MASLD
+    - name: steatosis_grade
+      kor: 간 생체검사 지방증 등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: NAS_STEATOSIS
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - MASLD
+    - name: lobular_inflammation_grade
+      kor: 간 생체검사 소엽 염증 등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_LOBULAR_INFLAMMATION_GRADE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - MASLD
+    - name: ballooning_grade
+      kor: 간세포 풍선변성 등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_BALLOONING_GRADE
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - MASLD
+    - name: fibrosis_stage
+      kor: 섬유화 병기(NASH CRN)
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: FIBROSIS_STAGE
+      standard: 자체 (NASH CRN)
+      cohorts:
+      - MASLD
+    - name: nas_score
+      kor: NAS 총점
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED (일부) · 자체 어휘
+      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
+      cohorts:
+      - MASLD
+      v1_hint:
+      - MASLD.bard_score
+  PATHOLOGY_TUMOR:
+    name: PATHOLOGY_TUMOR
+    layer: 공통 확장
+    kor: 병리 종양(자식)
+    grain: 종양 1
+    pk: pathology_tumor_id
+    parent: PATHOLOGY_REPORT
+    desc: 다발 종양의 개별 크기·위치. 단일 종양은 1행
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - LUNG_CANCER
+    fields:
+    - name: pathology_tumor_id
+      kor: 병리 종양(자식) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+    - name: pathology_report_id
+      kor: PATHOLOGY_REPORT 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PATHOLOGY_REPORT.pathology_report_id
+      desc: PATHOLOGY_REPORT 연결
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+    - name: tumor_count
+      kor: 병리검사에서 확인된 종양 개수
+      type: integer
+      value_kind: 수치
+      tier: 권고
+      standard: SNOMED (tumor size)
+      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - BREAST_CANCER.srgc_ptem_rslt_tumr_cnt
+      - COLORECTAL_CANCER.sgpt_tumr_loca_spcd
+    - name: tumor_size_width_cm
+      kor: 종양 가로 크기
+      type: float
+      value_kind: 수치
+      tier: 보류
+      unit: cm
+      standard: SNOMED (tumor size)
+      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.tumr_wdth_lnth_vl
+      - COLORECTAL_CANCER.tumr_wdth_lnth_vl
+    - name: tumor_size_length_cm
+      kor: 종양 세로 크기
+      type: float
+      value_kind: 수치
+      tier: 보류
+      unit: cm
+      standard: SNOMED (tumor size)
+      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.tumr_lgtd_lnth_vl
+      - COLORECTAL_CANCER.tumr_lgtd_lnth_vl
+    - name: tumor_size_height_cm
+      kor: 종양 높이
+      type: float
+      value_kind: 수치
+      tier: 권고
+      unit: cm
+      standard: SNOMED (tumor size)
+      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.tumr_hght_vl
+      - BREAST_CANCER.oprt_tumr_loca_cd
+      - COLORECTAL_CANCER.bpsy_cotm_dtlc_spcd
+    - name: pathologic_tumor_max_diameter_cm
+      kor: 수술 후 병리 종양 최대 직경
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: cm
+      standard: SNOMED (tumor size)
+      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.tumr_max_diam_vl
+  BIOMARKER:
+    name: BIOMARKER
+    layer: 공통 확장
+    kor: 분자·바이오마커
+    grain: 검사 × 마커
+    pk: biomarker_id
+    parent: PATHOLOGY_REPORT 또는 PROCEDURE
+    desc: 'IHC·FISH·NGS·유전자발현 검사. long 형: 마커명, 결과(정성), 값(정량), 단위, 방법, 변이 표기(HGVS)'
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    fields:
+    - name: biomarker_id
+      kor: 분자·바이오마커 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: pathology_report_id
+      kor: PATHOLOGY_REPORT 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PATHOLOGY_REPORT.pathology_report_id
+      desc: PATHOLOGY_REPORT 또는 PROCEDURE 연결
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: test_date
+      kor: 검사일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: ihc_test
+      kor: 면역조직화학병리 검사
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.imem_knnm
+      - BREAST_CANCER.imem_knnm
+      - COLORECTAL_CANCER.imem_knnm
+    - name: molecular_pathology_test
+      kor: 분자병리 검사
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.mlem_kncd
+      - BREAST_CANCER.mlem_rslt_kncd
+      - COLORECTAL_CANCER.mlem_kncd
+    - name: mutation_test_method
+      kor: 유전자 돌연변이검사 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.gmt_mtnm
+    - name: mutation_test_gene
+      kor: 돌연변이검사 시행 유전자 종류
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.gmt_mtcd
+    - name: molecular_subtype
+      kor: 유방암 분자아형
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.bc_id
+    - name: reference_sequence
+      kor: Reference Sequence 값
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.ref_seq
+    - name: dna_variant_a
+      kor: DNA 변이 정보 A 값
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.dna_vainf_a_vl
+    - name: dna_variant_b
+      kor: DNA 변이 정보 B 값
+      type: float
+      value_kind: 수치
+      tier: 권고
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.dna_vainf_a_vl
+    - name: dna_variant_c
+      kor: DNA 변이 정보 C 값
+      type: float
+      value_kind: 수치
+      tier: 권고
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.dna_vainf_a_vl
+    - name: protein_variant_a
+      kor: 아미노산 변이 정보 A
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.amsn_vainf_a_cd
+    - name: protein_variant_b
+      kor: 아미노산 변이 정보 B
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.amsn_vainf_a_cd
+    - name: protein_variant_c
+      kor: 아미노산 변이 정보 C
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.amsn_vainf_a_cd
+    - name: prognostic_gene_assay_type
+      kor: 예후예측 유전자 발현검사 종류
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.gnrx_knnm
+    - name: prognostic_gene_assay_result
+      kor: 예후예측 유전자 발현검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.gnrx_rslt_kncd
+    - name: germline_test_method
+      kor: 생식세포 변이검사 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.gmvx_mtnm
+    - name: germline_test_gene
+      kor: 생식세포 변이검사 유전자 종류
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.gmvx_gene_knnm
+    - name: germline_test_result
+      kor: 생식세포 변이검사 결과 내용
+      type: text
+      value_kind: 텍스트
+      tier: 필수
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.gmte_mtst_exam_rslt_cont
+    - name: pathogenic_variant_yn
+      kor: Pathogenic 검출 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.pavr_detect_yn_spnm
+    - name: vus_yn
+      kor: Unclassified Variant 검출 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 보류
+      codelist: YN
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.uncl_varnt_detect_yn_spnm
+    - name: pam50_ror_score
+      kor: PAM50 재발위험(ROR) 점수
+      type: integer
+      value_kind: 수치
+      tier: 보류
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+    - name: oncotype_rs
+      kor: Oncotype DX 재발점수
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+    - name: oncotype_risk_group
+      kor: Oncotype DX 위험군
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: RISK_GROUP
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+    - name: mammaprint_result
+      kor: MammaPrint 재발위험 판정
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - BREAST_CANCER
+    - name: mutation_test_result
+      kor: 유전자 돌연변이검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: gad_antibody_result
+      kor: 췌도 자가항체(GAD 항체) 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - DIABETES
+    - name: cd3_result
+      kor: CD3 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+    - name: cd5_result
+      kor: CD5 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cd5_result
+    - name: cd10_result
+      kor: CD10 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cd10_result
+    - name: cd15_result
+      kor: CD15 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cd15_result
+    - name: cd19_result
+      kor: CD19 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+    - name: cd20_result
+      kor: CD20 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+    - name: cd22_result
+      kor: CD22 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+    - name: cd23_result
+      kor: CD23 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cd23_result
+    - name: cd30_result
+      kor: CD30 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+    - name: cd79a_result
+      kor: CD79a 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cd79a_result
+    - name: pax5_result
+      kor: PAX5 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC/SNOMED
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.pax5_result
+    - name: bcl2_protein_result
+      kor: BCL2 단백 발현 결과와 양성률
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bcl2_expression_result
+    - name: bcl6_protein_result
+      kor: BCL6 단백 발현 결과와 양성률
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bcl6_expression_result
+    - name: mum1_result
+      kor: MUM1/IRF4 발현 결과와 양성률
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.mum1_expression_result
+    - name: myc_protein_result
+      kor: MYC 단백 발현 결과와 양성률
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.myc_expression_result
+    - name: cyclin_d1_result
+      kor: Cyclin D1 발현 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cyclin_d1_result
+    - name: sox11_result
+      kor: SOX11 발현 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.sox11_result
+    - name: alk_result
+      kor: ALK 발현 또는 재배열 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.alk_result
+    - name: pdl1_result
+      kor: PD-L1 발현 결과 및 평가법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.pd_l1_result
+    - name: ki67_percent
+      kor: Ki-67 증식지수
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: '%'
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.ki67_proliferation_index_pct
+    - name: ebv_eber_result
+      kor: EBV EBER 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.ebv_eber_result
+    - name: dlbcl_cell_of_origin
+      kor: DLBCL 세포기원 분류
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.cell_of_origin
+    - name: double_expressor_yn
+      kor: MYC/BCL2 이중발현 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.double_expressor_yn
+    - name: flow_cytometry_summary
+      kor: 유세포검사 면역표현형 요약
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.flow_cytometry_result
+    - name: molecular_test_date
+      kor: 분자·세포유전검사 시행일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: LOINC/SNOMED
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.molecular_test_date
+    - name: molecular_test_method
+      kor: 분자·세포유전검사 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_METHOD
+      standard: LOINC/SNOMED
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.molecular_test_date
+    - name: myc_rearrangement_result
+      kor: MYC 재배열 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.myc_rearrangement_result
+    - name: bcl2_rearrangement_result
+      kor: BCL2 재배열 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bcl2_rearrangement_result
+    - name: bcl6_rearrangement_result
+      kor: BCL6 재배열 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bcl6_rearrangement_result
+    - name: double_hit_status
+      kor: Double-hit/Triple-hit 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.double_hit_triple_hit_status
+    - name: t14_18_result
+      kor: t(14;18) 전좌 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.t_14_18_result
+    - name: t11_14_result
+      kor: t(11;14) 전좌 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.t_11_14_result
+    - name: tp53_abnormality_result
+      kor: TP53 변이, 17p 결실 또는 비정상 p53 발현 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.tp53_aberration_result
+    - name: complex_karyotype_yn
+      kor: Complex karyotype 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.complex_karyotype_yn
+    - name: ig_tcr_clonality_result
+      kor: IG/TCR 클론성 검사 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+    - name: mrd_result
+      kor: 유세포, PCR 또는 NGS 기반 미세잔존질환(MRD) 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.minimal_residual_disease_result
+    - name: ctdna_result
+      kor: 순환종양DNA(ctDNA) 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: BIOMARKER_RESULT
+      standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
+      desc: long 형. 마커별 컬럼 금지
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.ctdna_result
+  SURGERY:
+    name: SURGERY
+    layer: 공통 확장
+    kor: 수술
+    grain: 수술 1
+    pk: surgery_id
+    parent: PROCEDURE
+    desc: 수술일·수술명(EDI)·목적·부위·방법(개복/복강경/로봇), 종양 위치, 출혈량, 재건. 질환별 세부는 질환 표
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - LUNG_CANCER
+    - MASLD
+    fields:
+    - name: surgery_id
+      kor: 수술 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+    - name: procedure_occurrence_id
+      kor: PROCEDURE 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE 연결
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+    - name: surgery_date
+      kor: 수술 시행일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+      also:
+      - 간이식 수술 시행일
+      v1_hint:
+      - LUNG_CANCER.htlg_diag_cd_po
+      - BREAST_CANCER.oprt_tumr_loca_cd
+      - COLORECTAL_CANCER.mhis_absg_cont
+      - MASLD.oprt_kncd
+    - name: surgery_name
+      kor: 수술명
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: EDI/SNOMED procedure
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+      also:
+      - 간이식 수술명
+      v1_hint:
+      - MASLD.oprt_ymd
+    - name: surgery_purpose
+      kor: 수술 목적
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: SURG_PURPOSE
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+      v1_hint:
+      - LUNG_CANCER.oprt_prps_nm
+      - BREAST_CANCER.oprt_prps_nm
+      - COLORECTAL_CANCER.mhis_absg_cont
+      - MASLD.oprt_kncd
+    - name: surgery_site
+      kor: 수술 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: SURG_PURPOSE
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - BREAST_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.oprt_site_nm
+      - BREAST_CANCER.oprt_site_nm
+    - name: surgery_approach
+      kor: 수술 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: SURG_APPROACH
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+      v1_hint:
+      - LUNG_CANCER.oprt_mtnm
+      - BREAST_CANCER.oprt_mtnm
+      - COLORECTAL_CANCER.oprt_mtnm
+      - MASLD.oprt_kncd
+    - name: surgery_tumor_location
+      kor: 수술 시 확인한 종양 위치
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: SURG_PURPOSE
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - BREAST_CANCER.oprt_tumr_loca_nm
+      - COLORECTAL_CANCER.oprt_tumr_loca_nm
+    - name: reconstruction_type
+      kor: 재건·성형술 분류
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: SURG_PURPOSE
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.repr_clnm
+    - name: ebl_category
+      kor: 수술 중 추정실혈량 구분
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: SURG_PURPOSE
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ebl_qty_spcd
+    - name: ebl_ml
+      kor: 수술 중 추정실혈량 값
+      type: float
+      value_kind: 수치
+      tier: 권고
+      unit: mL
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ebl_qty_spcd
+    - name: stoma_reversal_date
+      kor: 장루 복원 수술 시행일
+      type: date
+      value_kind: 날짜
+      tier: 보류
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ostm_reop_nm
+    - name: stoma_reversal_name
+      kor: 장루 복원 수술명
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 보류
+      vocabulary: EDI/SNOMED procedure
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ostm_reop_cd
+    - name: stoma_reversal_site
+      kor: 장루 복원 수술 위치
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: SURG_PURPOSE
+      standard: EDI/SNOMED procedure
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ostm_reop_loca_spnm
+  RADIOTHERAPY:
+    name: RADIOTHERAPY
+    layer: 공통 확장
+    kor: 방사선 코스
+    grain: 치료 코스 1
+    pk: radiotherapy_id
+    parent: PROCEDURE
+    desc: 처방일·시작·종료, 목적, 부위, 1회 선량, 횟수, 총 선량, 기법
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - LUNG_CANCER
+    - LYMPHOMA
+    fields:
+    - name: radiotherapy_id
+      kor: 방사선 코스 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: procedure_occurrence_id
+      kor: PROCEDURE 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE 연결
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: rt_start_date
+      kor: 방사선치료 시작일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: rt_prescription_date
+      kor: 방사선치료 처방일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED/EDI
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.rdt_knnm
+      - BREAST_CANCER.rdt_knnm
+      - COLORECTAL_CANCER.rdt_prsc_ymd
+    - name: rt_name
+      kor: 방사선치료명
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: SNOMED/EDI
+      standard: SNOMED/EDI
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+    - name: rt_purpose
+      kor: 방사선치료 목적
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RT_PURPOSE
+      standard: SNOMED/EDI
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.rdt_prps_nm
+      - BREAST_CANCER.rdt_prps_nm
+      - COLORECTAL_CANCER.rdt_prps_nm
+    - name: rt_site
+      kor: 방사선치료 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RT_PURPOSE
+      standard: SNOMED/EDI
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - LUNG_CANCER.rdt_site_nm
+      - BREAST_CANCER.rdt_site_nm
+      - COLORECTAL_CANCER.rdt_site_nm
+      - LYMPHOMA.procedure_occurrence_id
+    - name: rt_dose_per_fraction_gy
+      kor: 방사선 1회 선량 값(Gy)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: Gy
+      standard: SNOMED/EDI
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.rd_gy
+      - BREAST_CANCER.rd_gy
+      - COLORECTAL_CANCER.rd_gy
+    - name: rt_fractions
+      kor: 방사선 부위별 시행 횟수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED/EDI
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.rd_impl_nt
+      - BREAST_CANCER.rd_impl_nt
+      - COLORECTAL_CANCER.rd_impl_nt
+    - name: rt_total_dose_gy
+      kor: 방사선치료 총 선량 값(Gy)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: Gy
+      standard: SNOMED/EDI
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      also:
+      - 방사선 부위별 총 선량 값(Gy)
+      v1_hint:
+      - LUNG_CANCER.rd_totl_gy
+      - BREAST_CANCER.rd_gy
+      - COLORECTAL_CANCER.rd_totl_gy
+      - LYMPHOMA.radiotherapy_total_dose_gy
+    - name: rt_yn
+      kor: 방사선치료 시행 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/EDI
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.radiotherapy_yn
+  ANTP_THERAPY:
+    name: ANTP_THERAPY
+    layer: 공통 확장
+    kor: 항암·전신치료 에피소드
+    grain: 요법 에피소드 1
+    pk: antp_id
+    parent: COHORT_INDEX
+    desc: line 번호, 레지멘, 목적(선행/보조/고식), 시작·종료, 사이클 수. 개별 약제는 DRUG_EXPOSURE FK
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - LUNG_CANCER
+    - LYMPHOMA
+    fields:
+    - name: antp_id
+      kor: 항암·전신치료 에피소드 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: prior_lines_count
+      kor: 이전 전신치료 line 수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: HemOnc/자체
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.prior_lines_of_therapy_count
+    - name: line_number
+      kor: 현재 치료 line 번호
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: HemOnc/자체
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.prior_lines_of_therapy_count
+    - name: regimen_name
+      kor: 항암요법 레지멘명
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: HemOnc/자체
+      standard: HemOnc/자체
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.antp_id
+    - name: cycles_count
+      kor: 투여 사이클 수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: HemOnc/자체
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.treatment_cycle_count
+    - name: regimen_or_line_of_therapy
+      kor: regimen_or_line_of_therapy
+      type: integer
+      value_kind: v1 유지
+      tier: 필수
+      required: true
+      desc: 치료 line 번호
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.regimen_or_line_of_therapy
+    - name: regimen
+      kor: regimen
+      type: varchar
+      value_kind: v1 유지
+      tier: 권고
+      desc: 항암 레지멘·약제명
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.regimen
+    - name: regimen_source_value
+      kor: regimen_source_value
+      type: varchar
+      value_kind: v1 유지
+      tier: 권고
+      desc: 항암 레지멘·약제명 원천 값. 비일반적 레지멘 표기를 위해 추가
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.regimen_source_value
+    - name: antp_start_date
+      kor: antp_start_date
+      type: date
+      value_kind: v1 유지
+      tier: 필수
+      required: true
+      desc: 항암요법 시작일. drug 연결 시 MIN(drug_exposure_start_date)로 산출 가능
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.antp_start_date
+    - name: antp_end_date
+      kor: antp_end_date
+      type: date
+      value_kind: v1 유지
+      tier: 권고
+      desc: 항암요법 종료일. drug 연결 시 MAX(drug_exposure_start_date + days_supply - 1)로 산출 가능
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.antp_end_date
+    - name: number_of_cycles
+      kor: number_of_cycles
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      desc: 총 투여 사이클 수
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.number_of_cycles
+    - name: treatment_intent_type
+      kor: treatment_intent_type
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: ANTP_THERAPY.treatment_intent_type
+      desc: 치료 목적 (1=Neoadjuvant, 2=Adjuvant, 3=Palliative, 4=Maintenance, 5=Definitive, 6=Salvage)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.treatment_intent_type
+    - name: best_overall_response_source_value
+      kor: best_overall_response_source_value
+      type: varchar
+      value_kind: v1 유지
+      tier: 권고
+      desc: 치료 반응 평가 원천 값
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.best_overall_response_source_value
+    - name: drug_category
+      kor: drug_category
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: ANTP_THERAPY.drug_category
+      desc: 약제 기전 (1=세포독성항암제, 2=표적치료제, 3=호르몬치료제, 4=항체-약물 접합체, 5=면역항암제, 6=기타)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.drug_category
+    - name: ecog_performance_status
+      kor: ecog_performance_status
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      desc: ECOG PS (0–5). 미상=NULL
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.ecog_performance_status
+    - name: treatment_outcome
+      kor: treatment_outcome
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      desc: '치료 지속 여부 (0: Not on Tx, 1: On Tx). 동일 person_id 기준으로 MAX(sequence_number) 행만 기록함'
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.treatment_outcome
+    - name: days_to_progression
+      kor: days_to_progression
+      type: date
+      value_kind: v1 유지
+      tier: 권고
+      desc: Progressive Disease (질병 진행/악화) 발생일. 동일 person_id 기준으로 MAX(sequence_number) 행만 기록함
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.days_to_progression
+    - name: progression_or_recurrence_anatomic_site
+      kor: progression_or_recurrence_anatomic_site
+      type: varchar
+      value_kind: v1 유지
+      tier: 권고
+      desc: PD 부위·상세 (복수: Liver, LN)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      v1_hint:
+      - ANTP_THERAPY.progression_or_recurrence_anatomic_site
+  RESPONSE_ASSESSMENT:
+    name: RESPONSE_ASSESSMENT
+    layer: 공통 확장
+    kor: 반응·경과 평가
+    grain: 평가 1
+    pk: response_id
+    parent: ANTP_THERAPY 또는 COHORT_INDEX
+    desc: 평가일·시점·기준(RECIST/Lugano/Deauville/RCB/pCR), 판정, 재발·진행 여부·일·부위, 측정 병변 요약
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - LUNG_CANCER
+    - LYMPHOMA
+    fields:
+    - name: response_id
+      kor: 반응·경과 평가 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: antp_id
+      kor: ANTP_THERAPY 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: ANTP_THERAPY.antp_id
+      desc: ANTP_THERAPY 또는 COHORT_INDEX 연결
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+    - name: recurrence_date
+      kor: 암 재발 진단일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      also:
+      - 완전 또는 부분관해 후 림프종 재발 확인일
+      v1_hint:
+      - LYMPHOMA.relapse_date
+    - name: recurrence_site
+      kor: 암 재발 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      also:
+      - 재발 부위
+      v1_hint:
+      - LUNG_CANCER.otog_mtst_site_nm
+      - BREAST_CANCER.bpsy_site_nm
+      - COLORECTAL_CANCER.bpsy_site_nm
+      - LYMPHOMA.relapse_sites
+    - name: pcr_yn
+      kor: 선행항암 후 병리학적 완전관해 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      also:
+      - 병리학적 완전관해(pCR) 여부
+    - name: rcb_class
+      kor: 선행치료 후 잔존종양부담(RCB) 등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RCB_CLASS
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - BREAST_CANCER
+      - LUNG_CANCER
+    - name: nar_score
+      kor: 신보조직장점수(NAR score)
+      type: integer
+      value_kind: 수치
+      tier: 보류
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: ccr_status
+      kor: 임상적 완전관해(cCR) 판정 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: measurable_disease_yn
+      kor: 측정가능 병변 존재 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.measurable_disease_yn
+    - name: target_lesions_count
+      kor: 표적 병변 개수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.sum_product_diameters
+    - name: spd_mm2
+      kor: 표적 병변 직경곱 합(SPD)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: mm2
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.sum_product_diameters
+    - name: disease_status
+      kor: 질환 경과 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.disease_course_status
+    - name: primary_refractory_yn
+      kor: 일차 치료 불응 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.primary_refractory_yn
+    - name: response_assessment_date
+      kor: 질환 반응평가 기준일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.response_assessment_date
+    - name: response_timepoint
+      kor: 반응평가 시점
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.pet_ct_assessment_date
+    - name: response_criteria
+      kor: 적용 반응평가 기준
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE_CRITERIA
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+    - name: response_method
+      kor: 반응평가 검사 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.response_assessment_modality
+    - name: deauville_score
+      kor: Deauville 5점 척도
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: DEAUVILLE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+    - name: anatomic_response
+      kor: 해부학적 반응
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.biopsy_site
+    - name: metabolic_response
+      kor: 대사 반응
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.metabolic_response
+    - name: best_overall_response
+      kor: 최적 종합반응
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: SNOMED (Deauville 708896007, RCB 1407080009) · 자체(RECIST)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.best_overall_response
+    - name: bone_marrow_response
+      kor: 기저 골수 침범이 있었던 환자의 골수 반응 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RESPONSE
+      standard: 자체
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.bone_marrow_response
+  ADVERSE_EVENT:
+    name: ADVERSE_EVENT
+    layer: 공통 확장
+    kor: 이상사례
+    grain: 사건 1
+    pk: adverse_event_id
+    parent: ANTP_THERAPY
+    desc: 'MedDRA PT(또는 CTCAE 용어), CTCAE 등급, 발생·종료일, 인과성, 중대성, 조치, 결과 · 코드체계: adverse_event_concept_id = MedDRA PT(또는 CTCAE 용어), severity = CTCAE
+      등급 1~5'
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - LYMPHOMA
+    - MASLD
+    fields:
+    - name: adverse_event_id
+      kor: 이상사례 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: antp_id
+      kor: ANTP_THERAPY 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: ANTP_THERAPY.antp_id
+      desc: ANTP_THERAPY 연결
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+    - name: bowel_perforation_yn
+      kor: 장천공 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: MedDRA + CTCAE
+      desc: 수술 합병증도 이상사례 표로
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.bwpf_yn_unid_spnm
+    - name: bowel_obstruction_yn
+      kor: 장폐색 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: MedDRA + CTCAE
+      desc: 수술 합병증도 이상사례 표로
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.inob_yn_unid_spnm
+    - name: complication_treatment
+      kor: 합병증 치료방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: CL_COMPLICATION_TREATMENT
+      standard: MedDRA + CTCAE
+      desc: 수술 합병증도 이상사례 표로
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.afoc_trtm_mtnm
+    - name: observation_id
+      kor: observation_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      key: FK
+      ref: OBSERVATION.observation_id
+      desc: OBSERVATION 테이블에 대한 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.observation_id
+    - name: condition_occurrence_id
+      kor: condition_occurrence_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      key: FK
+      ref: CONDITION_OCCURRENCE.condition_occurrence_id
+      desc: CONDITION_OCCURRENCE 테이블에 대한 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.condition_occurrence_id
+    - name: measurement_id
+      kor: measurement_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      key: FK
+      ref: MEASUREMENT.measurement_id
+      desc: MEASUREMENT 테이블에 대한 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.measurement_id
+    - name: procedure_occurrence_id
+      kor: procedure_occurrence_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      key: FK
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE_OCCURRENCE 테이블에 대한 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.procedure_occurrence_id
+    - name: drug_exposure_id
+      kor: drug_exposure_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      key: FK
+      ref: DRUG_EXPOSURE.drug_exposure_id
+      desc: DRUG_EXPOSURE 테이블에 대한 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.drug_exposure_id
+    - name: note_id
+      kor: note_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      key: FK
+      ref: NOTE.note_id
+      desc: NOTE 테이블에 대한 외래키이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.note_id
+    - name: adverse_event_concept_id
+      kor: adverse_event_concept_id
+      type: integer
+      value_kind: v1 유지
+      tier: 필수
+      required: true
+      desc: 이상사례를 나타내는 표준 코드값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.adverse_event_concept_id
+    - name: adverse_event_type_concept_id
+      kor: adverse_event_type_concept_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: OMOP.adverse_event_type_concept_id
+      desc: 이상사례의 기록 유형을 나타내는 코드값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.adverse_event_type_concept_id
+    - name: adverse_event_start_date
+      kor: adverse_event_start_date
+      type: date
+      value_kind: v1 유지
+      tier: 필수
+      required: true
+      desc: 이상사례가 발생한(또는 인지된) 날짜이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.adverse_event_start_date
+    - name: severity_concept_id
+      kor: severity_concept_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: OMOP.severity_concept_id
+      desc: 이상사례의 중증도를 나타내는 코드값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.severity_concept_id
+    - name: causality_concept_id
+      kor: causality_concept_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: OMOP.causality_concept_id
+      desc: 약물과의 인과관계를 나타내는 값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.causality_concept_id
+    - name: is_serious
+      kor: is_serious
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: COMMON.yn01
+      desc: 중대한 이상사례(SAE) 해당 여부를 나타내는 값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.is_serious
+    - name: seriousness_concept_id
+      kor: seriousness_concept_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: OMOP.seriousness_concept_id
+      desc: 중대한 이상사례(SAE) 판단 기준에 해당하는 항목을 나타내는 코드값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.seriousness_concept_id
+    - name: outcome_concept_id
+      kor: outcome_concept_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: OMOP.outcome_concept_id
+      desc: 이상사례의 결과를 나타내는 코드값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.outcome_concept_id
+    - name: action_taken_concept_id
+      kor: action_taken_concept_id
+      type: integer
+      value_kind: v1 유지
+      tier: 권고
+      codelist: OMOP.action_taken_concept_id
+      desc: 이상사례에 대해 취해진 조치(약물 관련)를 나타내는 코드값이다.
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      v1_hint:
+      - ADVERSE_EVENT.action_taken_concept_id
+  FAMILY_HISTORY:
+    name: FAMILY_HISTORY
+    layer: 공통 확장
+    kor: 가족력
+    grain: 환자 × 관계 × 질환
+    pk: family_history_id
+    parent: PERSON
+    desc: 관계, 질환(암종 등), 진단 나이
+    cohorts:
+    - BREAST_CANCER
+    - COLORECTAL_CANCER
+    - DIABETES
+    - LUNG_CANCER
+    - MASLD
+    fields:
+    - name: family_history_id
+      kor: 가족력 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - MASLD
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - DIABETES
+      - LUNG_CANCER
+      - MASLD
+    - name: family_history_yn
+      kor: 가족력 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (family member)
+      desc: 여부·관계·암종 3항목을 행 하나로 통합
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+      v1_hint:
+      - LUNG_CANCER.fmht_yn_noans_spnm
+      - BREAST_CANCER.hrpr_yn_noans_spnm
+      - COLORECTAL_CANCER.fmht_yn_noans_spnm
+      - MASLD.shis_yn_noans_spnm
+    - name: family_relation
+      kor: 가족력 대상자와의 관계
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: FAMILY_RELATION
+      standard: SNOMED (family member)
+      desc: 여부·관계·암종 3항목을 행 하나로 통합
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - MASLD
+      v1_hint:
+      - LUNG_CANCER.pt_fm_rlnm
+    - name: family_cancer_yn
+      kor: 가족의 암 병력 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (family member)
+      desc: 여부·관계·암종 3항목을 행 하나로 통합
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.fmhs_cncr_yn_noans_spnm
+      - BREAST_CANCER.fmhs_cncr_yn_noans_spnm
+      - COLORECTAL_CANCER.fmhs_cncr_yn_noans_spnm
+    - name: family_cancer_type
+      kor: 가족의 암 병력 암종
+      type: varchar
+      value_kind: 열린 표준 코드
+      tier: 필수
+      vocabulary: SNOMED (family member)
+      standard: SNOMED (family member)
+      desc: 여부·관계·암종 3항목을 행 하나로 통합
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.fmht_cncr_knnm
+      - BREAST_CANCER.fmht_cncr_knnm
+      - COLORECTAL_CANCER.fmht_cncr_knnm
+    - name: family_liver_disease_yn
+      kor: 가족의 간질환 병력 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED (family member)
+      desc: 여부·관계·암종 3항목을 행 하나로 통합
+      cohorts:
+      - MASLD
+    - name: family_diabetes_yn
+      kor: 당뇨병 가족력 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (family member)
+      desc: 여부·관계·암종 3항목을 행 하나로 통합
+      cohorts:
+      - DIABETES
+  LUNG_EXAM:
+    name: LUNG_EXAM
+    layer: 질환 확장
+    kor: 폐암 검사(검사 1)
+    grain: 검사 1
+    pk: lung_exam_id
+    parent: PROCEDURE_OCCURRENCE
+    desc: 흡연 상세, 영상 판독 구조값(CTR, 결절 유형, 진단적 분류), 4기 진단일 — 행 단위 검사 1
+    cohorts:
+    - LUNG_CANCER
+    fields:
+    - name: lung_exam_id
+      kor: 폐암 검사(검사 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - LUNG_CANCER
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - LUNG_CANCER
+    - name: procedure_occurrence_id
+      kor: PROCEDURE_OCCURRENCE 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE_OCCURRENCE 연결
+      cohorts:
+      - LUNG_CANCER
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - LUNG_CANCER
+    - name: exam_date
+      kor: 검사일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - LUNG_CANCER
+    - name: imaging_diagnostic_classification
+      kor: 영상검사 결과 진단적 분류(Diagnostic Classification)
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_IMAGING_DIAGNOSTIC_CLASSIFICATION
+      standard: SNOMED/LOINC (일부)
+      desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
+      cohorts:
+      - LUNG_CANCER
+    - name: imaging_tumor_max_diameter_cm
+      kor: 영상검사상 폐 종양 최대 직경
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: cm
+      standard: SNOMED (lesion size)
+      desc: 영상 측정 크기는 병리 크기와 구분
+      cohorts:
+      - LUNG_CANCER
+      v1_hint:
+      - LUNG_CANCER.lung_tumr_size_vl
+    - name: ctr_ratio
+      kor: 고형성분 비율(CTR)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: '1'
+      standard: SNOMED/LOINC (일부)
+      desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
+      cohorts:
+      - LUNG_CANCER
+    - name: nodule_radiologic_type
+      kor: 폐결절 방사선학적 유형
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_NODULE_RADIOLOGIC_TYPE
+      standard: SNOMED/LOINC (일부)
+      desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
+      cohorts:
+      - LUNG_CANCER
+  BREAST_BASELINE:
+    name: BREAST_BASELINE
+    layer: 질환 확장
+    kor: 유방암 기저(환자 1)
+    grain: 환자 1
+    pk: breast_baseline_id
+    parent: COHORT_INDEX
+    desc: 생식·산과력, 폐경, HRT, 치료 후 월경·임신, 분자아형, 유방 밀도·미세석회화, 다유전자 검사 점수 — 행 단위 환자 1
+    cohorts:
+    - BREAST_CANCER
+    fields:
+    - name: breast_baseline_id
+      kor: 유방암 기저(환자 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+    - name: record_date
+      kor: 기록일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - BREAST_CANCER
+    - name: married_yn
+      kor: 결혼 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.marital_status
+    - name: marital_status_detail
+      kor: 결혼상태 상세 구분
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_MARITAL_STATUS_DETAIL
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+    - name: menarche_age
+      kor: 초경 만 나이
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.mena_age_vl
+    - name: fertility_preservation_yn
+      kor: 가임력 보존 치료 시행 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.fertility_history
+    - name: fertility_preservation_type
+      kor: 가임력 보존 치료 종류
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: CL_FERTILITY_PRESERVATION_TYPE
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.fertility_history
+    - name: fertility_preservation_other
+      kor: 가임력 보존 치료 기타 내용
+      type: text
+      value_kind: 텍스트
+      tier: 보류
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.fertility_history
+    - name: parity_yn
+      kor: 출산 경험 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.history_of_live_birth
+    - name: first_birth_age
+      kor: 첫 출산 만 나이
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.delv_age_vl
+    - name: conception_method
+      kor: 임신 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_CONCEPTION_METHOD
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.pregnant_at_diagnosis
+    - name: pregnancy_outcome
+      kor: 임신 결과
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 권고
+      codelist: CL_PREGNANCY_OUTCOME
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.pregnant_at_diagnosis
+    - name: number_of_children
+      kor: 출산한 자녀 수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.delv_chld_cnt
+    - name: breastfeeding_yn
+      kor: 모유수유 경험 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.bfpr_yn_noans_spnm
+    - name: menopause_yn
+      kor: 폐경 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.hrpr_yn_noans_spnm
+    - name: menopause_age
+      kor: 폐경 만 나이
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.meno_age_vl
+    - name: hrt_yn
+      kor: 폐경 후 호르몬 대체요법(HRT) 시행 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.hrpr_yn_noans_spnm
+    - name: hrt_duration_months
+      kor: 호르몬 대체요법(HRT) 시행 기간
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: mo
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.hrpr_yn_noans_spcd
+    - name: pregnant_at_diagnosis_yn
+      kor: 유방암 진단 시 임신 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.pregnant_at_diagnosis
+    - name: postpartum_diagnosis_yn
+      kor: 출산 후 1년 이내 진단 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.postpartum_at_diagnosis
+    - name: menopausal_status_at_diagnosis
+      kor: 진단 시점 폐경 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.menopause_status
+    - name: menses_resumed_1y_yn
+      kor: 항암 종료 1년 시점 월경 재개 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.menstruation_resumed_after_treatment
+    - name: first_menses_after_chemo_date
+      kor: 항암 치료 후 첫 월경일
+      type: date
+      value_kind: 날짜
+      tier: 권고
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.first_menstrual_period_date_after_treatment
+    - name: menses_regularity_after_chemo
+      kor: 항암 치료 후 월경 규칙성
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_MENSES_REGULARITY_AFTER_CHEMO
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.menstruation_resumed_after_treatment
+    - name: pregnancy_attempt_yn
+      kor: 치료 후 임신 시도 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.pregnancy_attempt
+    - name: pregnancy_attempt_start_date
+      kor: 치료 후 임신 시도 시작일
+      type: date
+      value_kind: 날짜
+      tier: 보류
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.pregnancy_attempt
+    - name: pregnancy_success_yn
+      kor: 치료 후 임신 성공 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.pregnancy_success
+    - name: delivery_after_treatment_yn
+      kor: 치료 후 임신에서의 분만 시행 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED/LOINC (일부)
+      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.delivery
+  BREAST_EXAM:
+    name: BREAST_EXAM
+    layer: 질환 확장
+    kor: 유방암 검사(검사 1)
+    grain: 검사 1
+    pk: breast_exam_id
+    parent: PROCEDURE_OCCURRENCE
+    desc: 생식·산과력, 폐경, HRT, 치료 후 월경·임신, 분자아형, 유방 밀도·미세석회화, 다유전자 검사 점수 — 행 단위 검사 1
+    cohorts:
+    - BREAST_CANCER
+    fields:
+    - name: breast_exam_id
+      kor: 유방암 검사(검사 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - BREAST_CANCER
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - BREAST_CANCER
+    - name: procedure_occurrence_id
+      kor: PROCEDURE_OCCURRENCE 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE_OCCURRENCE 연결
+      cohorts:
+      - BREAST_CANCER
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - BREAST_CANCER
+    - name: exam_date
+      kor: 검사일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - BREAST_CANCER
+    - name: imaging_diagnostic_classification
+      kor: 영상검사 결과 진단적 분류(Diagnostic Classification)
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_IMAGING_DIAGNOSTIC_CLASSIFICATION
+      standard: SNOMED/LOINC (일부)
+      desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
+      cohorts:
+      - BREAST_CANCER
+      v1_hint:
+      - BREAST_CANCER.imex_rslt_diag_clcd
+    - name: mammographic_density
+      kor: 유방촬영술상 유방 밀도
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: BIRADS_DENSITY
+      standard: SNOMED (BI-RADS density)
+      cohorts:
+      - BREAST_CANCER
+  COLORECTAL_EXAM:
+    name: COLORECTAL_EXAM
+    layer: 질환 확장
+    kor: 대장암 검사(검사 1)
+    grain: 검사 1
+    pk: colorectal_exam_id
+    parent: PROCEDURE_OCCURRENCE
+    desc: 직장 MRI 구조값, 장루·문합·IMA·전환 사유, PCI·CC score, watch-and-wait, HIPEC, NAR — 행 단위 검사 1
+    cohorts:
+    - COLORECTAL_CANCER
+    fields:
+    - name: colorectal_exam_id
+      kor: 대장암 검사(검사 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: procedure_occurrence_id
+      kor: PROCEDURE_OCCURRENCE 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE_OCCURRENCE 연결
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: exam_date
+      kor: 검사일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: rectal_tumor_height_cm
+      kor: Rigid sigmoidoscopy 또는 MRI에서 측정된 직장암 위치 값
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: cm
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.rtcn_loca_dst_vl
+    - name: mri_invasion_depth_mm
+      kor: MRI 판독 결과 T3 이상에서 종양침윤 최대깊이 값(mm)
+      type: float
+      value_kind: 수치
+      tier: 보류
+      unit: mm
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tmin_mxdp_vl
+    - name: mri_t4b_invaded_organ
+      kor: MRI 판독 결과 T4B에서 침윤된 장기 부위
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_MRI_T4B_INVADED_ORGAN
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.t4b_inva_orgn_spnm
+    - name: mri_anterior_peritoneal_relation
+      kor: MRI 판독 결과 종양과 전방복막의 관계
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_MRI_ANTERIOR_PERITONEAL_RELATION
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.frnt_prtm_tumr_rlnm
+    - name: mri_distance_anal_verge_cm
+      kor: MRI 판독 결과 종양의 하부연과 항문연 사이의 거리 값(cm)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: cm
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.lstm_anvg_dst_vl
+    - name: mri_distance_anorectal_junction_cm
+      kor: MRI 판독 결과 종양의 하부연과 항문직장경계부 사이의 거리 값(cm)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: cm
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.lstm_anju_dst_vl
+    - name: mri_circumferential_extent
+      kor: MRI 판독 결과 종양의 환상 침범 범위(Circumferential tumor location)
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_MRI_CIRCUMFERENTIAL_EXTENT
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tumr_circ_loca_spcd
+    - name: mri_mrf_distance_mm
+      kor: MRI 판독 결과 직장간막근막에서 종양까지의 최단거리 값(mm)
+      type: float
+      value_kind: 수치
+      tier: 보류
+      unit: mm
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tumr_msfc_shrt_dst_vl
+    - name: mri_emvi_yn
+      kor: MRI 판독 결과 장벽외 혈관침윤(EMVI) 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 보류
+      codelist: YN
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tumr_emvi_ex_yn_spcd
+    - name: mri_mesorectal_node_yn
+      kor: MRI 판독 결과 직장 간내 림프절전이 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tumr_msrt_ln_mtst_ex_yn_spcd
+    - name: mri_extramesorectal_node_yn
+      kor: MRI 판독 결과 직장 간외 림프절전이 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tumr_exms_ln_mtst_ex_yn_spcd
+    - name: mri_circumferential_location
+      kor: MRI 판독 결과 종양의 환상 위치
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_MRI_CIRCUMFERENTIAL_LOCATION
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tumr_circ_loca_spcd
+    - name: mri_tumor_regression_grade
+      kor: MRI 판독 결과 종양반응등급(Radiologic tumor regression grade)
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_MRI_TUMOR_REGRESSION_GRADE
+      standard: SNOMED (일부)
+      desc: 직장 MRI 구조화 판독
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.tumr_rspn_grcd
+  COLORECTAL_SURGERY_DETAIL:
+    name: COLORECTAL_SURGERY_DETAIL
+    layer: 질환 확장
+    kor: 대장암 수술 세부(수술 1)
+    grain: 수술 1 (SURGERY 자식)
+    pk: colorectal_surgery_detail_id
+    parent: SURGERY
+    desc: 직장 MRI 구조값, 장루·문합·IMA·전환 사유, PCI·CC score, watch-and-wait, HIPEC, NAR — 행 단위 수술 1 (SURGERY 자식)
+    cohorts:
+    - COLORECTAL_CANCER
+    fields:
+    - name: colorectal_surgery_detail_id
+      kor: 대장암 수술 세부(수술 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: surgery_id
+      kor: SURGERY 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: SURGERY.surgery_id
+      desc: SURGERY 연결
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: preop_obstruction_treatment_yn
+      kor: 수술 전 폐색치료 시행 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.obst_trtm_spnm
+    - name: stoma_yn
+      kor: 수술 시 장루형성 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ostm_frmt_yn_unid_spnm
+    - name: stoma_reason
+      kor: 수술 시 장루형성 이유
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_STOMA_REASON
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ostm_frsn_spnm
+    - name: ima_ligation_level
+      kor: IMA (Inferior mesenteric artery) ligation 위치
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_IMA_LIGATION_LEVEL
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ima_ligt_loca_spnm
+    - name: splenic_flexure_mobilization_yn
+      kor: 비장굴곡 가동화 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.spfl_mobl_yn_unid_spnm
+    - name: anastomosis_method
+      kor: 문합 방법
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CL_ANASTOMOSIS_METHOD
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.anes_mtnm
+    - name: anastomosis_detail
+      kor: 문합 방법 세부 내용
+      type: text
+      value_kind: 텍스트
+      tier: 권고
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.anes_mtnm
+    - name: anastomosis_height_cm
+      kor: 문합부 위치 값
+      type: float
+      value_kind: 수치
+      tier: 권고
+      unit: cm
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.ansc_loca_dst_vl
+    - name: cc_score
+      kor: 완전감축점수(CC score)
+      type: integer
+      value_kind: 수치
+      tier: 보류
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: watch_and_wait_status
+      kor: 비수술적 경과관찰(watch-and-wait) 상태
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: CL_WATCH_AND_WAIT_STATUS
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+    - name: hipec_yn
+      kor: 온열복강내항암화학요법(HIPEC) 시행 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.lapr_conv_yn_unid_spnm
+    - name: conversion_to_open_yn
+      kor: 비개복수술 시행 중 개복수술로 전환 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.lapr_conv_yn_unid_spnm
+    - name: conversion_reason
+      kor: 비개복수술 시행 중 개복수술로 전환되었을 때 사유
+      type: text
+      value_kind: 텍스트
+      tier: 필수
+      standard: SNOMED (일부) · 자체
+      desc: 대장암 수술 세부
+      cohorts:
+      - COLORECTAL_CANCER
+      v1_hint:
+      - COLORECTAL_CANCER.lapr_conv_yn_unid_spcd
+  MASLD_EXAM:
+    name: MASLD_EXAM
+    layer: 질환 확장
+    kor: 대사이상지방간 검사(검사 1)
+    grain: 검사 1
+    pk: masld_exam_id
+    parent: PROCEDURE_OCCURRENCE
+    desc: 진단 근거, 병리 등급(NAS 구성·섬유화 병기), 탄성도(CAP/LSM/MRE/PDFF), 비침습 점수 구성, 비대상성 사건·HCC — 행 단위 검사 1
+    cohorts:
+    - MASLD
+    fields:
+    - name: masld_exam_id
+      kor: 대사이상지방간 검사(검사 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - MASLD
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - MASLD
+    - name: procedure_occurrence_id
+      kor: PROCEDURE_OCCURRENCE 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE_OCCURRENCE 연결
+      cohorts:
+      - MASLD
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - MASLD
+    - name: exam_date
+      kor: 검사일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - MASLD
+    - name: elastography_date
+      kor: 간 영상·탄성도 검사 시행일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      desc: 탄성도 행의 검사일
+      cohorts:
+      - MASLD
+    - name: mri_pdff_percent
+      kor: MRI-PDFF 간지방분율
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: '%'
+      standard: LOINC (일부) · 자체
+      desc: 검사값이지만 방법(장비)과 함께 저장
+      cohorts:
+      - MASLD
+    - name: mre_kpa
+      kor: MRE 간 경직도
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: kPa
+      standard: LOINC (일부) · 자체
+      desc: 검사값이지만 방법(장비)과 함께 저장
+      cohorts:
+      - MASLD
+    - name: cap_db_m
+      kor: FibroScan 감쇠계수(CAP)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: dB/m
+      standard: LOINC (일부) · 자체
+      desc: 검사값이지만 방법(장비)과 함께 저장
+      cohorts:
+      - MASLD
+    - name: lsm_kpa
+      kor: FibroScan 간 경직도(LSM)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: kPa
+      standard: LOINC (일부) · 자체
+      desc: 검사값이지만 방법(장비)과 함께 저장
+      cohorts:
+      - MASLD
+    - name: hvpg_mmhg
+      kor: 간정맥압력차(HVPG)
+      type: float
+      value_kind: 수치
+      tier: 권고
+      unit: mm[Hg]
+      standard: LOINC (일부) · 자체
+      desc: 검사값이지만 방법(장비)과 함께 저장
+      cohorts:
+      - MASLD
+    - name: spleen_stiffness_kpa
+      kor: 비장 경직도
+      type: float
+      value_kind: 수치
+      tier: 권고
+      unit: kPa
+      standard: LOINC (일부) · 자체
+      desc: 검사값이지만 방법(장비)과 함께 저장
+      cohorts:
+      - MASLD
+  MASLD_ASSESSMENT:
+    name: MASLD_ASSESSMENT
+    layer: 질환 확장
+    kor: 대사이상지방간 평가(평가 1)
+    grain: 평가 1
+    pk: masld_assessment_id
+    parent: COHORT_INDEX
+    desc: 진단 근거, 병리 등급(NAS 구성·섬유화 병기), 탄성도(CAP/LSM/MRE/PDFF), 비침습 점수 구성, 비대상성 사건·HCC — 행 단위 평가 1
+    cohorts:
+    - MASLD
+    fields:
+    - name: masld_assessment_id
+      kor: 대사이상지방간 평가(평가 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - MASLD
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - MASLD
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - MASLD
+    - name: assessment_date
+      kor: 평가일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - MASLD
+    - name: prognostic_score_type
+      kor: 대사이상지방간 예후 판단척도 종류
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - MASLD
+      v1_hint:
+      - MASLD.exam_gnrx_idx_nm
+    - name: prognostic_score_value
+      kor: 대사이상지방간 예후 판단척도 산식에 따른 산출 결과 값
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - MASLD
+      v1_hint:
+      - MASLD.exam_gnrx_rslt_vl
+    - name: elf_score
+      kor: ELF 섬유화 점수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - MASLD
+    - name: fib4_index
+      kor: FIB-4 지수
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - MASLD
+      v1_hint:
+      - MASLD.fib4_score
+    - name: nfs_score
+      kor: NAFLD 섬유화 점수(NFS)
+      type: integer
+      value_kind: 수치
+      tier: 보류
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - MASLD
+    - name: apri_score
+      kor: APRI 점수
+      type: integer
+      value_kind: 수치
+      tier: 권고
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - MASLD
+      v1_hint:
+      - MASLD.apri_score
+    - name: pro_c3_ng_ml
+      kor: 혈청 PRO-C3
+      type: float
+      value_kind: 수치
+      tier: 권고
+      unit: ng/mL
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - MASLD
+    - name: nis4_score
+      kor: NIS4 점수
+      type: integer
+      value_kind: 수치
+      tier: 보류
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - MASLD
+      v1_hint:
+      - MASLD.bard_score
+    - name: meld_score
+      kor: MELD(Model for End-stage Liver Disease) 점수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED
+      derived_score: true
+      cohorts:
+      - MASLD
+    - name: child_pugh_class
+      kor: Child-Pugh(간기능 중증도) 등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CHILD_PUGH
+      standard: SNOMED
+      derived_score: true
+      cohorts:
+      - MASLD
+  MASLD_EVENT:
+    name: MASLD_EVENT
+    layer: 질환 확장
+    kor: 대사이상지방간 사건(사건 1)
+    grain: 사건 1
+    pk: masld_event_id
+    parent: COHORT_INDEX
+    desc: 진단 근거, 병리 등급(NAS 구성·섬유화 병기), 탄성도(CAP/LSM/MRE/PDFF), 비침습 점수 구성, 비대상성 사건·HCC — 행 단위 사건 1
+    cohorts:
+    - MASLD
+    fields:
+    - name: masld_event_id
+      kor: 대사이상지방간 사건(사건 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - MASLD
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - MASLD
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - MASLD
+    - name: event_date
+      kor: 사건 발생일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - MASLD
+    - name: mash_resolution_yn
+      kor: MASH 소실 여부
+      type: integer
+      value_kind: 예/아니오+날짜
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일 동반
+      cohorts:
+      - MASLD
+    - name: fibrosis_improvement_yn
+      kor: 섬유화 1단계 이상 호전 여부
+      type: integer
+      value_kind: 예/아니오+날짜
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일 동반
+      cohorts:
+      - MASLD
+    - name: cirrhosis_yn
+      kor: 간경변증 동반 여부
+      type: integer
+      value_kind: 예/아니오+날짜
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일 동반
+      cohorts:
+      - MASLD
+    - name: decompensation_event_yn
+      kor: 간부전 비대상성 사건(복수·정맥류출혈·간성뇌증 등) 발생 여부
+      type: integer
+      value_kind: 예/아니오+날짜
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일 동반
+      cohorts:
+      - MASLD
+    - name: portal_hypertension_yn
+      kor: 문맥압항진증 여부
+      type: integer
+      value_kind: 예/아니오+날짜
+      tier: 보류
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일 동반
+      cohorts:
+      - MASLD
+      v1_hint:
+      - MASLD.shis_yn_noans_spnm
+    - name: esophageal_varices_yn
+      kor: 내시경으로 확인된 식도정맥류 여부
+      type: integer
+      value_kind: 예/아니오+날짜
+      tier: 보류
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일 동반
+      cohorts:
+      - MASLD
+    - name: hcc_yn
+      kor: 간세포암(HCC) 발생 여부
+      type: integer
+      value_kind: 예/아니오+날짜
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일 동반
+      cohorts:
+      - MASLD
+  DIABETES_BASELINE:
+    name: DIABETES_BASELINE
+    layer: 질환 확장
+    kor: 당뇨병 기저(환자 1)
+    grain: 환자 1
+    pk: diabetes_baseline_id
+    parent: COHORT_INDEX
+    desc: 당뇨 유형·진단 나이, CGM 요약(집계기간), 합병증 발생·등급(CKD 병기, 망막병증, 신경병증, 족부), 기기 사용 — 행 단위 환자 1
+    cohorts:
+    - DIABETES
+    fields:
+    - name: diabetes_baseline_id
+      kor: 당뇨병 기저(환자 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - DIABETES
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - DIABETES
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - DIABETES
+    - name: record_date
+      kor: 기록일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - DIABETES
+    - name: cgm_use_yn
+      kor: 연속혈당측정기(CGM) 사용 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED (device)
+      cohorts:
+      - DIABETES
+    - name: insulin_pump_yn
+      kor: 인슐린 펌프/폐회로 시스템 사용 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED (device)
+      cohorts:
+      - DIABETES
+  DIABETES_EVENT:
+    name: DIABETES_EVENT
+    layer: 질환 확장
+    kor: 당뇨병 사건(사건 1)
+    grain: 사건 1
+    pk: diabetes_event_id
+    parent: COHORT_INDEX
+    desc: 당뇨 유형·진단 나이, CGM 요약(집계기간), 합병증 발생·등급(CKD 병기, 망막병증, 신경병증, 족부), 기기 사용 — 행 단위 사건 1
+    cohorts:
+    - DIABETES
+    fields:
+    - name: diabetes_event_id
+      kor: 당뇨병 사건(사건 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - DIABETES
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - DIABETES
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - DIABETES
+    - name: event_date
+      kor: 사건 발생일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - DIABETES
+    - name: hba1c_target_met_yn
+      kor: HbA1c 7% 미만 목표 달성 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      derived_score: true
+      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: severe_hypoglycemia_count
+      kor: 중증 저혈당 발생 횟수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED
+      desc: 발생일·평가일 동반
+      cohorts:
+      - DIABETES
+    - name: hypoglycemia_unawareness_yn
+      kor: 저혈당 무감지증 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일·평가일 동반
+      cohorts:
+      - DIABETES
+    - name: ckd_stage
+      kor: 만성콩팥병(CKD) 병기
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: CKD_STAGE
+      standard: SNOMED
+      derived_score: true
+      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: dka_yn
+      kor: 당뇨병성 케톤산증(DKA) 발생 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      derived_score: true
+      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: retinopathy_severity
+      kor: 당뇨병성 망막병증 중증도 등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: DR_SEVERITY
+      standard: SNOMED
+      derived_score: true
+      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: macular_edema_yn
+      kor: 당뇨병성 황반부종 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      derived_score: true
+      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: peripheral_neuropathy_yn
+      kor: 당뇨병성 말초신경병증 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      derived_score: true
+      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: foot_ulcer_yn
+      kor: 당뇨병성 족부궤양 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      derived_score: true
+      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
+      cohorts:
+      - DIABETES
+    - name: wagner_grade
+      kor: 족부궤양 Wagner 등급
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 보류
+      codelist: WAGNER
+      standard: SNOMED
+      desc: 발생일·평가일 동반
+      cohorts:
+      - DIABETES
+    - name: cardiac_autonomic_neuropathy_yn
+      kor: 심장 자율신경병증 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일·평가일 동반
+      cohorts:
+      - DIABETES
+    - name: charcot_foot_yn
+      kor: 샤르코 관절병증(Charcot foot) 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 권고
+      codelist: YN
+      standard: SNOMED
+      desc: 발생일·평가일 동반
+      cohorts:
+      - DIABETES
+  LYMPHOMA_ASSESSMENT:
+    name: LYMPHOMA_ASSESSMENT
+    layer: 질환 확장
+    kor: 림프종 평가(평가 1)
+    grain: 평가 1
+    pk: lymphoma_assessment_id
+    parent: COHORT_INDEX
+    desc: B 증상, 침범 부위·영역 수, bulky, 전환, 예후지수(IPI 등), 이식·CAR-T, MRD·ctDNA — 행 단위 평가 1
+    cohorts:
+    - LYMPHOMA
+    fields:
+    - name: lymphoma_assessment_id
+      kor: 림프종 평가(평가 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - LYMPHOMA
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - LYMPHOMA
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - LYMPHOMA
+    - name: assessment_date
+      kor: 평가일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - LYMPHOMA
+    - name: b_symptoms_yn
+      kor: B 증상 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.observation_id
+    - name: fever_yn
+      kor: 원인불명 발열 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      cohorts:
+      - LYMPHOMA
+    - name: night_sweats_yn
+      kor: 야간 발한 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.drenching_night_sweats_yn
+    - name: weight_loss_percent_6m
+      kor: 최근 6개월 체중감소율
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: '%'
+      standard: SNOMED
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.weight_loss_6mo_pct
+    - name: prognostic_index_date
+      kor: 예후지수 산정 기준일
+      type: date
+      value_kind: 날짜
+      tier: 권고
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.prognostic_score_date
+    - name: ipi_score
+      kor: IPI 총점
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.ipi_score
+    - name: ipi_risk_group
+      kor: IPI 위험군
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RISK_GROUP
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.ipi_score
+    - name: aaipi_score
+      kor: 연령보정 IPI(aaIPI) 총점
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.aaipi_score
+    - name: nccn_ipi_score
+      kor: NCCN-IPI 총점
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.nccn_ipi_score
+    - name: flipi_score
+      kor: FLIPI 총점
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.flipi_score
+    - name: flipi2_score
+      kor: FLIPI2 총점
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.flipi2_score
+    - name: mipi_score
+      kor: MIPI 점수
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.ecog_performance_status
+    - name: mipi_c_risk_group
+      kor: MIPI-c 위험군
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: RISK_GROUP
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.mipi_score
+    - name: ips_score
+      kor: 호지킨림프종 IPS 총점
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+    - name: pit_score
+      kor: 말초T세포림프종 PIT 총점
+      type: integer
+      value_kind: 수치
+      tier: 필수
+      standard: 자체
+      derived_score: true
+      desc: 구성요소 저장 + 점수는 규칙
+      cohorts:
+      - LYMPHOMA
+    - name: gelf_high_burden_yn
+      kor: GELF 고종양부담 충족 여부
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: LOINC (일부)
+      derived_score: true
+      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
+      cohorts:
+      - LYMPHOMA
+  LYMPHOMA_EVENT:
+    name: LYMPHOMA_EVENT
+    layer: 질환 확장
+    kor: 림프종 사건(사건 1)
+    grain: 사건 1
+    pk: lymphoma_event_id
+    parent: COHORT_INDEX
+    desc: B 증상, 침범 부위·영역 수, bulky, 전환, 예후지수(IPI 등), 이식·CAR-T, MRD·ctDNA — 행 단위 사건 1
+    cohorts:
+    - LYMPHOMA
+    fields:
+    - name: lymphoma_event_id
+      kor: 림프종 사건(사건 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - LYMPHOMA
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - LYMPHOMA
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - LYMPHOMA
+    - name: event_date
+      kor: 사건 발생일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - LYMPHOMA
+    - name: transformation_yn
+      kor: 고등급 조직학적 전환 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED/ICD-O-3
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.transformation_yn
+    - name: transformation_date
+      kor: 조직학적 전환 확정일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED/ICD-O-3
+      cohorts:
+      - LYMPHOMA
+    - name: transformation_from_subtype
+      kor: 전환 전 림프종 아형
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: LYMPHOMA_SUBTYPE
+      standard: SNOMED/ICD-O-3
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.transformation_yn
+    - name: transformation_to_subtype
+      kor: 전환 후 림프종 아형
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: LYMPHOMA_SUBTYPE
+      standard: SNOMED/ICD-O-3
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.transformation_yn
+    - name: sct_yn
+      kor: 조혈모세포이식 시행 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED procedure
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.stem_cell_transplant_yn
+    - name: sct_date
+      kor: 조혈모세포 주입 또는 이식일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED procedure
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.stem_cell_transplant_date
+    - name: sct_type
+      kor: 조혈모세포이식 유형
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: SCT_TYPE
+      standard: SNOMED procedure
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.stem_cell_transplant_yn
+    - name: car_t_yn
+      kor: CAR-T 세포치료 시행 여부
+      type: integer
+      value_kind: 예/아니오
+      tier: 필수
+      codelist: YN
+      standard: SNOMED procedure
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.car_t_therapy_yn
+    - name: car_t_infusion_date
+      kor: CAR-T 세포 주입일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED procedure
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.car_t_infusion_date
+    - name: car_t_target
+      kor: CAR-T 표적 항원
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      codelist: SCT_TYPE
+      standard: SNOMED procedure
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.car_t_target_antigen
+    - name: apheresis_date
+      kor: 백혈구성분채집일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED procedure
+      cohorts:
+      - LYMPHOMA
+    - name: lymphodepletion_start_date
+      kor: 림프구감소 전처치 시작일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      standard: SNOMED procedure
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.lymphodepletion_start_date
+  LYMPHOMA_EXAM:
+    name: LYMPHOMA_EXAM
+    layer: 질환 확장
+    kor: 림프종 검사(검사 1)
+    grain: 검사 1
+    pk: lymphoma_exam_id
+    parent: PROCEDURE_OCCURRENCE
+    desc: B 증상, 침범 부위·영역 수, bulky, 전환, 예후지수(IPI 등), 이식·CAR-T, MRD·ctDNA — 행 단위 검사 1
+    cohorts:
+    - LYMPHOMA
+    fields:
+    - name: lymphoma_exam_id
+      kor: 림프종 검사(검사 1) ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: pk
+      desc: 행 고유키
+      cohorts:
+      - LYMPHOMA
+    - name: person_id
+      kor: 환자 ID
+      type: integer
+      value_kind: 키
+      tier: 필수
+      required: true
+      key: fk
+      ref: PERSON.person_id
+      desc: PERSON 외래키
+      cohorts:
+      - LYMPHOMA
+    - name: procedure_occurrence_id
+      kor: PROCEDURE_OCCURRENCE 외래키
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: PROCEDURE_OCCURRENCE.procedure_occurrence_id
+      desc: PROCEDURE_OCCURRENCE 연결
+      cohorts:
+      - LYMPHOMA
+    - name: visit_occurrence_id
+      kor: 방문 ID
+      type: integer
+      value_kind: 키
+      tier: 권고
+      key: fk
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      desc: 관련 방문(선택)
+      cohorts:
+      - LYMPHOMA
+    - name: exam_date
+      kor: 검사일
+      type: date
+      value_kind: 날짜
+      tier: 필수
+      required: true
+      event_date: true
+      desc: 행의 기준 사건일
+      cohorts:
+      - LYMPHOMA
+    - name: pet_suvmax
+      kor: PET 최고 SUVmax
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED/LOINC (일부)
+      cohorts:
+      - LYMPHOMA
+    - name: metabolic_tumor_volume_ml
+      kor: 대사종양용적(MTV)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      unit: mL
+      standard: SNOMED/LOINC (일부)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.metabolic_tumor_volume
+    - name: total_lesion_glycolysis
+      kor: 총병변당분해(TLG)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED/LOINC (일부)
+      cohorts:
+      - LYMPHOMA
+      v1_hint:
+      - LYMPHOMA.total_lesion_glycolysis
+    - name: mediastinal_mass_ratio
+      kor: 종격동 종괴비(MMR)
+      type: float
+      value_kind: 수치
+      tier: 필수
+      standard: SNOMED/LOINC (일부)
+      cohorts:
+      - LYMPHOMA

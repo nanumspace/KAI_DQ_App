@@ -35,6 +35,10 @@ cd dq-ts && npm test
 
 Python과 TypeScript 엔진은 같은 YAML을 읽으므로 규칙 YAML만 고치면 두 엔진에 같이 반영됩니다. 구조 규칙의 검사 유형을 새로 만드는 경우에만 `dq/engine.py`와 `dq-ts/src/structural.ts` 양쪽을 고치고 동등성 시험을 통과시켜야 합니다.
 
+## 사전 v2
+
+`spec/v2/` 의 재설계 명세는 `spec/build_spec_v2.py` 가 배치표(비공개)와 `spec/v2_field_names.py` 에서 생성합니다. 필드 이름·단위·코드표 지정을 바꾸려면 `v2_field_names.py` 를 고치고 다시 생성합니다. 생성물을 직접 편집하지 마세요.
+
 ## 명세 자체를 바꾸기
 
 명세를 만드는 `spec/build_spec.py`는 원본 데이터 사전을 파싱한 JSON을 입력으로 받습니다. 원본 사전은 공개 저장소에 포함되지 않으므로, 외부 기여자는 생성된 `spec/*.yaml`을 직접 고치고 그 변경을 pull request로 제안합니다. 유지 관리자가 사전과 대조해 반영합니다.

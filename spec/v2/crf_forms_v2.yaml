@@ -1294,6 +1294,8 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_SNOMED_MORPHOLOGY
       vocabulary: SNOMED (일부) · 자체 어휘
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000420
@@ -1334,6 +1336,8 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_SNOMED_MORPHOLOGY
       vocabulary: SNOMED (일부) · 자체 어휘
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000422
@@ -1355,6 +1359,8 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_SNOMED_MORPHOLOGY
       vocabulary: SNOMED (일부) · 자체 어휘
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000423
@@ -1935,6 +1941,8 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_SNOMED_DISORDER
       vocabulary: SNOMED (일부) · 자체 어휘
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000459
@@ -2347,6 +2355,8 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_HGNC_GENE
       vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000473
@@ -2548,6 +2558,8 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_HGNC_GENE
       vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000485
@@ -3083,6 +3095,9 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_LOINC
+      - REF_SNOMED_DISORDER
       vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000518
@@ -3407,6 +3422,9 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_EDI_PROCEDURE
+      - REF_SNOMED_PROCEDURE
       vocabulary: EDI/SNOMED procedure
       standard: EDI/SNOMED procedure
       concept_id: 10000000532
@@ -3609,6 +3627,9 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 보류
+      reference:
+      - REF_EDI_PROCEDURE
+      - REF_SNOMED_PROCEDURE
       vocabulary: EDI/SNOMED procedure
       standard: EDI/SNOMED procedure
       concept_id: 10000000541
@@ -3757,6 +3778,9 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_EDI_PROCEDURE
+      - REF_SNOMED_PROCEDURE
       vocabulary: SNOMED/EDI
       standard: SNOMED/EDI
       concept_id: 10000000544
@@ -4013,6 +4037,8 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_HEMONC_REGIMEN
       vocabulary: HemOnc/자체
       standard: HemOnc/자체
       concept_id: 10000000553
@@ -4915,6 +4941,8 @@ forms:
       type: integer
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_MEDDRA_PT
       vocabulary: MedDRA
       concept_id: 10000000587
       desc: 이상사례를 나타내는 표준 코드값이다.
@@ -5287,6 +5315,8 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 필수
+      reference:
+      - REF_SNOMED_NEOPLASM
       vocabulary: SNOMED (family member)
       standard: SNOMED (family member)
       concept_id: 10000000599
@@ -5337,6 +5367,9 @@ forms:
       type: varchar
       value_kind: 열린 표준 코드
       tier: 권고
+      reference:
+      - REF_SNOMED_DISORDER
+      - REF_KCD
       vocabulary: SNOMED/KCD
       concept_id: 10000000602
       target:

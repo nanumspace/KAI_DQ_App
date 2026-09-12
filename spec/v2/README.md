@@ -109,8 +109,33 @@ BI-RADS 처럼 **범주 하나하나를 가리키는 SNOMED 개념은 없는데 
 
 코드표 없는 척도를 적어두면 조용히 사라지므로 빌드가 경고로 잡습니다.
 
+### 참조표 등록 (열린 표준 코드)
+
+값이 미리 정해진 필드는 값 집합으로 받지만, 수술명·레지멘·이상사례 용어처럼 값이 수천~수십만 개인 필드(**14개**)는 값을 열거하지 않고 **어느 표준 표를 쓰는가**만 정합니다. 그 등록 내용이 `spec/v2_reference_tables.py` 이고, 생성물은 `spec/v2/vocab/REFERENCE_TABLE.csv` 입니다. 서식에서는 필드의 `reference:` 항목으로 드러납니다.
+
+**표의 내용은 저장소에 넣지 않습니다.** MedDRA·SNOMED 는 재배포가 제한된 라이선스이고, 심평원 마스터는 공개 데이터지만 원본이 수십 MB입니다. 대신 `spec/load_reference_tables.py` 가 각자 받은 로컬 원본을 읽어 `spec/v2/vocab/ref/`(gitignore)에 표를 만듭니다.
+
+```bash
+uv run --with-requirements spec/requirements.txt python spec/load_reference_tables.py
+KAI_REF_ROOT=/경로/표준용어 python spec/load_reference_tables.py --only REF_MEDDRA_PT
+```
+
+원본이 없는 표는 건너뛰고 무엇이 없는지 알려줍니다. 만든 표마다 행 수와 sha256 을 `ref/manifest.json` 에 남겨 어느 판으로 만든 표인지 확인할 수 있습니다.
+
+| 참조표 | 어휘 | 로더 | 비고 |
+|---|---|---|---|
+| `REF_MEDDRA_PT` | MedDRA 28.0 | ✅ 26,920행 | 이상사례 용어. LLT 가 아니라 PT 수준 |
+| `REF_EDI_PROCEDURE` | EDI | ✅ 432,993행 | 수술명·장루복원술명·방사선치료명 |
+| `REF_EDI_DRUG` | EDI | ✅ 22,307행 | `DRUG_EXPOSURE.drug_concept_id` |
+| `REF_KCD` | KCD 8차 | ✅ 21,299행 | 가족 질환 |
+| `REF_LOINC` | LOINC 2.80 | ✅ 104,672행 | 유세포검사 요약 |
+| `REF_SNOMED_PROCEDURE/MORPHOLOGY/NEOPLASM/DISORDER` | SNOMED | ECL | 로컬 배포본 대신 용어 서버에서 받습니다 |
+| `REF_HGNC_GENE` | HGNC | 미구현 | genenames.org complete set |
+| `REF_HEMONC_REGIMEN` | HemOnc | 미구현 | 국내 전용 레지멘은 자체 어휘로 받습니다 |
+
+열린 표준 코드인데 참조표가 등록되지 않은 필드가 있으면 빌드가 경고합니다.
+
 ## 다음 단계 (2.2)
 
-- 열린 표준 코드(수술명·레지멘·MedDRA 용어·약제)의 참조표를 어휘에 적재.
 - v1 미승격 필드 575개 중 승격할 것 고르기.
 - 3단계: 규칙 생성기·가상데이터·엔진·앱을 v2 로 전환. 앱에 서식→레코드 변환 단계를 추가.

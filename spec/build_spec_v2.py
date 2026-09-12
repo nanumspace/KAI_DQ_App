@@ -31,6 +31,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "spec"))
 from v2_field_names import FIELD_NAMES, UNITS, CODELIST_OVERRIDE, TYPE_OVERRIDE  # noqa: E402
 from v2_omop_map import CONCEPT_ID_BASE, OMOP_TABLES, SEED_CONCEPTS, FORM_MAP  # noqa: E402
+from v2_reference_tables import REFERENCE_TABLES, FIELD_REFERENCES, TABLE_REFERENCES  # noqa: E402
 from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, SNOMED_SCALES, LOINC_SOURCE, LOINC_FIELD_CODES,  # noqa: E402
                                PFT_ITEMS, ALCOHOL_ITEMS, COMORBIDITY_ITEMS, DRUG_CLASS_ITEMS)
 
@@ -297,6 +298,26 @@ for cs_id, (kor, dom, items, _adapt, note) in SPECIAL_SETS.items():
             code, ko, en, (voc, vcode) = it
         c = concept(f"CS:{cs_id}:{code}", ko, en, idom, voc, "Value", vcode, "S")
         concept_sets[cs_id]["items"].append(dict(concept_id=c, code=code, label=ko))
+# 2.2: 열린 표준 코드가 가리키는 참조표를 어휘에 등록한다. 표의 '내용'은 라이선스 때문에
+# 저장소에 넣지 않고 spec/load_reference_tables.py 가 로컬 원본에서 만든다(spec/v2/vocab/ref/).
+for ref_id, R in REFERENCE_TABLES.items():
+    concept(f"REF:{ref_id}", R["kor"], ref_id, "Metadata", R["vocabulary"], "Reference table",
+            f"{R['vocabulary']}:{R.get('ecl') or R.get('code')}", "C", R["note"])
+_ref_fields = collections.defaultdict(list)
+for (fm, fn), refs in FIELD_REFERENCES.items():
+    for r in refs:
+        if r not in REFERENCE_TABLES: warnings.append(f"{fm}.{fn} 이 등록되지 않은 참조표 {r} 를 가리킨다")
+    if fm not in forms or fn not in forms[fm]["fields"]:
+        warnings.append(f"FIELD_REFERENCES 의 {fm}.{fn} 에 해당하는 필드가 없다")
+    else:
+        forms[fm]["fields"][fn]["reference"] = refs
+        _ref_fields[fm].append(fn)
+# 열린 표준 코드인데 참조표가 등록되지 않은 필드는 값을 어디서 고르는지 알 수 없다.
+for _fm, _F in forms.items():
+    for _fn, _f in _F["fields"].items():
+        if _f.get("value_kind") == "열린 표준 코드" and not _f.get("reference"):
+            warnings.append(f"{_fm}.{_fn} 은 열린 표준 코드인데 가리키는 참조표가 없다")
+
 for d in derived:
     cs = d.get("concept_set")
     if cs and cs not in concept_sets and cs not in SPECIAL_SETS:
@@ -308,7 +329,23 @@ def wcsv(fn, rows, cols):
         w = csv.DictWriter(fh, fieldnames=cols); w.writeheader()
         for r in rows: w.writerow({c: r.get(c, "") for c in cols})
 wcsv("CONCEPT.csv", concepts.values(), ["concept_id", "concept_name_ko", "concept_name_en", "domain_id", "vocabulary_id", "concept_class_id", "concept_code", "standard_concept", "standard_hint", "valid_start_date", "valid_end_date", "invalid_reason", "key"])
-wcsv("VOCABULARY.csv", [dict(vocabulary_id=v, vocabulary_name=n, license=l, vocabulary_version=ver) for v, n, l, ver in [("KAI", "K-AI 자체 어휘", "Apache-2.0", "2026.09"), ("SNOMED", "SNOMED CT", "SNOMED International 회원국 라이선스", "확인 필요"), ("LOINC", "LOINC", "무료(사용자 등록)", "2.80"), ("UCUM", "UCUM 단위", "무료", "2.1"), ("MedDRA", "MedDRA", "별도 라이선스", "확인 필요"), ("KCD", "한국표준질병사인분류", "공개", "8차"), ("EDI", "건강보험 EDI 코드", "공개", "확인 필요"), ("ATC", "WHO Anatomical Therapeutic Chemical", "공개", "2026")]], ["vocabulary_id", "vocabulary_name", "license", "vocabulary_version"])
+VOCAB_ROWS = [dict(vocabulary_id=v, vocabulary_name=n, license=l, vocabulary_version=ver) for v, n, l, ver in [("KAI", "K-AI 자체 어휘", "Apache-2.0", "2026.09"), ("SNOMED", "SNOMED CT", "SNOMED International 회원국 라이선스", "확인 필요"), ("LOINC", "LOINC", "무료(사용자 등록)", "2.80"), ("UCUM", "UCUM 단위", "무료", "2.1"), ("MedDRA", "MedDRA", "별도 라이선스", "확인 필요"), ("KCD", "한국표준질병사인분류", "공개", "8차"), ("EDI", "건강보험 EDI 코드", "공개", "확인 필요"), ("ATC", "WHO Anatomical Therapeutic Chemical", "공개", "2026")]]
+# 참조표가 끌어들인 어휘(HGNC·HemOnc 등)도 빠짐없이 싣고, 판·라이선스는 등록부 쪽을 따른다.
+for _r in REFERENCE_TABLES.values():
+    _row = next((x for x in VOCAB_ROWS if x["vocabulary_id"] == _r["vocabulary"]), None)
+    if _row is None:
+        VOCAB_ROWS.append(dict(vocabulary_id=_r["vocabulary"], vocabulary_name=_r["vocabulary"], license=_r["license"], vocabulary_version=_r["version"]))
+    elif _row["vocabulary_version"] == "확인 필요":
+        _row.update(license=_r["license"], vocabulary_version=_r["version"])
+wcsv("VOCABULARY.csv", VOCAB_ROWS, ["vocabulary_id", "vocabulary_name", "license", "vocabulary_version"])
+# 참조표 등록부. 표의 내용이 아니라 "어느 표를 어디서 어떻게 얻는가"를 싣는다.
+wcsv("REFERENCE_TABLE.csv", [dict(reference_id=k, concept_id=registry[f"REF:{k}"], kor=R["kor"], vocabulary=R["vocabulary"],
+                                 version=R["version"], license=R["license"], obtain=R["obtain"],
+                                 source=R.get("source") or R.get("url") or (f"ECL {R['ecl']}" if R.get("ecl") else ""),
+                                 code_column=R["code"], label_column=R["label"],
+                                 used_by="; ".join(sorted(f"{a}.{b}" for (a, b), v in list(FIELD_REFERENCES.items()) + list(TABLE_REFERENCES.items()) if k in v)),
+                                 note=R["note"]) for k, R in REFERENCE_TABLES.items()],
+     ["reference_id", "concept_id", "kor", "vocabulary", "version", "license", "obtain", "source", "code_column", "label_column", "used_by", "note"])
 rel = []
 for cs in concept_sets.values():
     for it in cs["items"]: rel.append(dict(concept_id_1=it["concept_id"], concept_id_2=cs["parent_concept_id"], relationship_id="Is a"))
@@ -453,7 +490,7 @@ def clean(f):
     o = collections.OrderedDict()
     # 2.2: 코드표에 척도가 붙어 있으면 필드에서도 보이게 한다(값이 아니라 "이 필드가 무슨 척도인가").
     if f.get("codelist") in SNOMED_SCALES: f["scale"] = f"SNOMED:{SNOMED_SCALES[f['codelist']][0]} {SNOMED_SCALES[f['codelist']][1]}"
-    for k in ("name", "kor", "type", "value_kind", "tier", "required", "key", "ref", "event_date", "codelist", "scale", "vocabulary", "unit", "pattern", "standard", "concept_id", "derived_score", "desc", "target"):
+    for k in ("name", "kor", "type", "value_kind", "tier", "required", "key", "ref", "event_date", "codelist", "scale", "reference", "vocabulary", "unit", "pattern", "standard", "concept_id", "derived_score", "desc", "target"):
         v = f.get(k)
         if v not in (None, False, "", []): o[k] = v
     o["cohorts"] = sorted(f["cohorts"])

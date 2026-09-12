@@ -396,7 +396,49 @@ SNOMED_CODES = {
     ("CL_DIAGNOSIS_STATUS", "EXCLUDED"): "410516002",            # Known absent
     # RECURRENT(재발성): 후보 58184002 는 qualifier 가 아니라 disorder 라 위 셋과 층이 다르다.
 
+    # ---- 임상 종양 소견. 이 코드표는 한 축의 열거가 아니라 여러 종류의 임상 양상을 모은 것이라
+    #      finding 과 disorder 가 섞이는 것이 값의 성격 자체다(수정 방법처럼 한 축을 재는 경우와 다르다).
+    ("CL_CLINICAL_TUMOR_FEATURE", "PALPABLE"): "443607001",      # Palpable mass (finding)
+    ("CL_CLINICAL_TUMOR_FEATURE", "INFLAMMATORY"): "254840009",  # Inflammatory carcinoma of breast (disorder)
+    ("CL_CLINICAL_TUMOR_FEATURE", "OBSTRUCTION"): "81060008",    # Intestinal obstruction (disorder)
+    ("CL_CLINICAL_TUMOR_FEATURE", "PERFORATION"): "56905009",    # Perforation of intestine (disorder)
+    ("CL_CLINICAL_TUMOR_FEATURE", "BLEEDING"): "74474003",       # Gastrointestinal hemorrhage (disorder)
+    # NONPALPABLE(비촉지)·SKIN_INVOLVEMENT(피부·흉벽 침범): 대응 개념이 없다.
+    # INCIDENTAL(우연 발견): 검색되는 것이 전립선 전용 소견뿐이다.
+
+    # ---- 합병증 처치 (procedure)
+    ("CL_COMPLICATION_TREATMENT", "MEDICAL"): "416608005",       # Drug therapy
+    ("CL_COMPLICATION_TREATMENT", "ENDOSCOPIC"): "363687006",    # Endoscopic procedure
+    # DRAINAGE: 경피적 배액은 부위별 개념(간·복수·담낭…)만 있고 부위 없는 일반 개념이 없다.
+    # REOPERATION: 후보 261554009 는 procedure 가 아니라 qualifier value 라 나머지와 층이 어긋난다.
+    # OBSERVATION(보존적 관찰): 대응 개념이 없다.
+
+    # ---- DCIS 핵등급 (finding). 유방 DCIS 전용 개념이 세 등급 모두 있다.
+    ("CL_DCIS_NUCLEAR_GRADE", "LOW"): "369781009",               # DCIS nuclear pleomorphism, grade 1
+    ("CL_DCIS_NUCLEAR_GRADE", "INTERMEDIATE"): "369782002",      # DCIS nuclear pleomorphism, grade 2
+    ("CL_DCIS_NUCLEAR_GRADE", "HIGH"): "369783007",              # DCIS nuclear pleomorphism, grade 3
+
+    # ---- 검체 부위 구분 (body structure)
+    ("CL_BIOPSY_SITE", "REGIONAL_NODE"): "312500006",            # Regional lymph node structure
+    ("CL_SURGICAL_SPECIMEN_SITE", "REGIONAL_NODE"): "312500006",
+    # PRIMARY(원발 부위)·DISTANT(원격 전이 부위): SNOMED 의 원발·전이 개념(372087000 등)은 부위가
+    # 아니라 진단(disorder)이라 "어느 부위에서 뗀 검체인가"라는 이 필드의 뜻과 맞지 않는다.
+    # MARGIN(절제연): 절제연을 가리키는 부위 concept 이 없다.
+
+    # ---- 경과관찰
+    ("CL_WATCH_AND_WAIT_STATUS", "ONGOING"): "424313000",        # Active surveillance (regime/therapy)
+    # REGROWTH·CONVERTED_SURGERY·SUSTAINED_CCR: 경과의 상태를 가리키는 개념이 없다.
+
     # ---- 아직 KAI 로 남는 것들(확인 결과 대응 개념이 없거나 값이 뭉친다)
+    # CL_STAGING_METHOD: 축이 "무엇을 근거로 병기를 매겼나"인데 SNOMED 에는 근거 개념이 없고
+    #   PET-CT(450436003)·골수생검(234326005) 같은 시술 concept 만 있다. 다섯 값 중 둘만 시술로
+    #   올리면 코드표의 축이 섞이므로 전부 KAI 로 둔다.
+    # CL_LYMPHOMA_CATEGORY(NHL_B·NHL_T): B 계열은 Mature (peripheral) B-cell neoplasm(414654003)이
+    #   있으나 형질세포종까지 품는 더 넓은 개념이고, T 계열은 대응 개념이 아예 없다. 계열 정보는
+    #   CL_CELL_LINEAGE 로 이미 받는다.
+    # CL_PERITONEAL_CYTOLOGY_RESULT: 악성세포 유무 개념이 흉수 등 검체별로만 있고 복강 세척액용이 없다.
+    # CL_TME_QUALITY: 395136002 는 전직장간막절제 "시술"이지 그 질 등급이 아니다.
+    # CL_IMA_LIGATION_LEVEL: 하장간막동맥 결찰 시술 concept 만 있고 고위/저위라는 수준 값이 없다.
     # CL_IMAGING_DIAGNOSTIC_CLASSIFICATION(BI-RADS): SNOMED 에 척도(1348266008)와 평가 항목
     #   (146611000146107)은 있으나 범주 0~6 을 가리키는 값 concept 이 없다. 척도 concept 은 값이
     #   아니라 "이 필드가 무슨 척도인가"를 말하므로 필드 수준 메타로 두는 편이 맞다.

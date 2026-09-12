@@ -1,8 +1,9 @@
 cohorts:
   LUNG_CANCER:
     kor: 폐암
-    tables:
+    omop_tables:
     - PERSON
+    - OBSERVATION_PERIOD
     - DEATH
     - VISIT_OCCURRENCE
     - CONDITION_OCCURRENCE
@@ -11,6 +12,16 @@ cohorts:
     - MEASUREMENT
     - OBSERVATION
     - NOTE
+    - SPECIMEN
+    - COHORT
+    - EPISODE
+    - EPISODE_EVENT
+    extension_tables:
+    - PATHOLOGY_REPORT
+    - PATHOLOGY_TUMOR
+    - BIOMARKER
+    - LUNG_EXAM
+    forms:
     - COHORT_INDEX
     - STAGING
     - PATHOLOGY_REPORT
@@ -25,8 +36,9 @@ cohorts:
     - LUNG_EXAM
   BREAST_CANCER:
     kor: 유방암
-    tables:
+    omop_tables:
     - PERSON
+    - OBSERVATION_PERIOD
     - DEATH
     - VISIT_OCCURRENCE
     - CONDITION_OCCURRENCE
@@ -35,6 +47,17 @@ cohorts:
     - MEASUREMENT
     - OBSERVATION
     - NOTE
+    - SPECIMEN
+    - COHORT
+    - EPISODE
+    - EPISODE_EVENT
+    extension_tables:
+    - PATHOLOGY_REPORT
+    - PATHOLOGY_TUMOR
+    - BIOMARKER
+    - BREAST_BASELINE
+    - BREAST_EXAM
+    forms:
     - COHORT_INDEX
     - STAGING
     - PATHOLOGY_REPORT
@@ -50,8 +73,9 @@ cohorts:
     - BREAST_EXAM
   COLORECTAL_CANCER:
     kor: 대장암
-    tables:
+    omop_tables:
     - PERSON
+    - OBSERVATION_PERIOD
     - DEATH
     - VISIT_OCCURRENCE
     - CONDITION_OCCURRENCE
@@ -60,6 +84,17 @@ cohorts:
     - MEASUREMENT
     - OBSERVATION
     - NOTE
+    - SPECIMEN
+    - COHORT
+    - EPISODE
+    - EPISODE_EVENT
+    extension_tables:
+    - PATHOLOGY_REPORT
+    - PATHOLOGY_TUMOR
+    - BIOMARKER
+    - COLORECTAL_EXAM
+    - COLORECTAL_SURGERY_DETAIL
+    forms:
     - COHORT_INDEX
     - STAGING
     - PATHOLOGY_REPORT
@@ -75,8 +110,9 @@ cohorts:
     - COLORECTAL_SURGERY_DETAIL
   MASLD:
     kor: 대사이상지방간
-    tables:
+    omop_tables:
     - PERSON
+    - OBSERVATION_PERIOD
     - DEATH
     - VISIT_OCCURRENCE
     - CONDITION_OCCURRENCE
@@ -85,6 +121,16 @@ cohorts:
     - MEASUREMENT
     - OBSERVATION
     - NOTE
+    - SPECIMEN
+    - COHORT
+    - EPISODE
+    - EPISODE_EVENT
+    extension_tables:
+    - PATHOLOGY_REPORT
+    - MASLD_EXAM
+    - MASLD_ASSESSMENT
+    - MASLD_EVENT
+    forms:
     - COHORT_INDEX
     - PATHOLOGY_REPORT
     - SURGERY
@@ -95,8 +141,9 @@ cohorts:
     - MASLD_EVENT
   DIABETES:
     kor: 당뇨병
-    tables:
+    omop_tables:
     - PERSON
+    - OBSERVATION_PERIOD
     - DEATH
     - VISIT_OCCURRENCE
     - CONDITION_OCCURRENCE
@@ -105,6 +152,15 @@ cohorts:
     - MEASUREMENT
     - OBSERVATION
     - NOTE
+    - SPECIMEN
+    - COHORT
+    - EPISODE
+    - EPISODE_EVENT
+    extension_tables:
+    - BIOMARKER
+    - DIABETES_BASELINE
+    - DIABETES_EVENT
+    forms:
     - COHORT_INDEX
     - BIOMARKER
     - ADVERSE_EVENT
@@ -113,8 +169,9 @@ cohorts:
     - DIABETES_EVENT
   LYMPHOMA:
     kor: 림프종
-    tables:
+    omop_tables:
     - PERSON
+    - OBSERVATION_PERIOD
     - DEATH
     - VISIT_OCCURRENCE
     - CONDITION_OCCURRENCE
@@ -123,6 +180,17 @@ cohorts:
     - MEASUREMENT
     - OBSERVATION
     - NOTE
+    - SPECIMEN
+    - COHORT
+    - EPISODE
+    - EPISODE_EVENT
+    extension_tables:
+    - PATHOLOGY_REPORT
+    - BIOMARKER
+    - LYMPHOMA_ASSESSMENT
+    - LYMPHOMA_EVENT
+    - LYMPHOMA_EXAM
+    forms:
     - COHORT_INDEX
     - STAGING
     - PATHOLOGY_REPORT

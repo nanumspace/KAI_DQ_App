@@ -1,0 +1,8 @@
+vocabulary_id,vocabulary_name,license,vocabulary_version
+KAI,K-AI 자체 어휘,Apache-2.0,2026.09
+SNOMED,SNOMED CT,SNOMED International 회원국 라이선스,확인 필요
+LOINC,LOINC,무료,확인 필요
+UCUM,UCUM 단위,무료,2.1
+MedDRA,MedDRA,별도 라이선스,확인 필요
+KCD,한국표준질병사인분류,공개,8차
+EDI,건강보험 EDI 코드,공개,확인 필요

@@ -1082,117 +1082,117 @@ derived:
 derived_scores:
 - name: prognostic_score_type
   kor: 대사이상지방간 예후 판단척도 종류
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: prognostic_score_value
   kor: 대사이상지방간 예후 판단척도 산식에 따른 산출 결과 값
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: elf_score
   kor: ELF 섬유화 점수
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: fib4_index
   kor: FIB-4 지수
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: nfs_score
   kor: NAFLD 섬유화 점수(NFS)
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: apri_score
   kor: APRI 점수
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: pro_c3_ng_ml
   kor: 혈청 PRO-C3
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: nis4_score
   kor: NIS4 점수
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: meld_score
   kor: MELD(Model for End-stage Liver Disease) 점수
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: child_pugh_class
   kor: Child-Pugh(간기능 중증도) 등급
-  table: MASLD_ASSESSMENT
+  form: MASLD_ASSESSMENT
   cohort: MASLD
 - name: hba1c_target_met_yn
   kor: HbA1c 7% 미만 목표 달성 여부
-  table: DIABETES_EVENT
+  form: DIABETES_EVENT
   cohort: DIABETES
 - name: ckd_stage
   kor: 만성콩팥병(CKD) 병기
-  table: DIABETES_EVENT
+  form: DIABETES_EVENT
   cohort: DIABETES
 - name: dka_yn
   kor: 당뇨병성 케톤산증(DKA) 발생 여부
-  table: DIABETES_EVENT
+  form: DIABETES_EVENT
   cohort: DIABETES
 - name: retinopathy_severity
   kor: 당뇨병성 망막병증 중증도 등급
-  table: DIABETES_EVENT
+  form: DIABETES_EVENT
   cohort: DIABETES
 - name: macular_edema_yn
   kor: 당뇨병성 황반부종 여부
-  table: DIABETES_EVENT
+  form: DIABETES_EVENT
   cohort: DIABETES
 - name: peripheral_neuropathy_yn
   kor: 당뇨병성 말초신경병증 여부
-  table: DIABETES_EVENT
+  form: DIABETES_EVENT
   cohort: DIABETES
 - name: foot_ulcer_yn
   kor: 당뇨병성 족부궤양 여부
-  table: DIABETES_EVENT
+  form: DIABETES_EVENT
   cohort: DIABETES
 - name: prognostic_index_date
   kor: 예후지수 산정 기준일
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: ipi_score
   kor: IPI 총점
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: ipi_risk_group
   kor: IPI 위험군
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: aaipi_score
   kor: 연령보정 IPI(aaIPI) 총점
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: nccn_ipi_score
   kor: NCCN-IPI 총점
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: flipi_score
   kor: FLIPI 총점
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: flipi2_score
   kor: FLIPI2 총점
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: mipi_score
   kor: MIPI 점수
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: mipi_c_risk_group
   kor: MIPI-c 위험군
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: ips_score
   kor: 호지킨림프종 IPS 총점
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: pit_score
   kor: 말초T세포림프종 PIT 총점
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA
 - name: gelf_high_burden_yn
   kor: GELF 고종양부담 충족 여부
-  table: LYMPHOMA_ASSESSMENT
+  form: LYMPHOMA_ASSESSMENT
   cohort: LYMPHOMA

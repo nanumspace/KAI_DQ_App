@@ -37,7 +37,7 @@ Python과 TypeScript 엔진은 같은 YAML을 읽으므로 규칙 YAML만 고치
 
 ## 사전 v2
 
-`spec/v2/` 의 재설계 명세는 `spec/build_spec_v2.py` 가 배치표(비공개)와 `spec/v2_field_names.py` 에서 생성합니다. 필드 이름·단위·코드표 지정을 바꾸려면 `v2_field_names.py` 를 고치고 다시 생성합니다. 생성물을 직접 편집하지 마세요.
+`spec/v2/` 의 재설계 명세는 `spec/build_spec_v2.py` 가 배치표(비공개), `spec/v2_field_names.py`(필드 이름·단위·코드표·타입), `spec/v2_omop_map.py`(OMOP 테이블 정의, 어휘 씨앗, 서식→레코드 규칙)에서 생성합니다. 생성물을 직접 편집하지 말고 원천을 고쳐 다시 생성하세요. `spec/v2/vocab/concept_registry.json` 은 concept_id 등록부이므로 지우거나 고치지 마세요. 한 번 부여된 ID 는 재사용하지 않습니다.
 
 ## 명세 자체를 바꾸기
 

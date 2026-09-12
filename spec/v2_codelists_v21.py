@@ -334,7 +334,75 @@ SNOMED_CODES = {
     # (384689007 등)은 침범 여부만 말하고 현미경적/육안적을 나누지 않아 R1 과 R2 가 한 코드에 뭉친다.
     # AJCC R 분류는 코드 자체가 표준이므로 KAI 로 유지한다.
 
-    # 나머지 값 집합(영상 소견·생식력·이상사례 조치 등)의 SNOMED 승격은 다음 단계에서 이어서 채운다.
+    # ---- 직장암 MRI T4b 침범 장기 (body structure)
+    ("CL_MRI_T4B_INVADED_ORGAN", "PROSTATE"): "41216001",        # Structure of prostate
+    ("CL_MRI_T4B_INVADED_ORGAN", "SEMINAL_VESICLE"): "64739004",  # Seminal vesicle structure
+    ("CL_MRI_T4B_INVADED_ORGAN", "VAGINA"): "76784001",          # Vaginal structure
+    ("CL_MRI_T4B_INVADED_ORGAN", "UTERUS"): "35039007",          # Uterine structure
+    ("CL_MRI_T4B_INVADED_ORGAN", "BLADDER"): "89837001",         # Urinary bladder structure
+    ("CL_MRI_T4B_INVADED_ORGAN", "SACRUM"): "54735007",          # Bone structure of sacrum
+    # PELVIC_SIDEWALL(골반측벽): 골반강·복막강 개념만 있고 "측벽" 자체를 가리키는 부위 concept 이 없다.
+
+    # ---- 결절 영상 유형
+    ("CL_NODULE_RADIOLOGIC_TYPE", "GGN"): "1217294009",          # Ground glass lung opacity
+    # SOLID·PART_SOLID: 결절의 고형 성분 정도를 말하는 개념이 없다(간유리음영만 있다).
+
+    # ---- 폐경 상태 (finding)
+    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "PRE"): "22636003",    # Premenopausal state
+    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "PERI"): "161541000119104",  # Perimenopausal state
+    ("CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS", "POST"): "76498008",   # Postmenopausal state
+
+    # ---- 항암 후 월경 (finding)
+    ("CL_MENSES_REGULARITY_AFTER_CHEMO", "IRREGULAR"): "80182007",  # Irregular periods
+    ("CL_MENSES_REGULARITY_AFTER_CHEMO", "AMENORRHEA"): "14302001",  # Amenorrhea
+    # REGULAR: 검색되는 248965005 는 "월경 규칙성 소견"이라는 상위 개념이지 "규칙적"이라는 값이 아니다.
+
+    # ---- 임신 결과
+    ("CL_PREGNANCY_OUTCOME", "LIVE_BIRTH"): "281050002",         # Livebirth
+    ("CL_PREGNANCY_OUTCOME", "STILLBIRTH"): "237364002",         # Stillbirth
+    ("CL_PREGNANCY_OUTCOME", "MISCARRIAGE"): "17369002",         # Miscarriage (동의어 Spontaneous abortion)
+    ("CL_PREGNANCY_OUTCOME", "INDUCED_ABORTION"): "57797005",    # Induced termination of pregnancy
+    ("CL_PREGNANCY_OUTCOME", "ECTOPIC"): "34801009",             # Ectopic pregnancy
+    ("CL_PREGNANCY_OUTCOME", "ONGOING"): "77386006",             # Pregnancy
+
+    # ---- 수정 방법 (procedure)
+    ("CL_CONCEPTION_METHOD", "IVF"): "52637005",                 # Test tube ovum fertilization
+    ("CL_CONCEPTION_METHOD", "IUI"): "265064001",                # Intrauterine artificial insemination
+    # NATURAL: 후보가 1300203003 "자연 수정으로 생긴 임신"(finding)뿐이라 시술(procedure)인 다른 값들과
+    # 의미 층이 어긋난다. 한 코드표에 finding 과 procedure 를 섞지 않으려고 KAI 로 남긴다.
+
+    # ---- 가임력 보존 (procedure)
+    ("CL_FERTILITY_PRESERVATION_TYPE", "OOCYTE"): "440645004",   # Cryopreservation of oocyte
+    ("CL_FERTILITY_PRESERVATION_TYPE", "OVARIAN_TISSUE"): "439790009",  # Cryopreservation of ovarian tissue
+    # EMBRYO(배아 동결보존): 개념이 없다. GNRH_AGONIST 는 시술이 아니라 약물 요법이라 약물 계열로 받는다.
+
+    # ---- 혼인 상태 (finding)
+    ("CL_MARITAL_STATUS_DETAIL", "NEVER_MARRIED"): "125725006",  # Marital status: single, never married
+    ("CL_MARITAL_STATUS_DETAIL", "MARRIED"): "87915002",         # Married
+    ("CL_MARITAL_STATUS_DETAIL", "DIVORCED"): "20295000",        # Divorced
+    ("CL_MARITAL_STATUS_DETAIL", "WIDOWED"): "33553000",         # Widowed
+    # SEPARATED(별거): 후보가 430617007 "가집행 판결에 의한 법적 별거"뿐이라 사실상의 별거까지 담는
+    # 우리 값보다 좁다.
+
+    # ---- 세포 계열 (cell)
+    ("CL_CELL_LINEAGE", "B_CELL"): "112130006",                  # B lymphocyte
+    ("CL_CELL_LINEAGE", "T_CELL"): "57184004",                   # T lymphocyte
+    ("CL_CELL_LINEAGE", "NK_CELL"): "259717003",                 # Natural killer cell
+    ("CL_CELL_LINEAGE", "HRS"): "32915009",                      # Reed-Sternberg cell
+
+    # ---- 진단 상태 (qualifier value). 셋 다 <<36692007 |Known| 계열이라 층이 일관된다.
+    ("CL_DIAGNOSIS_STATUS", "CONFIRMED"): "410605003",           # Confirmed present
+    ("CL_DIAGNOSIS_STATUS", "SUSPECTED"): "415684004",           # Suspected
+    ("CL_DIAGNOSIS_STATUS", "EXCLUDED"): "410516002",            # Known absent
+    # RECURRENT(재발성): 후보 58184002 는 qualifier 가 아니라 disorder 라 위 셋과 층이 다르다.
+
+    # ---- 아직 KAI 로 남는 것들(확인 결과 대응 개념이 없거나 값이 뭉친다)
+    # CL_IMAGING_DIAGNOSTIC_CLASSIFICATION(BI-RADS): SNOMED 에 척도(1348266008)와 평가 항목
+    #   (146611000146107)은 있으나 범주 0~6 을 가리키는 값 concept 이 없다. 척도 concept 은 값이
+    #   아니라 "이 필드가 무슨 척도인가"를 말하므로 필드 수준 메타로 두는 편이 맞다.
+    # CL_ACTION_TAKEN_CONCEPT_ID·CL_OUTCOME_CONCEPT_ID: ICH E2B 규제 범주라 SNOMED 대응이 없다.
+    # CL_GROSS_TYPE(Borrmann)·CL_TUMOR_BUDDING_GRADE(ITBCC)·CL_MRI_TUMOR_REGRESSION_GRADE(mrTRG)
+    #   ·CL_VPI_GRADE·NASH CRN 등급: 출판 합의 척도지만 SNOMED 에 값 concept 이 없다.
 }
 # 주의: CL_DISTANT_METASTASIS_SITE 의 DISTANT_NODE 는 "원격 림프절"인데 SNOMED 에는 그 뜻의
 # 단일 부위 concept 이 없어 Structure of lymph node(59441001) 로만 매핑했다. 국소/원격 구분은

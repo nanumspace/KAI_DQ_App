@@ -1,4 +1,4 @@
-# 사전 v2 변환 보고서 (2026-09-13)
+# 사전 v2 변환 보고서 (2026-09-14)
 
 입력: `internal/decisions/배치표_v0_20260912.xlsx` · 출력: `spec/v2/`
 
@@ -100,3 +100,7 @@ SNOMED 확인 대기(코드표별 미매핑 값 수 · 다음 단계에서 `SNOM
 
 ## 경고
 
+- PATHOLOGY_REPORT.surgical_tumor_site_concept_id 이 가리키는 값 집합 TUMOR_SITE 가 만들어지지 않았다 — 값 검사를 걸 수 없다
+- BIOMARKER.molecular_test_method_concept_id 이 가리키는 값 집합 BIOMARKER_METHOD 가 만들어지지 않았다 — 값 검사를 걸 수 없다
+- LYMPHOMA_EVENT.transformation_from_subtype_concept_id 이 가리키는 값 집합 LYMPHOMA_SUBTYPE 가 만들어지지 않았다 — 값 검사를 걸 수 없다
+- LYMPHOMA_EVENT.transformation_to_subtype_concept_id 이 가리키는 값 집합 LYMPHOMA_SUBTYPE 가 만들어지지 않았다 — 값 검사를 걸 수 없다

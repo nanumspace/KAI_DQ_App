@@ -504,6 +504,12 @@ spec = collections.OrderedDict(meta=dict(name="K-AI 질환별 코호트 데이�
                 "병원은 CRF 서식을 채우고 앱이 서식→레코드 규칙으로 저장 테이블을 만든다", "OMOP 에 자리가 없는 병리 세부·질환 항목은 K-AI 확장 테이블(OMOP 관례: *_concept_id + *_source_value)", "한 테이블 = 행 단위 하나"]),
     layers=dict(omop=[t for t, T in tables.items() if T["layer"] == "OMOP"], extension=[t for t, T in tables.items() if T["layer"] != "OMOP"]),
     tables=tables)
+# 저장 컬럼이 가리키는 값 집합이 실제로 만들어졌는지 본다. 없으면 그 컬럼은 검사할 근거가 없다.
+for _t in tables.values():
+    for _c in _t["fields"]:
+        _cs = _c.get("concept_set")
+        if _cs and _cs not in concept_sets:
+            warnings.append(f"{_t['name']}.{_c['name']} 이 가리키는 값 집합 {_cs} 가 만들어지지 않았다 — 값 검사를 걸 수 없다")
 dump(spec, "kai_cdm_spec_v2.yaml")
 dump(dict(forms=collections.OrderedDict((n, dict(name=n, kor=F["kor"], grain=F["grain"], kind="OMOP 투영" if n in FORM_MAP else "확장 테이블 직접 저장",
      storage=list(dict.fromkeys([a["table"] for a in FORM_MAP[n]["anchors"]] + [FORM_MAP[n]["attr_default"]])) if n in FORM_MAP else [n], cohorts=sorted(F["cohorts"]), fields=[clean(f) for f in F["fields"].values()])) for n, F in forms.items())), "crf_forms_v2.yaml")

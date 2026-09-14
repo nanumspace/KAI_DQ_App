@@ -155,4 +155,8 @@ KAI_REF_ROOT=/경로/표준용어 python spec/load_reference_tables.py --only RE
 
 ## 다음 단계 (2.2)
 
-- 3단계: 규칙 생성기·가상데이터·엔진·앱을 v2 로 전환. 앱에 서식→레코드 변환 단계를 추가.
+- **3단계 (진행 중): v1 과 병행하며 v2 경로를 만든다.** 병원이 쓰던 v1 을 끊지 않고 둘을 견주어 보기 위해서다. v2 가 안정되면 v1 을 재단한다.
+  - ✅ 규칙 생성기: `python rules/generate_structural_rules.py --spec v2` → `rules/rules_structural_v2.yaml` (1,045개)
+  - ⬜ 가상데이터: v2 저장 테이블 30개를 바로 채우는 방식
+  - ⬜ 엔진(`dq/`, `dq-ts/`): v2 명세와 어휘를 읽도록
+  - ⬜ 앱: 서식→레코드 변환 단계 추가

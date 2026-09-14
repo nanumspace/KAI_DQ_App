@@ -18,6 +18,49 @@ forms:
     - LUNG_CANCER
     - LYMPHOMA
     - MASLD
+    mapping:
+      date_field: index_date
+      attr_default: OBSERVATION
+      anchors:
+      - table: COHORT
+        ref: COHORT
+        columns:
+          cohort_definition_id: '@COHORT_{cohort}'
+          subject_id: $person_id
+          cohort_start_date: $index_date
+          cohort_end_date: $last_followup_date|$index_date
+      - table: OBSERVATION_PERIOD
+        ref: OP
+        columns:
+          person_id: $person_id
+          observation_period_start_date: $index_date
+          observation_period_end_date: $last_followup_date|$index_date
+          period_type_concept_id: '@TYPE_REGISTRY'
+      - table: CONDITION_OCCURRENCE
+        ref: DX
+        columns:
+          person_id: $person_id
+          condition_concept_id: '@DX_{cohort}'
+          condition_start_date: $diagnosis_registered_date|$first_diagnosis_date|$index_date
+          condition_type_concept_id: '@TYPE_REGISTRY'
+          condition_source_value: $diagnosis_name
+      - table: EPISODE
+        ref: EP
+        columns:
+          person_id: $person_id
+          episode_concept_id: '@EP_DISEASE'
+          episode_start_date: $first_diagnosis_date|$index_date
+          episode_end_date: $last_followup_date
+          episode_number: 1
+          episode_object_concept_id: '@DX_{cohort}'
+          episode_type_concept_id: '@TYPE_REGISTRY'
+      - table: EPISODE_EVENT
+        ref: EPEV
+        columns:
+          episode_id: '#EP'
+          event_id: '#DX'
+          episode_event_field_concept_id: '@F_CONDITION'
+      links: []
     fields:
     - name: person_id
       kor: 코호트 인덱스 ID
@@ -398,6 +441,11 @@ forms:
     - COLORECTAL_CANCER
     - LUNG_CANCER
     - LYMPHOMA
+    mapping:
+      date_field: staging_date
+      attr_default: MEASUREMENT
+      anchors: []
+      links: []
     fields:
     - name: staging_id
       kor: 진단·병기 평가 ID
@@ -1107,7 +1155,27 @@ forms:
     - LUNG_CANCER
     - LYMPHOMA
     - MASLD
+    mapping: null
     fields:
+    - name: report_type
+      kor: 병리 보고서 종류
+      type: varchar
+      value_kind: 닫힌 범주
+      tier: 필수
+      required: true
+      codelist: CL_PATHOLOGY_REPORT_TYPE
+      concept_id: 10000001079
+      desc: 이 행이 어느 보고서인지. 필수 항목이 종류마다 달라 먼저 받는다.
+      target:
+        kind: column
+        table: PATHOLOGY_REPORT
+        column: report_type_concept_id
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
     - name: pathology_report_id
       kor: 병리 보고서 ID
       type: bigint
@@ -2039,6 +2107,7 @@ forms:
     - BREAST_CANCER
     - COLORECTAL_CANCER
     - LUNG_CANCER
+    mapping: null
     fields:
     - name: pathology_tumor_id
       kor: 병리 종양(자식) ID
@@ -2200,6 +2269,7 @@ forms:
     - DIABETES
     - LUNG_CANCER
     - LYMPHOMA
+    mapping: null
     fields:
     - name: biomarker_id
       kor: 분자·바이오마커 ID
@@ -3340,6 +3410,27 @@ forms:
     - COLORECTAL_CANCER
     - LUNG_CANCER
     - MASLD
+    mapping:
+      date_field: surgery_date
+      attr_default: OBSERVATION
+      anchors:
+      - table: PROCEDURE_OCCURRENCE
+        ref: PROC
+        columns:
+          person_id: $person_id
+          procedure_concept_id: $surgery_name:concept
+          procedure_date: $surgery_date
+          procedure_type_concept_id: '@TYPE_REGISTRY'
+          modifier_concept_id: $surgery_approach:concept
+          visit_occurrence_id: $visit_occurrence_id
+          procedure_source_value: $surgery_name
+      - table: EPISODE_EVENT
+        ref: EPEV
+        columns:
+          episode_id: '#EP'
+          event_id: '#PROC'
+          episode_event_field_concept_id: '@F_PROCEDURE'
+      links: []
     fields:
     - name: surgery_id
       kor: 수술 ID
@@ -3681,6 +3772,27 @@ forms:
     - COLORECTAL_CANCER
     - LUNG_CANCER
     - LYMPHOMA
+    mapping:
+      date_field: rt_start_date
+      attr_default: MEASUREMENT
+      anchors:
+      - table: PROCEDURE_OCCURRENCE
+        ref: PROC
+        columns:
+          person_id: $person_id
+          procedure_concept_id: $rt_name:concept
+          procedure_date: $rt_start_date
+          procedure_end_date: $rt_end_date
+          procedure_type_concept_id: '@TYPE_REGISTRY'
+          quantity: $rt_fractions
+          procedure_source_value: $rt_name
+      - table: EPISODE_EVENT
+        ref: EPEV
+        columns:
+          episode_id: '#EP'
+          event_id: '#PROC'
+          episode_event_field_concept_id: '@F_PROCEDURE'
+      links: []
     fields:
     - name: radiotherapy_id
       kor: 방사선 코스 ID
@@ -3946,6 +4058,29 @@ forms:
     - COLORECTAL_CANCER
     - LUNG_CANCER
     - LYMPHOMA
+    mapping:
+      date_field: antp_start_date
+      attr_default: OBSERVATION
+      anchors:
+      - table: EPISODE
+        ref: REG
+        columns:
+          person_id: $person_id
+          episode_concept_id: '@EP_REGIMEN'
+          episode_start_date: $antp_start_date
+          episode_end_date: $antp_end_date
+          episode_parent_id: '#EP'
+          episode_number: $regimen_or_line_of_therapy
+          episode_object_concept_id: $regimen:concept
+          episode_type_concept_id: '@TYPE_REGISTRY'
+          episode_source_value: $regimen_source_value|$regimen
+      links:
+      - table: EPISODE_EVENT
+        columns:
+          episode_id: '#REG'
+          event_id: DRUG_EXPOSURE.drug_exposure_id where antp_id = $antp_id
+          episode_event_field_concept_id: '@F_DRUG'
+        note: 연결된 약물마다 한 행
     fields:
     - name: antp_id
       kor: 항암·전신치료 에피소드 ID
@@ -4304,6 +4439,11 @@ forms:
     - COLORECTAL_CANCER
     - LUNG_CANCER
     - LYMPHOMA
+    mapping:
+      date_field: response_assessment_date
+      attr_default: MEASUREMENT
+      anchors: []
+      links: []
     fields:
     - name: response_id
       kor: 반응·경과 평가 ID
@@ -4793,6 +4933,27 @@ forms:
     - LUNG_CANCER
     - LYMPHOMA
     - MASLD
+    mapping:
+      date_field: adverse_event_start_date
+      attr_default: OBSERVATION
+      anchors:
+      - table: CONDITION_OCCURRENCE
+        ref: AE
+        columns:
+          person_id: $person_id
+          condition_concept_id: $adverse_event_concept_id:concept
+          condition_start_date: $adverse_event_start_date
+          condition_type_concept_id: '@TYPE_REGISTRY'
+          condition_status_concept_id: '@AE_STATUS'
+          visit_occurrence_id: $visit_occurrence_id
+          condition_source_value: $adverse_event_source_value
+      - table: EPISODE_EVENT
+        ref: EPEV
+        columns:
+          episode_id: '#REG(antp_id)'
+          event_id: '#AE'
+          episode_event_field_concept_id: '@F_CONDITION'
+      links: []
     fields:
     - name: adverse_event_id
       kor: 이상사례 ID
@@ -5191,6 +5352,22 @@ forms:
     - DIABETES
     - LUNG_CANCER
     - MASLD
+    mapping:
+      date_field: index_date
+      attr_default: OBSERVATION
+      anchors:
+      - table: OBSERVATION
+        ref: FH
+        columns:
+          person_id: $person_id
+          observation_concept_id: '@FAMILY_HISTORY_OF'
+          observation_date: $record_date|$index_date
+          observation_type_concept_id: '@TYPE_REGISTRY'
+          value_as_concept_id: $family_cancer_type:concept|$family_disease:concept
+          qualifier_concept_id: $family_relation:concept
+          value_as_number: $family_member_age_at_diagnosis
+          value_source_value: $family_cancer_type
+      links: []
     fields:
     - name: family_history_id
       kor: 가족력 ID
@@ -5410,6 +5587,7 @@ forms:
     - LUNG_EXAM
     cohorts:
     - LUNG_CANCER
+    mapping: null
     fields:
     - name: lung_exam_id
       kor: 폐암 검사(검사 1) ID
@@ -5538,6 +5716,7 @@ forms:
     - BREAST_BASELINE
     cohorts:
     - BREAST_CANCER
+    mapping: null
     fields:
     - name: breast_baseline_id
       kor: 유방암 기저(환자 1) ID
@@ -6036,6 +6215,7 @@ forms:
     - BREAST_EXAM
     cohorts:
     - BREAST_CANCER
+    mapping: null
     fields:
     - name: breast_exam_id
       kor: 유방암 검사(검사 1) ID
@@ -6134,6 +6314,7 @@ forms:
     - COLORECTAL_EXAM
     cohorts:
     - COLORECTAL_CANCER
+    mapping: null
     fields:
     - name: colorectal_exam_id
       kor: 대장암 검사(검사 1) ID
@@ -6420,6 +6601,7 @@ forms:
     - COLORECTAL_SURGERY_DETAIL
     cohorts:
     - COLORECTAL_CANCER
+    mapping: null
     fields:
     - name: colorectal_surgery_detail_id
       kor: 대장암 수술 세부(수술 1) ID
@@ -6699,6 +6881,7 @@ forms:
     - MASLD_EXAM
     cohorts:
     - MASLD
+    mapping: null
     fields:
     - name: masld_exam_id
       kor: 대사이상지방간 검사(검사 1) ID
@@ -6867,6 +7050,7 @@ forms:
     - MASLD_ASSESSMENT
     cohorts:
     - MASLD
+    mapping: null
     fields:
     - name: masld_assessment_id
       kor: 대사이상지방간 평가(평가 1) ID
@@ -7093,6 +7277,7 @@ forms:
     - MASLD_EVENT
     cohorts:
     - MASLD
+    mapping: null
     fields:
     - name: masld_event_id
       kor: 대사이상지방간 사건(사건 1) ID
@@ -7265,6 +7450,7 @@ forms:
     - DIABETES_BASELINE
     cohorts:
     - DIABETES
+    mapping: null
     fields:
     - name: diabetes_baseline_id
       kor: 당뇨병 기저(환자 1) ID
@@ -7358,6 +7544,7 @@ forms:
     - DIABETES_EVENT
     cohorts:
     - DIABETES
+    mapping: null
     fields:
     - name: diabetes_event_id
       kor: 당뇨병 사건(사건 1) ID
@@ -7609,6 +7796,7 @@ forms:
     - LYMPHOMA_ASSESSMENT
     cohorts:
     - LYMPHOMA
+    mapping: null
     fields:
     - name: lymphoma_assessment_id
       kor: 림프종 평가(평가 1) ID
@@ -7936,6 +8124,7 @@ forms:
     - LYMPHOMA_EVENT
     cohorts:
     - LYMPHOMA
+    mapping: null
     fields:
     - name: lymphoma_event_id
       kor: 림프종 사건(사건 1) ID
@@ -8184,6 +8373,7 @@ forms:
     - LYMPHOMA_EXAM
     cohorts:
     - LYMPHOMA
+    mapping: null
     fields:
     - name: lymphoma_exam_id
       kor: 림프종 검사(검사 1) ID

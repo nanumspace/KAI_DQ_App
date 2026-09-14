@@ -1,4 +1,4 @@
-# 사전 v2 변환 보고서 (2026-09-14)
+# 사전 v2 변환 보고서 (2026-09-15)
 
 입력: `internal/decisions/배치표_v0_20260912.xlsx` · 출력: `spec/v2/`
 
@@ -8,8 +8,8 @@
 |---|---|
 | 저장 테이블 | 30 (OMOP 14, K-AI 확장 16) |
 | CRF 서식 | 24 (OMOP 투영 8, 확장 저장 16) |
-| 서식 필드 | 456 (필수 348, 권고 76, 보류 32) |
-| K-AI concept | 1077 (SNOMED 코드 보유 176) |
+| 서식 필드 | 457 (필수 349, 권고 76, 보류 32) |
+| K-AI concept | 1078 (SNOMED 코드 보유 176) |
 | 값 집합 | 99 (비어 있음 0) |
 | 코어 파생 변수 | 120 · 파생 점수 29 |
 | v1 미승격 필드 | 575 |
@@ -20,7 +20,7 @@
 |---|---|---|---|
 | COHORT_INDEX | 환자 1 | 18 | COHORT, OBSERVATION_PERIOD, CONDITION_OCCURRENCE, EPISODE, EPISODE_EVENT, OBSERVATION |
 | STAGING | 환자 × 판정 시점 × 체계 | 33 | MEASUREMENT |
-| PATHOLOGY_REPORT | 검체(보고서) 1 | 54 | PATHOLOGY_REPORT (확장 테이블) |
+| PATHOLOGY_REPORT | 검체(보고서) 1 | 55 | PATHOLOGY_REPORT (확장 테이블) |
 | PATHOLOGY_TUMOR | 종양 1 | 8 | PATHOLOGY_TUMOR (확장 테이블) |
 | BIOMARKER | 검사 × 마커 | 67 | BIOMARKER (확장 테이블) |
 | SURGERY | 수술 1 | 15 | PROCEDURE_OCCURRENCE, EPISODE_EVENT, OBSERVATION |

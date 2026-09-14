@@ -709,6 +709,7 @@ concept_id,concept_name_ko,concept_name_en,domain_id,vocabulary_id,concept_class
 10000000413,Bulky disease 여부,bulky_disease_yn,Measurement,KAI,Attribute,KAI-STAGING-bulky_disease_yn,S,SNOMED AJCC qualifier · OMOP Cancer Modifier,2026-09-12,2099-12-31,,FIELD:STAGING:bulky_disease_yn
 10000000414,Bulky disease 판정에 적용한 최대 직경 기준(cm),bulky_threshold_cm,Measurement,KAI,Attribute,KAI-STAGING-bulky_threshold_cm,S,SNOMED AJCC qualifier · OMOP Cancer Modifier,2026-09-12,2099-12-31,,FIELD:STAGING:bulky_threshold_cm
 10000000415,기준 시점의 가장 큰 병변 장경(cm),largest_lesion_diameter_cm,Measurement,KAI,Attribute,KAI-STAGING-largest_lesion_diameter_cm,S,SNOMED AJCC qualifier · OMOP Cancer Modifier,2026-09-12,2099-12-31,,FIELD:STAGING:largest_lesion_diameter_cm
+10000001079,병리 보고서 종류,report_type,Observation,KAI,Attribute,KAI-PATHOLOGY_REPORT-report_type,S,,2026-09-12,2099-12-31,,FIELD:PATHOLOGY_REPORT:report_type
 10000000416,생체검사 시행 방법,biopsy_method,Observation,KAI,Attribute,KAI-PATHOLOGY_REPORT-biopsy_method,S,SNOMED (일부) · 자체 어휘,2026-09-12,2099-12-31,,FIELD:PATHOLOGY_REPORT:biopsy_method
 10000000417,생체검사 대상 부위 or 검체,biopsy_site,Observation,KAI,Attribute,KAI-PATHOLOGY_REPORT-biopsy_site,S,SNOMED (일부) · 자체 어휘,2026-09-12,2099-12-31,,FIELD:PATHOLOGY_REPORT:biopsy_site
 10000000418,생체검사 시행 폐 상세 위치,biopsy_site_detail,Observation,KAI,Attribute,KAI-PATHOLOGY_REPORT-biopsy_site_detail,S,SNOMED (일부) · 자체 어휘,2026-09-12,2099-12-31,,FIELD:PATHOLOGY_REPORT:biopsy_site_detail

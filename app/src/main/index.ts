@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { app, BrowserWindow, ipcMain, dialog, shell, utilityProcess } from "electron";
-import { setRoot, loadSpec, loadProfiles, loadStructuralRules, loadSemanticRules, readCsv } from "@engine/index.js";
+import { setRoot, loadSpec, loadProfiles, loadStructuralRules, loadSemanticRules, readCsv, convertCrfDirectory } from "@engine/index.js";
 import type { Summary, Spec } from "@engine/types.js";
 import type { AppConfig, CohortInfo, RuleInfo, RunRequest, RunRecord, RunDetail, FindingsQuery, Dashboard, InputPlan, SourceCandidate, TemplateKind, OutputFile } from "@shared/types";
 import { readConfig, writeConfig } from "./config";
@@ -178,6 +178,12 @@ function registerIpc(): void {
   ipcMain.handle("input:check", (_e, cohort: string, candidates: SourceCandidate[], mapping: Record<string, string>) => check(cohort, candidates, mapping));
   ipcMain.handle("input:preview", (_e, c: SourceCandidate) => input.preview(c));
   ipcMain.handle("template:export", (_e, cohort: string, kind: TemplateKind) => exportTemplate(cohort, kind));
+  // v2: 서식 CSV 가 든 폴더를 저장 레코드로 바꾼다. 결과 폴더를 그대로 검증에 넣을 수 있다.
+  ipcMain.handle("crf:convert", (_e, req: { cohort: string; inDir: string; outDir?: string }) => {
+    const outDir = req.outDir ?? path.join(app.getPath("userData"), "crf-staging", req.cohort);
+    const r = convertCrfDirectory({ cohort: req.cohort, inDir: req.inDir, outDir });
+    return { outDir, ...r };
+  });
   ipcMain.handle("run:start", (_e, req: RunRequest) => runValidation(req));
   ipcMain.handle("runs:list", () => db.listRuns());
   ipcMain.handle("runs:get", async (_e, runId: string): Promise<RunDetail> => {

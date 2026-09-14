@@ -197,11 +197,26 @@ for F in forms.values():
     for f in F["fields"].values():
         if f.get("codelist") and "." in str(f["codelist"]) and f["codelist"] not in codelists: f["codelist"] = "CL_" + f["name"].upper()
         if f.get("codelist") in ALIAS_CODELIST: f["codelist"] = ALIAS_CODELIST[f["codelist"]]  # 2.1: 새 값집합 대신 기존 값집합 재사용
+def _add_row_kind_fields():
+    """행 종류는 병원이 서식에서 고르는 값이다. 저장 컬럼만 만들면 채울 길이 없다."""
+    for form_name, rk in ROW_KINDS.items():
+        F = forms.get(form_name)
+        if not F or rk["column"].replace("_concept_id", "") in F["fields"]:
+            continue
+        name = rk["column"].replace("_concept_id", "")
+        f = new_field(name, rk["kor"], "varchar", "닫힌 범주", "필수",
+                      codelist=rk["codelist"], cohorts=set(F["cohorts"]),
+                      desc="이 행이 어느 보고서인지. 필수 항목이 종류마다 달라 먼저 받는다.")
+        f["required"] = True
+        F["fields"] = collections.OrderedDict([(name, f)] + list(F["fields"].items()))
+
+_add_row_kind_fields()
 placeholder = sorted({f["codelist"] for F in forms.values() for f in F["fields"].values() if f.get("codelist") and str(f["codelist"]).startswith("CL_")})
 placeholder = sorted(set(placeholder) | {rk["codelist"] for rk in ROW_KINDS.values()})   # 2.2: 행 종류 코드표
 # 2.2: 한 표에 여러 종류의 행이 앉는 곳에는 '행 종류' 코드표를 더한다(조건부 필수의 근거).
 for _rk in ROW_KINDS.values():
     VALUE_SETS.setdefault(_rk["codelist"], _rk["values"])
+
 
 # 2.1: 배치표에서 비었던 값 집합을 spec/v2_codelists_v21.py 의 정의로 채운다 (임상 표준 근거는 그 파일 주석 참고)
 filled_2_1 = sorted(set(VALUE_SETS) & set(placeholder))
@@ -370,11 +385,8 @@ for name, (kor, grain, pk, cols) in OMOP_TABLES.items():
 def ext_table(F):
     cols = []
     rk = ROW_KINDS.get(F["name"])
-    if rk:
-        # 2.2: 한 표에 여러 종류의 행이 앉으므로, 무슨 행인지부터 적는다.
-        cols.append(dict(name=rk["column"], type="bigint", concept_set=rk["codelist"], kor=rk["kor"],
-                         tier="필수", required=True, cohorts=sorted({c for f in F["fields"].values() for c in f["cohorts"]}),
-                         desc="이 행이 어느 병리 보고서인지. 필수 항목이 종류마다 다르므로 먼저 받는다."))
+    # 2.2: 행 종류 컬럼은 _add_row_kind_fields() 가 서식 필드로 넣어 두었으므로
+    # 아래 반복에서 다른 닫힌 범주 필드와 똑같이 만들어진다. 여기서 또 만들면 컬럼이 겹친다.
     for f in F["fields"].values():
         base = dict(kor=f["kor"], tier=f["tier"], required=bool(f.get("required")), cohorts=sorted(f["cohorts"]))
         if f.get("key"): cols.append(dict(name=f["name"], type="bigint", key=f["key"], ref=f.get("ref"), **base)); continue
@@ -533,7 +545,14 @@ for _t in tables.values():
             warnings.append(f"{_t['name']}.{_c['name']} 이 가리키는 값 집합 {_cs} 가 만들어지지 않았다 — 값 검사를 걸 수 없다")
 dump(spec, "kai_cdm_spec_v2.yaml")
 dump(dict(forms=collections.OrderedDict((n, dict(name=n, kor=F["kor"], grain=F["grain"], kind="OMOP 투영" if n in FORM_MAP else "확장 테이블 직접 저장",
-     storage=list(dict.fromkeys([a["table"] for a in FORM_MAP[n]["anchors"]] + [FORM_MAP[n]["attr_default"]])) if n in FORM_MAP else [n], cohorts=sorted(F["cohorts"]), fields=[clean(f) for f in F["fields"].values()])) for n, F in forms.items())), "crf_forms_v2.yaml")
+     storage=list(dict.fromkeys([a["table"] for a in FORM_MAP[n]["anchors"]] + [FORM_MAP[n]["attr_default"]])) if n in FORM_MAP else [n], cohorts=sorted(F["cohorts"]),
+     # 2.2: 서식 한 행을 레코드로 바꾸는 규칙. 필드별 target 만으로는 부족하고, 먼저 만들 레코드(anchors)와
+     # 사건 날짜가 어느 필드인지를 알아야 한다. 앱(TypeScript)이 이것을 읽어 변환한다.
+     mapping=(dict(date_field=FORM_MAP[n].get("date_field"), attr_default=FORM_MAP[n]["attr_default"],
+                   anchors=[dict(table=a["table"], ref=a.get("ref"), columns=dict(a["columns"])) for a in FORM_MAP[n]["anchors"]],
+                   links=[dict(table=l["table"], columns=dict(l["columns"]), note=l.get("note")) for l in FORM_MAP[n].get("links", [])])
+              if n in FORM_MAP else None),
+     fields=[clean(f) for f in F["fields"].values()])) for n, F in forms.items())), "crf_forms_v2.yaml")
 dump(dict(cohorts=collections.OrderedDict((c, dict(kor=COHORT_KOR[c], omop_tables=list(OMOP_TABLES), extension_tables=[t for t in EXT_FORMS if c in forms[t]["cohorts"]], forms=[n for n, F in forms.items() if c in F["cohorts"]])) for c in ALL_COHORTS)), "cohort_profiles_v2.yaml")
 # 2.1: 코어 파생 검사값 변수(MEASUREMENT 로 직행하는 것)에도 LOINC 코드가 있으면 붙인다
 for d in derived:

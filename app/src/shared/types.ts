@@ -142,6 +142,8 @@ export interface Api {
   checkInput(cohort: string, candidates: SourceCandidate[], mapping: Record<string, string>): Promise<InputPlan>;
   previewSource(candidate: SourceCandidate): Promise<PreviewData>;
   exportTemplate(cohort: string, kind: TemplateKind): Promise<string | null>;
+  /** v2: 서식 CSV 폴더를 저장 레코드로 바꾼다 */
+  convertCrf(req: CrfConvertRequest): Promise<CrfConvertResult>;
   runValidation(req: RunRequest): Promise<RunRecord>;
   onProgress(cb: (p: RunProgress) => void): () => void;
   listRuns(): Promise<RunRecord[]>;
@@ -156,4 +158,16 @@ export interface Api {
   onNav(cb: (page: string) => void): () => void;
   /** 자동 점검 모드에서 메인이 넣어 주는 입력 계획 (화면 캡처용) */
   onSmokePlan(cb: (plan: InputPlan) => void): () => void;
+}
+
+// ------------------------------------------------------------------ 서식 → 레코드 변환 (v2)
+// v2 에서 병원이 채우는 것은 저장 테이블이 아니라 서식이다. 앱이 그것을 저장 레코드로 바꾼 뒤 검증한다.
+export interface CrfConvertRequest { cohort: string; inDir: string; outDir?: string }
+export interface CrfConvertIssue { form: string; row: number; field?: string; message: string }
+export interface CrfConvertResult {
+  outDir: string;
+  formsRead: Record<string, number>;
+  tablesWritten: Record<string, number>;
+  missingForms: string[];
+  issues: CrfConvertIssue[];
 }

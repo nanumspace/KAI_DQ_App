@@ -3397,6 +3397,7 @@ rules:
   params:
     expected:
     - report_type_concept_id
+    - report_type_source_value
     - pathology_report_id
     - person_id
     - specimen_id
@@ -5854,6 +5855,7 @@ rules:
   fields:
   - specimen_date
   - report_type_concept_id
+  - report_type_source_value
   - biopsy_method_concept_id
   - biopsy_method_source_value
   - biopsy_site_concept_id
@@ -5939,6 +5941,7 @@ rules:
     anchor: specimen_date
     members:
     - report_type_concept_id
+    - report_type_source_value
     - biopsy_method_concept_id
     - biopsy_method_source_value
     - biopsy_site_concept_id

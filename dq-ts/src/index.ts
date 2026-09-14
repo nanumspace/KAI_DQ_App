@@ -7,4 +7,6 @@ export { readCsv, writeCsv, csvCell } from "./csv.js";
 export { verify, writeVerificationSummary, COHORTS } from "./verify.js";
 export type { Verification } from "./verify.js";
 export { compareRun, compareAll } from "./compare.js";
+export { loadCrfSpec, CrfConverter, convertCrfDirectory, formsForCohort } from "./crf.js";
+export type { CrfSpec, FormSpec, FormField, FieldTarget, ConvertIssue, ConvertResult, ConvertDirResult } from "./crf.js";
 export type * from "./types.js";

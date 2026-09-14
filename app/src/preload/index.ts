@@ -20,6 +20,7 @@ const api: Api = {
   checkInput: (cohort, candidates, mapping) => ipcRenderer.invoke("input:check", cohort, candidates, mapping),
   previewSource: (c) => ipcRenderer.invoke("input:preview", c),
   exportTemplate: (cohort, kind) => ipcRenderer.invoke("template:export", cohort, kind),
+  convertCrf: (req) => ipcRenderer.invoke("crf:convert", req),
   runValidation: (req) => ipcRenderer.invoke("run:start", req),
   onProgress: (cb) => on("run:progress", cb),
   listRuns: () => ipcRenderer.invoke("runs:list"),

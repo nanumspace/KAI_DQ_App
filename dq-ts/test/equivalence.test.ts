@@ -43,3 +43,33 @@ describe("Python 참조 구현과 동등성", () => {
     }
   });
 });
+
+// ---------------------------------------------------------------- v2 경로
+// v2 는 아직 폐암만 옮겨져 있다. v1 과 나란히 돌려 두 구현이 같은 판정을 내는지 본다.
+describe("v2: Python 참조 구현과 동등성", () => {
+  const V2_COHORT = "LUNG_CANCER";
+  const v2Out = path.join(getRoot(), "dq-ts/output/test-reports-v2");
+  const pyDir = (kind: string) => path.join(getRoot(), `dq/reports/${kind}_v2_${V2_COHORT}`);
+  const hasPy = fs.existsSync(path.join(pyDir("clean"), "summary.json"));
+  const hasData = fs.existsSync(path.join(getRoot(), `synth/output/clean_v2/${V2_COHORT}`));
+
+  beforeAll(async () => {
+    if (!hasData) return;
+    fs.rmSync(v2Out, { recursive: true, force: true });
+    for (const kind of ["clean", "dirty"]) {
+      const data = path.join(getRoot(), `synth/output/${kind}_v2/${V2_COHORT}`);
+      if (!fs.existsSync(data)) continue;
+      await runEngine({ cohort: V2_COHORT, today: TODAY, spec: "v2", data, out: path.join(v2Out, `${kind}_${V2_COHORT}`) });
+    }
+  }, 120_000);
+
+  it.skipIf(!hasPy || !hasData)("clean·dirty 두 실행의 규칙 결과와 위반 행이 같다", () => {
+    for (const kind of ["clean", "dirty"]) {
+      const py = path.join(pyDir(kind), "findings.csv");
+      const ts = path.join(v2Out, `${kind}_${V2_COHORT}`, "findings.csv");
+      if (!fs.existsSync(py) || !fs.existsSync(ts)) continue;
+      const norm = (p: string) => fs.readFileSync(p, "utf-8").replace(/^﻿/, "").split(/\r?\n/).filter(Boolean).sort();
+      expect(norm(ts), `${kind} 의 위반 행이 Python 과 다르다`).toEqual(norm(py));
+    }
+  });
+});

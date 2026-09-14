@@ -41,6 +41,64 @@ export function loadSpec(): Spec {
   return loadYaml<Spec>("spec/kai_cdm_spec.yaml");
 }
 
+// ---------------------------------------------------------------- v2 (저장 구조 재설계)
+// v1 과 나란히 둔다. 병원이 쓰던 v1 경로를 끊지 않기 위해서다.
+
+export function loadSpecV2(): Spec {
+  return loadYaml<Spec>("spec/v2/kai_cdm_spec_v2.yaml");
+}
+
+export function loadProfilesV2(): Record<string, { kor: string; omop_tables: string[]; extension_tables: string[] }> {
+  return loadYaml<{ cohorts: Record<string, { kor: string; omop_tables: string[]; extension_tables: string[] }> }>(
+    "spec/v2/cohort_profiles_v2.yaml").cohorts;
+}
+
+export function loadStructuralRulesV2(): StructuralRule[] {
+  const rules = loadYaml<{ rules: StructuralRule[] }>("rules/rules_structural_v2.yaml").rules;
+  for (const r of rules) {
+    r.fields = r.fields ?? [];
+    r.params = r.params ?? {};
+    r.scope = r.scope ?? "all";
+  }
+  return rules;
+}
+
+export function loadSemanticRulesV2(): SemanticRule[] {
+  const rules = loadYaml<{ rules: SemanticRule[] }>("rules/rules_semantic_v2.yaml").rules;
+  for (const r of rules) {
+    r.requires = r.requires ?? [];
+    r.scope = r.scope ?? "all";
+  }
+  return rules;
+}
+
+/** 값 집합 항목. v2 는 코드(예/아니오)와 concept_id 둘 다 쓰므로 양쪽을 만든다. */
+export interface ConceptSets {
+  codeOfConcept: Map<string, string>;      // concept_id -> 코드 (행 종류 판정에 쓴다)
+  episodeField: Map<string, string>;       // F_DRUG 등 씨앗 concept_id -> key
+}
+
+export function loadConceptSetsV2(): ConceptSets {
+  const codeOfConcept = new Map<string, string>();
+  for (const line of readText("spec/v2/vocab/CONCEPT_SET_ITEM.csv").split(/\r?\n/).slice(1)) {
+    if (!line.trim()) continue;
+    const [, conceptId, code] = line.split(",");
+    if (conceptId) codeOfConcept.set(conceptId, code ?? "");
+  }
+  const episodeField = new Map<string, string>();
+  const rows = readText("spec/v2/vocab/CONCEPT.csv").split(/\r?\n/);
+  const header = rows[0].replace(/^\uFEFF/, "").split(",");
+  const iId = header.indexOf("concept_id"), iKey = header.indexOf("key");
+  for (const line of rows.slice(1)) {
+    if (!line.trim()) continue;
+    const cells = line.split(",");
+    const key = cells[cells.length - 1];
+    if (key && key.startsWith("F_")) episodeField.set(cells[iId], key);
+  }
+  void iKey;
+  return { codeOfConcept, episodeField };
+}
+
 /** codelists.yaml 의 모든 절(embedded/common/omop)을 합쳐 코드표명 → 허용 코드 문자열 집합 */
 export function loadCodelists(): Map<string, Set<string>> {
   const cl = loadYaml<Record<string, Record<string, Record<string, unknown>>>>("spec/codelists.yaml");

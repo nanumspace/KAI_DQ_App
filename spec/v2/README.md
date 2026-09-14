@@ -221,7 +221,8 @@ python dq/run_all.py --spec v2          # 생성 → 검증 → 오류 주입 �
     - 폐암 가상데이터에서 규칙 357개 중 1개 위반(위 '남은 1건'). v1 경로는 규칙 427개·위반 0으로 그대로다.
     - 의미 규칙은 `rules/rules_semantic_v2.yaml` 에 26개를 새로 썼다(아래).
     - 구조 357 + 의미 26 = **383개 규칙**, 폐암 가상데이터에서 위반 1건(위 '남은 1건').
-    - TypeScript 엔진(`dq-ts/`)은 아직 v1 만 읽는다.
+    - TypeScript 엔진도 `--spec v2` 로 같은 규칙을 돌린다: `npm run engine -- --spec v2 --cohort LUNG_CANCER --data ... --out ...`
+      두 구현이 clean·dirty 두 실행에서 **위반 행까지 완전히 같다**(`dq-ts/test/equivalence.test.ts`).
   - 🔸 오류 주입·검출 평가: `python dq/run_all.py --spec v2` 로 생성→검증→주입→검증→평가를 한 번에 돈다.
     - 폐암에서 **주입 113건 전부 검출(재현율 1.0)**, 깨끗한 데이터 위반 3건(위 '남은 1건').
   - ⬜ 앱: 서식→레코드 변환 단계 추가

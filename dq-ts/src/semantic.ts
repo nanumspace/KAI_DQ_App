@@ -42,6 +42,9 @@ export interface SemanticContext {
   /** cohort_definition 경계의 YAML 원문 표기 (없으면 숫자 그대로) */
   cdText?: { female_min: string; female_max: string; age_min: string; age_max: string };
   onRule?: (i: number, n: number, ruleId: string) => void;
+  /** v2 는 질환 테이블도 코호트 정의도 없다. 대신 값 집합·씨앗 concept 을 보조 테이블로 올린다. */
+  specVersion?: "v1" | "v2";
+  conceptSets?: { codeOfConcept: Map<string, string>; episodeField: Map<string, string> };
 }
 
 export interface SemanticSink {
@@ -86,6 +89,42 @@ export async function runSemantic(ctx: SemanticContext, rules: SemanticRule[], s
       .map(([k, v]) => `(${Number(k)}, ${sqlStr(v.name)})`);
     await con.run(`CREATE TABLE _ANTICANCER_DRUGS (concept_id BIGINT, name VARCHAR)`);
     if (ac.length) await con.run(`INSERT INTO _ANTICANCER_DRUGS VALUES ${ac.join(", ")}`);
+
+    if (ctx.specVersion === "v2") {
+      // 행 종류(생검/수술)와 EPISODE_EVENT 가 가리키는 테이블을 SQL 에서 쓸 수 있게 올린다.
+      const rk = [...(ctx.conceptSets?.codeOfConcept ?? new Map())].map(([id, code]) => `(${Number(id)}, ${sqlStr(code)})`);
+      await con.run(`CREATE TABLE _ROW_KIND (concept_id BIGINT, code VARCHAR)`);
+      if (rk.length) await con.run(`INSERT INTO _ROW_KIND VALUES ${rk.join(", ")}`);
+      const ef = [...(ctx.conceptSets?.episodeField ?? new Map())].map(([id, key]) => `(${sqlStr(key)}, ${Number(id)})`);
+      await con.run(`CREATE TABLE _EPISODE_FIELD (key VARCHAR, concept_id BIGINT)`);
+      if (ef.length) await con.run(`INSERT INTO _EPISODE_FIELD VALUES ${ef.join(", ")}`);
+      const substV2: Record<string, string> = { "{TODAY}": `DATE '${ctx.todayIso}'` };
+      const presentV2 = new Set(ctx.raw.keys());
+      let iv = 0;
+      for (const rule of rules) {
+        iv += 1;
+        ctx.onRule?.(iv, rules.length, rule.id);
+        if (rule.scope !== "all" && !rule.scope.includes(ctx.cohort)) continue;
+        const req = rule.requires;
+        const st = sink.initStat(rule, req.length ? pySorted(req).join(",") : "");
+        const missing = req.filter((t) => !presentV2.has(t));
+        if (missing.length) { st.status = "skipped"; st.note = `필요 테이블 없음: ${pyList(pySorted(missing))}`; continue; }
+        let sql = rule.sql;
+        for (const [k, v] of Object.entries(substV2)) sql = sql.split(k).join(v);
+        let rows: unknown[][];
+        try {
+          rows = (await con.runAndReadAll(sql)).getRows();
+        } catch (e) {
+          st.status = "error"; st.note = `SQL 오류: ${String((e as Error).message ?? e).slice(0, 200)}`; continue;
+        }
+        for (const [personId, rowKey, detail] of rows) {
+          const k = valStr(rowKey);
+          sink.add(rule, st.table, "", k === null ? "None" : k, valStr(personId), valStr(detail) ?? "");
+        }
+        if (st.violations > 0) st.status = "fail";
+      }
+      return;
+    }
 
     const cd = ctx.concepts.cohort_definition[ctx.cohort];
     const dtab = ctx.diseaseTable;

@@ -1,7 +1,8 @@
 // 검증 엔진 본체: 적재 → 구조 규칙 → 교차 규칙 → 요약/보고서
 import fs from "node:fs";
 import path from "node:path";
-import { loadSpec, loadCodelists, loadConcepts, loadCohortDefinitionText, loadProfiles, loadStructuralRules, loadSemanticRules } from "./load.js";
+import { loadSpec, loadCodelists, loadConcepts, loadCohortDefinitionText, loadProfiles, loadStructuralRules, loadSemanticRules,
+         loadSpecV2, loadProfilesV2, loadStructuralRulesV2, loadSemanticRulesV2, loadConceptSetsV2, type ConceptSets } from "./load.js";
 import { readCsv, writeCsv } from "./csv.js";
 import { runStructural } from "./structural.js";
 import { runSemantic } from "./semantic.js";
@@ -17,6 +18,8 @@ export interface EngineOptions {
   cohort: string;
   today?: string; // YYYY-MM-DD
   onProgress?: ProgressFn;
+  /** 어느 명세로 검사할지. v1 과 v2 는 당분간 나란히 돈다. */
+  spec?: "v1" | "v2";
 }
 
 export class Engine {
@@ -29,6 +32,8 @@ export class Engine {
   readonly profile: { kor: string; tables: string[] };
   readonly tablesInCohort: string[];
   readonly diseaseTable: string;
+  readonly specVersion: "v1" | "v2";
+  readonly conceptSets?: ConceptSets;
   readonly rulesStruct: StructuralRule[];
   readonly rulesSem: SemanticRule[];
   readonly raw = new Map<string, RawTable>();
@@ -41,17 +46,33 @@ export class Engine {
     this.cohort = opt.cohort;
     this.progress = opt.onProgress;
     this.todayIso = opt.today ?? new Date().toISOString().slice(0, 10);
-    this.spec = loadSpec();
-    this.codelists = loadCodelists();
+    this.specVersion = opt.spec ?? "v1";
+    // 검사항목 타당 범위는 v2 명세에 없어 v1 표를 빌려 쓴다(OMOP 검사 concept_id 는 같다).
     this.concepts = loadConcepts();
-    this.cdText = loadCohortDefinitionText();
-    const profiles = loadProfiles();
-    if (!profiles[opt.cohort]) throw new Error(`알 수 없는 코호트: ${opt.cohort}`);
-    this.profile = profiles[opt.cohort];
-    this.tablesInCohort = this.profile.tables;
-    this.diseaseTable = this.tablesInCohort.find((t) => this.spec.tables[t].category === "disease")!;
-    this.rulesStruct = loadStructuralRules();
-    this.rulesSem = loadSemanticRules();
+    if (this.specVersion === "v2") {
+      this.spec = loadSpecV2();
+      this.codelists = new Map();
+      this.cdText = {};
+      const profiles = loadProfilesV2();
+      if (!profiles[opt.cohort]) throw new Error(`알 수 없는 코호트: ${opt.cohort}`);
+      this.profile = { kor: profiles[opt.cohort].kor, tables: [...profiles[opt.cohort].omop_tables, ...profiles[opt.cohort].extension_tables] };
+      this.tablesInCohort = this.profile.tables;
+      this.diseaseTable = "";
+      this.rulesStruct = loadStructuralRulesV2();
+      this.rulesSem = loadSemanticRulesV2();
+      this.conceptSets = loadConceptSetsV2();
+    } else {
+      this.spec = loadSpec();
+      this.codelists = loadCodelists();
+      this.cdText = loadCohortDefinitionText();
+      const profiles = loadProfiles();
+      if (!profiles[opt.cohort]) throw new Error(`알 수 없는 코호트: ${opt.cohort}`);
+      this.profile = profiles[opt.cohort];
+      this.tablesInCohort = this.profile.tables;
+      this.diseaseTable = this.tablesInCohort.find((t) => this.spec.tables[t].category === "disease")!;
+      this.rulesStruct = loadStructuralRules();
+      this.rulesSem = loadSemanticRules();
+    }
   }
 
   load(dataDir: string): this {
@@ -97,6 +118,7 @@ export class Engine {
     runStructural(
       { cohort: this.cohort, today: new Date(this.todayIso + "T00:00:00Z"), spec: this.spec, codelists: this.codelists,
         tablesInCohort: this.tablesInCohort, raw: this.raw, aliasesApplied: this.aliasesApplied,
+        codeOfConcept: this.conceptSets?.codeOfConcept,
         onRule: (i, n, id) => this.progress?.({ stage: "structural", done: i, total: n, text: `구조 규칙 ${id}` }) },
       this.rulesStruct, { initStat: this.initStat, add: this.add });
     for (const st of this.ruleStats.values()) if (st.violations > 0) st.status = "fail";
@@ -106,6 +128,7 @@ export class Engine {
     await runSemantic(
       { cohort: this.cohort, todayIso: this.todayIso, spec: this.spec, concepts: this.concepts,
         tablesInCohort: this.tablesInCohort, raw: this.raw, diseaseTable: this.diseaseTable, cdText: this.cdText[this.cohort],
+        specVersion: this.specVersion, conceptSets: this.conceptSets,
         onRule: (i, n, id) => this.progress?.({ stage: "semantic", done: i, total: n, text: `교차 규칙 ${id}` }) },
       this.rulesSem, { initStat: this.initStat, add: this.add });
   }

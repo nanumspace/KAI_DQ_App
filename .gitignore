@@ -34,3 +34,6 @@ spec/v2/vocab/ref/
 
 # v2 가상데이터 출력
 synth/output/clean_v2/
+
+# v2 오류 주입 출력
+synth/output/dirty_v2/

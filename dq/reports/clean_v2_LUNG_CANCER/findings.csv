@@ -1,0 +1,4 @@
+﻿rule_id,rule_name,category,severity,table,field,row_key,person_id,detail
+SV-0280,PATHOLOGY_REPORT.adenocarcinoma_predominant_subtype_concept_id 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,adenocarcinoma_predominant_subtype_concept_id,100011,100008,SURGICAL 행인데 adenocarcinoma_predominant_subtype_concept_id 가 비어 있다
+SV-0280,PATHOLOGY_REPORT.adenocarcinoma_predominant_subtype_concept_id 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,adenocarcinoma_predominant_subtype_concept_id,100044,100031,SURGICAL 행인데 adenocarcinoma_predominant_subtype_concept_id 가 비어 있다
+SV-0280,PATHOLOGY_REPORT.adenocarcinoma_predominant_subtype_concept_id 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,adenocarcinoma_predominant_subtype_concept_id,100055,100039,SURGICAL 행인데 adenocarcinoma_predominant_subtype_concept_id 가 비어 있다

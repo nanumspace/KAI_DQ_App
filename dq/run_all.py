@@ -4,6 +4,7 @@
 
     python dq/run_all.py            # 6개 코호트 전부
     python dq/run_all.py --cohort LUNG_CANCER
+    python dq/run_all.py --spec v2  # v2 경로(지금은 폐암만 옮겨져 있다)
 """
 import argparse, os, subprocess, sys, io, json
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
@@ -22,7 +23,22 @@ def sh(*args):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--cohort"); ap.add_argument("--n", type=int, default=100); ap.add_argument("--today", default="2026-09-07")
+    ap.add_argument("--spec", default="v1", choices=["v1", "v2"])
     a = ap.parse_args()
+    if a.spec == "v2":
+        # v2 는 옮긴 코호트만 돈다. 옮기는 대로 generate.py 의 SCENARIOS_V2 가 늘어난다.
+        # import 하면 그 모듈이 stdout 을 바꿔 버리므로 코드를 읽기만 한다.
+        import ast
+        src = ast.parse(open(os.path.join(ROOT, "synth/generate.py"), encoding="utf-8").read())
+        v2_cohorts = next(list(ast.literal_eval(n.value)) for n in ast.walk(src)
+                          if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", "") == "SCENARIOS_V2")
+        for c in ([a.cohort] if a.cohort else v2_cohorts):
+            sh("synth/generate.py", "--spec", "v2", "--cohort", c, "--n", str(a.n))
+            sh("dq/engine.py", "--spec", "v2", "--cohort", c, "--data", f"synth/output/clean_v2/{c}", "--out", f"dq/reports/clean_v2_{c}", "--today", a.today)
+            sh("synth/inject_faults_v2.py", "--cohort", c)
+            sh("dq/engine.py", "--spec", "v2", "--cohort", c, "--data", f"synth/output/dirty_v2/{c}", "--out", f"dq/reports/dirty_v2_{c}", "--today", a.today)
+            sh("dq/verify.py", "--spec", "v2", "--cohort", c)
+        raise SystemExit(0)
     cohorts = [a.cohort] if a.cohort else COHORTS
     for i, c in enumerate(cohorts):
         sh("synth/generate.py", "--cohort", c, "--n", str(a.n), "--seed", str(20260907 + COHORTS.index(c)))

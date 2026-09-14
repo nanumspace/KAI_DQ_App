@@ -1,0 +1,165 @@
+{
+ "cohort": "LUNG_CANCER",
+ "clean": {
+  "rules": 383,
+  "violations": 3,
+  "failed_rules": 1,
+  "false_positive_rate": null
+ },
+ "dirty": {
+  "rules": 383,
+  "violations": 162,
+  "failed_rules": 55
+ },
+ "faults_total": 113,
+ "faults_detected": 113,
+ "recall": 1.0,
+ "fault_types": 18,
+ "fault_types_fully_detected": 18,
+ "missed": [],
+ "by_type": [
+  {
+   "fault_type": "ANCHOR_MISSING",
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "CODE_OUT_OF_SET",
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "COLUMN_MISSING",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "CONCEPT_OUT_OF_SET",
+   "n": 9,
+   "detected": 9,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DAYS_SUPPLY_MISMATCH",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "EPISODE_END_BEFORE_START",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "EVENT_AFTER_DEATH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FK_BROKEN",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FUTURE_DATE",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "NODES_POSITIVE_GT_EXAMINED",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PK_DUP",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_EITHER_NULL",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_NULL",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_NULL_WHEN",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "SPECIMEN_DATE_MISMATCH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "TYPE_BAD",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_BEFORE_BIRTH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_END_BEFORE_START",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  }
+ ],
+ "by_category": [
+  {
+   "category": "Completeness",
+   "n": 42,
+   "detected": 42,
+   "recall": 1.0
+  },
+  {
+   "category": "Conformance",
+   "n": 45,
+   "detected": 45,
+   "recall": 1.0
+  },
+  {
+   "category": "Plausibility",
+   "n": 26,
+   "detected": 26,
+   "recall": 1.0
+  }
+ ],
+ "collateral_rules": [
+  "SEMV-COM-004",
+  "SEMV-COM-006",
+  "SEMV-COM-007",
+  "SEMV-EP-002",
+  "SEMV-EP-003",
+  "SEMV-EP-004",
+  "SEMV-PA-003",
+  "SV-0015",
+  "SV-0041",
+  "SV-0117",
+  "SV-0256",
+  "SV-0417",
+  "SV-0592"
+ ]
+}

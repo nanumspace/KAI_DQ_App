@@ -783,6 +783,19 @@ tables:
     - LYMPHOMA
     - MASLD
     fields:
+    - name: report_type_concept_id
+      type: bigint
+      concept_set: CL_PATHOLOGY_REPORT_TYPE
+      kor: 병리 보고서 종류
+      tier: 필수
+      required: true
+      cohorts:
+      - BREAST_CANCER
+      - COLORECTAL_CANCER
+      - LUNG_CANCER
+      - LYMPHOMA
+      - MASLD
+      desc: 이 행이 어느 병리 보고서인지. 필수 항목이 종류마다 다르므로 먼저 받는다.
     - name: pathology_report_id
       type: bigint
       key: pk
@@ -861,6 +874,8 @@ tables:
       - COLORECTAL_CANCER
       - LUNG_CANCER
       - LYMPHOMA
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: biopsy_method_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -884,6 +899,8 @@ tables:
       - COLORECTAL_CANCER
       - LUNG_CANCER
       - LYMPHOMA
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: biopsy_site_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -905,6 +922,8 @@ tables:
       cohorts:
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: biopsy_site_detail_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -925,6 +944,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: surgical_specimen_site_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -946,6 +967,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: biopsy_histologic_diagnosis_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -966,6 +989,8 @@ tables:
       cohorts:
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: biopsy_differentiation_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -986,6 +1011,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: surgical_histologic_diagnosis_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1022,6 +1049,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: adenocarcinoma_predominant_subtype_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1038,6 +1067,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: vpi_grade_concept_id
       type: bigint
       concept_set: CL_VPI_GRADE
@@ -1047,6 +1078,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: vpi_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1063,6 +1096,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: sentinel_nodes_examined
       type: float
       unit: null
@@ -1073,6 +1108,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: sentinel_nodes_positive
       type: float
       unit: null
@@ -1083,6 +1120,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: lymph_nodes_examined
       type: float
       unit: null
@@ -1094,6 +1133,8 @@ tables:
       cohorts:
       - BREAST_CANCER
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: lymph_nodes_positive
       type: float
       unit: null
@@ -1105,6 +1146,8 @@ tables:
       cohorts:
       - BREAST_CANCER
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: biopsy_laterality_concept_id
       type: bigint
       concept_set: CL_BIOPSY_LATERALITY
@@ -1114,6 +1157,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: biopsy_laterality_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1131,6 +1176,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: surgical_specimen_laterality_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1156,6 +1203,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: surgical_histologic_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1224,6 +1273,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: resection_margin_status_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1241,6 +1292,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: residual_tumor_r_class_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1276,6 +1329,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: surgical_tumor_site_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1293,6 +1348,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: gross_type_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1336,6 +1393,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: tumor_budding_grade_concept_id
       type: bigint
       concept_set: CL_TUMOR_BUDDING_GRADE
@@ -1345,6 +1404,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: tumor_budding_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1362,6 +1423,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: resection_completeness_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1403,6 +1466,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: invasion_depth_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1437,6 +1502,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      applies_when:
+        report_type_concept_id: SURGICAL
     - name: tme_quality_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1455,6 +1522,8 @@ tables:
       cohorts:
       - LYMPHOMA
       - MASLD
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: biopsy_adequacy_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1473,6 +1542,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: liver_fibrosis_grade_name_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1490,6 +1561,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: steatosis_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1507,6 +1580,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: lobular_inflammation_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1524,6 +1599,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: ballooning_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1541,6 +1618,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      applies_when:
+        report_type_concept_id: BIOPSY
     - name: fibrosis_stage_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1559,6 +1638,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      applies_when:
+        report_type_concept_id: BIOPSY
   PATHOLOGY_TUMOR:
     name: PATHOLOGY_TUMOR
     layer: K-AI 확장

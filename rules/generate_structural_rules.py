@@ -27,10 +27,12 @@ if V2:
     # 값 집합의 허용 concept_id 목록. v2 는 코드 문자열이 아니라 concept_id 로 값을 받는다.
     import csv
     CONCEPT = list(csv.DictReader(open("spec/v2/vocab/CONCEPT.csv", encoding="utf-8")))
-    SET_IDS = {}
+    SET_IDS, SET_CODES = {}, {}
     for c in CONCEPT:
         if c["concept_class_id"] == "Value" and c["key"].startswith("CS:"):
-            SET_IDS.setdefault(c["key"].split(":")[1], []).append(int(c["concept_id"]))
+            set_id, code = c["key"].split(":")[1], c["key"].split(":")[2]
+            SET_IDS.setdefault(set_id, []).append(int(c["concept_id"]))
+            SET_CODES.setdefault(set_id, []).append(code)
 else:
     SPEC = yaml.safe_load(open("spec/kai_cdm_spec.yaml", encoding="utf-8"))
     PROFILES = yaml.safe_load(open("spec/cohort_profiles.yaml", encoding="utf-8"))["cohorts"]
@@ -121,15 +123,41 @@ if V2:
         add(nid("SV"), f"{tname} 컬럼 구성", "Conformance", "structure", tname, "columns",
             params=dict(expected=fnames), scope=tscope, desc="명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.")
         if t.get("pk"):
+            pk_cols = [c.strip() for c in str(t["pk"]).split("+")]   # v2 는 복합 PK 를 'a+b+c' 로 적는다
             add(nid("SV"), f"{tname}.{t['pk']} PK 유일성", "Conformance", "relational", tname, "pk_unique",
-                fields=[t["pk"]], scope=tscope, desc="PK 는 NULL 이 아니고 유일해야 한다.")
+                fields=pk_cols, params=dict(columns=pk_cols), scope=tscope,
+                desc="PK 는 NULL 이 아니고 (여러 컬럼이면 그 조합이) 유일해야 한다.")
         for f in fields:
             fn, scope = f["name"], sorted(f.get("cohorts") or []) or tscope
             # 필수: OMOP 이 요구하거나(required) 배치표가 '필수' 로 정한 것
             key = (f.get("key") or "").upper()
             if (f.get("required") or f.get("tier") == "필수") and key != "PK":
-                add(nid("SV"), f"{tname}.{fn} 필수", "Completeness", "value", tname, "not_null", fields=[fn],
-                    scope=scope, desc=f"필수 필드 {fn} 은 NULL 일 수 없다.")
+                aw = f.get("applies_when")
+                open_std = fn.endswith("_concept_id") and not f.get("concept_set") and f.get("vocabulary")
+                if open_std:
+                    # 열린 표준 코드는 참조표(MedDRA·SNOMED…)를 병원이 따로 싣고 나서야 concept_id 가 붙는다.
+                    # 그래서 concept_id 를 곧바로 요구하지 않고, 원천값이라도 반드시 남기게 한다.
+                    pair = [fn, fn.replace("_concept_id", "_source_value")]
+                    prm = dict(columns=pair)
+                    tag = ""
+                    if aw:                       # 행 종류에도 걸리면 그 종류에서만 따진다
+                        wcol, wcode = next(iter(aw.items()))
+                        prm.update(when_column=wcol, when_code=wcode); tag = f"({wcode} 행)"
+                    add(nid("SV"), f"{tname}.{fn} 필수{tag}(코드 또는 원천값)", "Completeness", "value", tname,
+                        "not_null_either", fields=pair, params=prm, scope=scope,
+                        desc=f"{fn} 이 비면 원천값이라도 있어야 한다. 참조표를 싣기 전에는 원천값만 남는다.")
+                elif aw:
+                    # 한 표에 여러 종류의 행이 앉는 곳이다. 그 종류일 때만 필수다.
+                    col, code = next(iter(aw.items()))
+                    add(nid("SV"), f"{tname}.{fn} 필수({code} 행)", "Completeness", "value", tname, "not_null_when",
+                        fields=[fn], params=dict(when_column=col, when_code=code), scope=scope,
+                        desc=f"{col} 이 {code} 인 행에서는 {fn} 이 NULL 일 수 없다.")
+                else:
+                    empty_set = f.get("concept_set") and not SET_IDS.get(f["concept_set"]) and not SET_CODES.get(f["concept_set"])
+                    add(nid("SV"), f"{tname}.{fn} 필수", "Completeness", "value", tname, "not_null", fields=[fn],
+                        severity="warning" if empty_set else "error", scope=scope,
+                        desc=(f"필수 필드 {fn} 은 NULL 일 수 없다." if not empty_set else
+                              f"{fn} 은 필수지만 값 집합 {f['concept_set']} 이 비어 있어 채울 근거가 없다 — 값 집합을 채우면 오류로 올린다."))
             if f["type"] in TYPE_RULE:
                 add(nid("SV"), f"{tname}.{fn} 타입({f['type']})", "Conformance", "value", tname, "type", fields=[fn],
                     params=dict(type=TYPE_RULE[f["type"]]), scope=scope,
@@ -140,10 +168,16 @@ if V2:
                     fields=[fn], params=dict(ref_table=rt, ref_field=rc), scope=scope,
                     desc=f"{fn} 의 값은 {f['ref']} 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).")
             cs = f.get("concept_set")
-            if cs and SET_IDS.get(cs):
-                add(nid("SV"), f"{tname}.{fn} 값 집합({cs})", "Conformance", "value", tname, "concept_set", fields=[fn],
-                    params=dict(concept_set=cs, concept_ids=sorted(SET_IDS[cs])), scope=scope,
-                    desc=f"{fn} 은 값 집합 {cs} 의 concept_id 여야 한다.")
+            if cs and (SET_IDS.get(cs) or SET_CODES.get(cs)):
+                # bigint(*_concept_id) 는 concept_id 를 담고, 그 밖(예/아니오 같은 integer 플래그)은 코드를 담는다.
+                if f["type"] == "bigint":
+                    add(nid("SV"), f"{tname}.{fn} 값 집합({cs})", "Conformance", "value", tname, "concept_set",
+                        fields=[fn], params=dict(concept_set=cs, concept_ids=sorted(SET_IDS.get(cs, []))), scope=scope,
+                        desc=f"{fn} 은 값 집합 {cs} 의 concept_id 여야 한다.")
+                else:
+                    add(nid("SV"), f"{tname}.{fn} 값 집합({cs}) 코드", "Conformance", "value", tname, "concept_code",
+                        fields=[fn], params=dict(concept_set=cs, codes=sorted(SET_CODES.get(cs, []))), scope=scope,
+                        desc=f"{fn} 은 값 집합 {cs} 의 코드여야 한다(concept_id 가 아니다).")
             elif cs:
                 add(nid("SV"), f"{tname}.{fn} 값 집합({cs}) 비어 있음", "Conformance", "value", tname, "concept_set_empty",
                     fields=[fn], params=dict(concept_set=cs), severity="warning", scope=scope,

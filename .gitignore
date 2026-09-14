@@ -31,3 +31,6 @@ Thumbs.db
 
 # 참조표 내용(라이선스 있는 원본에서 만든다 · spec/load_reference_tables.py)
 spec/v2/vocab/ref/
+
+# v2 가상데이터 출력
+synth/output/clean_v2/

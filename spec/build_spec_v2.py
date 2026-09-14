@@ -33,6 +33,7 @@ from v2_field_names import FIELD_NAMES, UNITS, CODELIST_OVERRIDE, TYPE_OVERRIDE 
 from v2_omop_map import CONCEPT_ID_BASE, OMOP_TABLES, SEED_CONCEPTS, FORM_MAP  # noqa: E402
 from v2_reference_tables import REFERENCE_TABLES, FIELD_REFERENCES, TABLE_REFERENCES  # noqa: E402
 from v2_legacy_triage import classify as triage_legacy, BUCKETS as LEGACY_BUCKETS  # noqa: E402
+from v2_row_kinds import ROW_KINDS, NEEDS_REVIEW  # noqa: E402
 from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, SNOMED_SCALES, LOINC_SOURCE, LOINC_FIELD_CODES,  # noqa: E402
                                PFT_ITEMS, ALCOHOL_ITEMS, COMORBIDITY_ITEMS, DRUG_CLASS_ITEMS)
 
@@ -197,6 +198,11 @@ for F in forms.values():
         if f.get("codelist") and "." in str(f["codelist"]) and f["codelist"] not in codelists: f["codelist"] = "CL_" + f["name"].upper()
         if f.get("codelist") in ALIAS_CODELIST: f["codelist"] = ALIAS_CODELIST[f["codelist"]]  # 2.1: 새 값집합 대신 기존 값집합 재사용
 placeholder = sorted({f["codelist"] for F in forms.values() for f in F["fields"].values() if f.get("codelist") and str(f["codelist"]).startswith("CL_")})
+placeholder = sorted(set(placeholder) | {rk["codelist"] for rk in ROW_KINDS.values()})   # 2.2: 행 종류 코드표
+# 2.2: 한 표에 여러 종류의 행이 앉는 곳에는 '행 종류' 코드표를 더한다(조건부 필수의 근거).
+for _rk in ROW_KINDS.values():
+    VALUE_SETS.setdefault(_rk["codelist"], _rk["values"])
+
 # 2.1: 배치표에서 비었던 값 집합을 spec/v2_codelists_v21.py 의 정의로 채운다 (임상 표준 근거는 그 파일 주석 참고)
 filled_2_1 = sorted(set(VALUE_SETS) & set(placeholder))
 for p in placeholder:
@@ -363,6 +369,12 @@ for name, (kor, grain, pk, cols) in OMOP_TABLES.items():
                         fields=[dict(name=c, type=t, required=req, desc=d, **({"concept_set": "DISCHARGE_STATUS"} if c == "discharge_to_concept_id" else {})) for c, t, req, d in cols])
 def ext_table(F):
     cols = []
+    rk = ROW_KINDS.get(F["name"])
+    if rk:
+        # 2.2: 한 표에 여러 종류의 행이 앉으므로, 무슨 행인지부터 적는다.
+        cols.append(dict(name=rk["column"], type="bigint", concept_set=rk["codelist"], kor=rk["kor"],
+                         tier="필수", required=True, cohorts=sorted({c for f in F["fields"].values() for c in f["cohorts"]}),
+                         desc="이 행이 어느 병리 보고서인지. 필수 항목이 종류마다 다르므로 먼저 받는다."))
     for f in F["fields"].values():
         base = dict(kor=f["kor"], tier=f["tier"], required=bool(f.get("required")), cohorts=sorted(f["cohorts"]))
         if f.get("key"): cols.append(dict(name=f["name"], type="bigint", key=f["key"], ref=f.get("ref"), **base)); continue
@@ -372,6 +384,15 @@ def ext_table(F):
             cols.append(dict(name=f["name"] + "_source_value", type="varchar", desc="병원이 고른 코드·라벨 원천값", kor=f["kor"] + " 원천값", tier="권고", required=False, cohorts=sorted(f["cohorts"])))
         elif vk in ("예/아니오", "예/아니오+날짜"): cols.append(dict(name=f["name"], type="integer", concept_set="YN", **base))
         else: cols.append(dict(name=f["name"], type=f["type"], unit=f.get("unit"), pattern=f.get("pattern"), event_date=f.get("event_date"), **base))
+    if rk:
+        for c in cols:
+            kind = rk["applies"].get(c["name"])
+            if kind and kind != "BOTH":
+                c["applies_when"] = {rk["column"]: kind}
+            elif (c.get("tier") == "필수" and kind is None and c["name"] != rk["column"]
+                  and not c.get("key") and not c.get("event_date") and not c["name"].endswith("_source_value")):
+                # 키와 사건 날짜는 어느 종류에나 있으므로 분류 대상이 아니다
+                warnings.append(f"{F['name']}.{c['name']} 은 필수인데 어느 행 종류에 해당하는지 정하지 않았다 (spec/v2_row_kinds.py)")
     return cols
 for fn_ in EXT_FORMS:
     F = forms[fn_]

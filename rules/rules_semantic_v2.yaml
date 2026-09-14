@@ -1,0 +1,477 @@
+    # v2 저장 구조용 의미 규칙 (손으로 씀, DuckDB SQL)
+    #
+    # v1 규칙 75개를 그대로 옮길 수 없다. v1 은 질환마다 큰 테이블 하나를 두고 거기에 수술일·생검일이
+    # 컬럼으로 있었는데, v2 는 같은 사실이 OMOP 테이블과 확장 테이블에 나뉘어 앉기 때문이다.
+    # 그래서 '무엇을 보는 규칙인가'만 남기고 SQL 은 v2 구조로 다시 썼다.
+    #
+    # 각 규칙의 SELECT 는 person_id, row_key, detail 세 컬럼을 낸다. 한 행이 위반 하나다.
+    # requires 에 적은 테이블이 없으면 그 규칙은 '건너뜀'으로 기록된다.
+    #
+    # v1 에 있었으나 아직 옮기지 않은 것:
+    #   - 코호트 구성 조건·인구학적 분포(SEM-COM-013/024): v2 는 COHORT 테이블이 따로 있어 그 기준부터 정해야 한다.
+    #   - 질환별 규칙 중 폐암 외(유방·대장·MASLD·당뇨·림프종): 그 코호트를 v2 로 옮길 때 함께 쓴다.
+rules:
+  # ================================================================ 공통 · 시간 순서
+  - id: SEMV-COM-001
+    name: 방문 종료일 >= 시작일
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: all
+    requires: [VISIT_OCCURRENCE]
+    desc: 퇴원일이 입원일보다 앞설 수 없다.
+    sql: |
+      SELECT person_id, CAST(visit_occurrence_id AS VARCHAR) AS row_key,
+             'visit_end_date ' || visit_end_date || ' < visit_start_date ' || visit_start_date AS detail
+      FROM VISIT_OCCURRENCE WHERE visit_end_date < visit_start_date
+
+  - id: SEMV-COM-002
+    name: 방문일 >= 출생연도
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: all
+    requires: [PERSON, VISIT_OCCURRENCE]
+    desc: 태어나기 전에 방문할 수 없다.
+    sql: |
+      SELECT v.person_id, CAST(v.visit_occurrence_id AS VARCHAR) AS row_key,
+             'visit_start_date ' || v.visit_start_date || ' 가 출생연도 ' || p.year_of_birth || ' 보다 이르다' AS detail
+      FROM VISIT_OCCURRENCE v JOIN PERSON p ON p.person_id = v.person_id
+      WHERE EXTRACT(YEAR FROM v.visit_start_date) < p.year_of_birth
+
+  - id: SEMV-COM-003
+    name: 사망 이후 임상 이벤트 금지
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: all
+    requires: [DEATH]
+    desc: 사망일보다 뒤에 일어난 사건은 있을 수 없다. v1 은 PERSON.death_date 를 봤지만 v2 는 DEATH 테이블을 본다.
+    sql: |
+      WITH ev AS (
+        SELECT person_id, 'VISIT_OCCURRENCE:' || visit_occurrence_id AS row_key, visit_start_date AS d FROM VISIT_OCCURRENCE
+        UNION ALL SELECT person_id, 'CONDITION_OCCURRENCE:' || condition_occurrence_id, condition_start_date FROM CONDITION_OCCURRENCE
+        UNION ALL SELECT person_id, 'PROCEDURE_OCCURRENCE:' || procedure_occurrence_id, procedure_date FROM PROCEDURE_OCCURRENCE
+        UNION ALL SELECT person_id, 'DRUG_EXPOSURE:' || drug_exposure_id, drug_exposure_start_date FROM DRUG_EXPOSURE
+        UNION ALL SELECT person_id, 'MEASUREMENT:' || measurement_id, measurement_date FROM MEASUREMENT
+        UNION ALL SELECT person_id, 'OBSERVATION:' || observation_id, observation_date FROM OBSERVATION
+        UNION ALL SELECT person_id, 'SPECIMEN:' || specimen_id, specimen_date FROM SPECIMEN
+      )
+      SELECT ev.person_id, ev.row_key, '사건일 ' || ev.d || ' 가 사망일 ' || x.death_date || ' 보다 뒤다' AS detail
+      FROM ev JOIN DEATH x ON x.person_id = ev.person_id
+      WHERE ev.d > x.death_date
+
+  - id: SEMV-COM-004
+    name: 관찰기간 밖 이벤트 금지
+    category: Plausibility
+    subcategory: temporal
+    severity: warning
+    scope: all
+    requires: [OBSERVATION_PERIOD]
+    desc: 관찰기간 밖의 사건은 기록 경위를 확인해야 한다. v2 는 관찰기간이 PERSON 이 아니라 별도 테이블이다.
+    sql: |
+      SELECT v.person_id, CAST(v.visit_occurrence_id AS VARCHAR) AS row_key,
+             'visit_start_date ' || v.visit_start_date || ' 가 관찰기간 [' || o.observation_period_start_date
+             || ', ' || o.observation_period_end_date || '] 밖이다' AS detail
+      FROM VISIT_OCCURRENCE v JOIN OBSERVATION_PERIOD o ON o.person_id = v.person_id
+      WHERE v.visit_start_date < o.observation_period_start_date OR v.visit_start_date > o.observation_period_end_date
+
+  - id: SEMV-COM-005
+    name: 관찰기간 자체의 정합
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: all
+    requires: [OBSERVATION_PERIOD]
+    desc: 관찰기간 종료일이 시작일보다 앞설 수 없고, 사망했다면 사망일에서 끝나야 한다.
+    sql: |
+      SELECT o.person_id, CAST(o.observation_period_id AS VARCHAR) AS row_key,
+             CASE WHEN o.observation_period_end_date < o.observation_period_start_date
+                  THEN '관찰기간 종료 ' || o.observation_period_end_date || ' < 시작 ' || o.observation_period_start_date
+                  ELSE '사망일 ' || d.death_date || ' 과 관찰기간 종료 ' || o.observation_period_end_date || ' 가 다르다' END AS detail
+      FROM OBSERVATION_PERIOD o LEFT JOIN DEATH d ON d.person_id = o.person_id
+      WHERE o.observation_period_end_date < o.observation_period_start_date
+         OR (d.person_id IS NOT NULL AND o.observation_period_end_date <> d.death_date)
+
+  - id: SEMV-COM-006
+    name: 이벤트일이 방문 기간 안에 있음
+    category: Plausibility
+    subcategory: temporal
+    severity: warning
+    scope: all
+    requires: [VISIT_OCCURRENCE]
+    desc: 방문에 매단 사건은 그 방문 기간 안에 있어야 한다.
+    sql: |
+      WITH ev AS (
+        SELECT person_id, visit_occurrence_id AS vid, 'CONDITION_OCCURRENCE:' || condition_occurrence_id AS row_key, condition_start_date AS d FROM CONDITION_OCCURRENCE WHERE visit_occurrence_id IS NOT NULL
+        UNION ALL SELECT person_id, visit_occurrence_id, 'PROCEDURE_OCCURRENCE:' || procedure_occurrence_id, procedure_date FROM PROCEDURE_OCCURRENCE WHERE visit_occurrence_id IS NOT NULL
+        UNION ALL SELECT person_id, visit_occurrence_id, 'DRUG_EXPOSURE:' || drug_exposure_id, drug_exposure_start_date FROM DRUG_EXPOSURE WHERE visit_occurrence_id IS NOT NULL
+        UNION ALL SELECT person_id, visit_occurrence_id, 'MEASUREMENT:' || measurement_id, measurement_date FROM MEASUREMENT WHERE visit_occurrence_id IS NOT NULL
+      )
+      SELECT ev.person_id, ev.row_key,
+             '사건일 ' || ev.d || ' 가 방문 [' || v.visit_start_date || ', ' || v.visit_end_date || '] 밖이다' AS detail
+      FROM ev JOIN VISIT_OCCURRENCE v ON v.visit_occurrence_id = ev.vid
+      WHERE ev.d < v.visit_start_date OR ev.d > v.visit_end_date
+
+  - id: SEMV-COM-007
+    name: 이벤트-방문 환자 일치
+    category: Conformance
+    subcategory: relational
+    severity: error
+    scope: all
+    requires: [VISIT_OCCURRENCE]
+    desc: 사건에 적힌 환자와 그 방문의 환자가 달라서는 안 된다.
+    sql: |
+      WITH ev AS (
+        SELECT person_id, visit_occurrence_id AS vid, 'CONDITION_OCCURRENCE:' || condition_occurrence_id AS row_key FROM CONDITION_OCCURRENCE WHERE visit_occurrence_id IS NOT NULL
+        UNION ALL SELECT person_id, visit_occurrence_id, 'PROCEDURE_OCCURRENCE:' || procedure_occurrence_id FROM PROCEDURE_OCCURRENCE WHERE visit_occurrence_id IS NOT NULL
+        UNION ALL SELECT person_id, visit_occurrence_id, 'DRUG_EXPOSURE:' || drug_exposure_id FROM DRUG_EXPOSURE WHERE visit_occurrence_id IS NOT NULL
+        UNION ALL SELECT person_id, visit_occurrence_id, 'MEASUREMENT:' || measurement_id FROM MEASUREMENT WHERE visit_occurrence_id IS NOT NULL
+        UNION ALL SELECT person_id, visit_occurrence_id, 'PATHOLOGY_REPORT:' || pathology_report_id FROM PATHOLOGY_REPORT WHERE visit_occurrence_id IS NOT NULL
+      )
+      SELECT ev.person_id, ev.row_key,
+             '사건의 person_id ' || ev.person_id || ' 와 방문의 person_id ' || v.person_id || ' 가 다르다' AS detail
+      FROM ev JOIN VISIT_OCCURRENCE v ON v.visit_occurrence_id = ev.vid
+      WHERE v.person_id <> ev.person_id
+
+  - id: SEMV-COM-008
+    name: 입원 방문 기간 중첩
+    category: Plausibility
+    subcategory: temporal
+    severity: warning
+    scope: all
+    requires: [VISIT_OCCURRENCE]
+    desc: 한 환자의 입원 기간이 서로 겹칠 수 없다.
+    sql: |
+      SELECT a.person_id, CAST(a.visit_occurrence_id AS VARCHAR) AS row_key,
+             '입원 ' || a.visit_occurrence_id || ' [' || a.visit_start_date || ',' || a.visit_end_date
+             || '] 이 ' || b.visit_occurrence_id || ' [' || b.visit_start_date || ',' || b.visit_end_date || '] 과 겹친다' AS detail
+      FROM VISIT_OCCURRENCE a JOIN VISIT_OCCURRENCE b
+        ON a.person_id = b.person_id AND a.visit_occurrence_id < b.visit_occurrence_id
+      WHERE a.visit_concept_id = 9201 AND b.visit_concept_id = 9201
+        AND a.visit_start_date <= b.visit_end_date AND b.visit_start_date <= a.visit_end_date
+
+  # ================================================================ 공통 · 값의 정합
+  - id: SEMV-COM-009
+    name: 약물 종료일 >= 시작일, days_supply 일치
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: all
+    requires: [DRUG_EXPOSURE]
+    desc: 종료일은 시작일 + days_supply - 1 이어야 한다.
+    sql: |
+      SELECT person_id, CAST(drug_exposure_id AS VARCHAR) AS row_key,
+             CASE WHEN drug_exposure_end_date < drug_exposure_start_date
+                  THEN '종료일 ' || drug_exposure_end_date || ' < 시작일 ' || drug_exposure_start_date
+                  ELSE 'days_supply ' || days_supply || ' 가 기간('
+                       || (drug_exposure_end_date - drug_exposure_start_date + 1) || '일) 과 다르다' END AS detail
+      FROM DRUG_EXPOSURE
+      WHERE drug_exposure_end_date < drug_exposure_start_date
+         OR (days_supply IS NOT NULL AND days_supply <> (drug_exposure_end_date - drug_exposure_start_date + 1))
+
+  - id: SEMV-COM-010
+    name: 검사 결과값 존재
+    category: Completeness
+    subcategory: value
+    severity: error
+    scope: all
+    requires: [MEASUREMENT]
+    desc: |
+      검사 행에 수치도 값 concept 도 원천값도 없으면 무엇을 쟀는지 알 수 없다.
+      병기·반응처럼 원천 표기만 남기는 항목이 있어 원천값도 값으로 인정한다.
+    sql: |
+      SELECT person_id, CAST(measurement_id AS VARCHAR) AS row_key,
+             'value_as_number 와 value_as_concept_id 가 모두 비어 있다' AS detail
+      FROM MEASUREMENT
+      WHERE value_as_number IS NULL AND (value_as_concept_id IS NULL OR value_as_concept_id = '')
+        AND (value_source_value IS NULL OR value_source_value = '')
+        AND (measurement_source_value IS NULL OR measurement_source_value = '')
+
+  - id: SEMV-COM-011
+    name: 정상범위 하한 <= 상한
+    category: Plausibility
+    subcategory: atemporal
+    severity: error
+    scope: all
+    requires: [MEASUREMENT]
+    desc: 참고범위의 하한이 상한보다 클 수 없다.
+    sql: |
+      SELECT person_id, CAST(measurement_id AS VARCHAR) AS row_key,
+             'range_low ' || range_low || ' > range_high ' || range_high AS detail
+      FROM MEASUREMENT
+      WHERE range_low IS NOT NULL AND range_high IS NOT NULL AND range_low > range_high
+
+  - id: SEMV-COM-012
+    name: 검사항목별 타당 범위
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: all
+    requires: [MEASUREMENT]
+    desc: |
+      검사항목마다 사람에게 나올 수 있는 범위가 있다. v2 명세에는 아직 범위 정보가 없어,
+      v1 이 쓰던 검사항목 범위표(spec/concepts.yaml)를 그대로 빌려 쓴다. OMOP 검사 concept_id 는 v1·v2 가 같다.
+    sql: |
+      SELECT m.person_id, CAST(m.measurement_id AS VARCHAR) AS row_key,
+             c.name || ' = ' || m.value_as_number || ' 가 타당 범위 [' || c.lo || ', ' || c.hi || '] 밖이다' AS detail
+      FROM MEASUREMENT m JOIN _MEASUREMENT_CONCEPTS c ON c.concept_id = CAST(m.measurement_concept_id AS BIGINT)
+      WHERE m.value_as_number IS NOT NULL AND (m.value_as_number < c.lo OR m.value_as_number > c.hi)
+
+  - id: SEMV-COM-013
+    name: 노트 본문 존재
+    category: Completeness
+    subcategory: value
+    severity: warning
+    scope: all
+    requires: [NOTE]
+    desc: 본문이 빈 노트는 쓸모가 없다.
+    sql: |
+      SELECT person_id, CAST(note_id AS VARCHAR) AS row_key, '노트 본문이 비어 있다' AS detail
+      FROM NOTE WHERE note_text IS NULL OR TRIM(note_text) = ''
+
+  - id: SEMV-COM-014
+    name: BMI = 체중 / 신장^2
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: all
+    requires: [MEASUREMENT]
+    desc: 같은 날 잰 신장·체중으로 계산한 값과 기록된 BMI 가 0.5 넘게 다르면 셋 중 하나가 틀렸다.
+    sql: |
+      WITH h AS (SELECT person_id, measurement_date d, value_as_number v FROM MEASUREMENT WHERE measurement_concept_id = '3036277' AND value_as_number IS NOT NULL),
+           w AS (SELECT person_id, measurement_date d, value_as_number v FROM MEASUREMENT WHERE measurement_concept_id = '3025315' AND value_as_number IS NOT NULL),
+           b AS (SELECT person_id, measurement_id, measurement_date d, value_as_number v FROM MEASUREMENT WHERE measurement_concept_id = '3038553' AND value_as_number IS NOT NULL)
+      SELECT b.person_id, CAST(b.measurement_id AS VARCHAR) AS row_key,
+             'BMI ' || b.v || ' 가 신장·체중으로 계산한 ' || ROUND(w.v / POWER(h.v / 100, 2), 1) || ' 와 다르다' AS detail
+      FROM b JOIN h ON h.person_id = b.person_id AND h.d = b.d
+             JOIN w ON w.person_id = b.person_id AND w.d = b.d
+      WHERE ABS(b.v - w.v / POWER(h.v / 100, 2)) > 0.5
+
+  # ================================================================ 치료 묶음(EPISODE) — v1 의 ANTP_THERAPY 자리
+  - id: SEMV-EP-001
+    name: 에피소드 종료일 >= 시작일
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: all
+    requires: [EPISODE]
+    desc: 치료 묶음의 종료일이 시작일보다 앞설 수 없다.
+    sql: |
+      SELECT person_id, CAST(episode_id AS VARCHAR) AS row_key,
+             'episode_end_date ' || episode_end_date || ' < episode_start_date ' || episode_start_date AS detail
+      FROM EPISODE WHERE episode_end_date IS NOT NULL AND episode_end_date < episode_start_date
+
+  - id: SEMV-EP-002
+    name: 에피소드에 매단 사건이 실제로 있음
+    category: Conformance
+    subcategory: relational
+    severity: error
+    scope: all
+    requires: [EPISODE_EVENT, EPISODE]
+    desc: |
+      EPISODE_EVENT 는 어느 테이블의 몇 번 행인지를 episode_event_field_concept_id 로 가리킨다.
+      가리킨 행이 실제로 없으면 연결이 끊긴 것이다. 약물·진단·시술 세 가지를 본다.
+    sql: |
+      WITH ee AS (
+        SELECT e.person_id, ee.episode_id, ee.event_id, f.key AS target
+        FROM EPISODE_EVENT ee
+        JOIN EPISODE e ON e.episode_id = ee.episode_id
+        JOIN _EPISODE_FIELD f ON CAST(f.concept_id AS VARCHAR) = CAST(ee.episode_event_field_concept_id AS VARCHAR)
+      )
+      SELECT ee.person_id, CAST(ee.episode_id AS VARCHAR) || ':' || CAST(ee.event_id AS VARCHAR) AS row_key,
+             target || ' 가 가리킨 사건 ' || ee.event_id || ' 이 대상 테이블에 없다' AS detail
+      FROM ee
+      LEFT JOIN DRUG_EXPOSURE d ON ee.target = 'F_DRUG' AND CAST(d.drug_exposure_id AS VARCHAR) = CAST(ee.event_id AS VARCHAR)
+      LEFT JOIN CONDITION_OCCURRENCE c ON ee.target = 'F_CONDITION' AND CAST(c.condition_occurrence_id AS VARCHAR) = CAST(ee.event_id AS VARCHAR)
+      LEFT JOIN PROCEDURE_OCCURRENCE p ON ee.target = 'F_PROCEDURE' AND CAST(p.procedure_occurrence_id AS VARCHAR) = CAST(ee.event_id AS VARCHAR)
+      WHERE ee.target IN ('F_DRUG', 'F_CONDITION', 'F_PROCEDURE')
+        AND d.drug_exposure_id IS NULL AND c.condition_occurrence_id IS NULL AND p.procedure_occurrence_id IS NULL
+
+  - id: SEMV-EP-003
+    name: 레지멘 기간이 연결 약물 기간과 일치
+    category: Plausibility
+    subcategory: temporal
+    severity: warning
+    scope: all
+    requires: [EPISODE, EPISODE_EVENT, DRUG_EXPOSURE]
+    desc: 레지멘 에피소드의 시작·종료는 그 에피소드에 매단 약물의 최초·최종 날짜와 맞아야 한다.
+    sql: |
+      WITH d AS (
+        SELECT ee.episode_id, MIN(dr.drug_exposure_start_date) s, MAX(dr.drug_exposure_end_date) e
+        FROM EPISODE_EVENT ee
+        JOIN _EPISODE_FIELD f ON CAST(f.concept_id AS VARCHAR) = CAST(ee.episode_event_field_concept_id AS VARCHAR) AND f.key = 'F_DRUG'
+        JOIN DRUG_EXPOSURE dr ON CAST(dr.drug_exposure_id AS VARCHAR) = CAST(ee.event_id AS VARCHAR)
+        GROUP BY ee.episode_id
+      )
+      SELECT ep.person_id, CAST(ep.episode_id AS VARCHAR) AS row_key,
+             '레지멘 기간 [' || ep.episode_start_date || ', ' || ep.episode_end_date
+             || '] 이 연결 약물 기간 [' || d.s || ', ' || d.e || '] 을 담지 못한다' AS detail
+      FROM EPISODE ep JOIN d ON d.episode_id = ep.episode_id
+      WHERE ep.episode_start_date > d.s OR (ep.episode_end_date IS NOT NULL AND ep.episode_end_date < d.e)
+
+  - id: SEMV-EP-004
+    name: 에피소드와 연결 사건의 환자 일치
+    category: Conformance
+    subcategory: relational
+    severity: error
+    scope: all
+    requires: [EPISODE, EPISODE_EVENT, DRUG_EXPOSURE]
+    desc: 에피소드의 환자와 그 에피소드에 매단 약물의 환자가 달라서는 안 된다.
+    sql: |
+      SELECT ep.person_id, CAST(ep.episode_id AS VARCHAR) || ':' || CAST(dr.drug_exposure_id AS VARCHAR) AS row_key,
+             '에피소드 환자 ' || ep.person_id || ' 와 약물 환자 ' || dr.person_id || ' 가 다르다' AS detail
+      FROM EPISODE ep
+      JOIN EPISODE_EVENT ee ON ee.episode_id = ep.episode_id
+      JOIN _EPISODE_FIELD f ON CAST(f.concept_id AS VARCHAR) = CAST(ee.episode_event_field_concept_id AS VARCHAR) AND f.key = 'F_DRUG'
+      JOIN DRUG_EXPOSURE dr ON CAST(dr.drug_exposure_id AS VARCHAR) = CAST(ee.event_id AS VARCHAR)
+      WHERE dr.person_id <> ep.person_id
+
+  - id: SEMV-EP-005
+    name: 진단일 <= 첫 치료 시작일
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: all
+    requires: [EPISODE, CONDITION_OCCURRENCE]
+    desc: 진단보다 먼저 치료가 시작될 수 없다.
+    sql: |
+      WITH dx AS (SELECT person_id, MIN(condition_start_date) d FROM CONDITION_OCCURRENCE GROUP BY person_id),
+           tx AS (SELECT person_id, MIN(episode_start_date) d FROM EPISODE GROUP BY person_id)
+      SELECT tx.person_id, CAST(tx.person_id AS VARCHAR) AS row_key,
+             '첫 치료 시작 ' || tx.d || ' 가 첫 진단 ' || dx.d || ' 보다 이르다' AS detail
+      FROM tx JOIN dx ON dx.person_id = tx.person_id
+      WHERE tx.d < dx.d
+
+  # ================================================================ 검체와 병리
+  - id: SEMV-PA-001
+    name: 병리 보고서의 검체일이 SPECIMEN 과 일치
+    category: Conformance
+    subcategory: relational
+    severity: error
+    scope: all
+    requires: [PATHOLOGY_REPORT, SPECIMEN]
+    desc: 같은 검체를 가리키는데 채취일이 다르면 둘 중 하나가 틀렸다.
+    sql: |
+      SELECT pr.person_id, CAST(pr.pathology_report_id AS VARCHAR) AS row_key,
+             '병리 보고서의 검체일 ' || pr.specimen_date || ' 가 SPECIMEN 의 ' || s.specimen_date || ' 와 다르다' AS detail
+      FROM PATHOLOGY_REPORT pr JOIN SPECIMEN s ON CAST(s.specimen_id AS VARCHAR) = CAST(pr.specimen_id AS VARCHAR)
+      WHERE pr.specimen_date IS NOT NULL AND pr.specimen_date <> s.specimen_date
+
+  - id: SEMV-PA-002
+    name: 침윤 림프절 수 <= 절제 림프절 수
+    category: Plausibility
+    subcategory: atemporal
+    severity: error
+    scope: all
+    requires: [PATHOLOGY_REPORT]
+    desc: 떼어낸 림프절보다 암이 퍼진 림프절이 많을 수 없다. 감시림프절도 같다.
+    sql: |
+      SELECT person_id, CAST(pathology_report_id AS VARCHAR) AS row_key,
+             '침윤 ' || lymph_nodes_positive || ' > 절제 ' || lymph_nodes_examined AS detail
+      FROM PATHOLOGY_REPORT
+      WHERE lymph_nodes_examined IS NOT NULL AND lymph_nodes_positive IS NOT NULL
+        AND lymph_nodes_positive > lymph_nodes_examined
+      UNION ALL
+      SELECT person_id, CAST(pathology_report_id AS VARCHAR),
+             '감시림프절 침윤 ' || sentinel_nodes_positive || ' > 절제 ' || sentinel_nodes_examined
+      FROM PATHOLOGY_REPORT
+      WHERE sentinel_nodes_examined IS NOT NULL AND sentinel_nodes_positive IS NOT NULL
+        AND sentinel_nodes_positive > sentinel_nodes_examined
+
+  - id: SEMV-PA-003
+    name: 수술 병리 검체일 >= 수술일
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: all
+    requires: [PATHOLOGY_REPORT, PROCEDURE_OCCURRENCE]
+    desc: |
+      수술 병리는 수술로 떼어낸 검체를 보는 것이라, 앞선 60일 안에 대응하는 시술이 있어야 한다.
+      v1 은 질환 테이블의 수술일 컬럼을 봤지만 v2 는 PROCEDURE_OCCURRENCE 를 본다.
+    sql: |
+      WITH sp AS (
+        SELECT pr.person_id, pr.pathology_report_id, pr.specimen_date
+        FROM PATHOLOGY_REPORT pr
+        JOIN _ROW_KIND k ON CAST(k.concept_id AS VARCHAR) = CAST(pr.report_type_concept_id AS VARCHAR)
+        WHERE k.code = 'SURGICAL' AND pr.specimen_date IS NOT NULL
+      )
+      SELECT sp.person_id, CAST(sp.pathology_report_id AS VARCHAR) AS row_key,
+             '수술 병리 검체일 ' || sp.specimen_date || ' 앞 60일 안에 시술 기록이 없다' AS detail
+      FROM sp LEFT JOIN PROCEDURE_OCCURRENCE p
+        ON p.person_id = sp.person_id AND p.procedure_date <= sp.specimen_date
+       AND sp.specimen_date - p.procedure_date <= 60
+      WHERE p.procedure_occurrence_id IS NULL
+
+  - id: SEMV-PA-004
+    name: 병리 종양 크기 정합
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: all
+    requires: [PATHOLOGY_TUMOR]
+    desc: 최대 직경이 가로·세로·높이 중 가장 큰 값보다 작을 수 없다.
+    sql: |
+      SELECT person_id, CAST(pathology_tumor_id AS VARCHAR) AS row_key,
+             '최대 직경 ' || pathologic_tumor_max_diameter_cm || ' 가 변 길이 최대값보다 작다' AS detail
+      FROM PATHOLOGY_TUMOR
+      WHERE pathologic_tumor_max_diameter_cm IS NOT NULL
+        AND pathologic_tumor_max_diameter_cm < GREATEST(
+              COALESCE(tumor_size_width_cm, 0), COALESCE(tumor_size_length_cm, 0), COALESCE(tumor_size_height_cm, 0))
+
+  # ================================================================ 폐암
+  - id: SEMV-LC-001
+    name: 유전자검사일 >= 검체 채취일
+    category: Plausibility
+    subcategory: temporal
+    severity: warning
+    scope: [LUNG_CANCER]
+    requires: [BIOMARKER, SPECIMEN]
+    desc: 검체를 얻기 전에 그 검체로 검사할 수 없다.
+    sql: |
+      SELECT b.person_id, CAST(b.biomarker_id AS VARCHAR) AS row_key,
+             '검사일 ' || b.test_date || ' 가 검체 채취일 ' || s.specimen_date || ' 보다 이르다' AS detail
+      FROM BIOMARKER b JOIN SPECIMEN s ON CAST(s.specimen_id AS VARCHAR) = CAST(b.specimen_id AS VARCHAR)
+      WHERE b.test_date IS NOT NULL AND b.test_date < s.specimen_date
+
+  - id: SEMV-LC-002
+    name: 영상 종양 크기와 병리 종양 크기 정합
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: [LUNG_CANCER]
+    requires: [LUNG_EXAM, PATHOLOGY_TUMOR]
+    desc: 진단 시점 영상에서 잰 크기와 절제 검체에서 잰 크기가 3 cm 넘게 다르면 확인이 필요하다.
+    sql: |
+      WITH first_exam AS (
+        SELECT person_id, MIN(exam_date) d
+        FROM LUNG_EXAM WHERE imaging_tumor_max_diameter_cm IS NOT NULL GROUP BY person_id
+      ), img AS (
+        -- 진단 시점(첫 영상)의 크기를 본다. 추적 영상은 치료로 줄어든 크기라 견줄 대상이 아니다.
+        SELECT l.person_id, MAX(l.imaging_tumor_max_diameter_cm) v
+        FROM LUNG_EXAM l JOIN first_exam f ON f.person_id = l.person_id AND f.d = l.exam_date
+        GROUP BY l.person_id
+      ), pat AS (
+        SELECT person_id, MAX(pathologic_tumor_max_diameter_cm) v
+        FROM PATHOLOGY_TUMOR WHERE pathologic_tumor_max_diameter_cm IS NOT NULL GROUP BY person_id
+      )
+      SELECT pat.person_id, CAST(pat.person_id AS VARCHAR) AS row_key,
+             '영상 크기 ' || img.v || ' cm 와 병리 크기 ' || pat.v || ' cm 가 3 cm 넘게 다르다' AS detail
+      FROM pat JOIN img ON img.person_id = pat.person_id
+      WHERE ABS(pat.v - img.v) > 3
+
+  - id: SEMV-LC-003
+    name: 흡연 기록 논리
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: [LUNG_CANCER]
+    requires: [OBSERVATION]
+    desc: 흡연한 적 없다고 적으면서 흡연량·흡연기간을 함께 적을 수 없다.
+    sql: |
+      WITH st AS (SELECT person_id, value_as_string v FROM OBSERVATION WHERE observation_concept_id = '4275495'),
+           qty AS (SELECT DISTINCT person_id FROM OBSERVATION WHERE observation_concept_id IN ('4298794', '37017670'))
+      SELECT st.person_id, CAST(st.person_id AS VARCHAR) AS row_key,
+             '흡연 상태가 ' || st.v || ' 인데 흡연량·흡연기간이 기록돼 있다' AS detail
+      FROM st JOIN qty ON qty.person_id = st.person_id
+      WHERE st.v = 'Never smoker'

@@ -177,13 +177,14 @@ def generate(ctx: CtxV2, n=100):
             ctx.episode_event(disease_ep, proc, ctx.seeds["field_procedure"])
             path_day = ctx.days(surgery_day, ctx.randint(3, 7))
             pt = t if ctx.bern(0.8) else ctx.choice(list(TSIZE))
-            psize = round(ctx.rand(*TSIZE[pt]), 1)
+            # 병리 크기는 영상 크기 언저리에서 나온다(둘이 크게 벌어지면 그 자체가 확인 대상이다)
+            psize = round(min(max(size * ctx.rand(0.75, 1.25), 0.5), size + 2.5), 1)
             pn = nn if ctx.bern(0.75) else ctx.choice(["N0", "N1", "N2"])
             tot_ln = ctx.randint(8, 30)
             pos_ln = 0 if pn == "N0" else ctx.randint(1, min(6, tot_ln))
             vpi = ctx.bern(0.3)
             op_spec = ctx.specimen(p, surgery_day, 4002054, vid=svid, source=f"LOBECTOMY-{lobe_cd}")
-            op_path = ctx.ext("PATHOLOGY_REPORT", p, vid=svid, specimen_id=op_spec, specimen_date=path_day,
+            op_path = ctx.ext("PATHOLOGY_REPORT", p, vid=svid, specimen_id=op_spec, specimen_date=surgery_day,
                               report_type_concept_id=ctx.cs("CL_PATHOLOGY_REPORT_TYPE", "SURGICAL"),
                               surgical_specimen_site_concept_id=ctx.cs("CL_SURGICAL_SPECIMEN_SITE", "PRIMARY"),
                               surgical_specimen_site_source_value=lobe_nm,

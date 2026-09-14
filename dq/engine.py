@@ -45,8 +45,10 @@ class Engine:
             self.tables_in_cohort = list(self.profile["omop_tables"]) + list(self.profile["extension_tables"])
             self.disease_table = None
             self.rules_struct = load_yaml("rules/rules_structural_v2.yaml")["rules"]
-            self.rules_sem = []          # v2 의미 규칙은 아직 없다
-            self.codelists, self.concepts = {}, {}
+            self.rules_sem = load_yaml("rules/rules_semantic_v2.yaml")["rules"]
+            self.codelists = {}
+            # 검사항목 타당 범위는 v2 명세에 아직 없어 v1 표를 빌려 쓴다(OMOP 검사 concept_id 는 같다)
+            self.concepts = load_yaml("spec/concepts.yaml")
             # 값 집합: 코드와 concept_id 둘 다 쓴다(컬럼 타입에 따라 다르다)
             import csv as _csv
             self.set_codes, self.set_ids, self.code_of_concept = {}, {}, {}
@@ -297,10 +299,6 @@ class Engine:
 
     # ------------------------------------------------------- semantic pass
     def run_semantic(self):
-        if self.spec_version == "v2":
-            # v1 의미 규칙은 v1 테이블 이름으로 쓴 SQL 이라 v2 에 그대로 걸 수 없다.
-            # v2 의미 규칙을 따로 쓸 때까지는 구조 규칙만 돈다.
-            return self
         con = duckdb.connect()
         for t in self.tables_in_cohort:
             if t not in self.raw:
@@ -325,6 +323,31 @@ class Engine:
         con.register("_ac", pd.DataFrame(ac))
         con.execute("CREATE TABLE _ANTICANCER_DRUGS AS SELECT * FROM _ac")
 
+        if self.spec_version == "v2":
+            # 행 종류 코드를 SQL 에서도 쓸 수 있게 보조 테이블로 올린다(예: 수술 병리만 고르기)
+            con.register("_rk", pd.DataFrame([dict(concept_id=int(k), code=v) for k, v in self.code_of_concept.items()]))
+            con.execute("CREATE TABLE _ROW_KIND AS SELECT * FROM _rk")
+            # EPISODE_EVENT 가 어느 테이블을 가리키는지는 field concept 으로 정해진다.
+            # 테이블마다 id 가 1부터 따로 매겨지므로 이걸 봐야 같은 번호끼리 헷갈리지 않는다.
+            import csv as _csv2
+            seed = {r["key"]: int(r["concept_id"]) for r in
+                    _csv2.DictReader(open(os.path.join(ROOT, "spec/v2/vocab/CONCEPT.csv"), encoding="utf-8"))}
+            con.register("_sd", pd.DataFrame([dict(key=k, concept_id=v) for k, v in seed.items() if k.startswith("F_")]))
+            con.execute("CREATE TABLE _EPISODE_FIELD AS SELECT * FROM _sd")
+            subst = {"{TODAY}": f"DATE '{self.today.isoformat()}'"}
+            present = set(self.raw)
+            for rule in self.rules_sem:
+                scope = rule.get("scope", "all")
+                if scope != "all" and self.cohort not in scope:
+                    continue
+                req = set(rule.get("requires", []))
+                self.init_stat(rule, ",".join(sorted(req)) if req else "")
+                st = self.rule_stats[rule["id"]]
+                if not req.issubset(present):
+                    st["status"] = "skipped"; st["note"] = f"필요 테이블 없음: {sorted(req - present)}"; continue
+                self._run_one_sem(con, rule, subst)
+            return self
+
         cd = self.concepts["cohort_definition"][self.cohort]
         dtab = self.disease_table
         kcd_field = {"LUNG_CANCER": "lucn_diag_kncd", "BREAST_CANCER": "brcn_diag_kncd", "COLORECTAL_CANCER": "clcn_diag_kncd"}.get(dtab, "NULL")
@@ -346,18 +369,24 @@ class Engine:
             st = self.rule_stats[rule["id"]]
             if not req.issubset(present) or dtab not in present:
                 st["status"] = "skipped"; st["note"] = f"필요 테이블 없음: {sorted(req - present)}"; continue
-            sql = rule["sql"]
-            for k, v in subst.items():
-                sql = sql.replace(k, v)
-            try:
-                res = con.execute(sql).fetchall()
-            except Exception as e:
-                st["status"] = "error"; st["note"] = f"SQL 오류: {str(e)[:200]}"; continue
-            for person_id, row_key, detail in res:
-                self.add(rule, st["table"], "", row_key, None if person_id is None else int(person_id), detail or "")
-            if st["violations"] > 0:
-                st["status"] = "fail"
+            self._run_one_sem(con, rule, subst)
         con.close()
+        return self
+
+    def _run_one_sem(self, con, rule, subst):
+        """의미 규칙 하나를 돌린다. SELECT 는 person_id, row_key, detail 순서로 낸다."""
+        st = self.rule_stats[rule["id"]]
+        sql = rule["sql"]
+        for k, v in subst.items():
+            sql = sql.replace(k, v)
+        try:
+            res = con.execute(sql).fetchall()
+        except Exception as e:
+            st["status"] = "error"; st["note"] = f"SQL 오류: {str(e)[:200]}"; return
+        for person_id, row_key, detail in res:
+            self.add(rule, st["table"], "", row_key, None if person_id is None else int(person_id), detail or "")
+        if st["violations"] > 0:
+            st["status"] = "fail"
 
     # --------------------------------------------------------------- report
     def summary(self):

@@ -176,5 +176,9 @@ KAI_REF_ROOT=/경로/표준용어 python spec/load_reference_tables.py --only RE
     - `synth/framework_v2.py` 가 v2 저장 테이블에 적고, `scenarios/lung_v2.py` 가 여정을 기술한다. 여정 자체는 v1 과 같다.
     - 명세에 없는 컬럼을 쓰거나 값 집합에 없는 코드를 쓰면 생성이 그 자리에서 멈춘다.
     - 생성물을 v2 구조 규칙 357개로 검사해 위반 1건까지 줄였다(아래 '남은 1건' 참고).
-  - ⬜ 엔진(`dq/`, `dq-ts/`): v2 명세와 어휘를 읽도록
+  - 🔸 엔진: `python dq/engine.py --spec v2 --cohort LUNG_CANCER --data synth/output/clean_v2/LUNG_CANCER --out dq/reports/v2_LUNG_CANCER`
+    - v2 명세·프로필·값 집합을 읽고, v2 전용 검사 5종(`concept_set`·`concept_code`·`not_null_when`·`not_null_either`·복합 PK)을 더했다.
+    - 폐암 가상데이터에서 규칙 357개 중 1개 위반(위 '남은 1건'). v1 경로는 규칙 427개·위반 0으로 그대로다.
+    - **의미 규칙 75개는 아직 v1 전용이다.** v1 테이블 이름으로 쓴 SQL 이라 v2 에 그대로 걸 수 없어, `--spec v2` 에서는 구조 규칙만 돈다.
+    - TypeScript 엔진(`dq-ts/`)은 아직 v1 만 읽는다.
   - ⬜ 앱: 서식→레코드 변환 단계 추가

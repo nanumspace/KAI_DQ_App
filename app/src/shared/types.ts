@@ -65,7 +65,7 @@ export interface InputPlan {
 
 export interface PreviewData { columns: string[]; rows: string[][]; total: number }
 
-export type TemplateKind = "csv" | "xlsx" | "spec" | "sample";
+export type TemplateKind = "csv" | "xlsx" | "spec" | "sample" | "crf";   // crf: v2 서식 빈 양식
 
 // ------------------------------------------------------------------ 실행
 export interface RunRequest {
@@ -169,5 +169,7 @@ export interface CrfConvertResult {
   formsRead: Record<string, number>;
   tablesWritten: Record<string, number>;
   missingForms: string[];
+  /** 어느 서식도 만들지 않는 표 — EHR 추출본으로 받아야 한다 */
+  tablesFromEhr: string[];
   issues: CrfConvertIssue[];
 }

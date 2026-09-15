@@ -50,6 +50,8 @@ export interface CrfSpec {
   conceptByKey: Map<string, number>;
   /** 저장 테이블의 PK 이름 */
   pkOf: Map<string, string>;
+  /** 저장 테이블의 전체 컬럼(명세 순서). 변환 결과는 이 컬럼을 다 갖춰야 한다. */
+  columnsOf: Map<string, string[]>;
 }
 
 export function loadCrfSpec(root = getRoot()): CrfSpec {
@@ -65,9 +67,10 @@ export function loadCrfSpec(root = getRoot()): CrfSpec {
     if (key) conceptByKey.set(key, Number(cells[iId]));
   }
   const spec = parse(fs.readFileSync(path.join(root, "spec/v2/kai_cdm_spec_v2.yaml"), "utf-8")) as
-    { tables: Record<string, { pk: string }> };
+    { tables: Record<string, { pk: string; fields: Array<{ name: string }> }> };
   const pkOf = new Map(Object.entries(spec.tables).map(([t, v]) => [t, v.pk]));
-  return { forms, conceptByKey, pkOf };
+  const columnsOf = new Map(Object.entries(spec.tables).map(([t, v]) => [t, v.fields.map((f) => f.name)]));
+  return { forms, conceptByKey, pkOf, columnsOf };
 }
 
 export interface ConvertIssue { form: string; row: number; field?: string; message: string }
@@ -302,6 +305,12 @@ export interface ConvertDirResult {
   issues: ConvertIssue[];
   /** 이 코호트가 채워야 하는데 파일이 없는 서식 */
   missingForms: string[];
+  /**
+   * 어느 서식도 만들지 않는 저장 테이블. 서식은 EHR 에 구조화되어 있지 않은 것을 받는 자리라,
+   * 환자·방문·약물·사망처럼 EHR 에서 그대로 뽑는 표는 서식이 아니라 추출본으로 받아야 한다.
+   * 이 표들은 변환 결과에 없으므로, 검증할 때 병원의 추출본과 합쳐야 한다.
+   */
+  tablesFromEhr: string[];
 }
 
 /**
@@ -332,11 +341,71 @@ export function convertCrfDirectory(opts: {
   const { records, issues } = conv.result();
   const tablesWritten: Record<string, number> = {};
   for (const [table, recs] of records) {
-    // 레코드마다 채운 컬럼이 다르므로 열의 합집합을 헤더로 쓴다
-    const cols: string[] = [];
-    for (const r of recs) for (const k of Object.keys(r)) if (!cols.includes(k)) cols.push(k);
-    writeCsv(path.join(opts.outDir, `${table}.csv`), cols, recs);
+    // 명세의 컬럼을 모두 쓴다. 값이 없는 컬럼도 빈 칸으로 둬야 '컬럼 구성' 검사를 지난다.
+    const cols = spec.columnsOf.get(table) ?? [];
+    const extra: string[] = [];
+    for (const r of recs) for (const k of Object.keys(r)) if (!cols.includes(k) && !extra.includes(k)) extra.push(k);
+    if (extra.length) {
+      conv.issues.push({ form: "(변환)", row: 0, message: `${table} 에 명세에 없는 컬럼이 생겼습니다: ${extra.join(", ")}` });
+    }
+    writeCsv(path.join(opts.outDir, `${table}.csv`), [...cols, ...extra], recs);
     tablesWritten[table] = recs.length;
   }
-  return { formsRead, tablesWritten, issues, missingForms };
+  // 이 코호트에 필요한 표 가운데 어느 서식도 만들지 않는 것
+  const profiles = parse(fs.readFileSync(path.join(opts.root ?? getRoot(), "spec/v2/cohort_profiles_v2.yaml"), "utf-8"))
+    .cohorts as Record<string, { omop_tables: string[]; extension_tables: string[] }>;
+  const needed = new Set([...(profiles[opts.cohort]?.omop_tables ?? []), ...(profiles[opts.cohort]?.extension_tables ?? [])]);
+  const producible = new Set<string>();
+  for (const form of formsForCohort(spec, opts.cohort)) {
+    for (const t of form.storage) producible.add(t);
+    for (const f of form.fields) if (f.target?.table) producible.add(f.target.table);
+  }
+  const tablesFromEhr = [...needed].filter((t) => !producible.has(t)).sort();
+  return { formsRead, tablesWritten, issues, missingForms, tablesFromEhr };
+}
+
+/**
+ * 병원이 채울 빈 서식(CSV)을 만든다. 서식마다 파일 하나이고 첫 줄이 필드 이름이다.
+ * 값을 고르는 필드에는 고를 수 있는 코드를 README 에 함께 적는다 — 코드를 모르면 채울 수 없기 때문이다.
+ */
+export function writeCrfTemplates(cohort: string, dir: string, root = getRoot()): string[] {
+  const spec = loadCrfSpec(root);
+  const forms = formsForCohort(spec, cohort);
+  fs.mkdirSync(dir, { recursive: true });
+  const written: string[] = [];
+  // 값 집합 코드 목록 (CS:<집합>:<코드> 키에서 모은다)
+  const codesOf = new Map<string, string[]>();
+  for (const key of spec.conceptByKey.keys()) {
+    if (!key.startsWith("CS:")) continue;
+    const [, set, code] = key.split(":");
+    if (!code) continue;
+    const list = codesOf.get(set) ?? [];
+    list.push(code);
+    codesOf.set(set, list);
+  }
+
+  const guide: string[] = [
+    `K-AI 코호트 입력 양식 — ${cohort} (서식 ${forms.length}개)`, "",
+    "- 파일 하나가 서식 하나입니다. 파일 이름은 바꾸지 마세요.",
+    "- 첫 줄은 필드 이름입니다. 순서는 바꿔도 되지만 이름은 바꾸지 마세요.",
+    "- 인코딩 UTF-8, 빈 값은 빈 칸, 날짜는 YYYY-MM-DD 입니다.",
+    "- person_id 는 모든 서식에 있어야 합니다. 같은 환자는 같은 값을 쓰세요.",
+    "- 값을 고르는 필드는 아래 목록의 코드를 그대로 적습니다(한글 라벨이 아니라 코드).",
+    "",
+  ];
+  for (const form of forms) {
+    const fields = form.fields.filter((f) => f.target?.kind !== "skip" || f.name === "person_id");
+    const p = path.join(dir, `${form.name}.csv`);
+    fs.writeFileSync(p, "﻿" + fields.map((f) => f.name).join(",") + "\n", "utf-8");
+    written.push(p);
+    guide.push(`[${form.name}] ${form.kor} · 행 단위: ${form.grain}`);
+    for (const f of fields) {
+      if (!f.codelist) continue;
+      const codes = codesOf.get(f.codelist) ?? [];
+      guide.push(`   ${f.name} (${f.kor ?? ""}) : ${codes.length ? codes.join(" | ") : "(값 집합이 아직 비어 있습니다)"}`);
+    }
+    guide.push("");
+  }
+  fs.writeFileSync(path.join(dir, "README.txt"), guide.join("\n"), "utf-8");
+  return written;
 }

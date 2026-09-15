@@ -78,13 +78,13 @@
 | SV-0592 LUNG_EXAM.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성 | Conformance | error | LUNG_EXAM | 1 | visit_occurrence_id=100099 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음 |
 | SEMV-COM-001 방문 종료일 >= 시작일 | Plausibility | error | VISIT_OCCURRENCE | 3 | visit_end_date 2024-01-15 < visit_start_date 2024-01-16 / visit_end_date 2023-12-21 < visit_start_date 2023-12-22 |
 | SEMV-COM-002 방문일 >= 출생연도 | Plausibility | error | PERSON,VISIT_OCCURRENCE | 2 | visit_start_date 1890-01-01 가 출생연도 1975 보다 이르다 / visit_start_date 1890-01-01 가 출생연도 1954 보다 이르다 |
-| SEMV-COM-003 사망 이후 임상 이벤트 금지 | Plausibility | error | DEATH | 2 | 사건일 2026-08-31 가 사망일 2025-01-17 보다 뒤다 / 사건일 2026-08-31 가 사망일 2021-11-18 보다 뒤다 |
-| SEMV-COM-004 관찰기간 밖 이벤트 금지 | Plausibility | warning | OBSERVATION_PERIOD | 2 | visit_start_date 1890-01-01 가 관찰기간 [2019-12-28, 2026-02-02] 밖이다 / visit_start_date 1890-01-01 가 관찰기간 [2019-11-09, 2021-11-18] 밖이다 |
-| SEMV-COM-006 이벤트일이 방문 기간 안에 있음 | Plausibility | warning | VISIT_OCCURRENCE | 8 | 사건일 2099-01-01 가 방문 [2020-10-22, 2020-10-22] 밖이다 / 사건일 2099-01-01 가 방문 [2022-01-20, 2022-01-20] 밖이다 |
-| SEMV-COM-007 이벤트-방문 환자 일치 | Conformance | error | VISIT_OCCURRENCE | 3 | 사건의 person_id 999999999 와 방문의 person_id 100013 가 다르다 / 사건의 person_id 999999999 와 방문의 person_id 100031 가 다르다 |
+| SEMV-COM-003 사망 이후 임상 이벤트 금지 | Plausibility | error | CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE | 2 | 사건일 2026-08-31 가 사망일 2025-01-17 보다 뒤다 / 사건일 2026-08-31 가 사망일 2021-11-18 보다 뒤다 |
+| SEMV-COM-004 관찰기간 밖 이벤트 금지 | Plausibility | warning | OBSERVATION_PERIOD,VISIT_OCCURRENCE | 2 | visit_start_date 1890-01-01 가 관찰기간 [2019-12-28, 2026-02-02] 밖이다 / visit_start_date 1890-01-01 가 관찰기간 [2019-11-09, 2021-11-18] 밖이다 |
+| SEMV-COM-006 이벤트일이 방문 기간 안에 있음 | Plausibility | warning | CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE | 8 | 사건일 2099-01-01 가 방문 [2020-10-22, 2020-10-22] 밖이다 / 사건일 2099-01-01 가 방문 [2022-01-20, 2022-01-20] 밖이다 |
+| SEMV-COM-007 이벤트-방문 환자 일치 | Conformance | error | CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PATHOLOGY_REPORT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE | 3 | 사건의 person_id 999999999 와 방문의 person_id 100013 가 다르다 / 사건의 person_id 999999999 와 방문의 person_id 100031 가 다르다 |
 | SEMV-COM-009 약물 종료일 >= 시작일, days_supply 일치 | Plausibility | error | DRUG_EXPOSURE | 3 | days_supply 99 가 기간(7일) 과 다르다 / days_supply 99 가 기간(1일) 과 다르다 |
 | SEMV-EP-001 에피소드 종료일 >= 시작일 | Plausibility | error | EPISODE | 2 | episode_end_date 2000-01-01 < episode_start_date 2021-10-03 / episode_end_date 2000-01-01 < episode_start_date 2021-03-11 |
-| SEMV-EP-002 에피소드에 매단 사건이 실제로 있음 | Conformance | error | EPISODE,EPISODE_EVENT | 2 | F_DRUG 가 가리킨 사건 100316 이 대상 테이블에 없다 / F_CONDITION 가 가리킨 사건 100083 이 대상 테이블에 없다 |
+| SEMV-EP-002 에피소드에 매단 사건이 실제로 있음 | Conformance | error | CONDITION_OCCURRENCE,DRUG_EXPOSURE,EPISODE,EPISODE_EVENT,PROCEDURE_OCCURRENCE | 2 | F_DRUG 가 가리킨 사건 100316 이 대상 테이블에 없다 / F_CONDITION 가 가리킨 사건 100083 이 대상 테이블에 없다 |
 | SEMV-EP-003 레지멘 기간이 연결 약물 기간과 일치 | Plausibility | warning | DRUG_EXPOSURE,EPISODE,EPISODE_EVENT | 3 | 레지멘 기간 [2021-10-03, 2000-01-01] 이 연결 약물 기간 [2021-10-03, 2021-12-05] 을 담지 못한다 / 레지멘 기간 [2022-03-27, 2022-06-18] 이 연결 약물 기간 [2019-05-03, 2022-05-29] 을 담 |
 | SEMV-EP-004 에피소드와 연결 사건의 환자 일치 | Conformance | error | DRUG_EXPOSURE,EPISODE,EPISODE_EVENT | 1 | 에피소드 환자 100029 와 약물 환자 100034 가 다르다 |
 | SEMV-PA-001 병리 보고서의 검체일이 SPECIMEN 과 일치 | Conformance | error | PATHOLOGY_REPORT,SPECIMEN | 2 | 병리 보고서의 검체일 2001-01-01 가 SPECIMEN 의 2022-03-06 와 다르다 / 병리 보고서의 검체일 2001-01-01 가 SPECIMEN 의 2021-04-27 와 다르다 |

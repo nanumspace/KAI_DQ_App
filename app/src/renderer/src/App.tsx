@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import { api } from "./api";
 import { Dashboard } from "./pages/Dashboard";
 import { RunPage } from "./pages/RunPage";
+import { CrfPage } from "./pages/CrfPage";
 import { RulesPage } from "./pages/RulesPage";
 import { FindingsPage } from "./pages/FindingsPage";
 import { ReportPage } from "./pages/ReportPage";
 import { MonitorPage } from "./pages/MonitorPage";
 import { SettingsPage } from "./pages/SettingsPage";
 
-export type Page = "dashboard" | "run" | "rules" | "findings" | "report" | "monitor" | "settings";
+export type Page = "dashboard" | "run" | "crf" | "rules" | "findings" | "report" | "monitor" | "settings";
 
 const MENU: { id: Page; label: string; icon: string }[] = [
   { id: "run", label: "검증 실행", icon: "▶" },
+  { id: "crf", label: "서식 변환", icon: "⇄" },
   { id: "report", label: "결과 보고서", icon: "▤" },
   { id: "findings", label: "오류 현황 조회", icon: "⌕" },
   { id: "dashboard", label: "대시보드", icon: "⌂" },
@@ -46,6 +48,7 @@ export function App() {
       <main className="main">
         {page === "dashboard" && <Dashboard key={version} nav={nav} />}
         {page === "run" && <RunPage nav={nav} />}
+        {page === "crf" && <CrfPage />}
         {page === "rules" && <RulesPage />}
         {page === "findings" && <FindingsPage key={`${version}-${runId ?? ""}`} nav={nav} />}
         {page === "report" && <ReportPage key={`${version}-${runId ?? ""}`} nav={nav} />}

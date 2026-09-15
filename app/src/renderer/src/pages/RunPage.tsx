@@ -123,6 +123,7 @@ export function RunPage({ nav }: { nav: Nav }) {
               <button className="btn sm" disabled={!!busy} onClick={() => template("csv")}>CSV 양식 묶음 (헤더만)</button>
               <button className="btn sm" disabled={!!busy} onClick={() => template("spec")}>컬럼 명세서 (xlsx)</button>
               <button className="btn sm" disabled={!!busy} onClick={() => template("sample")}>견본 데이터 (100명 가상 코호트)</button>
+              <button className="btn sm" disabled={!!busy} onClick={() => template("crf")}>서식 양식 (v2 · CSV)</button>
             </div>
             <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.5 }}>병원은 이 양식대로 내보내면 됩니다. 파일명과 컬럼명은 그대로 두고, 날짜는 YYYY-MM-DD, 빈 값은 빈 칸입니다.</div>
           </div>

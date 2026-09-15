@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { app, BrowserWindow, ipcMain, dialog, shell, utilityProcess } from "electron";
-import { setRoot, loadSpec, loadProfiles, loadStructuralRules, loadSemanticRules, readCsv, convertCrfDirectory } from "@engine/index.js";
+import { setRoot, loadSpec, loadProfiles, loadStructuralRules, loadSemanticRules, readCsv, convertCrfDirectory, writeCrfTemplates } from "@engine/index.js";
 import type { Summary, Spec } from "@engine/types.js";
 import type { AppConfig, CohortInfo, RuleInfo, RunRequest, RunRecord, RunDetail, FindingsQuery, Dashboard, InputPlan, SourceCandidate, TemplateKind, OutputFile } from "@shared/types";
 import { readConfig, writeConfig } from "./config";
@@ -81,6 +81,14 @@ function check(cohort: string, candidates: SourceCandidate[], mapping: Record<st
 
 async function exportTemplate(cohort: string, kind: TemplateKind): Promise<string | null> {
   const info = cohortOf(cohort); const s = spec();
+  if (kind === "crf") {
+    // v2: 병원이 채울 빈 서식. 고를 수 있는 코드 목록을 README 에 함께 적는다.
+    const r = await dialog.showOpenDialog(win!, { title: "저장할 폴더 선택", properties: ["openDirectory", "createDirectory"] });
+    if (r.canceled) return null;
+    const dest = path.join(r.filePaths[0], `${cohort}_서식양식`);
+    writeCrfTemplates(cohort, dest);
+    return dest;
+  }
   if (kind === "csv" || kind === "sample") {
     const r = await dialog.showOpenDialog(win!, { title: "저장할 폴더 선택", properties: ["openDirectory", "createDirectory"] });
     if (r.canceled) return null;

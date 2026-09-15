@@ -45,7 +45,7 @@ rules:
     subcategory: temporal
     severity: error
     scope: all
-    requires: [DEATH]
+    requires: [DEATH, VISIT_OCCURRENCE, CONDITION_OCCURRENCE, PROCEDURE_OCCURRENCE, DRUG_EXPOSURE, MEASUREMENT, OBSERVATION, SPECIMEN]
     desc: 사망일보다 뒤에 일어난 사건은 있을 수 없다. v1 은 PERSON.death_date 를 봤지만 v2 는 DEATH 테이블을 본다.
     sql: |
       WITH ev AS (
@@ -67,7 +67,7 @@ rules:
     subcategory: temporal
     severity: warning
     scope: all
-    requires: [OBSERVATION_PERIOD]
+    requires: [OBSERVATION_PERIOD, VISIT_OCCURRENCE]
     desc: 관찰기간 밖의 사건은 기록 경위를 확인해야 한다. v2 는 관찰기간이 PERSON 이 아니라 별도 테이블이다.
     sql: |
       SELECT v.person_id, CAST(v.visit_occurrence_id AS VARCHAR) AS row_key,
@@ -82,7 +82,7 @@ rules:
     subcategory: temporal
     severity: error
     scope: all
-    requires: [OBSERVATION_PERIOD]
+    requires: [OBSERVATION_PERIOD, DEATH]
     desc: 관찰기간 종료일이 시작일보다 앞설 수 없고, 사망했다면 사망일에서 끝나야 한다.
     sql: |
       SELECT o.person_id, CAST(o.observation_period_id AS VARCHAR) AS row_key,
@@ -99,7 +99,7 @@ rules:
     subcategory: temporal
     severity: warning
     scope: all
-    requires: [VISIT_OCCURRENCE]
+    requires: [VISIT_OCCURRENCE, CONDITION_OCCURRENCE, PROCEDURE_OCCURRENCE, DRUG_EXPOSURE, MEASUREMENT]
     desc: 방문에 매단 사건은 그 방문 기간 안에 있어야 한다.
     sql: |
       WITH ev AS (
@@ -119,7 +119,7 @@ rules:
     subcategory: relational
     severity: error
     scope: all
-    requires: [VISIT_OCCURRENCE]
+    requires: [VISIT_OCCURRENCE, CONDITION_OCCURRENCE, PROCEDURE_OCCURRENCE, DRUG_EXPOSURE, MEASUREMENT, PATHOLOGY_REPORT]
     desc: 사건에 적힌 환자와 그 방문의 환자가 달라서는 안 된다.
     sql: |
       WITH ev AS (
@@ -268,7 +268,7 @@ rules:
     subcategory: relational
     severity: error
     scope: all
-    requires: [EPISODE_EVENT, EPISODE]
+    requires: [EPISODE_EVENT, EPISODE, DRUG_EXPOSURE, CONDITION_OCCURRENCE, PROCEDURE_OCCURRENCE]
     desc: |
       EPISODE_EVENT 는 어느 테이블의 몇 번 행인지를 episode_event_field_concept_id 로 가리킨다.
       가리킨 행이 실제로 없으면 연결이 끊긴 것이다. 약물·진단·시술 세 가지를 본다.

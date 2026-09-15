@@ -21,6 +21,10 @@ export function SettingsPage() {
     if (!d) return;
     try { setCfg(await api.setConfig({ root: d })); setMsg("명세 위치를 저장했습니다."); refresh(); } catch (e) { setErr(String(e)); }
   };
+  const saveSpec = async (v: "v1" | "v2") => {
+    try { setCfg(await api.setConfig({ specVersion: v })); setMsg(`${v} 명세로 바꿨습니다. 검증 실행 화면에서 코호트를 다시 고르세요.`); refresh(); }
+    catch (e) { setErr(String(e)); }
+  };
   const saveToday = async () => {
     try { setCfg(await api.setConfig({ defaultToday: today || null })); setMsg("검증 실행일 기본값을 저장했습니다."); } catch (e) { setErr(String(e)); }
   };
@@ -38,9 +42,24 @@ export function SettingsPage() {
               <div className="row"><input type="text" value={cfg.root} readOnly /><button className="btn" onClick={chooseRoot}>변경</button></div>
             </label>
             <div className="kv">
+              <span className="k">명세 판</span><span>{cfg.specVersion}</span>
               <span className="k">코호트</span><span>{cohorts.length ? cohorts.map((c) => c.kor).join(", ") : "읽을 수 없음 (위치를 확인하세요)"}</span>
               <span className="k">패키징</span><span>{cfg.packaged ? "설치본 (내장 명세)" : "개발 모드 (저장소)"}</span>
             </div>
+          </div>
+        </Card>
+        <Card title="명세 판" sub="어느 저장 구조로 검증할지 고릅니다. 바꾸면 코호트 · 규칙 · 견본 데이터가 함께 바뀝니다">
+          <div className="form">
+            <label>판
+              <select value={cfg.specVersion} onChange={(e) => saveSpec(e.target.value as "v1" | "v2")}>
+                <option value="v2">v2 — OMOP CDM 5.4 + K-AI 확장 (기본)</option>
+                <option value="v1">v1 — 질환별 단일 표 (옛 제출본용)</option>
+              </select>
+            </label>
+            <p className="muted" style={{ fontSize: 12.5, lineHeight: 1.6 }}>
+              v2 는 환자·방문·검사를 OMOP 표준 표에 앉히고, 서식으로 받는 항목만 K-AI 확장 표에 둡니다.
+              v1 로 이미 낸 데이터를 다시 볼 때만 v1 을 고르세요.
+            </p>
           </div>
         </Card>
         <Card title="검증 실행일 기본값" sub="비우면 실행 당일. 미래 날짜 판정과 보고서의 검증일에 쓰입니다">

@@ -23,11 +23,12 @@ export function RunPage({ nav }: { nav: Nav }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [drag, setDrag] = useState(false);
+  const [specVersion, setSpecVersion] = useState<"v1" | "v2">("v2");
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     api.listCohorts().then((cs) => { setCohorts(cs); if (cs.length) setCohort((c) => c || cs[0].id); }).catch((e) => setErr(String(e)));
-    api.getConfig().then((c) => setToday(c.defaultToday ?? new Date().toISOString().slice(0, 10)));
+    api.getConfig().then((c) => { setToday(c.defaultToday ?? new Date().toISOString().slice(0, 10)); setSpecVersion(c.specVersion); });
     const off1 = api.onProgress((p) => setProgress(p));
     const off2 = api.onSmokePlan((p) => { setCohort(p.cohort); setPlan(p); });
     return () => { off1(); off2(); };
@@ -123,7 +124,7 @@ export function RunPage({ nav }: { nav: Nav }) {
               <button className="btn sm" disabled={!!busy} onClick={() => template("csv")}>CSV 양식 묶음 (헤더만)</button>
               <button className="btn sm" disabled={!!busy} onClick={() => template("spec")}>컬럼 명세서 (xlsx)</button>
               <button className="btn sm" disabled={!!busy} onClick={() => template("sample")}>견본 데이터 (100명 가상 코호트)</button>
-              <button className="btn sm" disabled={!!busy} onClick={() => template("crf")}>서식 양식 (v2 · CSV)</button>
+              {specVersion === "v2" && <button className="btn sm" disabled={!!busy} onClick={() => template("crf")}>서식 양식 (병원이 채울 빈 서식 · CSV)</button>}
             </div>
             <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.5 }}>병원은 이 양식대로 내보내면 됩니다. 파일명과 컬럼명은 그대로 두고, 날짜는 YYYY-MM-DD, 빈 값은 빈 칸입니다.</div>
           </div>

@@ -5,6 +5,11 @@ export interface AppConfig {
   root: string;
   /** 검증 실행일 기본값 (null 이면 오늘) */
   defaultToday: string | null;
+  /**
+   * 어느 명세로 검증할지. 기본은 v2 (저장 구조 재설계본)다.
+   * v1 로 낸 데이터를 아직 들고 있는 기관이 있어 옛 경로를 끊지 않고 남겨 둔다.
+   */
+  specVersion: "v1" | "v2";
   /** 앱 데이터 위치 (읽기 전용 정보) */
   userData: string;
   packaged: boolean;
@@ -131,7 +136,7 @@ export interface Dashboard {
 
 export interface Api {
   getConfig(): Promise<AppConfig>;
-  setConfig(patch: Partial<Pick<AppConfig, "root" | "defaultToday">>): Promise<AppConfig>;
+  setConfig(patch: Partial<Pick<AppConfig, "root" | "defaultToday" | "specVersion">>): Promise<AppConfig>;
   listCohorts(): Promise<CohortInfo[]>;
   listRules(): Promise<RuleInfo[]>;
   chooseDirectory(title?: string): Promise<string | null>;

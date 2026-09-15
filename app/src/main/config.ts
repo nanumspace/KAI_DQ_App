@@ -20,14 +20,19 @@ export function readConfig(): AppConfig {
   return {
     root: saved.root && fs.existsSync(path.join(saved.root, "spec")) ? saved.root : defaultRoot(),
     defaultToday: saved.defaultToday ?? null,
+    specVersion: saved.specVersion === "v1" ? "v1" : "v2",
     userData: app.getPath("userData"),
     packaged: app.isPackaged,
   };
 }
 
-export function writeConfig(patch: Partial<Pick<AppConfig, "root" | "defaultToday">>): AppConfig {
+export function writeConfig(patch: Partial<Pick<AppConfig, "root" | "defaultToday" | "specVersion">>): AppConfig {
   const cur = readConfig();
-  const next = { root: patch.root ?? cur.root, defaultToday: patch.defaultToday === undefined ? cur.defaultToday : patch.defaultToday };
+  const next = {
+    root: patch.root ?? cur.root,
+    defaultToday: patch.defaultToday === undefined ? cur.defaultToday : patch.defaultToday,
+    specVersion: patch.specVersion ?? cur.specVersion,
+  };
   fs.mkdirSync(path.dirname(configPath()), { recursive: true });
   fs.writeFileSync(configPath(), JSON.stringify(next, null, 2), "utf-8");
   return readConfig();

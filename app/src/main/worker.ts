@@ -1,8 +1,8 @@
 // 검증 엔진 워커 (Electron utilityProcess). 메인 프로세스와 분리되어 화면이 멈추지 않는다.
-// 메시지: {type:"run", root, cohort, dataDir, outDir, today} → progress ... → {type:"done", summary} | {type:"error", message}
+// 메시지: {type:"run", root, cohort, dataDir, outDir, today, spec} → progress ... → {type:"done", summary} | {type:"error", message}
 import { runEngine, setRoot } from "@engine/index.js";
 
-interface RunMsg { type: "run"; root: string; cohort: string; dataDir: string; outDir: string; today?: string }
+interface RunMsg { type: "run"; root: string; cohort: string; dataDir: string; outDir: string; today?: string; spec?: "v1" | "v2" }
 
 const port = process.parentPort;
 
@@ -12,7 +12,7 @@ port.on("message", async (e: Electron.MessageEvent) => {
   setRoot(m.root);
   try {
     const summary = await runEngine({
-      cohort: m.cohort, data: m.dataDir, out: m.outDir, today: m.today,
+      cohort: m.cohort, data: m.dataDir, out: m.outDir, today: m.today, spec: m.spec,
       onProgress: (p) => port.postMessage({ type: "progress", ...p }),
     });
     port.postMessage({ type: "done", summary });

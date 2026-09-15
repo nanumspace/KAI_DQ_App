@@ -170,18 +170,20 @@ export function autoMatch(tables: string[], spec: Spec, candidates: SourceCandid
 }
 
 // ------------------------------------------------------------------ 사전 점검
-export function checkTables(tables: string[], spec: Spec, candidates: SourceCandidate[], mapping: Record<string, string>, auto: Record<string, string>): TableCheck[] {
+export function checkTables(tables: string[], spec: Spec, candidates: SourceCandidate[], mapping: Record<string, string>, auto: Record<string, string>, requiredTables: string[] = ["PERSON"]): TableCheck[] {
   const byId = new Map(candidates.map((c) => [c.id, c]));
-  const disease = tables.find((t) => spec.tables[t].category === "disease");
+  const req = new Set(requiredTables);
   return tables.map((table) => {
     const st = spec.tables[table];
-    const required = table === "PERSON" || table === disease;
+    const required = req.has(table);
     const cid = mapping[table] ?? null;
     const c = cid ? byId.get(cid) ?? null : null;
     const issues: InputIssue[] = [];
     const out: TableCheck = { table, kor: st.kor, required, candidateId: cid, auto: !!cid && auto[table] === cid, rows: null, missingColumns: [], extraColumns: [], aliases: [], issues };
     if (!c) {
-      issues.push(required ? { level: "error", text: "파일이 없습니다. 이 테이블 없이는 검증할 수 없습니다." } : { level: "warn", text: "파일이 없습니다. 이 테이블의 규칙은 건너뜁니다." });
+      issues.push(required
+        ? { level: "error", text: "파일이 없습니다. 이 테이블 없이는 검증할 수 없습니다." }
+        : { level: "warn", text: "파일이 없습니다. 이 테이블의 규칙은 건너뛰고 '테이블 없음'으로 보고됩니다. 해당 사례가 없더라도 헤더만 있는 빈 파일을 넣어 주세요." });
       return out;
     }
     if (c.error) { issues.push({ level: "error", text: `파일을 읽을 수 없습니다: ${c.error}` }); return out; }
@@ -214,10 +216,10 @@ export function checkTables(tables: string[], spec: Spec, candidates: SourceCand
   });
 }
 
-export function buildPlan(cohort: string, tables: string[], spec: Spec, candidates: SourceCandidate[], mapping?: Record<string, string>): InputPlan {
+export function buildPlan(cohort: string, tables: string[], spec: Spec, candidates: SourceCandidate[], mapping?: Record<string, string>, requiredTables?: string[]): InputPlan {
   const auto = autoMatch(tables, spec, candidates);
   const m = mapping ?? auto;
-  const checks = checkTables(tables, spec, candidates, m, auto);
+  const checks = checkTables(tables, spec, candidates, m, auto, requiredTables);
   const errors = checks.reduce((n, t) => n + t.issues.filter((i) => i.level === "error").length, 0);
   const warnings = checks.reduce((n, t) => n + t.issues.filter((i) => i.level === "warn").length, 0);
   return { cohort, candidates, mapping: m, tables: checks, errors, warnings, ok: errors === 0 };
@@ -264,12 +266,14 @@ export function stageInputs(candidates: SourceCandidate[], mapping: Record<strin
 
 // ------------------------------------------------------------------ 입력 양식
 function specRows(tables: string[], spec: Spec): (string | number | boolean)[][] {
-  const rows: (string | number | boolean)[][] = [["테이블", "테이블(한글)", "순서", "컬럼", "타입", "필수", "키", "참조", "코드표", "범위", "패턴", "설명"]];
+  const rows: (string | number | boolean)[][] = [["테이블", "테이블(한글)", "순서", "컬럼", "컬럼(한글)", "타입", "필수", "키", "참조", "코드표", "범위", "패턴", "설명"]];
   for (const t of tables) {
     const st = spec.tables[t];
     st.fields.forEach((f, i) => {
       const range = Array.isArray(f.range) ? `${(f.range as number[])[0]} ~ ${(f.range as number[])[1]}` : "";
-      rows.push([t, st.kor, i + 1, f.name, f.type, f.required ? "Y" : "", String(f.key ?? ""), String(f.ref ?? ""), String(f.codelist ?? ""), range, String(f.pattern ?? ""), String(f.desc ?? "")]);
+      // 코드표 이름은 v1 이 codelist, v2 가 concept_set 이다
+      const codes = f.codelist ?? f.concept_set;
+      rows.push([t, st.kor, i + 1, f.name, String(f.kor ?? ""), f.type, f.required ? "Y" : "", String(f.key ?? ""), String(f.ref ?? ""), String(codes ?? ""), range, String(f.pattern ?? ""), String(f.desc ?? "")]);
     });
   }
   return rows;

@@ -2,7 +2,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { app, BrowserWindow, ipcMain, dialog, shell, utilityProcess } from "electron";
-import { setRoot, loadSpec, loadProfiles, loadStructuralRules, loadSemanticRules, readCsv, convertCrfDirectory, writeCrfTemplates, loadCrfSpec, formsForCohort } from "@engine/index.js";
+import { setRoot, loadSpec, loadProfiles, loadStructuralRules, loadSemanticRules,
+         loadSpecV2, loadProfilesV2, loadStructuralRulesV2, loadSemanticRulesV2, readCsv, convertCrfDirectory, writeCrfTemplates, loadCrfSpec, formsForCohort } from "@engine/index.js";
 import type { Summary, Spec } from "@engine/types.js";
 import type { AppConfig, CohortInfo, RuleInfo, RunRequest, RunRecord, RunDetail, FindingsQuery, Dashboard, InputPlan, SourceCandidate, TemplateKind, OutputFile } from "@shared/types";
 import { readConfig, writeConfig } from "./config";
@@ -32,10 +33,16 @@ function createWindow(): BrowserWindow {
 }
 
 // ------------------------------------------------------------------ 명세·규칙
-function spec(): Spec { setRoot(config.root); return loadSpec(); }
+// 기본은 v2(저장 구조 재설계본)다. v1 로 낸 데이터를 아직 들고 있는 기관을 위해 옛 경로도 고를 수 있다.
+function isV2(): boolean { return config.specVersion !== "v1"; }
+
+function spec(): Spec { setRoot(config.root); return isV2() ? loadSpecV2() : loadSpec(); }
 
 function cohorts(): CohortInfo[] {
   setRoot(config.root);
+  if (isV2()) {
+    return Object.entries(loadProfilesV2()).map(([id, p]) => ({ id, kor: p.kor, tables: [...p.omop_tables, ...p.extension_tables] }));
+  }
   return Object.entries(loadProfiles()).map(([id, p]) => ({ id, kor: p.kor, tables: p.tables }));
 }
 
@@ -47,12 +54,13 @@ function cohortOf(id: string): CohortInfo {
 
 function rules(): RuleInfo[] {
   setRoot(config.root);
-  const st: RuleInfo[] = loadStructuralRules().map((r) => ({
+  const v2 = isV2();
+  const st: RuleInfo[] = (v2 ? loadStructuralRulesV2() : loadStructuralRules()).map((r) => ({
     id: r.id, name: r.name, category: r.category, subcategory: r.subcategory ?? "", severity: r.severity,
     table: r.table, fields: r.fields.join(","), check: r.check, desc: r.desc ?? "",
     scope: r.scope === "all" ? "all" : r.scope.join(","), kind: "structural",
   }));
-  const se: RuleInfo[] = loadSemanticRules().map((r) => ({
+  const se: RuleInfo[] = (v2 ? loadSemanticRulesV2() : loadSemanticRules()).map((r) => ({
     id: r.id, name: r.name, category: r.category, subcategory: r.subcategory ?? "", severity: r.severity,
     table: r.requires.join(","), fields: "", check: "sql", desc: r.desc ?? "",
     scope: r.scope === "all" ? "all" : r.scope.join(","), kind: "semantic", sql: r.sql,
@@ -60,23 +68,39 @@ function rules(): RuleInfo[] {
   return [...st, ...se];
 }
 
-/** 견본 데이터 위치: 개발 중에는 synth/output/clean, 설치본은 resources/kai/samples */
+/** 견본 데이터 위치: 개발 중에는 synth/output, 설치본은 resources/kai/samples. 명세 판마다 폴더가 다르다. */
 function sampleDir(cohort: string): string | null {
-  const cands = [path.join(config.root, "samples", cohort), path.join(config.root, "synth/output/clean", cohort)];
+  const v2 = isV2();
+  const cands = [
+    path.join(config.root, v2 ? "samples_v2" : "samples", cohort),
+    path.join(config.root, v2 ? "synth/output/clean_v2" : "synth/output/clean", cohort),
+  ];
   return cands.find((p) => fs.existsSync(path.join(p, "PERSON.csv"))) ?? null;
 }
 
 // ------------------------------------------------------------------ 입력
+/**
+ * 없으면 검증 자체가 서지 않는 표.
+ * v1 은 환자와 그 질환의 본표 둘이었다. v2 는 질환 본표가 없어지고 모두 OMOP 에 앉으므로 환자만 남는다.
+ * 나머지가 없으면 막지 않고 경고만 낸다 — 엔진이 '테이블 없음'으로 따로 보고한다.
+ */
+function requiredTables(tables: string[]): string[] {
+  if (isV2()) return ["PERSON"];
+  const s = spec();
+  const disease = tables.find((t) => s.tables[t].category === "disease");
+  return disease ? ["PERSON", disease] : ["PERSON"];
+}
+
 function inspect(cohort: string, paths: string[], existing: SourceCandidate[] = []): InputPlan {
   const info = cohortOf(cohort);
   const fresh = input.inspectPaths(paths);
   const seen = new Set(fresh.map((c) => c.id));
   const candidates = [...existing.filter((c) => !seen.has(c.id)), ...fresh];
-  return input.buildPlan(cohort, info.tables, spec(), candidates);
+  return input.buildPlan(cohort, info.tables, spec(), candidates, undefined, requiredTables(info.tables));
 }
 
 function check(cohort: string, candidates: SourceCandidate[], mapping: Record<string, string>): InputPlan {
-  return input.buildPlan(cohort, cohortOf(cohort).tables, spec(), candidates, mapping);
+  return input.buildPlan(cohort, cohortOf(cohort).tables, spec(), candidates, mapping, requiredTables(cohortOf(cohort).tables));
 }
 
 async function exportTemplate(cohort: string, kind: TemplateKind): Promise<string | null> {
@@ -157,7 +181,7 @@ function runValidation(req: RunRequest): Promise<RunRecord> {
       }
     });
     child.on("exit", (code) => { if (running) finish(() => reject(new Error(`엔진 프로세스가 종료됨 (code ${code})`))); });
-    child.postMessage({ type: "run", root: config.root, cohort: req.cohort, dataDir: inputDir, outDir, today });
+    child.postMessage({ type: "run", root: config.root, cohort: req.cohort, dataDir: inputDir, outDir, today, spec: config.specVersion });
   });
 }
 
@@ -170,7 +194,14 @@ function runFromDir(cohort: string, dir: string, today: string, label: string): 
 // ------------------------------------------------------------------ IPC
 function registerIpc(): void {
   ipcMain.handle("config:get", () => config);
-  ipcMain.handle("config:set", (_e, patch) => { config = writeConfig(patch); return config; });
+  ipcMain.handle("config:set", (_e, patch) => {
+    // 명세 판을 바꾸면 코호트·규칙·양식이 전부 달라진다. 화면들이 이미 읽어 둔 것을 버리도록 다시 그린다.
+    const changesSpec = patch?.specVersion && patch.specVersion !== config.specVersion;
+    if (changesSpec && running) throw new Error("검증이 실행 중입니다. 끝난 뒤에 명세 판을 바꾸세요.");
+    config = writeConfig(patch);
+    if (changesSpec) setTimeout(() => win?.webContents.reload(), 400);
+    return config;
+  });
   ipcMain.handle("cohorts:list", () => cohorts());
   ipcMain.handle("rules:list", () => rules());
   ipcMain.handle("dialog:directory", async (_e, title?: string) => {
@@ -235,14 +266,17 @@ async function smoke(): Promise<void> {
   const log = (s: string) => { console.log(`[smoke] ${s}`); fs.appendFileSync(path.join(out, "smoke.log"), s + "\n"); };
   const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
   try {
+    // 켜져 있는 명세 판의 가상데이터를 쓴다 (v2 는 clean_v2 / dirty_v2)
+    const sfx = isV2() ? "_v2" : "";
     const synth = path.join(config.root, "synth/output");
+    log(`명세 ${config.specVersion} · 규칙 ${rules().length}개`);
     // 엑셀 입력 경로 시험: 폐암 dirty 를 엑셀 한 파일(시트당 테이블)로 만들어 넣는다
     const xlsxPath = path.join(out, "LUNG_CANCER_dirty.xlsx");
     {
       const XLSX = await import("xlsx");
       const wb = XLSX.utils.book_new();
       for (const t of cohortOf("LUNG_CANCER").tables) {
-        const p = path.join(synth, "dirty/LUNG_CANCER", `${t}.csv`);
+        const p = path.join(synth, `dirty${sfx}/LUNG_CANCER`, `${t}.csv`);
         if (!fs.existsSync(p)) continue;
         const raw = readCsv(p);
         const rows = [raw.columns, ...Array.from({ length: raw.n }, (_, i) => raw.columns.map((c) => raw.cols.get(c)![i]))];
@@ -250,7 +284,7 @@ async function smoke(): Promise<void> {
       }
       XLSX.writeFile(wb, xlsxPath);
     }
-    for (const [cohort, dir, label] of [["LUNG_CANCER", path.join(synth, "clean/LUNG_CANCER"), "clean 가상데이터"], ["DIABETES", path.join(synth, "dirty/DIABETES"), "dirty 가상데이터"]] as const) {
+    for (const [cohort, dir, label] of [["LUNG_CANCER", path.join(synth, `clean${sfx}/LUNG_CANCER`), "clean 가상데이터"], ["DIABETES", path.join(synth, `dirty${sfx}/DIABETES`), "dirty 가상데이터"]] as const) {
       const rec = await runFromDir(cohort, dir, "2026-09-07", label);
       log(`run ${rec.run_id}: rules=${rec.rules_total} violations=${rec.violations_total}`);
     }
@@ -275,7 +309,7 @@ async function smoke(): Promise<void> {
       const crfSpec = loadCrfSpec();
       for (const form of formsForCohort(crfSpec, "LUNG_CANCER")) {
         if (form.mapping) continue;                       // 투영 서식은 되돌릴 수 없다
-        const src = path.join(config.root, "synth/output/clean_v2/LUNG_CANCER", `${form.name}.csv`);
+        const src = path.join(synth, "clean_v2/LUNG_CANCER", `${form.name}.csv`);
         if (!fs.existsSync(src)) continue;
         const df = readCsv(src);
         const names = form.fields.map((f) => f.name);
@@ -320,6 +354,10 @@ async function smoke(): Promise<void> {
 // ------------------------------------------------------------------ 시작
 app.whenReady().then(async () => {
   config = readConfig();
+  // 자동 점검에서는 어느 명세 판으로 돌릴지 환경변수로 고른다 (v1 회귀 확인용)
+  if (SMOKE && (process.env.KAI_SMOKE_SPEC === "v1" || process.env.KAI_SMOKE_SPEC === "v2")) {
+    config = writeConfig({ specVersion: process.env.KAI_SMOKE_SPEC });
+  }
   await db.openDb(path.join(app.getPath("userData"), "history.duckdb"));
   registerIpc();
   win = createWindow();

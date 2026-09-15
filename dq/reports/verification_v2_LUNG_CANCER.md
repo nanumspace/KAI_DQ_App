@@ -3,7 +3,7 @@
 - clean 데이터: 규칙 377개 실행, 위반 0건 (오탐)
 - dirty 데이터: 주입 오류 116건 중 116건 검출, 재현율 1.0
 - 오류 유형 18종 중 전부 검출 18종
-- 주입 오류의 부수 효과로 함께 발화한 규칙: SEMV-COM-004, SEMV-COM-005, SEMV-COM-006, SEMV-COM-007, SEMV-COM-008, SEMV-EP-002, SEMV-EP-003, SEMV-EP-004, SEMV-PA-003, SV-0015, SV-0040, SV-0113, SV-0250, SV-0411
+- 주입 오류의 부수 효과로 함께 발화한 규칙: SEMV-COM-004, SEMV-COM-005, SEMV-COM-006, SEMV-COM-007, SEMV-EP-002, SEMV-EP-003, SEMV-EP-004, SV-0015, SV-0040, SV-0113, SV-0250, SV-0411
 
 | 오류 유형 | 분류 | 주입 | 검출 | 재현율 |
 |---|---|---|---|---|

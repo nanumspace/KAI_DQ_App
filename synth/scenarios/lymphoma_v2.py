@@ -80,7 +80,9 @@ def generate(ctx: CtxV2, n=100):
         }
         row = {f"{k}_concept_id": ctx.cs("BIOMARKER_RESULT", "양성" if v else "음성") for k, v in markers.items()}
         row["dlbcl_cell_of_origin_concept_id"] = ctx.cs("BIOMARKER_RESULT", "불명확" if sub_cd != "DLBCL" else "양성")
-        row["double_hit_status_concept_id"] = ctx.cs("BIOMARKER_RESULT", "음성")
+        # double-hit 은 MYC 재배열에 BCL2 나 BCL6 재배열이 함께 있는 것이다. 따로 뽑으면 판정과 결과가 어긋난다.
+        dh = markers["myc_rearrangement_result"] and (markers["bcl2_rearrangement_result"] or markers["bcl6_rearrangement_result"])
+        row["double_hit_status_concept_id"] = ctx.cs("BIOMARKER_RESULT", "양성" if dh else "음성")
         ctx.ext("BIOMARKER", p, vid=bv, specimen_id=spec, test_date=bx_day,
                 ki67_percent=ctx.randint(10, 95), molecular_test_date=bx_day,
                 molecular_test_method_concept_id=ctx.cs("BIOMARKER_METHOD", ctx.choice(["NGS", "FISH", "PCR"])),

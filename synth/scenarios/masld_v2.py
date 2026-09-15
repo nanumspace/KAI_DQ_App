@@ -33,6 +33,12 @@ def generate(ctx: CtxV2, n=100):
         stage = ctx.choice(["F0", "F1", "F2", "F3", "F4"], p=[0.22, 0.3, 0.24, 0.16, 0.08])
         advanced = stage in ("F3", "F4")
         nas = ctx.randint(3, 8) if ctx.bern(0.6) else ctx.randint(0, 3)
+        # 사망은 여정을 적기 전에 정한다. 뒤에서 정하면 앞서 적은 사건이 사망일 뒤에 남는다.
+        # 추적 중에 간경변으로 진행한 환자는 이 창 안에서는 죽지 않는다 — 처음부터 F4 인 환자만 본다.
+        if stage == "F4" and ctx.bern(0.12):
+            d = ctx.days(index, ctx.randint(700, 365 * 6))
+            if d <= ctx.today:
+                ctx.set_death(p, d)
 
         # ---- 1) 진단 외래
         vid = ctx.visit(p, index, OUTPATIENT)
@@ -137,8 +143,4 @@ def generate(ctx: CtxV2, n=100):
                     decompensation_event_yn=1 if (cirrhosis and ctx.bern(0.08)) else 0,
                     hcc_yn=1 if hcc else 0)
 
-        if cirrhosis and ctx.bern(0.12):
-            d = ctx.days(index, ctx.randint(700, 365 * 6))
-            if d <= ctx.today:
-                ctx.set_death(p, d)
         ctx.finalize_person(p)

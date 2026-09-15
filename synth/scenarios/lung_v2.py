@@ -56,6 +56,14 @@ def generate(ctx: CtxV2, n=100):
         cur_smok = smoker and ctx.bern(0.5)
         egfr = (hist == 1) and ctx.bern(0.45 if gender == FEMALE else 0.3)
         diff = ctx.choice(["well", "moderately", "poorly"])
+        # 사망은 여정을 적기 전에 정한다. 뒤에서 정하면 앞서 적은 사건이 사망일 뒤에 남는다.
+        # 사망일은 오늘을 넘길 수 없다(넘으면 아직 생존한 것이다).
+        if stage == "IV" and ctx.bern(0.45):
+            d = ctx.days(index, ctx.randint(200, 1100))
+            if d <= ctx.today: ctx.set_death(p, d)
+        elif stage in ("IIIA", "IIIB") and ctx.bern(0.2):
+            d = ctx.days(index, ctx.randint(400, 1500))
+            if d <= ctx.today: ctx.set_death(p, d)
 
         # ---- 1) 진단 입원 (3일)
         dx_vid = ctx.visit(p, index, INPATIENT, los=3)
@@ -241,14 +249,7 @@ def generate(ctx: CtxV2, n=100):
                 ctx.measure(p, rday, 36769180, vid=rvid,
                             source=ctx.choice(["CR", "PR", "SD", "PD"], p=[0.05, 0.35, 0.4, 0.2]))
 
-        # ---- 4) 추적과 사망
-        # 사망일은 오늘을 넘길 수 없다(넘으면 아직 생존한 것이다)
-        if stage == "IV" and ctx.bern(0.45):
-            d = ctx.days(index, ctx.randint(200, 1100))
-            if d <= ctx.today: ctx.set_death(p, d)
-        elif stage in ("IIIA", "IIIB") and ctx.bern(0.2):
-            d = ctx.days(index, ctx.randint(400, 1500))
-            if d <= ctx.today: ctx.set_death(p, d)
+        # ---- 4) 추적
         for k in range(1, 9):
             fday = ctx.days(index, 90 * k)
             if fday > ctx.today or (p.death_date and fday > p.death_date):

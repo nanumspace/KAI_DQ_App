@@ -8,14 +8,14 @@
  },
  "dirty": {
   "rules": 498,
-  "violations": 136,
-  "failed_rules": 46
+  "violations": 150,
+  "failed_rules": 48
  },
- "faults_total": 99,
- "faults_detected": 99,
+ "faults_total": 101,
+ "faults_detected": 101,
  "recall": 1.0,
- "fault_types": 17,
- "fault_types_fully_detected": 17,
+ "fault_types": 18,
+ "fault_types_fully_detected": 18,
  "missed": [],
  "by_type": [
   {
@@ -50,6 +50,12 @@
   },
   {
    "fault_type": "EPISODE_END_BEFORE_START",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "EVENT_AFTER_DEATH",
    "n": 2,
    "detected": 2,
    "recall": 1.0
@@ -136,18 +142,19 @@
   },
   {
    "category": "Plausibility",
-   "n": 21,
-   "detected": 21,
+   "n": 23,
+   "detected": 23,
    "recall": 1.0
   }
  ],
  "collateral_rules": [
   "SEMV-COM-004",
   "SEMV-COM-006",
-  "SEMV-COM-010",
+  "SEMV-EP-002",
   "SEMV-EP-003",
   "SEMV-EP-005",
   "SEMV-PA-003",
+  "SV-0059",
   "SV-0250",
   "SV-0676",
   "SV-0677"

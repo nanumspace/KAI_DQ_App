@@ -8,14 +8,14 @@
  },
  "dirty": {
   "rules": 461,
-  "violations": 172,
-  "failed_rules": 47
+  "violations": 158,
+  "failed_rules": 52
  },
- "faults_total": 105,
- "faults_detected": 105,
+ "faults_total": 106,
+ "faults_detected": 106,
  "recall": 1.0,
- "fault_types": 17,
- "fault_types_fully_detected": 17,
+ "fault_types": 18,
+ "fault_types_fully_detected": 18,
  "missed": [],
  "by_type": [
   {
@@ -55,6 +55,12 @@
    "recall": 1.0
   },
   {
+   "fault_type": "EVENT_AFTER_DEATH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
    "fault_type": "FK_BROKEN",
    "n": 12,
    "detected": 12,
@@ -62,8 +68,8 @@
   },
   {
    "fault_type": "FUTURE_DATE",
-   "n": 12,
-   "detected": 12,
+   "n": 11,
+   "detected": 11,
    "recall": 1.0
   },
   {
@@ -136,19 +142,23 @@
   },
   {
    "category": "Plausibility",
-   "n": 24,
-   "detected": 24,
+   "n": 25,
+   "detected": 25,
    "recall": 1.0
   }
  ],
  "collateral_rules": [
   "SEMV-COM-004",
+  "SEMV-COM-005",
   "SEMV-COM-006",
   "SEMV-COM-007",
+  "SEMV-EP-002",
   "SEMV-EP-003",
   "SEMV-PA-003",
-  "SV-0113",
+  "SV-0122",
   "SV-0250",
+  "SV-0334",
+  "SV-0355",
   "SV-0696"
  ]
 }

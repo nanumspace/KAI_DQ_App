@@ -8,8 +8,8 @@
  },
  "dirty": {
   "rules": 377,
-  "violations": 236,
-  "failed_rules": 57
+  "violations": 221,
+  "failed_rules": 55
  },
  "faults_total": 116,
  "faults_detected": 116,
@@ -152,11 +152,9 @@
   "SEMV-COM-005",
   "SEMV-COM-006",
   "SEMV-COM-007",
-  "SEMV-COM-008",
   "SEMV-EP-002",
   "SEMV-EP-003",
   "SEMV-EP-004",
-  "SEMV-PA-003",
   "SV-0015",
   "SV-0040",
   "SV-0113",

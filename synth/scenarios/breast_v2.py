@@ -56,8 +56,9 @@ def generate(ctx: CtxV2, n=100):
                              (PLT, ctx.normal(250, 65, 60, 500, 0)), (ALB, ctx.normal(4.2, 0.4, 2.5, 5.2, 1)),
                              (CREA, ctx.normal(0.8, 0.2, 0.4, 2.5, 2)), (CA153, ctx.normal(18, 12, 2, 200, 1))):
             ctx.measure(p, index, concept, val, vid=vid)
-        _baseline_row(ctx, p, vid, index, age)
-
+        # 생식·산과력은 여성에게만 있다. 남성 유방암(1%)에 적으면 성별 규칙에 걸린다.
+        if gender == FEMALE:
+            _baseline_row(ctx, p, vid, index, age)
         # ---- 생검과 병리
         bx_day = ctx.days(index, ctx.randint(1, 10))
         bv = ctx.visit_on(p, bx_day)
@@ -98,7 +99,7 @@ def generate(ctx: CtxV2, n=100):
             sn_tot = ctx.randint(1, 6)
             sn_pos = 0 if stage == "I" else ctx.randint(0, sn_tot)
             tot_ln = sn_tot + (ctx.randint(5, 25) if sn_pos else 0)
-            pos_ln = sn_pos + (ctx.randint(0, 6) if sn_pos else 0)
+            pos_ln = min(sn_pos + (ctx.randint(0, 6) if sn_pos else 0), tot_ln)   # 침윤은 절제한 수를 넘지 못한다
             ctx.ext("PATHOLOGY_REPORT", p, vid=sv, specimen_id=op_spec, specimen_date=surgery_day,
                     report_type_concept_id=ctx.cs("CL_PATHOLOGY_REPORT_TYPE", "SURGICAL"),
                     report_type_source_value="SURGICAL",

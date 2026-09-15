@@ -2,36 +2,36 @@
  "cohort": "DIABETES",
  "run_date": "2026-09-07",
  "tables": {
-  "PERSON": 60,
-  "OBSERVATION_PERIOD": 60,
-  "DEATH": 1,
-  "VISIT_OCCURRENCE": 1061,
-  "CONDITION_OCCURRENCE": 176,
-  "PROCEDURE_OCCURRENCE": 301,
-  "DRUG_EXPOSURE": 3007,
-  "MEASUREMENT": 7817,
-  "OBSERVATION": 60,
-  "NOTE": 982,
+  "PERSON": 100,
+  "OBSERVATION_PERIOD": 100,
+  "DEATH": 3,
+  "VISIT_OCCURRENCE": 1766,
+  "CONDITION_OCCURRENCE": 261,
+  "PROCEDURE_OCCURRENCE": 500,
+  "DRUG_EXPOSURE": 4604,
+  "MEASUREMENT": 13064,
+  "OBSERVATION": 100,
+  "NOTE": 1644,
   "SPECIMEN": 0,
-  "COHORT": 60,
-  "EPISODE": 60,
-  "EPISODE_EVENT": 98,
-  "BIOMARKER": 15,
-  "DIABETES_BASELINE": 60,
-  "DIABETES_EVENT": 241
+  "COHORT": 100,
+  "EPISODE": 100,
+  "EPISODE_EVENT": 144,
+  "BIOMARKER": 37,
+  "DIABETES_BASELINE": 100,
+  "DIABETES_EVENT": 400
  },
  "rules_total": 341,
- "rules_failed": 37,
+ "rules_failed": 36,
  "rules_skipped": 6,
  "rules_error": 1,
- "violations_total": 198,
+ "violations_total": 185,
  "violations_error": 101,
- "violations_warning": 97,
+ "violations_warning": 84,
  "by_category": {
   "Completeness": {
    "rules": 109,
-   "failed": 8,
-   "violations": 29
+   "failed": 7,
+   "violations": 27
   },
   "Conformance": {
    "rules": 198,
@@ -41,7 +41,7 @@
   "Plausibility": {
    "rules": 34,
    "failed": 11,
-   "violations": 120
+   "violations": 109
   }
  },
  "rules": [
@@ -70,7 +70,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -84,7 +84,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -98,7 +98,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -112,7 +112,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -126,7 +126,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -140,7 +140,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -154,7 +154,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -168,7 +168,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -182,7 +182,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -196,7 +196,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -210,7 +210,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -238,7 +238,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -252,7 +252,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -266,7 +266,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -280,7 +280,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -294,7 +294,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -308,7 +308,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -322,7 +322,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -336,7 +336,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -350,7 +350,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -364,7 +364,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -378,7 +378,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -392,7 +392,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -406,7 +406,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -434,7 +434,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -448,7 +448,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -462,7 +462,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -476,7 +476,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -490,7 +490,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -504,7 +504,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -518,7 +518,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -532,7 +532,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -546,7 +546,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -560,7 +560,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1,
+   "rows_checked": 3,
    "note": ""
   },
   {
@@ -588,7 +588,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -602,7 +602,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -616,7 +616,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -630,7 +630,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -644,7 +644,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -658,7 +658,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -672,7 +672,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -686,7 +686,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -700,7 +700,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -714,7 +714,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -728,7 +728,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -742,7 +742,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -756,7 +756,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -770,7 +770,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -784,7 +784,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -798,7 +798,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -812,7 +812,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -826,7 +826,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1061,
+   "rows_checked": 1766,
    "note": ""
   },
   {
@@ -854,7 +854,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -868,7 +868,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -882,7 +882,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -896,7 +896,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -910,7 +910,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -924,7 +924,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -938,7 +938,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -952,7 +952,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -966,7 +966,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -980,7 +980,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -994,7 +994,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -1008,7 +1008,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -1022,7 +1022,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -1036,7 +1036,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -1050,7 +1050,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -1064,7 +1064,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 176,
+   "rows_checked": 261,
    "note": ""
   },
   {
@@ -1092,7 +1092,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1106,7 +1106,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1120,7 +1120,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1134,7 +1134,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1148,7 +1148,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1162,7 +1162,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1176,7 +1176,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1190,7 +1190,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1204,7 +1204,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1218,7 +1218,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1232,7 +1232,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1246,7 +1246,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1260,7 +1260,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1274,7 +1274,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1288,7 +1288,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1302,7 +1302,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1316,7 +1316,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 301,
+   "rows_checked": 500,
    "note": ""
   },
   {
@@ -1344,7 +1344,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1358,7 +1358,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1372,7 +1372,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1386,7 +1386,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1400,7 +1400,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1414,7 +1414,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1428,7 +1428,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1442,7 +1442,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1456,7 +1456,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1470,7 +1470,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1484,7 +1484,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1498,7 +1498,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1512,7 +1512,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1526,7 +1526,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1540,7 +1540,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1554,7 +1554,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1568,7 +1568,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1582,7 +1582,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3007,
+   "rows_checked": 4604,
    "note": ""
   },
   {
@@ -1610,7 +1610,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1624,7 +1624,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1638,7 +1638,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1652,7 +1652,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1666,7 +1666,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1680,7 +1680,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1694,7 +1694,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1708,7 +1708,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1722,7 +1722,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1736,7 +1736,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1750,7 +1750,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1764,7 +1764,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1778,7 +1778,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1792,7 +1792,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1806,7 +1806,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1820,7 +1820,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1834,7 +1834,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1848,7 +1848,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1862,7 +1862,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1876,7 +1876,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1890,7 +1890,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1904,7 +1904,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7817,
+   "rows_checked": 13064,
    "note": ""
   },
   {
@@ -1932,7 +1932,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -1946,7 +1946,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -1960,7 +1960,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -1974,7 +1974,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -1988,7 +1988,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2002,7 +2002,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2016,7 +2016,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2030,7 +2030,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2044,7 +2044,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2058,7 +2058,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2072,7 +2072,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2086,7 +2086,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2100,7 +2100,7 @@
    "check": "type",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2114,7 +2114,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2128,7 +2128,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2142,7 +2142,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2156,7 +2156,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2170,7 +2170,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2184,7 +2184,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2198,7 +2198,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2226,7 +2226,7 @@
    "check": "columns",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2240,7 +2240,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2254,7 +2254,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2268,7 +2268,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2282,7 +2282,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2296,7 +2296,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2310,7 +2310,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2324,7 +2324,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2338,7 +2338,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2352,7 +2352,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2366,7 +2366,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2380,7 +2380,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2394,7 +2394,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2408,7 +2408,7 @@
    "check": "not_null",
    "status": "skipped",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": "컬럼 없음: ['note_text']"
   },
   {
@@ -2422,7 +2422,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2436,7 +2436,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2450,7 +2450,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2464,7 +2464,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2478,7 +2478,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2492,7 +2492,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2506,7 +2506,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 982,
+   "rows_checked": 1644,
    "note": ""
   },
   {
@@ -2786,7 +2786,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2800,7 +2800,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2814,7 +2814,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2828,7 +2828,7 @@
    "check": "type",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2842,7 +2842,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2856,7 +2856,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2870,7 +2870,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2884,7 +2884,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2898,7 +2898,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2912,7 +2912,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2926,7 +2926,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2954,7 +2954,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2968,7 +2968,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2982,7 +2982,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2996,7 +2996,7 @@
    "check": "type",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3010,7 +3010,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3024,7 +3024,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3038,7 +3038,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3052,7 +3052,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3066,7 +3066,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3080,7 +3080,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3094,7 +3094,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3108,7 +3108,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3122,7 +3122,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3136,7 +3136,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3150,7 +3150,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3164,7 +3164,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3178,7 +3178,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3192,7 +3192,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3220,7 +3220,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 98,
+   "rows_checked": 144,
    "note": ""
   },
   {
@@ -3234,7 +3234,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 98,
+   "rows_checked": 144,
    "note": ""
   },
   {
@@ -3248,7 +3248,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 98,
+   "rows_checked": 144,
    "note": ""
   },
   {
@@ -3262,7 +3262,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 98,
+   "rows_checked": 144,
    "note": ""
   },
   {
@@ -3276,7 +3276,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 98,
+   "rows_checked": 144,
    "note": ""
   },
   {
@@ -3290,7 +3290,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 98,
+   "rows_checked": 144,
    "note": ""
   },
   {
@@ -3304,7 +3304,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 98,
+   "rows_checked": 144,
    "note": ""
   },
   {
@@ -3318,7 +3318,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 98,
+   "rows_checked": 144,
    "note": ""
   },
   {
@@ -3346,7 +3346,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3360,7 +3360,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3374,7 +3374,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3388,7 +3388,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3402,7 +3402,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3416,7 +3416,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3430,7 +3430,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3444,7 +3444,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3458,7 +3458,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3472,7 +3472,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3486,7 +3486,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3500,7 +3500,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3514,7 +3514,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3528,7 +3528,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3542,7 +3542,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3556,7 +3556,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3570,7 +3570,7 @@
    "check": "group_anchor",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 15,
+   "rows_checked": 37,
    "note": ""
   },
   {
@@ -3598,7 +3598,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3612,7 +3612,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3626,7 +3626,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3640,7 +3640,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3654,7 +3654,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3668,7 +3668,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3682,7 +3682,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3696,7 +3696,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3710,7 +3710,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3724,7 +3724,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3738,7 +3738,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3752,7 +3752,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3766,7 +3766,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3780,7 +3780,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3794,7 +3794,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3808,7 +3808,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3822,7 +3822,7 @@
    "check": "group_anchor",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -3850,7 +3850,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3864,7 +3864,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3878,7 +3878,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3892,7 +3892,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3906,7 +3906,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3920,7 +3920,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3934,7 +3934,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3948,7 +3948,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3962,7 +3962,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 6,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3976,7 +3976,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -3990,7 +3990,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4004,7 +4004,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4018,7 +4018,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4032,7 +4032,7 @@
    "check": "concept_code",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4046,7 +4046,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4060,7 +4060,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4074,7 +4074,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4088,7 +4088,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4102,7 +4102,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4116,7 +4116,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4130,7 +4130,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4144,7 +4144,7 @@
    "check": "concept_set",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4158,7 +4158,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4172,7 +4172,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4186,7 +4186,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4200,7 +4200,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4214,7 +4214,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4228,7 +4228,7 @@
    "check": "concept_set",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4242,7 +4242,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4256,7 +4256,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4270,7 +4270,7 @@
    "check": "concept_code",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4284,7 +4284,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4298,7 +4298,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4312,7 +4312,7 @@
    "check": "concept_code",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4326,7 +4326,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4340,7 +4340,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4354,7 +4354,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4368,7 +4368,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4382,7 +4382,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4396,7 +4396,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4410,7 +4410,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4424,7 +4424,7 @@
    "check": "concept_code",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4438,7 +4438,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4452,7 +4452,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4466,7 +4466,7 @@
    "check": "group_anchor",
    "status": "fail",
    "violations": 6,
-   "rows_checked": 241,
+   "rows_checked": 400,
    "note": ""
   },
   {
@@ -4549,7 +4549,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 44,
+   "violations": 33,
    "rows_checked": 0,
    "note": ""
   },
@@ -4800,8 +4800,8 @@
    "table": "MEASUREMENT,VISIT_OCCURRENCE",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 2,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },

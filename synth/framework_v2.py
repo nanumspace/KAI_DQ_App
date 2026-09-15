@@ -83,6 +83,12 @@ class CtxV2(CtxV1):
         return cid
 
     # ------------------------------------------------------------- 사람·기간
+    def set_death(self, p, date):
+        """사망일을 정한다. 이미 그 뒤의 방문을 적어 두었다면 시나리오가 순서를 잘못 잡은 것이다 — 조용히 넘기지 않는다."""
+        late = [start for (_, start, _, _) in p.visits if start > date]
+        assert not late, f"person {p.person_id}: 사망일 {date} 뒤에 방문 {len(late)}건이 이미 적혀 있다. 사망은 여정 앞에서 정하라."
+        p.death_date = date
+
     def finalize_person(self, p):
         """PERSON 한 행 + 관찰기간 + (사망했으면) DEATH. v1 은 이 셋을 PERSON 에 몰아 넣었다."""
         self.rows["PERSON"].append(dict(

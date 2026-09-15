@@ -8,11 +8,11 @@
  },
  "dirty": {
   "rules": 531,
-  "violations": 158,
-  "failed_rules": 50
+  "violations": 143,
+  "failed_rules": 47
  },
- "faults_total": 102,
- "faults_detected": 102,
+ "faults_total": 100,
+ "faults_detected": 100,
  "recall": 1.0,
  "fault_types": 17,
  "fault_types_fully_detected": 17,
@@ -92,8 +92,8 @@
   },
   {
    "fault_type": "REQUIRED_NULL_WHEN",
-   "n": 6,
-   "detected": 6,
+   "n": 10,
+   "detected": 10,
    "recall": 1.0
   },
   {
@@ -104,8 +104,8 @@
   },
   {
    "fault_type": "TYPE_BAD",
-   "n": 12,
-   "detected": 12,
+   "n": 6,
+   "detected": 6,
    "recall": 1.0
   },
   {
@@ -124,14 +124,14 @@
  "by_category": [
   {
    "category": "Completeness",
-   "n": 27,
-   "detected": 27,
+   "n": 31,
+   "detected": 31,
    "recall": 1.0
   },
   {
    "category": "Conformance",
-   "n": 54,
-   "detected": 54,
+   "n": 48,
+   "detected": 48,
    "recall": 1.0
   },
   {
@@ -144,15 +144,12 @@
  "collateral_rules": [
   "SEMV-COM-004",
   "SEMV-COM-006",
-  "SEMV-COM-007",
   "SEMV-EP-002",
   "SEMV-EP-003",
   "SEMV-EP-004",
-  "SEMV-EP-005",
   "SV-0197",
   "SV-0209",
   "SV-0250",
-  "SV-0411",
-  "SV-0513"
+  "SV-0928"
  ]
 }

@@ -38,6 +38,11 @@ def generate(ctx: CtxV2, n=100):
         a1c = ctx.normal(8.6, 1.6, 6.5, 14.0)
         cgm = ctx.bern(0.15)
         pump = cgm and ctx.bern(0.2)
+        # 사망은 여정을 적기 전에 정한다. 뒤에서 정하면 앞서 적은 사건이 사망일 뒤에 남는다.
+        if ctx.bern(0.06):
+            d = ctx.days(index, ctx.randint(500, 365 * 6))
+            if d <= ctx.today:
+                ctx.set_death(p, d)
 
         # ---- 1) 진단 외래
         vid = ctx.visit(p, index, OUTPATIENT)
@@ -117,11 +122,6 @@ def generate(ctx: CtxV2, n=100):
                                              drugs=len(drugs), plan="약제 유지" if cur_a1c <= 7.5 else "약제 강화"),
                      vid=v)
 
-        # ---- 4) 일부 사망
-        if ctx.bern(0.06):
-            d = ctx.days(index, ctx.randint(500, 365 * 6))
-            if d <= ctx.today:
-                ctx.set_death(p, d)
         ctx.finalize_person(p)
 
 

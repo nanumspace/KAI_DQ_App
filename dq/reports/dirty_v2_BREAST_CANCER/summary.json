@@ -2,48 +2,48 @@
  "cohort": "BREAST_CANCER",
  "run_date": "2026-09-07",
  "tables": {
-  "PERSON": 60,
-  "OBSERVATION_PERIOD": 60,
-  "DEATH": 0,
-  "VISIT_OCCURRENCE": 1841,
-  "CONDITION_OCCURRENCE": 129,
-  "PROCEDURE_OCCURRENCE": 654,
-  "DRUG_EXPOSURE": 2042,
-  "MEASUREMENT": 1056,
+  "PERSON": 100,
+  "OBSERVATION_PERIOD": 100,
+  "DEATH": 1,
+  "VISIT_OCCURRENCE": 2991,
+  "CONDITION_OCCURRENCE": 224,
+  "PROCEDURE_OCCURRENCE": 1088,
+  "DRUG_EXPOSURE": 3374,
+  "MEASUREMENT": 1784,
   "OBSERVATION": 0,
   "NOTE": 0,
-  "SPECIMEN": 117,
-  "COHORT": 60,
-  "EPISODE": 102,
-  "EPISODE_EVENT": 1258,
-  "PATHOLOGY_REPORT": 117,
+  "SPECIMEN": 194,
+  "COHORT": 100,
+  "EPISODE": 173,
+  "EPISODE_EVENT": 2174,
+  "PATHOLOGY_REPORT": 194,
   "PATHOLOGY_TUMOR": 0,
-  "BIOMARKER": 60,
-  "BREAST_BASELINE": 60,
-  "BREAST_EXAM": 420
+  "BIOMARKER": 100,
+  "BREAST_BASELINE": 100,
+  "BREAST_EXAM": 700
  },
  "rules_total": 498,
- "rules_failed": 46,
- "rules_skipped": 1,
- "rules_error": 1,
- "violations_total": 136,
- "violations_error": 119,
- "violations_warning": 17,
+ "rules_failed": 48,
+ "rules_skipped": 3,
+ "rules_error": 0,
+ "violations_total": 150,
+ "violations_error": 131,
+ "violations_warning": 19,
  "by_category": {
   "Completeness": {
    "rules": 155,
-   "failed": 16,
-   "violations": 48
+   "failed": 15,
+   "violations": 45
   },
   "Conformance": {
    "rules": 304,
-   "failed": 17,
-   "violations": 47
+   "failed": 19,
+   "violations": 61
   },
   "Plausibility": {
    "rules": 39,
-   "failed": 13,
-   "violations": 41
+   "failed": 14,
+   "violations": 44
   }
  },
  "rules": [
@@ -72,7 +72,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -86,7 +86,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -100,7 +100,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -114,7 +114,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -128,7 +128,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -142,7 +142,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -156,7 +156,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -170,7 +170,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -184,7 +184,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -198,7 +198,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -212,7 +212,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -240,7 +240,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -254,7 +254,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -268,7 +268,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -282,7 +282,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -296,7 +296,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -310,7 +310,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -324,7 +324,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -338,7 +338,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -352,7 +352,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -366,7 +366,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -380,7 +380,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -394,7 +394,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -408,7 +408,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -436,7 +436,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -450,7 +450,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -464,7 +464,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -478,7 +478,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -492,7 +492,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -506,7 +506,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -520,7 +520,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -534,7 +534,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -548,7 +548,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -562,7 +562,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 0,
+   "rows_checked": 1,
    "note": ""
   },
   {
@@ -590,7 +590,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -604,7 +604,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -618,7 +618,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -632,7 +632,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -646,7 +646,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -660,7 +660,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -674,7 +674,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -688,7 +688,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -702,7 +702,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -716,7 +716,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -730,7 +730,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -744,7 +744,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -758,7 +758,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -770,9 +770,9 @@
    "table": "VISIT_OCCURRENCE",
    "fields": "visit_end_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 1841,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -786,7 +786,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -800,7 +800,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -814,7 +814,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -828,7 +828,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1841,
+   "rows_checked": 2991,
    "note": ""
   },
   {
@@ -856,7 +856,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -868,9 +868,9 @@
    "table": "CONDITION_OCCURRENCE",
    "fields": "condition_occurrence_id",
    "check": "pk_unique",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 129,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -884,7 +884,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -896,9 +896,9 @@
    "table": "CONDITION_OCCURRENCE",
    "fields": "condition_occurrence_id",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 129,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -912,7 +912,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -926,7 +926,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -940,7 +940,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -954,7 +954,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -968,7 +968,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -982,7 +982,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -996,7 +996,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -1010,7 +1010,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -1024,7 +1024,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -1038,7 +1038,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -1052,7 +1052,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -1066,7 +1066,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 129,
+   "rows_checked": 224,
    "note": ""
   },
   {
@@ -1094,7 +1094,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1108,7 +1108,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1122,7 +1122,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1136,7 +1136,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1150,7 +1150,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1164,7 +1164,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1178,7 +1178,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1192,7 +1192,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1206,7 +1206,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1220,7 +1220,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1234,7 +1234,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1248,7 +1248,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1262,7 +1262,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1276,7 +1276,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1290,7 +1290,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1304,7 +1304,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1318,7 +1318,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 654,
+   "rows_checked": 1088,
    "note": ""
   },
   {
@@ -1346,7 +1346,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1360,7 +1360,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1374,7 +1374,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1388,7 +1388,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1402,7 +1402,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1416,7 +1416,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1430,7 +1430,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1444,7 +1444,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1458,7 +1458,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1472,7 +1472,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1486,7 +1486,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1500,7 +1500,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1514,7 +1514,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1528,7 +1528,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1542,7 +1542,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1556,7 +1556,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1570,7 +1570,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1584,7 +1584,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2042,
+   "rows_checked": 3374,
    "note": ""
   },
   {
@@ -1610,9 +1610,9 @@
    "table": "MEASUREMENT",
    "fields": "",
    "check": "columns",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 1056,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1626,7 +1626,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1640,7 +1640,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1654,7 +1654,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1668,7 +1668,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1682,7 +1682,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1694,9 +1694,9 @@
    "table": "MEASUREMENT",
    "fields": "measurement_concept_id",
    "check": "not_null",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 1056,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1710,7 +1710,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1724,7 +1724,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1736,9 +1736,9 @@
    "table": "MEASUREMENT",
    "fields": "measurement_date",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 1056,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1752,7 +1752,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1764,9 +1764,9 @@
    "table": "MEASUREMENT",
    "fields": "measurement_type_concept_id",
    "check": "not_null",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 1056,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1780,7 +1780,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1794,7 +1794,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1806,9 +1806,9 @@
    "table": "MEASUREMENT",
    "fields": "value_as_number",
    "check": "type",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 1056,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1822,7 +1822,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1836,7 +1836,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1850,7 +1850,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1862,10 +1862,10 @@
    "table": "MEASUREMENT",
    "fields": "range_high",
    "check": "type",
-   "status": "skipped",
+   "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
-   "note": "컬럼 없음: ['range_high']"
+   "rows_checked": 1784,
+   "note": ""
   },
   {
    "rule_id": "SV-0131",
@@ -1878,7 +1878,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1892,7 +1892,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -1906,7 +1906,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1056,
+   "rows_checked": 1784,
    "note": ""
   },
   {
@@ -2536,7 +2536,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2549,8 +2549,8 @@
    "fields": "specimen_id",
    "check": "pk_unique",
    "status": "fail",
-   "violations": 2,
-   "rows_checked": 117,
+   "violations": 5,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2562,9 +2562,9 @@
    "table": "SPECIMEN",
    "fields": "specimen_id",
    "check": "not_null",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 117,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2578,7 +2578,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2592,7 +2592,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2606,7 +2606,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2618,9 +2618,9 @@
    "table": "SPECIMEN",
    "fields": "specimen_concept_id",
    "check": "not_null",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 117,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2632,9 +2632,9 @@
    "table": "SPECIMEN",
    "fields": "specimen_concept_id",
    "check": "type",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 117,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2648,7 +2648,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2662,7 +2662,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2676,7 +2676,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2690,7 +2690,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2704,7 +2704,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2718,7 +2718,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2732,7 +2732,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2746,7 +2746,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2760,7 +2760,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -2788,7 +2788,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2802,7 +2802,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2816,7 +2816,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2830,7 +2830,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2844,7 +2844,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2858,7 +2858,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2872,7 +2872,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2886,7 +2886,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2900,7 +2900,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2914,7 +2914,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2928,7 +2928,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -2956,7 +2956,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -2970,7 +2970,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -2984,7 +2984,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -2998,7 +2998,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3012,7 +3012,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3026,7 +3026,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3040,7 +3040,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3054,7 +3054,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3068,7 +3068,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3082,7 +3082,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3096,7 +3096,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3110,7 +3110,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3124,7 +3124,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3138,7 +3138,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3152,7 +3152,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3166,7 +3166,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3180,7 +3180,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3194,7 +3194,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 102,
+   "rows_checked": 173,
    "note": ""
   },
   {
@@ -3222,7 +3222,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1258,
+   "rows_checked": 2174,
    "note": ""
   },
   {
@@ -3236,7 +3236,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1258,
+   "rows_checked": 2174,
    "note": ""
   },
   {
@@ -3250,7 +3250,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1258,
+   "rows_checked": 2174,
    "note": ""
   },
   {
@@ -3264,7 +3264,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1258,
+   "rows_checked": 2174,
    "note": ""
   },
   {
@@ -3278,7 +3278,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1258,
+   "rows_checked": 2174,
    "note": ""
   },
   {
@@ -3292,7 +3292,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1258,
+   "rows_checked": 2174,
    "note": ""
   },
   {
@@ -3306,7 +3306,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1258,
+   "rows_checked": 2174,
    "note": ""
   },
   {
@@ -3320,7 +3320,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1258,
+   "rows_checked": 2174,
    "note": ""
   },
   {
@@ -3348,7 +3348,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3362,7 +3362,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3376,7 +3376,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3390,7 +3390,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3404,7 +3404,7 @@
    "check": "concept_set",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3418,7 +3418,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3432,7 +3432,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3446,7 +3446,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3460,7 +3460,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3474,7 +3474,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3488,7 +3488,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3501,8 +3501,8 @@
    "fields": "specimen_id",
    "check": "fk",
    "status": "fail",
-   "violations": 4,
-   "rows_checked": 117,
+   "violations": 7,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3516,7 +3516,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3530,7 +3530,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3544,7 +3544,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3558,7 +3558,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3572,7 +3572,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3586,7 +3586,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3600,7 +3600,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3614,7 +3614,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3628,7 +3628,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3642,7 +3642,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3656,7 +3656,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3670,7 +3670,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3684,7 +3684,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3698,7 +3698,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3712,7 +3712,7 @@
    "check": "not_null_either",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3726,7 +3726,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3740,7 +3740,7 @@
    "check": "not_null_either",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3754,7 +3754,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3768,7 +3768,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3782,7 +3782,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3796,7 +3796,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3810,7 +3810,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3824,7 +3824,7 @@
    "check": "not_null_when",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3838,7 +3838,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3852,7 +3852,7 @@
    "check": "not_null_when",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3866,7 +3866,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3880,7 +3880,7 @@
    "check": "not_null_when",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3894,7 +3894,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3908,7 +3908,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3922,7 +3922,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3936,7 +3936,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3950,7 +3950,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3962,9 +3962,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "microcalcification_yn",
    "check": "not_null",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 117,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3978,7 +3978,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -3992,7 +3992,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4006,7 +4006,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4020,7 +4020,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4034,7 +4034,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4046,9 +4046,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "dcis_nuclear_grade_concept_id",
    "check": "not_null",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 117,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4062,7 +4062,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4076,7 +4076,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4090,7 +4090,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4104,7 +4104,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4118,7 +4118,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4132,7 +4132,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4146,7 +4146,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4160,7 +4160,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4174,7 +4174,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4188,7 +4188,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4202,7 +4202,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4216,7 +4216,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4230,7 +4230,7 @@
    "check": "concept_code",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4244,7 +4244,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4258,7 +4258,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4272,7 +4272,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4286,7 +4286,7 @@
    "check": "not_null_when",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4300,7 +4300,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4314,7 +4314,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4328,7 +4328,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4342,7 +4342,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4356,7 +4356,7 @@
    "check": "concept_code",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4370,7 +4370,7 @@
    "check": "group_anchor",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 117,
+   "rows_checked": 194,
    "note": ""
   },
   {
@@ -4622,7 +4622,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4636,7 +4636,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4650,7 +4650,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4664,7 +4664,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4678,7 +4678,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4692,7 +4692,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4706,7 +4706,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4719,8 +4719,8 @@
    "fields": "specimen_id",
    "check": "fk",
    "status": "fail",
-   "violations": 3,
-   "rows_checked": 60,
+   "violations": 5,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4734,7 +4734,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4748,7 +4748,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4762,7 +4762,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4776,7 +4776,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4790,7 +4790,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4804,7 +4804,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4818,7 +4818,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4832,7 +4832,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4846,7 +4846,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4860,7 +4860,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4874,7 +4874,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4888,7 +4888,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4902,7 +4902,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4916,7 +4916,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4930,7 +4930,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4944,7 +4944,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4958,7 +4958,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4972,7 +4972,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -4986,7 +4986,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5000,7 +5000,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5014,7 +5014,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5028,7 +5028,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5042,7 +5042,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5056,7 +5056,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5070,7 +5070,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5084,7 +5084,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5098,7 +5098,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5112,7 +5112,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5126,7 +5126,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5140,7 +5140,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5154,7 +5154,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5168,7 +5168,7 @@
    "check": "not_null_either",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5182,7 +5182,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5196,7 +5196,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5210,7 +5210,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5224,7 +5224,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5238,7 +5238,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5252,7 +5252,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5266,7 +5266,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5280,7 +5280,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5294,7 +5294,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5308,7 +5308,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5322,7 +5322,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5336,7 +5336,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5350,7 +5350,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5364,7 +5364,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5378,7 +5378,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5392,7 +5392,7 @@
    "check": "group_anchor",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5420,7 +5420,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5434,7 +5434,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5448,7 +5448,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5462,7 +5462,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5476,7 +5476,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5490,7 +5490,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5504,7 +5504,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5518,7 +5518,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5532,7 +5532,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5546,7 +5546,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5560,7 +5560,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5574,7 +5574,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5588,7 +5588,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5602,7 +5602,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5616,7 +5616,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5630,7 +5630,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5644,7 +5644,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5658,7 +5658,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5672,7 +5672,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5686,7 +5686,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5700,7 +5700,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5714,7 +5714,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5728,7 +5728,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5742,7 +5742,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5756,7 +5756,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5770,7 +5770,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5784,7 +5784,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5798,7 +5798,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5812,7 +5812,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5826,7 +5826,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5840,7 +5840,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5854,7 +5854,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5868,7 +5868,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5882,7 +5882,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5896,7 +5896,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5910,7 +5910,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5924,7 +5924,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5938,7 +5938,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5952,7 +5952,7 @@
    "check": "concept_code",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5966,7 +5966,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5980,7 +5980,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -5994,7 +5994,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6008,7 +6008,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6022,7 +6022,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6036,7 +6036,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6050,7 +6050,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6064,7 +6064,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6078,7 +6078,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6092,7 +6092,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6106,7 +6106,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6120,7 +6120,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6134,7 +6134,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6148,7 +6148,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6162,7 +6162,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6176,7 +6176,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6190,7 +6190,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6204,7 +6204,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6218,7 +6218,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6232,7 +6232,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6246,7 +6246,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6260,7 +6260,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6274,7 +6274,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6288,7 +6288,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6302,7 +6302,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6316,7 +6316,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6330,7 +6330,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6344,7 +6344,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6358,7 +6358,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6372,7 +6372,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6386,7 +6386,7 @@
    "check": "group_anchor",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 60,
+   "rows_checked": 100,
    "note": ""
   },
   {
@@ -6412,9 +6412,9 @@
    "table": "BREAST_EXAM",
    "fields": "",
    "check": "columns",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 420,
+   "status": "fail",
+   "violations": 1,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6428,7 +6428,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6442,7 +6442,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6456,7 +6456,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6470,7 +6470,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6484,7 +6484,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6498,7 +6498,7 @@
    "check": "type",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6512,7 +6512,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6526,7 +6526,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6540,7 +6540,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6552,9 +6552,9 @@
    "table": "BREAST_EXAM",
    "fields": "exam_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 420,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6568,7 +6568,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6582,7 +6582,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6596,7 +6596,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6608,10 +6608,10 @@
    "table": "BREAST_EXAM",
    "fields": "mammographic_density_concept_id",
    "check": "not_null",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
-   "rows_checked": 420,
-   "note": ""
+   "rows_checked": 700,
+   "note": "컬럼 없음: ['mammographic_density_concept_id']"
   },
   {
    "rule_id": "SV-0684",
@@ -6622,10 +6622,10 @@
    "table": "BREAST_EXAM",
    "fields": "mammographic_density_concept_id",
    "check": "type",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
-   "rows_checked": 420,
-   "note": ""
+   "rows_checked": 700,
+   "note": "컬럼 없음: ['mammographic_density_concept_id']"
   },
   {
    "rule_id": "SV-0685",
@@ -6636,10 +6636,10 @@
    "table": "BREAST_EXAM",
    "fields": "mammographic_density_concept_id",
    "check": "concept_set",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
-   "rows_checked": 420,
-   "note": ""
+   "rows_checked": 700,
+   "note": "컬럼 없음: ['mammographic_density_concept_id']"
   },
   {
    "rule_id": "SV-0686",
@@ -6652,7 +6652,7 @@
    "check": "group_anchor",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 420,
+   "rows_checked": 700,
    "note": ""
   },
   {
@@ -6692,8 +6692,8 @@
    "table": "CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",
    "fields": "",
    "check": "sql",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 2,
    "rows_checked": 0,
    "note": ""
   },
@@ -6735,7 +6735,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 13,
+   "violations": 15,
    "rows_checked": 0,
    "note": ""
   },
@@ -6790,8 +6790,8 @@
    "table": "MEASUREMENT",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },
@@ -6804,10 +6804,10 @@
    "table": "MEASUREMENT",
    "fields": "",
    "check": "sql",
-   "status": "error",
+   "status": "pass",
    "violations": 0,
    "rows_checked": 0,
-   "note": "SQL 오류: Binder Error: Referenced column \"range_high\" not found in FROM clause!\nCandidate bindings: \"range_low\", \"person_id\", \"measurement_id\", \"measurement_date\", \"measurement_event_id\"\n\nLINE 4: WHERE range_l"
+   "note": ""
   },
   {
    "rule_id": "SEMV-COM-012",
@@ -6874,8 +6874,8 @@
    "table": "CONDITION_OCCURRENCE,DRUG_EXPOSURE,EPISODE,EPISODE_EVENT,PROCEDURE_OCCURRENCE",
    "fields": "",
    "check": "sql",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 0,
    "note": ""
   },
@@ -6917,7 +6917,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 1,
    "rows_checked": 0,
    "note": ""
   },

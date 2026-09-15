@@ -406,7 +406,16 @@ class Engine:
         except Exception as e:
             st["status"] = "error"; st["note"] = f"SQL 오류: {str(e)[:200]}"; return
         for person_id, row_key, detail in res:
-            self.add(rule, st["table"], "", row_key, None if person_id is None else int(person_id), detail or "")
+            # 오류 데이터에서는 person_id 가 숫자가 아닐 수 있다(그 자체가 검출 대상이다).
+            # 엔진이 여기서 넘어지면 정작 그 오류를 보고하지 못한다.
+            if person_id is None:
+                pid = None
+            else:
+                try:
+                    pid = int(person_id)
+                except (TypeError, ValueError):
+                    pid = str(person_id)
+            self.add(rule, st["table"], "", row_key, pid, detail or "")
         if st["violations"] > 0:
             st["status"] = "fail"
 

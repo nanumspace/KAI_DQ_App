@@ -20,18 +20,18 @@
   "DIABETES_BASELINE": 60,
   "DIABETES_EVENT": 241
  },
- "rules_total": 339,
- "rules_failed": 36,
- "rules_skipped": 7,
- "rules_error": 0,
- "violations_total": 138,
+ "rules_total": 341,
+ "rules_failed": 37,
+ "rules_skipped": 6,
+ "rules_error": 1,
+ "violations_total": 198,
  "violations_error": 101,
- "violations_warning": 37,
+ "violations_warning": 97,
  "by_category": {
   "Completeness": {
-   "rules": 108,
-   "failed": 7,
-   "violations": 27
+   "rules": 109,
+   "failed": 8,
+   "violations": 29
   },
   "Conformance": {
    "rules": 198,
@@ -39,9 +39,9 @@
    "violations": 49
   },
   "Plausibility": {
-   "rules": 33,
+   "rules": 34,
    "failed": 11,
-   "violations": 62
+   "violations": 120
   }
  },
  "rules": [
@@ -348,8 +348,8 @@
    "table": "OBSERVATION_PERIOD",
    "fields": "observation_period_start_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -768,8 +768,8 @@
    "table": "VISIT_OCCURRENCE",
    "fields": "visit_end_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 1061,
    "note": ""
   },
@@ -852,8 +852,8 @@
    "table": "CONDITION_OCCURRENCE",
    "fields": "",
    "check": "columns",
-   "status": "fail",
-   "violations": 1,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 176,
    "note": ""
   },
@@ -1020,10 +1020,10 @@
    "table": "CONDITION_OCCURRENCE",
    "fields": "condition_type_concept_id",
    "check": "not_null",
-   "status": "skipped",
+   "status": "pass",
    "violations": 0,
    "rows_checked": 176,
-   "note": "컬럼 없음: ['condition_type_concept_id']"
+   "note": ""
   },
   {
    "rule_id": "SV-0071",
@@ -1034,10 +1034,10 @@
    "table": "CONDITION_OCCURRENCE",
    "fields": "condition_type_concept_id",
    "check": "type",
-   "status": "skipped",
+   "status": "pass",
    "violations": 0,
    "rows_checked": 176,
-   "note": "컬럼 없음: ['condition_type_concept_id']"
+   "note": ""
   },
   {
    "rule_id": "SV-0072",
@@ -1482,8 +1482,8 @@
    "table": "DRUG_EXPOSURE",
    "fields": "drug_exposure_start_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 3007,
    "note": ""
   },
@@ -2224,8 +2224,8 @@
    "table": "NOTE",
    "fields": "",
    "check": "columns",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 1,
    "rows_checked": 982,
    "note": ""
   },
@@ -2336,8 +2336,8 @@
    "table": "NOTE",
    "fields": "note_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 982,
    "note": ""
   },
@@ -2406,10 +2406,10 @@
    "table": "NOTE",
    "fields": "note_text",
    "check": "not_null",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
    "rows_checked": 982,
-   "note": ""
+   "note": "컬럼 없음: ['note_text']"
   },
   {
    "rule_id": "SV-0170",
@@ -3092,8 +3092,8 @@
    "table": "EPISODE",
    "fields": "episode_start_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -3512,8 +3512,8 @@
    "table": "BIOMARKER",
    "fields": "test_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 15,
    "note": ""
   },
@@ -3736,8 +3736,8 @@
    "table": "DIABETES_BASELINE",
    "fields": "record_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -3778,8 +3778,8 @@
    "table": "DIABETES_BASELINE",
    "fields": "cgm_use_yn",
    "check": "concept_code",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -3988,8 +3988,8 @@
    "table": "DIABETES_EVENT",
    "fields": "event_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 241,
    "note": ""
   },
@@ -4030,8 +4030,8 @@
    "table": "DIABETES_EVENT",
    "fields": "hba1c_target_met_yn",
    "check": "concept_code",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 241,
    "note": ""
   },
@@ -4521,7 +4521,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 51,
    "rows_checked": 0,
    "note": ""
   },
@@ -4534,8 +4534,8 @@
    "table": "DEATH,OBSERVATION_PERIOD",
    "fields": "",
    "check": "sql",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 0,
    "note": ""
   },
@@ -4549,7 +4549,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 34,
+   "violations": 44,
    "rows_checked": 0,
    "note": ""
   },
@@ -4591,7 +4591,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 6,
+   "violations": 3,
    "rows_checked": 0,
    "note": ""
   },
@@ -4646,10 +4646,10 @@
    "table": "NOTE",
    "fields": "",
    "check": "sql",
-   "status": "pass",
+   "status": "error",
    "violations": 0,
    "rows_checked": 0,
-   "note": ""
+   "note": "SQL 오류: Binder Error: Referenced column \"note_text\" not found in FROM clause!\nCandidate bindings: \"note_title\", \"note_date\", \"note_type_concept_id\", \"note_id\", \"note_event_id\"\n\nLINE 2: FROM NOTE WHERE note_te"
   },
   {
    "rule_id": "SEMV-COM-014",
@@ -4702,8 +4702,8 @@
    "table": "DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 1,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },
@@ -4790,6 +4790,34 @@
    "violations": 0,
    "rows_checked": 0,
    "note": "필요 테이블 없음: ['PATHOLOGY_TUMOR']"
+  },
+  {
+   "rule_id": "SEMV-DM-001",
+   "name": "해마다 HbA1c 를 잰다",
+   "category": "Completeness",
+   "subcategory": "value",
+   "severity": "warning",
+   "table": "MEASUREMENT,VISIT_OCCURRENCE",
+   "fields": "",
+   "check": "sql",
+   "status": "fail",
+   "violations": 2,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-DM-002",
+   "name": "혈당강하제 처방은 진단 뒤에",
+   "category": "Plausibility",
+   "subcategory": "temporal",
+   "severity": "error",
+   "table": "CONDITION_OCCURRENCE,DRUG_EXPOSURE",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
   }
  ]
 }

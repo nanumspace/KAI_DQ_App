@@ -8,11 +8,11 @@
  },
  "dirty": {
   "rules": 377,
-  "violations": 159,
-  "failed_rules": 55
+  "violations": 236,
+  "failed_rules": 57
  },
- "faults_total": 113,
- "faults_detected": 113,
+ "faults_total": 116,
+ "faults_detected": 116,
  "recall": 1.0,
  "fault_types": 18,
  "fault_types_fully_detected": 18,
@@ -38,8 +38,8 @@
   },
   {
    "fault_type": "CONCEPT_OUT_OF_SET",
-   "n": 9,
-   "detected": 9,
+   "n": 12,
+   "detected": 12,
    "recall": 1.0
   },
   {
@@ -136,8 +136,8 @@
   },
   {
    "category": "Conformance",
-   "n": 45,
-   "detected": 45,
+   "n": 48,
+   "detected": 48,
    "recall": 1.0
   },
   {
@@ -149,12 +149,13 @@
  ],
  "collateral_rules": [
   "SEMV-COM-004",
+  "SEMV-COM-005",
   "SEMV-COM-006",
   "SEMV-COM-007",
+  "SEMV-COM-008",
   "SEMV-EP-002",
   "SEMV-EP-003",
   "SEMV-EP-004",
-  "SEMV-LC-001",
   "SEMV-PA-003",
   "SV-0015",
   "SV-0040",

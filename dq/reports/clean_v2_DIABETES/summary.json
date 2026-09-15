@@ -20,7 +20,7 @@
   "DIABETES_BASELINE": 60,
   "DIABETES_EVENT": 241
  },
- "rules_total": 339,
+ "rules_total": 341,
  "rules_failed": 0,
  "rules_skipped": 5,
  "rules_error": 0,
@@ -29,7 +29,7 @@
  "violations_warning": 0,
  "by_category": {
   "Completeness": {
-   "rules": 108,
+   "rules": 109,
    "failed": 0,
    "violations": 0
   },
@@ -39,7 +39,7 @@
    "violations": 0
   },
   "Plausibility": {
-   "rules": 33,
+   "rules": 34,
    "failed": 0,
    "violations": 0
   }
@@ -4790,6 +4790,34 @@
    "violations": 0,
    "rows_checked": 0,
    "note": "필요 테이블 없음: ['PATHOLOGY_TUMOR']"
+  },
+  {
+   "rule_id": "SEMV-DM-001",
+   "name": "해마다 HbA1c 를 잰다",
+   "category": "Completeness",
+   "subcategory": "value",
+   "severity": "warning",
+   "table": "MEASUREMENT,VISIT_OCCURRENCE",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-DM-002",
+   "name": "혈당강하제 처방은 진단 뒤에",
+   "category": "Plausibility",
+   "subcategory": "temporal",
+   "severity": "error",
+   "table": "CONDITION_OCCURRENCE,DRUG_EXPOSURE",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
   }
  ]
 }

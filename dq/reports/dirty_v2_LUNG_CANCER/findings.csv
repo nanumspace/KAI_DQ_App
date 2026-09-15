@@ -1,29 +1,33 @@
 ﻿rule_id,rule_name,category,severity,table,field,row_key,person_id,detail
+SV-0014,OBSERVATION_PERIOD 컬럼 구성,Conformance,error,OBSERVATION_PERIOD,period_type_concept_id,,,컬럼 누락: period_type_concept_id
 SV-0015,OBSERVATION_PERIOD.observation_period_id PK 유일성,Conformance,error,OBSERVATION_PERIOD,observation_period_id,NOT_A_NUMBER,100007,PK 중복: NOT_A_NUMBER
 SV-0015,OBSERVATION_PERIOD.observation_period_id PK 유일성,Conformance,error,OBSERVATION_PERIOD,observation_period_id,NOT_A_NUMBER,100011,PK 중복: NOT_A_NUMBER
 SV-0015,OBSERVATION_PERIOD.observation_period_id PK 유일성,Conformance,error,OBSERVATION_PERIOD,observation_period_id,NOT_A_NUMBER,100028,PK 중복: NOT_A_NUMBER
 SV-0017,OBSERVATION_PERIOD.observation_period_id 타입(bigint),Conformance,error,OBSERVATION_PERIOD,observation_period_id,NOT_A_NUMBER,100007,observation_period_id='NOT_A_NUMBER' 은 integer 아님
 SV-0017,OBSERVATION_PERIOD.observation_period_id 타입(bigint),Conformance,error,OBSERVATION_PERIOD,observation_period_id,NOT_A_NUMBER,100011,observation_period_id='NOT_A_NUMBER' 은 integer 아님
 SV-0017,OBSERVATION_PERIOD.observation_period_id 타입(bigint),Conformance,error,OBSERVATION_PERIOD,observation_period_id,NOT_A_NUMBER,100028,observation_period_id='NOT_A_NUMBER' 은 integer 아님
+SV-0022,OBSERVATION_PERIOD.observation_period_start_date 미래 날짜 금지,Plausibility,error,OBSERVATION_PERIOD,observation_period_start_date,100002,100002,observation_period_start_date=2099-01-01 미래 날짜
+SV-0022,OBSERVATION_PERIOD.observation_period_start_date 미래 날짜 금지,Plausibility,error,OBSERVATION_PERIOD,observation_period_start_date,100022,100022,observation_period_start_date=2099-01-01 미래 날짜
+SV-0022,OBSERVATION_PERIOD.observation_period_start_date 미래 날짜 금지,Plausibility,error,OBSERVATION_PERIOD,observation_period_start_date,100045,100045,observation_period_start_date=2099-01-01 미래 날짜
 SV-0040,VISIT_OCCURRENCE.visit_occurrence_id PK 유일성,Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,NOT_A_NUMBER,100007,PK 중복: NOT_A_NUMBER
 SV-0040,VISIT_OCCURRENCE.visit_occurrence_id PK 유일성,Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,NOT_A_NUMBER,100010,PK 중복: NOT_A_NUMBER
 SV-0040,VISIT_OCCURRENCE.visit_occurrence_id PK 유일성,Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,NOT_A_NUMBER,100046,PK 중복: NOT_A_NUMBER
 SV-0042,VISIT_OCCURRENCE.visit_occurrence_id 타입(bigint),Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,NOT_A_NUMBER,100007,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
 SV-0042,VISIT_OCCURRENCE.visit_occurrence_id 타입(bigint),Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,NOT_A_NUMBER,100010,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
 SV-0042,VISIT_OCCURRENCE.visit_occurrence_id 타입(bigint),Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,NOT_A_NUMBER,100046,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
-SV-0052,VISIT_OCCURRENCE.visit_end_date 미래 날짜 금지,Plausibility,error,VISIT_OCCURRENCE,visit_end_date,100154,100010,visit_end_date=2099-01-01 미래 날짜
-SV-0052,VISIT_OCCURRENCE.visit_end_date 미래 날짜 금지,Plausibility,error,VISIT_OCCURRENCE,visit_end_date,100352,100023,visit_end_date=2099-01-01 미래 날짜
-SV-0052,VISIT_OCCURRENCE.visit_end_date 미래 날짜 금지,Plausibility,error,VISIT_OCCURRENCE,visit_end_date,100532,100034,visit_end_date=2099-01-01 미래 날짜
-SV-0059,CONDITION_OCCURRENCE.condition_occurrence_id PK 유일성,Conformance,error,CONDITION_OCCURRENCE,condition_occurrence_id,100139,100029,PK 중복: 100139
-SV-0059,CONDITION_OCCURRENCE.condition_occurrence_id PK 유일성,Conformance,error,CONDITION_OCCURRENCE,condition_occurrence_id,100139,100035,PK 중복: 100139
-SV-0085,PROCEDURE_OCCURRENCE.procedure_date 미래 날짜 금지,Plausibility,error,PROCEDURE_OCCURRENCE,procedure_date,100274,100023,procedure_date=2099-01-01 미래 날짜
-SV-0085,PROCEDURE_OCCURRENCE.procedure_date 미래 날짜 금지,Plausibility,error,PROCEDURE_OCCURRENCE,procedure_date,100364,100030,procedure_date=2099-01-01 미래 날짜
-SV-0085,PROCEDURE_OCCURRENCE.procedure_date 미래 날짜 금지,Plausibility,error,PROCEDURE_OCCURRENCE,procedure_date,100634,100052,procedure_date=2099-01-01 미래 날짜
-SV-0094,DRUG_EXPOSURE.drug_exposure_id PK 유일성,Conformance,error,DRUG_EXPOSURE,drug_exposure_id,100423,100045,PK 중복: 100423
-SV-0094,DRUG_EXPOSURE.drug_exposure_id PK 유일성,Conformance,error,DRUG_EXPOSURE,drug_exposure_id,100423,100052,PK 중복: 100423
+SV-0059,CONDITION_OCCURRENCE.condition_occurrence_id PK 유일성,Conformance,error,CONDITION_OCCURRENCE,condition_occurrence_id,100201,100003,PK 중복: 100201
+SV-0059,CONDITION_OCCURRENCE.condition_occurrence_id PK 유일성,Conformance,error,CONDITION_OCCURRENCE,condition_occurrence_id,100201,100054,PK 중복: 100201
+SV-0085,PROCEDURE_OCCURRENCE.procedure_date 미래 날짜 금지,Plausibility,error,PROCEDURE_OCCURRENCE,procedure_date,100128,100011,procedure_date=2099-01-01 미래 날짜
+SV-0085,PROCEDURE_OCCURRENCE.procedure_date 미래 날짜 금지,Plausibility,error,PROCEDURE_OCCURRENCE,procedure_date,100270,100023,procedure_date=2099-01-01 미래 날짜
+SV-0085,PROCEDURE_OCCURRENCE.procedure_date 미래 날짜 금지,Plausibility,error,PROCEDURE_OCCURRENCE,procedure_date,100409,100034,procedure_date=2099-01-01 미래 날짜
+SV-0094,DRUG_EXPOSURE.drug_exposure_id PK 유일성,Conformance,error,DRUG_EXPOSURE,drug_exposure_id,100417,100003,PK 중복: 100417
+SV-0094,DRUG_EXPOSURE.drug_exposure_id PK 유일성,Conformance,error,DRUG_EXPOSURE,drug_exposure_id,100417,100045,PK 중복: 100417
 SV-0099,DRUG_EXPOSURE.drug_concept_id 필수,Completeness,error,DRUG_EXPOSURE,drug_concept_id,100108,100012,drug_concept_id NULL
 SV-0099,DRUG_EXPOSURE.drug_concept_id 필수,Completeness,error,DRUG_EXPOSURE,drug_concept_id,100176,100020,drug_concept_id NULL
 SV-0099,DRUG_EXPOSURE.drug_concept_id 필수,Completeness,error,DRUG_EXPOSURE,drug_concept_id,100527,100057,drug_concept_id NULL
+SV-0103,DRUG_EXPOSURE.drug_exposure_start_date 미래 날짜 금지,Plausibility,error,DRUG_EXPOSURE,drug_exposure_start_date,100271,100028,drug_exposure_start_date=2099-01-01 미래 날짜
+SV-0103,DRUG_EXPOSURE.drug_exposure_start_date 미래 날짜 금지,Plausibility,error,DRUG_EXPOSURE,drug_exposure_start_date,100421,100045,drug_exposure_start_date=2099-01-01 미래 날짜
+SV-0103,DRUG_EXPOSURE.drug_exposure_start_date 미래 날짜 금지,Plausibility,error,DRUG_EXPOSURE,drug_exposure_start_date,100470,100052,drug_exposure_start_date=2099-01-01 미래 날짜
 SV-0113,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,,100022,PK NULL
 SV-0113,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,,100026,PK NULL
 SV-0113,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,,100034,PK NULL
@@ -33,33 +37,29 @@ SV-0114,MEASUREMENT.measurement_id 필수,Completeness,error,MEASUREMENT,measure
 SV-0124,MEASUREMENT.measurement_type_concept_id 타입(bigint),Conformance,error,MEASUREMENT,measurement_type_concept_id,100982,100025,measurement_type_concept_id='NOT_A_NUMBER' 은 integer 아님
 SV-0124,MEASUREMENT.measurement_type_concept_id 타입(bigint),Conformance,error,MEASUREMENT,measurement_type_concept_id,101661,100042,measurement_type_concept_id='NOT_A_NUMBER' 은 integer 아님
 SV-0124,MEASUREMENT.measurement_type_concept_id 타입(bigint),Conformance,error,MEASUREMENT,measurement_type_concept_id,102358,100059,measurement_type_concept_id='NOT_A_NUMBER' 은 integer 아님
-SV-0135,OBSERVATION 컬럼 구성,Conformance,error,OBSERVATION,qualifier_concept_id,,,컬럼 누락: qualifier_concept_id
-SV-0157,NOTE.note_id PK 유일성,Conformance,error,NOTE,note_id,100177,100004,PK 중복: 100177
-SV-0157,NOTE.note_id PK 유일성,Conformance,error,NOTE,note_id,100177,100053,PK 중복: 100177
+SV-0157,NOTE.note_id PK 유일성,Conformance,error,NOTE,note_id,100004,100002,PK 중복: 100004
+SV-0157,NOTE.note_id PK 유일성,Conformance,error,NOTE,note_id,100004,100060,PK 중복: 100004
 SV-0182,SPECIMEN.person_id 필수,Completeness,error,SPECIMEN,person_id,100005,,person_id NULL
 SV-0182,SPECIMEN.person_id 필수,Completeness,error,SPECIMEN,person_id,100039,,person_id NULL
 SV-0182,SPECIMEN.person_id 필수,Completeness,error,SPECIMEN,person_id,100065,,person_id NULL
 SV-0190,SPECIMEN.specimen_date 미래 날짜 금지,Plausibility,error,SPECIMEN,specimen_date,100044,100031,specimen_date=2099-01-01 미래 날짜
 SV-0190,SPECIMEN.specimen_date 미래 날짜 금지,Plausibility,error,SPECIMEN,specimen_date,100045,100032,specimen_date=2099-01-01 미래 날짜
-SV-0190,SPECIMEN.specimen_date 미래 날짜 금지,Plausibility,error,SPECIMEN,specimen_date,100054,100039,specimen_date=2099-01-01 미래 날짜
-SV-0204,COHORT.cohort_start_date 미래 날짜 금지,Plausibility,error,COHORT,cohort_start_date,1+100002+2099-01-01,,cohort_start_date=2099-01-01 미래 날짜
-SV-0204,COHORT.cohort_start_date 미래 날짜 금지,Plausibility,error,COHORT,cohort_start_date,1+100006+2099-01-01,,cohort_start_date=2099-01-01 미래 날짜
-SV-0204,COHORT.cohort_start_date 미래 날짜 금지,Plausibility,error,COHORT,cohort_start_date,1+100056+2099-01-01,,cohort_start_date=2099-01-01 미래 날짜
+SV-0190,SPECIMEN.specimen_date 미래 날짜 금지,Plausibility,error,SPECIMEN,specimen_date,100089,100060,specimen_date=2099-01-01 미래 날짜
 SV-0244,PATHOLOGY_REPORT.person_id -> PERSON.person_id 참조무결성,Conformance,error,PATHOLOGY_REPORT,person_id,100029,999999999,person_id=999999999 가 PERSON.person_id 에 없음
 SV-0244,PATHOLOGY_REPORT.person_id -> PERSON.person_id 참조무결성,Conformance,error,PATHOLOGY_REPORT,person_id,100067,999999999,person_id=999999999 가 PERSON.person_id 에 없음
 SV-0244,PATHOLOGY_REPORT.person_id -> PERSON.person_id 참조무결성,Conformance,error,PATHOLOGY_REPORT,person_id,100080,999999999,person_id=999999999 가 PERSON.person_id 에 없음
 SV-0250,PATHOLOGY_REPORT.specimen_date 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100003,100003,specimen_date NULL
-SV-0250,PATHOLOGY_REPORT.specimen_date 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100045,100032,specimen_date NULL
-SV-0250,PATHOLOGY_REPORT.specimen_date 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100079,100054,specimen_date NULL
+SV-0250,PATHOLOGY_REPORT.specimen_date 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100007,100005,specimen_date NULL
+SV-0250,PATHOLOGY_REPORT.specimen_date 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100050,100036,specimen_date NULL
 SV-0257,PATHOLOGY_REPORT.biopsy_site_concept_id 타입(bigint),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100025,100018,biopsy_site_concept_id='NOT_A_NUMBER' 은 integer 아님
 SV-0257,PATHOLOGY_REPORT.biopsy_site_concept_id 타입(bigint),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100060,100042,biopsy_site_concept_id='NOT_A_NUMBER' 은 integer 아님
 SV-0257,PATHOLOGY_REPORT.biopsy_site_concept_id 타입(bigint),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100075,100052,biopsy_site_concept_id='NOT_A_NUMBER' 은 integer 아님
 SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100025,100018,biopsy_site_concept_id=NOT_A_NUMBER 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
-SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100039,100029,biopsy_site_concept_id=10000099999 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
-SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100046,100033,biopsy_site_concept_id=10000099999 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
-SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100050,100036,biopsy_site_concept_id=10000099999 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
+SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100028,100020,biopsy_site_concept_id=10000099999 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
 SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100060,100042,biopsy_site_concept_id=NOT_A_NUMBER 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
+SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100072,100050,biopsy_site_concept_id=10000099999 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
 SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100075,100052,biopsy_site_concept_id=NOT_A_NUMBER 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
+SV-0258,PATHOLOGY_REPORT.biopsy_site_concept_id 값 집합(CL_BIOPSY_SITE),Conformance,error,PATHOLOGY_REPORT,biopsy_site_concept_id,100083,100057,biopsy_site_concept_id=10000099999 는 값 집합(CL_BIOPSY_SITE) 의 concept_id 가 아니다
 SV-0262,PATHOLOGY_REPORT.surgical_specimen_site_concept_id 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,surgical_specimen_site_concept_id,100042,100030,SURGICAL 행 인데 surgical_specimen_site_concept_id 가 비어 있다
 SV-0262,PATHOLOGY_REPORT.surgical_specimen_site_concept_id 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,surgical_specimen_site_concept_id,100059,100041,SURGICAL 행 인데 surgical_specimen_site_concept_id 가 비어 있다
 SV-0262,PATHOLOGY_REPORT.surgical_specimen_site_concept_id 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,surgical_specimen_site_concept_id,100085,100058,SURGICAL 행 인데 surgical_specimen_site_concept_id 가 비어 있다
@@ -69,6 +69,9 @@ SV-0265,PATHOLOGY_REPORT.biopsy_histologic_diagnosis_concept_id 필수(BIOPSY �
 SV-0267,PATHOLOGY_REPORT.biopsy_differentiation_concept_id 필수(BIOPSY 행),Completeness,error,PATHOLOGY_REPORT,biopsy_differentiation_concept_id,100010,100008,BIOPSY 행 인데 biopsy_differentiation_concept_id 가 비어 있다
 SV-0267,PATHOLOGY_REPORT.biopsy_differentiation_concept_id 필수(BIOPSY 행),Completeness,error,PATHOLOGY_REPORT,biopsy_differentiation_concept_id,100054,100039,BIOPSY 행 인데 biopsy_differentiation_concept_id 가 비어 있다
 SV-0267,PATHOLOGY_REPORT.biopsy_differentiation_concept_id 필수(BIOPSY 행),Completeness,error,PATHOLOGY_REPORT,biopsy_differentiation_concept_id,100068,100048,BIOPSY 행 인데 biopsy_differentiation_concept_id 가 비어 있다
+SV-0269,PATHOLOGY_REPORT.biopsy_differentiation_concept_id 값 집합(CL_BIOPSY_DIFFERENTIATION),Conformance,error,PATHOLOGY_REPORT,biopsy_differentiation_concept_id,100002,100002,biopsy_differentiation_concept_id=10000099999 는 값 집합(CL_BIOPSY_DIFFERENTIATION) 의 concept_id 가 아니다
+SV-0269,PATHOLOGY_REPORT.biopsy_differentiation_concept_id 값 집합(CL_BIOPSY_DIFFERENTIATION),Conformance,error,PATHOLOGY_REPORT,biopsy_differentiation_concept_id,100031,100023,biopsy_differentiation_concept_id=10000099999 는 값 집합(CL_BIOPSY_DIFFERENTIATION) 의 concept_id 가 아니다
+SV-0269,PATHOLOGY_REPORT.biopsy_differentiation_concept_id 값 집합(CL_BIOPSY_DIFFERENTIATION),Conformance,error,PATHOLOGY_REPORT,biopsy_differentiation_concept_id,100070,100049,biopsy_differentiation_concept_id=10000099999 는 값 집합(CL_BIOPSY_DIFFERENTIATION) 의 concept_id 가 아니다
 SV-0270,PATHOLOGY_REPORT.surgical_histologic_diagnosis_concept_id 필수(SURGICAL 행)(코드 또는 원천값),Completeness,error,PATHOLOGY_REPORT,surgical_histologic_diagnosis_concept_id,100057,100040,surgical_histologic_diagnosis_concept_id 와 surgical_histologic_diagnosis_source_value 가 모두 비어 있다
 SV-0270,PATHOLOGY_REPORT.surgical_histologic_diagnosis_concept_id 필수(SURGICAL 행)(코드 또는 원천값),Completeness,error,PATHOLOGY_REPORT,surgical_histologic_diagnosis_concept_id,100069,100048,surgical_histologic_diagnosis_concept_id 와 surgical_histologic_diagnosis_source_value 가 모두 비어 있다
 SV-0270,PATHOLOGY_REPORT.surgical_histologic_diagnosis_concept_id 필수(SURGICAL 행)(코드 또는 원천값),Completeness,error,PATHOLOGY_REPORT,surgical_histologic_diagnosis_concept_id,100076,100052,surgical_histologic_diagnosis_concept_id 와 surgical_histologic_diagnosis_source_value 가 모두 비어 있다
@@ -79,17 +82,17 @@ SV-0274,PATHOLOGY_REPORT.adenocarcinoma_predominant_subtype_concept_id 필수(SU
 SV-0274,PATHOLOGY_REPORT.adenocarcinoma_predominant_subtype_concept_id 필수(SURGICAL 행)(surgical_histologic_diagnosis_source_value 에 'Adenocarcinoma' 일 때),Completeness,error,PATHOLOGY_REPORT,adenocarcinoma_predominant_subtype_concept_id,100021,100015,SURGICAL 행 이고 surgical_histologic_diagnosis_source_value 에 'Adenocarcinoma' 가 든 행 인데 adenocarcinoma_predominant_subtype_concept_id 가 비어 있다
 SV-0274,PATHOLOGY_REPORT.adenocarcinoma_predominant_subtype_concept_id 필수(SURGICAL 행)(surgical_histologic_diagnosis_source_value 에 'Adenocarcinoma' 일 때),Completeness,error,PATHOLOGY_REPORT,adenocarcinoma_predominant_subtype_concept_id,100023,100016,SURGICAL 행 이고 surgical_histologic_diagnosis_source_value 에 'Adenocarcinoma' 가 든 행 인데 adenocarcinoma_predominant_subtype_concept_id 가 비어 있다
 SV-0279,PATHOLOGY_REPORT.stas_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,stas_yn,100011,100008,"stas_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
-SV-0279,PATHOLOGY_REPORT.stas_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,stas_yn,100044,100031,"stas_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
-SV-0279,PATHOLOGY_REPORT.stas_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,stas_yn,100087,100059,"stas_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
+SV-0279,PATHOLOGY_REPORT.stas_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,stas_yn,100027,100019,"stas_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
+SV-0279,PATHOLOGY_REPORT.stas_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,stas_yn,100089,100060,"stas_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
 SV-0283,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100040,100029,SURGICAL 행 인데 obstructive_pneumonia_atelectasis_yn 가 비어 있다
 SV-0283,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100066,100046,SURGICAL 행 인데 obstructive_pneumonia_atelectasis_yn 가 비어 있다
 SV-0283,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 필수(SURGICAL 행),Completeness,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100073,100050,SURGICAL 행 인데 obstructive_pneumonia_atelectasis_yn 가 비어 있다
-SV-0285,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100006,100004,"obstructive_pneumonia_atelectasis_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
-SV-0285,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100032,100023,"obstructive_pneumonia_atelectasis_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
-SV-0285,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100034,100024,"obstructive_pneumonia_atelectasis_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
+SV-0285,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100015,100011,"obstructive_pneumonia_atelectasis_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
+SV-0285,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100044,100031,"obstructive_pneumonia_atelectasis_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
+SV-0285,PATHOLOGY_REPORT.obstructive_pneumonia_atelectasis_yn 값 집합(YN) 코드,Conformance,error,PATHOLOGY_REPORT,obstructive_pneumonia_atelectasis_yn,100087,100059,"obstructive_pneumonia_atelectasis_yn=7 는 값 집합(YN) 의 코드가 아니다 (허용: ['0', '1', '9'])"
 SV-0383,PATHOLOGY_REPORT 사건 날짜 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100003,100003,"['report_type_concept_id', 'biopsy_method_concept_id', 'biopsy_method_source_value'] 값 있으나 anchor specimen_date NULL"
-SV-0383,PATHOLOGY_REPORT 사건 날짜 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100045,100032,"['report_type_concept_id', 'biopsy_method_concept_id', 'biopsy_method_source_value'] 값 있으나 anchor specimen_date NULL"
-SV-0383,PATHOLOGY_REPORT 사건 날짜 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100079,100054,"['report_type_concept_id', 'biopsy_method_concept_id', 'biopsy_method_source_value'] 값 있으나 anchor specimen_date NULL"
+SV-0383,PATHOLOGY_REPORT 사건 날짜 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100007,100005,"['report_type_concept_id', 'biopsy_method_concept_id', 'biopsy_method_source_value'] 값 있으나 anchor specimen_date NULL"
+SV-0383,PATHOLOGY_REPORT 사건 날짜 필수,Completeness,error,PATHOLOGY_REPORT,specimen_date,100050,100036,"['report_type_concept_id', 'biopsy_method_concept_id', 'biopsy_method_source_value'] 값 있으나 anchor specimen_date NULL"
 SV-0393,PATHOLOGY_TUMOR.pathology_report_id -> PATHOLOGY_REPORT.pathology_report_id 참조무결성,Conformance,error,PATHOLOGY_TUMOR,pathology_report_id,100040,100029,pathology_report_id=999999999 가 PATHOLOGY_REPORT.pathology_report_id 에 없음
 SV-0393,PATHOLOGY_TUMOR.pathology_report_id -> PATHOLOGY_REPORT.pathology_report_id 참조무결성,Conformance,error,PATHOLOGY_TUMOR,pathology_report_id,100057,100040,pathology_report_id=999999999 가 PATHOLOGY_REPORT.pathology_report_id 에 없음
 SV-0393,PATHOLOGY_TUMOR.pathology_report_id -> PATHOLOGY_REPORT.pathology_report_id 참조무결성,Conformance,error,PATHOLOGY_TUMOR,pathology_report_id,100071,100049,pathology_report_id=999999999 가 PATHOLOGY_REPORT.pathology_report_id 에 없음
@@ -102,59 +105,133 @@ SV-0408,BIOMARKER.specimen_id -> SPECIMEN.specimen_id 참조무결성,Conformanc
 SV-0410,BIOMARKER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,BIOMARKER,visit_occurrence_id,100158,100047,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
 SV-0410,BIOMARKER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,BIOMARKER,visit_occurrence_id,100173,100051,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
 SV-0410,BIOMARKER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,BIOMARKER,visit_occurrence_id,100208,100060,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+SV-0411,BIOMARKER.test_date 필수,Completeness,error,BIOMARKER,test_date,100115,100035,test_date NULL
 SV-0411,BIOMARKER.test_date 필수,Completeness,error,BIOMARKER,test_date,100174,100051,test_date NULL
-SV-0411,BIOMARKER.test_date 필수,Completeness,error,BIOMARKER,test_date,100178,100052,test_date NULL
-SV-0411,BIOMARKER.test_date 필수,Completeness,error,BIOMARKER,test_date,100197,100058,test_date NULL
-SV-0416,BIOMARKER.ihc_test_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,ihc_test_concept_id,100005,100002,ihc_test_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
-SV-0416,BIOMARKER.ihc_test_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,ihc_test_concept_id,100030,100009,ihc_test_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
-SV-0416,BIOMARKER.ihc_test_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,ihc_test_concept_id,100176,100051,ihc_test_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
-SV-0419,BIOMARKER.molecular_pathology_test_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,molecular_pathology_test_concept_id,100018,100006,molecular_pathology_test_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
-SV-0419,BIOMARKER.molecular_pathology_test_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,molecular_pathology_test_concept_id,100045,100014,molecular_pathology_test_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
-SV-0419,BIOMARKER.molecular_pathology_test_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,molecular_pathology_test_concept_id,100059,100019,molecular_pathology_test_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
+SV-0411,BIOMARKER.test_date 필수,Completeness,error,BIOMARKER,test_date,100176,100051,test_date NULL
+SV-0422,BIOMARKER.mutation_test_method_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,mutation_test_method_concept_id,100034,100010,mutation_test_method_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
+SV-0422,BIOMARKER.mutation_test_method_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,mutation_test_method_concept_id,100153,100045,mutation_test_method_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
+SV-0422,BIOMARKER.mutation_test_method_concept_id 값 집합(BIOMARKER_RESULT),Conformance,error,BIOMARKER,mutation_test_method_concept_id,100160,100047,mutation_test_method_concept_id=10000099999 는 값 집합(BIOMARKER_RESULT) 의 concept_id 가 아니다
 SV-0423,BIOMARKER.mutation_test_gene_concept_id 필수(코드 또는 원천값),Completeness,error,BIOMARKER,mutation_test_gene_concept_id,100028,100008,mutation_test_gene_concept_id 와 mutation_test_gene_source_value 가 모두 비어 있다
 SV-0423,BIOMARKER.mutation_test_gene_concept_id 필수(코드 또는 원천값),Completeness,error,BIOMARKER,mutation_test_gene_concept_id,100065,100021,mutation_test_gene_concept_id 와 mutation_test_gene_source_value 가 모두 비어 있다
 SV-0423,BIOMARKER.mutation_test_gene_concept_id 필수(코드 또는 원천값),Completeness,error,BIOMARKER,mutation_test_gene_concept_id,100205,100060,mutation_test_gene_concept_id 와 mutation_test_gene_source_value 가 모두 비어 있다
+SV-0573,BIOMARKER 사건 날짜 필수,Completeness,error,BIOMARKER,test_date,100115,100035,"['ihc_test_concept_id', 'ihc_test_source_value', 'molecular_pathology_test_concept_id'] 값 있으나 anchor test_date NULL"
 SV-0573,BIOMARKER 사건 날짜 필수,Completeness,error,BIOMARKER,test_date,100174,100051,"['ihc_test_concept_id', 'ihc_test_source_value', 'molecular_pathology_test_concept_id'] 값 있으나 anchor test_date NULL"
-SV-0573,BIOMARKER 사건 날짜 필수,Completeness,error,BIOMARKER,test_date,100178,100052,"['ihc_test_concept_id', 'ihc_test_source_value', 'molecular_pathology_test_concept_id'] 값 있으나 anchor test_date NULL"
-SV-0573,BIOMARKER 사건 날짜 필수,Completeness,error,BIOMARKER,test_date,100197,100058,"['ihc_test_concept_id', 'ihc_test_source_value', 'molecular_pathology_test_concept_id'] 값 있으나 anchor test_date NULL"
-SEMV-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,100721,100046,visit_end_date 2023-02-14 < visit_start_date 2023-02-15
-SEMV-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,100788,100050,visit_end_date 2023-07-23 < visit_start_date 2023-07-24
-SEMV-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,100904,100057,visit_end_date 2022-01-23 < visit_start_date 2022-01-24
-SEMV-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100292,100019,visit_start_date 1890-01-01 가 출생연도 1966 보다 이르다
-SEMV-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100496,100032,visit_start_date 1890-01-01 가 출생연도 1969 보다 이르다
-SEMV-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",,MEASUREMENT:100030,100001,사건일 2025-01-24 가 사망일 2025-01-17 보다 뒤다
-SEMV-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",,MEASUREMENT:101062,100026,사건일 2022-08-05 가 사망일 2022-07-29 보다 뒤다
-SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100292,100019,"visit_start_date 1890-01-01 가 관찰기간 [2022-06-08, 2026-09-01] 밖이다"
-SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100496,100032,"visit_start_date 1890-01-01 가 관찰기간 [2018-07-22, 2026-09-01] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100274,100023,"사건일 2099-01-01 가 방문 [2023-01-27, 2023-01-27] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100364,100030,"사건일 2099-01-01 가 방문 [2024-01-16, 2024-01-16] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100607,100050,"사건일 2023-07-24 가 방문 [2023-07-24, 2023-07-23] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100634,100052,"사건일 2099-01-01 가 방문 [2020-12-10, 2020-12-10] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100692,100057,"사건일 2022-01-24 가 방문 [2022-01-24, 2022-01-23] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:100030,100001,"사건일 2025-01-24 가 방문 [2022-06-02, 2022-06-02] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101062,100026,"사건일 2022-08-05 가 방문 [2020-05-30, 2020-05-30] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101849,100046,"사건일 2023-02-15 가 방문 [2023-02-15, 2023-02-14] 밖이다"
-SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101850,100046,"사건일 2023-02-15 가 방문 [2023-02-15, 2023-02-14] 밖이다"
+SV-0573,BIOMARKER 사건 날짜 필수,Completeness,error,BIOMARKER,test_date,100176,100051,"['ihc_test_concept_id', 'ihc_test_source_value', 'molecular_pathology_test_concept_id'] 값 있으나 anchor test_date NULL"
+SV-0588,LUNG_EXAM.imaging_diagnostic_classification_concept_id 값 집합(CL_IMAGING_DIAGNOSTIC_CLASSIFICATION),Conformance,error,LUNG_EXAM,imaging_diagnostic_classification_concept_id,100197,100023,imaging_diagnostic_classification_concept_id=10000099999 는 값 집합(CL_IMAGING_DIAGNOSTIC_CLASSIFICATION) 의 concept_id 가 아니다
+SV-0588,LUNG_EXAM.imaging_diagnostic_classification_concept_id 값 집합(CL_IMAGING_DIAGNOSTIC_CLASSIFICATION),Conformance,error,LUNG_EXAM,imaging_diagnostic_classification_concept_id,100247,100029,imaging_diagnostic_classification_concept_id=10000099999 는 값 집합(CL_IMAGING_DIAGNOSTIC_CLASSIFICATION) 의 concept_id 가 아니다
+SV-0588,LUNG_EXAM.imaging_diagnostic_classification_concept_id 값 집합(CL_IMAGING_DIAGNOSTIC_CLASSIFICATION),Conformance,error,LUNG_EXAM,imaging_diagnostic_classification_concept_id,100281,100033,imaging_diagnostic_classification_concept_id=10000099999 는 값 집합(CL_IMAGING_DIAGNOSTIC_CLASSIFICATION) 의 concept_id 가 아니다
+SEMV-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,100054,100003,visit_end_date 2024-05-09 < visit_start_date 2024-05-10
+SEMV-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,100463,100029,visit_end_date 2022-06-18 < visit_start_date 2022-06-19
+SEMV-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,100530,100034,visit_end_date 2019-04-11 < visit_start_date 2019-04-12
+SEMV-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100722,100046,visit_start_date 1890-01-01 가 출생연도 1946 보다 이르다
+SEMV-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100789,100050,visit_start_date 1890-01-01 가 출생연도 1951 보다 이르다
+SEMV-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100128,100011,사건일 2099-01-01 가 사망일 2020-09-01 보다 뒤다
+SEMV-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100409,100034,사건일 2099-01-01 가 사망일 2021-08-20 보다 뒤다
+SEMV-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100271,100028,사건일 2099-01-01 가 사망일 2023-11-06 보다 뒤다
+SEMV-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",,MEASUREMENT:100801,100021,사건일 2021-04-03 가 사망일 2021-03-27 보다 뒤다
+SEMV-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",,MEASUREMENT:101864,100046,사건일 2024-08-15 가 사망일 2024-08-08 보다 뒤다
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100020,100002,"visit_start_date 2021-09-06 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100021,100002,"visit_start_date 2021-09-13 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100022,100002,"visit_start_date 2021-10-03 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100023,100002,"visit_start_date 2021-10-24 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100024,100002,"visit_start_date 2021-11-14 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100025,100002,"visit_start_date 2021-12-05 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100026,100002,"visit_start_date 2021-12-26 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100027,100002,"visit_start_date 2022-01-16 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100028,100002,"visit_start_date 2022-02-06 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100029,100002,"visit_start_date 2022-02-27 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100030,100002,"visit_start_date 2022-03-20 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100031,100002,"visit_start_date 2021-12-05 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100032,100002,"visit_start_date 2022-03-05 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100033,100002,"visit_start_date 2022-06-03 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100034,100002,"visit_start_date 2022-09-01 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100035,100002,"visit_start_date 2022-11-30 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100036,100002,"visit_start_date 2023-02-28 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100037,100002,"visit_start_date 2023-05-29 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100038,100002,"visit_start_date 2023-08-27 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100328,100022,"visit_start_date 2020-04-14 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100329,100022,"visit_start_date 2020-04-26 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100330,100022,"visit_start_date 2020-05-27 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100331,100022,"visit_start_date 2020-06-17 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100332,100022,"visit_start_date 2020-07-08 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100333,100022,"visit_start_date 2020-07-29 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100334,100022,"visit_start_date 2020-08-19 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100335,100022,"visit_start_date 2020-09-09 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100336,100022,"visit_start_date 2020-09-30 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100337,100022,"visit_start_date 2020-10-21 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100338,100022,"visit_start_date 2020-11-11 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100339,100022,"visit_start_date 2020-07-13 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100340,100022,"visit_start_date 2020-10-11 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100341,100022,"visit_start_date 2021-01-09 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100342,100022,"visit_start_date 2021-04-09 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100343,100022,"visit_start_date 2021-07-08 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100344,100022,"visit_start_date 2021-10-06 가 관찰기간 [2099-01-01, 2021-11-18] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100701,100045,"visit_start_date 2020-04-06 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100702,100045,"visit_start_date 2020-04-14 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100703,100045,"visit_start_date 2020-05-15 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100704,100045,"visit_start_date 2020-06-05 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100705,100045,"visit_start_date 2020-06-26 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100706,100045,"visit_start_date 2020-07-17 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100707,100045,"visit_start_date 2020-08-07 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100708,100045,"visit_start_date 2020-08-28 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100709,100045,"visit_start_date 2020-09-18 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100710,100045,"visit_start_date 2020-10-09 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100711,100045,"visit_start_date 2020-10-30 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100712,100045,"visit_start_date 2020-07-05 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100713,100045,"visit_start_date 2020-10-03 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100714,100045,"visit_start_date 2021-01-01 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100715,100045,"visit_start_date 2021-04-01 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100716,100045,"visit_start_date 2021-06-30 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100717,100045,"visit_start_date 2021-09-28 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100718,100045,"visit_start_date 2021-12-27 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100719,100045,"visit_start_date 2022-03-27 가 관찰기간 [2099-01-01, 2026-09-01] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100722,100046,"visit_start_date 1890-01-01 가 관찰기간 [2022-08-15, 2024-08-08] 밖이다"
+SEMV-COM-004,관찰기간 밖 이벤트 금지,Plausibility,warning,"OBSERVATION_PERIOD,VISIT_OCCURRENCE",,100789,100050,"visit_start_date 1890-01-01 가 관찰기간 [2019-01-25, 2026-09-01] 밖이다"
+SEMV-COM-005,관찰기간 자체의 정합,Plausibility,error,"DEATH,OBSERVATION_PERIOD",,100022,100022,관찰기간 종료 2021-11-18 < 시작 2099-01-01
+SEMV-COM-005,관찰기간 자체의 정합,Plausibility,error,"DEATH,OBSERVATION_PERIOD",,100002,100002,관찰기간 종료 2026-09-01 < 시작 2099-01-01
+SEMV-COM-005,관찰기간 자체의 정합,Plausibility,error,"DEATH,OBSERVATION_PERIOD",,100045,100045,관찰기간 종료 2026-09-01 < 시작 2099-01-01
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100038,100003,"사건일 2024-05-10 가 방문 [2024-05-10, 2024-05-09] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100128,100011,"사건일 2099-01-01 가 방문 [2019-03-20, 2019-03-27] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100270,100023,"사건일 2099-01-01 가 방문 [2022-05-02, 2022-05-05] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100347,100029,"사건일 2022-06-19 가 방문 [2022-06-19, 2022-06-18] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100409,100034,"사건일 2099-01-01 가 방문 [2019-05-14, 2019-05-14] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100271,100028,"사건일 2099-01-01 가 방문 [2022-05-26, 2022-05-26] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100312,100034,"사건일 2019-04-12 가 방문 [2019-04-12, 2019-04-11] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100313,100034,"사건일 2019-04-12 가 방문 [2019-04-12, 2019-04-11] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100314,100034,"사건일 2019-04-12 가 방문 [2019-04-12, 2019-04-11] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100421,100045,"사건일 2099-01-01 가 방문 [2020-08-07, 2020-08-07] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100470,100052,"사건일 2099-01-01 가 방문 [2019-08-21, 2019-08-21] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:100801,100021,"사건일 2021-04-03 가 방문 [2019-11-24, 2019-11-24] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101231,100029,"사건일 2022-06-19 가 방문 [2022-06-19, 2022-06-18] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101365,100034,"사건일 2019-04-12 가 방문 [2019-04-12, 2019-04-11] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101366,100034,"사건일 2019-04-12 가 방문 [2019-04-12, 2019-04-11] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101367,100034,"사건일 2019-04-12 가 방문 [2019-04-12, 2019-04-11] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101368,100034,"사건일 2019-04-12 가 방문 [2019-04-12, 2019-04-11] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101369,100034,"사건일 2019-04-12 가 방문 [2019-04-12, 2019-04-11] 밖이다"
+SEMV-COM-006,이벤트일이 방문 기간 안에 있음,Plausibility,warning,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101864,100046,"사건일 2024-08-15 가 방문 [2023-06-03, 2023-06-03] 밖이다"
 SEMV-COM-007,이벤트-방문 환자 일치,Conformance,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PATHOLOGY_REPORT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PATHOLOGY_REPORT:100029,999999999,사건의 person_id 999999999 와 방문의 person_id 100021 가 다르다
 SEMV-COM-007,이벤트-방문 환자 일치,Conformance,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PATHOLOGY_REPORT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PATHOLOGY_REPORT:100067,999999999,사건의 person_id 999999999 와 방문의 person_id 100047 가 다르다
 SEMV-COM-007,이벤트-방문 환자 일치,Conformance,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PATHOLOGY_REPORT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PATHOLOGY_REPORT:100080,999999999,사건의 person_id 999999999 와 방문의 person_id 100054 가 다르다
-SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100069,100007,days_supply 99 가 기간(1일) 과 다르다
-SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100158,100018,days_supply 99 가 기간(1일) 과 다르다
-SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100386,100043,days_supply 99 가 기간(1일) 과 다르다
-SEMV-EP-001,에피소드 종료일 >= 시작일,Plausibility,error,EPISODE,,100006,100002,episode_end_date 2000-01-01 < episode_start_date 2021-12-26
-SEMV-EP-001,에피소드 종료일 >= 시작일,Plausibility,error,EPISODE,,100114,100055,episode_end_date 2000-01-01 < episode_start_date 2019-11-01
-SEMV-EP-002,에피소드에 매단 사건이 실제로 있음,Conformance,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,EPISODE,EPISODE_EVENT,PROCEDURE_OCCURRENCE",,100108:100470,100052,F_DRUG 가 가리킨 사건 100470 이 대상 테이블에 없다
-SEMV-EP-003,레지멘 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",,100006,100002,"레지멘 기간 [2021-12-26, 2000-01-01] 이 연결 약물 기간 [2021-12-26, 2022-02-27] 을 담지 못한다"
-SEMV-EP-003,레지멘 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",,100095,100045,"레지멘 기간 [2020-08-07, 2020-10-29] 이 연결 약물 기간 [2019-08-21, 2020-10-09] 을 담지 못한다"
-SEMV-EP-003,레지멘 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",,100114,100055,"레지멘 기간 [2019-11-01, 2000-01-01] 이 연결 약물 기간 [2019-11-01, 2020-01-03] 을 담지 못한다"
-SEMV-EP-004,에피소드와 연결 사건의 환자 일치,Conformance,error,"DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",,100095:100423,100045,에피소드 환자 100045 와 약물 환자 100052 가 다르다
-SEMV-PA-001,병리 보고서의 검체일이 SPECIMEN 과 일치,Conformance,error,"PATHOLOGY_REPORT,SPECIMEN",,100001,100001,병리 보고서의 검체일 2001-01-01 가 SPECIMEN 의 2022-03-06 와 다르다
-SEMV-PA-001,병리 보고서의 검체일이 SPECIMEN 과 일치,Conformance,error,"PATHOLOGY_REPORT,SPECIMEN",,100009,100007,병리 보고서의 검체일 2001-01-01 가 SPECIMEN 의 2023-06-30 와 다르다
+SEMV-COM-008,입원 방문 기간 중첩,Plausibility,warning,VISIT_OCCURRENCE,,100720,100046,"입원 100720 [2023-02-02,2023-02-05] 이 100722 [1890-01-01,2023-03-21] 과 겹친다"
+SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100019,100002,days_supply 99 가 기간(1일) 과 다르다
+SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100271,100028,종료일 2022-05-26 < 시작일 2099-01-01
+SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100283,100029,days_supply 99 가 기간(1일) 과 다르다
+SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100421,100045,종료일 2020-08-07 < 시작일 2099-01-01
+SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100470,100052,종료일 2019-08-21 < 시작일 2099-01-01
+SEMV-COM-009,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100529,100057,days_supply 99 가 기간(1일) 과 다르다
+SEMV-EP-001,에피소드 종료일 >= 시작일,Plausibility,error,EPISODE,,100016,100007,episode_end_date 2000-01-01 < episode_start_date 2023-10-17
+SEMV-EP-001,에피소드 종료일 >= 시작일,Plausibility,error,EPISODE,,100089,100043,episode_end_date 2000-01-01 < episode_start_date 2020-01-02
+SEMV-EP-002,에피소드에 매단 사건이 실제로 있음,Conformance,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,EPISODE,EPISODE_EVENT,PROCEDURE_OCCURRENCE",,100008:100034,100003,F_DRUG 가 가리킨 사건 100034 이 대상 테이블에 없다
+SEMV-EP-003,레지멘 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",,100016,100007,"레지멘 기간 [2023-10-17, 2000-01-01] 이 연결 약물 기간 [2023-10-17, 2023-12-19] 을 담지 못한다"
+SEMV-EP-003,레지멘 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",,100089,100043,"레지멘 기간 [2020-01-02, 2000-01-01] 이 연결 약물 기간 [2020-01-02, 2020-03-05] 을 담지 못한다"
+SEMV-EP-003,레지멘 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",,100094,100045,"레지멘 기간 [2020-05-15, 2020-08-06] 이 연결 약물 기간 [2020-05-15, 2022-10-11] 을 담지 못한다"
+SEMV-EP-004,에피소드와 연결 사건의 환자 일치,Conformance,error,"DRUG_EXPOSURE,EPISODE,EPISODE_EVENT",,100094:100417,100045,에피소드 환자 100045 와 약물 환자 100003 가 다르다
 SEMV-PA-001,병리 보고서의 검체일이 SPECIMEN 과 일치,Conformance,error,"PATHOLOGY_REPORT,SPECIMEN",,100044,100031,병리 보고서의 검체일 2022-08-18 가 SPECIMEN 의 2099-01-01 와 다르다
-SEMV-PA-001,병리 보고서의 검체일이 SPECIMEN 과 일치,Conformance,error,"PATHOLOGY_REPORT,SPECIMEN",,100054,100039,병리 보고서의 검체일 2021-12-22 가 SPECIMEN 의 2099-01-01 와 다르다
-SEMV-PA-002,침윤 림프절 수 <= 절제 림프절 수,Plausibility,error,PATHOLOGY_REPORT,,100019,100014,침윤 999.0 > 절제 26.0
-SEMV-PA-002,침윤 림프절 수 <= 절제 림프절 수,Plausibility,error,PATHOLOGY_REPORT,,100027,100019,침윤 999.0 > 절제 15.0
+SEMV-PA-001,병리 보고서의 검체일이 SPECIMEN 과 일치,Conformance,error,"PATHOLOGY_REPORT,SPECIMEN",,100045,100032,병리 보고서의 검체일 2020-11-28 가 SPECIMEN 의 2099-01-01 와 다르다
+SEMV-PA-001,병리 보고서의 검체일이 SPECIMEN 과 일치,Conformance,error,"PATHOLOGY_REPORT,SPECIMEN",,100047,100034,병리 보고서의 검체일 2001-01-01 가 SPECIMEN 의 2019-02-14 와 다르다
+SEMV-PA-001,병리 보고서의 검체일이 SPECIMEN 과 일치,Conformance,error,"PATHOLOGY_REPORT,SPECIMEN",,100078,100053,병리 보고서의 검체일 2001-01-01 가 SPECIMEN 의 2023-02-14 와 다르다
+SEMV-PA-001,병리 보고서의 검체일이 SPECIMEN 과 일치,Conformance,error,"PATHOLOGY_REPORT,SPECIMEN",,100089,100060,병리 보고서의 검체일 2023-12-27 가 SPECIMEN 의 2099-01-01 와 다르다
+SEMV-PA-002,침윤 림프절 수 <= 절제 림프절 수,Plausibility,error,PATHOLOGY_REPORT,,100051,100036,침윤 999.0 > 절제 24.0
+SEMV-PA-002,침윤 림프절 수 <= 절제 림프절 수,Plausibility,error,PATHOLOGY_REPORT,,100055,100039,침윤 999.0 > 절제 25.0
+SEMV-PA-003,수술 병리 검체일 >= 수술일,Plausibility,error,"PATHOLOGY_REPORT,PROCEDURE_OCCURRENCE",,100078,100053,수술 병리 검체일 2001-01-01 앞 60일 안에 시술 기록이 없다
 SEMV-PA-003,수술 병리 검체일 >= 수술일,Plausibility,error,"PATHOLOGY_REPORT,PROCEDURE_OCCURRENCE",,100080,999999999,수술 병리 검체일 2020-01-11 앞 60일 안에 시술 기록이 없다
-SEMV-LC-001,유전자검사일 >= 검체 채취일,Plausibility,warning,"BIOMARKER,SPECIMEN",,100132,,검사일 2021-12-31 가 검체 채취일 2099-01-01 보다 이르다
-SEMV-LC-001,유전자검사일 >= 검체 채취일,Plausibility,warning,"BIOMARKER,SPECIMEN",,100130,100039,검사일 2021-12-31 가 검체 채취일 2099-01-01 보다 이르다
-SEMV-LC-001,유전자검사일 >= 검체 채취일,Plausibility,warning,"BIOMARKER,SPECIMEN",,100129,100039,검사일 2021-12-31 가 검체 채취일 2099-01-01 보다 이르다

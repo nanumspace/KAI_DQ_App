@@ -41,9 +41,14 @@ def generate(ctx: CtxV2, n=100):
         ctx.episode_event(ep, dx, ctx.seeds["field_condition"])
         if nas >= 4:
             ctx.condition(p, index, MASH, vid=vid, source="K75.8")
-        for c, src, prob in ((T2DM, "E11.9", 0.45), (HTN, "I10", 0.5), (DLP, "E78.5", 0.6), (OBESITY, "E66.9", 0.55)):
-            if ctx.bern(prob):
-                ctx.condition(p, index, c, vid=vid, source=src)
+        # MASLD 는 정의상 심장대사 위험인자를 하나 이상 동반한다. 하나도 없는 환자는 그 정의에 맞지 않는다.
+        risks = [(c, src) for c, src, prob in
+                 ((T2DM, "E11.9", 0.45), (HTN, "I10", 0.5), (DLP, "E78.5", 0.6), (OBESITY, "E66.9", 0.55))
+                 if ctx.bern(prob)]
+        if not risks:
+            risks = [ctx.choice([(T2DM, "E11.9"), (HTN, "I10"), (DLP, "E78.5"), (OBESITY, "E66.9")])]
+        for c, src in risks:
+            ctx.condition(p, index, c, vid=vid, source=src)
 
         ht = ctx.normal(170 if gender == MALE else 157, 6, 145, 190)
         wt = ctx.normal(82 if gender == MALE else 72, 14, 45, 140)
@@ -101,11 +106,14 @@ def generate(ctx: CtxV2, n=100):
             if day > ctx.today or (p.death_date and day > p.death_date):
                 break
             v = ctx.visit(p, day, OUTPATIENT)
+            # FIB-4 는 기록한 검사값에서 바로 계산한다. 따로 뽑으면 점수와 검사값이 어긋난다.
+            ast_v = ctx.normal(44, 16, 12, 200, 0)
+            alt_v = ctx.normal(52, 22, 10, 250, 0)
             plt = ctx.normal(150 if advanced else 235, 50, 40, 420, 0)
-            for concept, val in ((AST, ctx.normal(44, 16, 12, 200, 0)), (ALT, ctx.normal(52, 22, 10, 250, 0)),
-                                 (PLT, plt), (ALB, ctx.normal(4.1, 0.4, 2.2, 5.2, 1))):
+            for concept, val in ((AST, ast_v), (ALT, alt_v), (PLT, plt), (ALB, ctx.normal(4.1, 0.4, 2.2, 5.2, 1))):
                 ctx.measure(p, day, concept, val, vid=v)
-            fib4 = round(max(0.3, (age * ctx.normal(44, 16, 12, 200, 0)) / (plt * (ctx.normal(52, 22, 10, 250, 0) ** 0.5))), 2)
+            age_now = day.year - p.birth.year
+            fib4 = round((age_now * ast_v) / (plt * (alt_v ** 0.5)), 2)
             child = "A" if not cirrhosis else ctx.choice(["A", "B", "C"], p=[0.6, 0.3, 0.1])
             ctx.ext("MASLD_ASSESSMENT", p, vid=v, assessment_date=day,
                     prognostic_score_type=1, prognostic_score_value=fib4,

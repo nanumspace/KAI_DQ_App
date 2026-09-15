@@ -22,12 +22,12 @@
   "BREAST_BASELINE": 60,
   "BREAST_EXAM": 420
  },
- "rules_total": 495,
- "rules_failed": 47,
+ "rules_total": 498,
+ "rules_failed": 46,
  "rules_skipped": 1,
- "rules_error": 0,
- "violations_total": 143,
- "violations_error": 126,
+ "rules_error": 1,
+ "violations_total": 136,
+ "violations_error": 119,
  "violations_warning": 17,
  "by_category": {
   "Completeness": {
@@ -37,13 +37,13 @@
   },
   "Conformance": {
    "rules": 304,
-   "failed": 18,
-   "violations": 53
+   "failed": 17,
+   "violations": 47
   },
   "Plausibility": {
-   "rules": 36,
+   "rules": 39,
    "failed": 13,
-   "violations": 42
+   "violations": 41
   }
  },
  "rules": [
@@ -994,8 +994,8 @@
    "table": "CONDITION_OCCURRENCE",
    "fields": "condition_start_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 129,
    "note": ""
   },
@@ -1610,8 +1610,8 @@
    "table": "MEASUREMENT",
    "fields": "",
    "check": "columns",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 1,
    "rows_checked": 1056,
    "note": ""
   },
@@ -1750,8 +1750,8 @@
    "table": "MEASUREMENT",
    "fields": "measurement_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 1056,
    "note": ""
   },
@@ -1862,10 +1862,10 @@
    "table": "MEASUREMENT",
    "fields": "range_high",
    "check": "type",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
    "rows_checked": 1056,
-   "note": ""
+   "note": "컬럼 없음: ['range_high']"
   },
   {
    "rule_id": "SV-0131",
@@ -2534,8 +2534,8 @@
    "table": "SPECIMEN",
    "fields": "",
    "check": "columns",
-   "status": "fail",
-   "violations": 1,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 117,
    "note": ""
   },
@@ -2744,10 +2744,10 @@
    "table": "SPECIMEN",
    "fields": "anatomic_site_concept_id",
    "check": "type",
-   "status": "skipped",
+   "status": "pass",
    "violations": 0,
    "rows_checked": 117,
-   "note": "컬럼 없음: ['anatomic_site_concept_id']"
+   "note": ""
   },
   {
    "rule_id": "SV-0194",
@@ -3402,8 +3402,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "report_type_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 117,
    "note": ""
   },
@@ -3570,8 +3570,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "specimen_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 117,
    "note": ""
   },
@@ -3906,8 +3906,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "biopsy_laterality_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 117,
    "note": ""
   },
@@ -3990,8 +3990,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "microcalcification_yn",
    "check": "concept_code",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 117,
    "note": ""
   },
@@ -4186,8 +4186,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "inflammatory_breast_cancer_yn",
    "check": "concept_code",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 117,
    "note": ""
   },
@@ -4228,8 +4228,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "lymphovascular_invasion_yn",
    "check": "concept_code",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 117,
    "note": ""
   },
@@ -4354,8 +4354,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "mammographic_microcalcification_yn",
    "check": "concept_code",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 117,
    "note": ""
   },
@@ -5068,8 +5068,8 @@
    "table": "BIOMARKER",
    "fields": "prognostic_gene_assay_type_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -5950,8 +5950,8 @@
    "table": "BREAST_BASELINE",
    "fields": "menopause_yn",
    "check": "concept_code",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -6202,8 +6202,8 @@
    "table": "BREAST_BASELINE",
    "fields": "menses_resumed_1y_yn",
    "check": "concept_code",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -6804,10 +6804,10 @@
    "table": "MEASUREMENT",
    "fields": "",
    "check": "sql",
-   "status": "pass",
+   "status": "error",
    "violations": 0,
    "rows_checked": 0,
-   "note": ""
+   "note": "SQL 오류: Binder Error: Referenced column \"range_high\" not found in FROM clause!\nCandidate bindings: \"range_low\", \"person_id\", \"measurement_id\", \"measurement_date\", \"measurement_event_id\"\n\nLINE 4: WHERE range_l"
   },
   {
    "rule_id": "SEMV-COM-012",
@@ -6916,8 +6916,8 @@
    "table": "CONDITION_OCCURRENCE,EPISODE",
    "fields": "",
    "check": "sql",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 2,
    "rows_checked": 0,
    "note": ""
   },
@@ -6931,7 +6931,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 6,
+   "violations": 3,
    "rows_checked": 0,
    "note": ""
   },
@@ -6970,6 +6970,48 @@
    "subcategory": "atemporal",
    "severity": "warning",
    "table": "PATHOLOGY_TUMOR",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-BC-001",
+   "name": "생식·산과 기록이 있는 환자는 여성",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "error",
+   "table": "BREAST_BASELINE,PERSON",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-BC-002",
+   "name": "폐경 기록의 앞뒤가 맞음",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "warning",
+   "table": "BREAST_BASELINE",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-BC-003",
+   "name": "출산 기록의 앞뒤가 맞음",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "warning",
+   "table": "BREAST_BASELINE",
    "fields": "",
    "check": "sql",
    "status": "pass",

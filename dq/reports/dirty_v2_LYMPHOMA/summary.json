@@ -4,46 +4,46 @@
  "tables": {
   "PERSON": 60,
   "OBSERVATION_PERIOD": 60,
-  "DEATH": 3,
-  "VISIT_OCCURRENCE": 1177,
-  "CONDITION_OCCURRENCE": 133,
+  "DEATH": 12,
+  "VISIT_OCCURRENCE": 1134,
+  "CONDITION_OCCURRENCE": 124,
   "PROCEDURE_OCCURRENCE": 300,
-  "DRUG_EXPOSURE": 1368,
-  "MEASUREMENT": 1362,
+  "DRUG_EXPOSURE": 1280,
+  "MEASUREMENT": 1322,
   "OBSERVATION": 0,
   "NOTE": 0,
   "SPECIMEN": 60,
   "COHORT": 60,
   "EPISODE": 120,
-  "EPISODE_EVENT": 1501,
+  "EPISODE_EVENT": 1404,
   "PATHOLOGY_REPORT": 60,
   "BIOMARKER": 60,
   "LYMPHOMA_ASSESSMENT": 60,
   "LYMPHOMA_EVENT": 60,
   "LYMPHOMA_EXAM": 180
  },
- "rules_total": 526,
- "rules_failed": 48,
- "rules_skipped": 3,
+ "rules_total": 531,
+ "rules_failed": 50,
+ "rules_skipped": 2,
  "rules_error": 0,
- "violations_total": 156,
- "violations_error": 131,
- "violations_warning": 25,
+ "violations_total": 158,
+ "violations_error": 136,
+ "violations_warning": 22,
  "by_category": {
   "Completeness": {
    "rules": 174,
-   "failed": 12,
-   "violations": 36
+   "failed": 11,
+   "violations": 33
   },
   "Conformance": {
-   "rules": 310,
-   "failed": 23,
-   "violations": 62
+   "rules": 312,
+   "failed": 27,
+   "violations": 77
   },
   "Plausibility": {
-   "rules": 42,
-   "failed": 13,
-   "violations": 58
+   "rules": 45,
+   "failed": 12,
+   "violations": 48
   }
  },
  "rules": [
@@ -140,8 +140,8 @@
    "table": "PERSON",
    "fields": "gender_concept_id",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -252,8 +252,8 @@
    "table": "OBSERVATION_PERIOD",
    "fields": "observation_period_id",
    "check": "pk_unique",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 2,
    "rows_checked": 60,
    "note": ""
   },
@@ -436,7 +436,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -450,7 +450,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -464,7 +464,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -478,7 +478,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -492,7 +492,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -506,7 +506,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -518,9 +518,9 @@
    "table": "DEATH",
    "fields": "death_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 3,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -534,7 +534,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -548,7 +548,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -562,7 +562,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -590,7 +590,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -604,7 +604,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -618,7 +618,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -632,7 +632,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -646,7 +646,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -660,7 +660,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -674,7 +674,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -688,7 +688,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -702,7 +702,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -716,7 +716,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -730,7 +730,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -744,7 +744,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -758,7 +758,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -772,7 +772,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -786,7 +786,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -800,7 +800,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -814,7 +814,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -828,7 +828,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1177,
+   "rows_checked": 1134,
    "note": ""
   },
   {
@@ -856,7 +856,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -870,7 +870,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -884,7 +884,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -898,7 +898,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -912,7 +912,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -924,9 +924,9 @@
    "table": "CONDITION_OCCURRENCE",
    "fields": "person_id",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 133,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -940,7 +940,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -954,7 +954,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -968,7 +968,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -982,7 +982,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -996,7 +996,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -1010,7 +1010,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -1024,7 +1024,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -1038,7 +1038,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -1052,7 +1052,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -1066,7 +1066,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 133,
+   "rows_checked": 124,
    "note": ""
   },
   {
@@ -1106,8 +1106,8 @@
    "table": "PROCEDURE_OCCURRENCE",
    "fields": "procedure_occurrence_id",
    "check": "pk_unique",
-   "status": "fail",
-   "violations": 5,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 300,
    "note": ""
   },
@@ -1134,8 +1134,8 @@
    "table": "PROCEDURE_OCCURRENCE",
    "fields": "procedure_occurrence_id",
    "check": "type",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 300,
    "note": ""
   },
@@ -1344,9 +1344,9 @@
    "table": "DRUG_EXPOSURE",
    "fields": "",
    "check": "columns",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 1368,
+   "status": "fail",
+   "violations": 1,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1360,7 +1360,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1374,7 +1374,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1388,7 +1388,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1402,7 +1402,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1416,7 +1416,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1430,7 +1430,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1444,7 +1444,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1458,7 +1458,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1472,7 +1472,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1486,7 +1486,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1500,7 +1500,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1514,7 +1514,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1528,7 +1528,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1540,10 +1540,10 @@
    "table": "DRUG_EXPOSURE",
    "fields": "quantity",
    "check": "type",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
-   "rows_checked": 1368,
-   "note": ""
+   "rows_checked": 1280,
+   "note": "컬럼 없음: ['quantity']"
   },
   {
    "rule_id": "SV-0108",
@@ -1556,7 +1556,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1570,7 +1570,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1584,7 +1584,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1368,
+   "rows_checked": 1280,
    "note": ""
   },
   {
@@ -1612,7 +1612,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1626,7 +1626,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1640,7 +1640,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1654,7 +1654,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1668,7 +1668,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1682,7 +1682,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1696,7 +1696,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1710,7 +1710,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1724,7 +1724,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1738,7 +1738,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1750,9 +1750,9 @@
    "table": "MEASUREMENT",
    "fields": "measurement_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 5,
-   "rows_checked": 1362,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1766,7 +1766,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1780,7 +1780,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1794,7 +1794,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1808,7 +1808,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1822,7 +1822,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1836,7 +1836,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1850,7 +1850,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1864,7 +1864,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1878,7 +1878,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1892,7 +1892,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -1906,7 +1906,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1362,
+   "rows_checked": 1322,
    "note": ""
   },
   {
@@ -3094,8 +3094,8 @@
    "table": "EPISODE",
    "fields": "episode_start_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 120,
    "note": ""
   },
@@ -3222,7 +3222,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1501,
+   "rows_checked": 1404,
    "note": ""
   },
   {
@@ -3236,7 +3236,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1501,
+   "rows_checked": 1404,
    "note": ""
   },
   {
@@ -3250,7 +3250,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1501,
+   "rows_checked": 1404,
    "note": ""
   },
   {
@@ -3264,7 +3264,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1501,
+   "rows_checked": 1404,
    "note": ""
   },
   {
@@ -3278,7 +3278,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1501,
+   "rows_checked": 1404,
    "note": ""
   },
   {
@@ -3292,7 +3292,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1501,
+   "rows_checked": 1404,
    "note": ""
   },
   {
@@ -3306,7 +3306,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1501,
+   "rows_checked": 1404,
    "note": ""
   },
   {
@@ -3320,7 +3320,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1501,
+   "rows_checked": 1404,
    "note": ""
   },
   {
@@ -3458,8 +3458,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "person_id",
    "check": "fk",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -3556,8 +3556,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "specimen_date",
    "check": "type",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -3570,8 +3570,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "specimen_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -3752,8 +3752,8 @@
    "table": "BIOMARKER",
    "fields": "biomarker_id",
    "check": "pk_unique",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 2,
    "rows_checked": 60,
    "note": ""
   },
@@ -3808,8 +3808,8 @@
    "table": "BIOMARKER",
    "fields": "person_id",
    "check": "fk",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -3836,8 +3836,8 @@
    "table": "BIOMARKER",
    "fields": "specimen_id",
    "check": "fk",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -4480,8 +4480,8 @@
    "table": "BIOMARKER",
    "fields": "mum1_result_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -4550,8 +4550,8 @@
    "table": "BIOMARKER",
    "fields": "cyclin_d1_result_concept_id",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -4564,8 +4564,8 @@
    "table": "BIOMARKER",
    "fields": "cyclin_d1_result_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -4942,8 +4942,8 @@
    "table": "BIOMARKER",
    "fields": "molecular_test_method_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -5068,8 +5068,8 @@
    "table": "BIOMARKER",
    "fields": "bcl6_rearrangement_result_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -5152,8 +5152,8 @@
    "table": "BIOMARKER",
    "fields": "t14_18_result_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -5782,8 +5782,8 @@
    "table": "LYMPHOMA_ASSESSMENT",
    "fields": "ipi_score",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -6146,8 +6146,8 @@
    "table": "LYMPHOMA_EVENT",
    "fields": "lymphoma_event_id",
    "check": "pk_unique",
-   "status": "fail",
-   "violations": 2,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -6202,8 +6202,8 @@
    "table": "LYMPHOMA_EVENT",
    "fields": "person_id",
    "check": "fk",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -6230,8 +6230,8 @@
    "table": "LYMPHOMA_EVENT",
    "fields": "visit_occurrence_id",
    "check": "fk",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -6412,8 +6412,8 @@
    "table": "LYMPHOMA_EVENT",
    "fields": "transformation_to_subtype_concept_id",
    "check": "not_null_when",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -6818,8 +6818,8 @@
    "table": "LYMPHOMA_EXAM",
    "fields": "",
    "check": "columns",
-   "status": "fail",
-   "violations": 1,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 180,
    "note": ""
   },
@@ -6916,8 +6916,8 @@
    "table": "LYMPHOMA_EXAM",
    "fields": "visit_occurrence_id",
    "check": "fk",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 180,
    "note": ""
   },
@@ -6958,8 +6958,8 @@
    "table": "LYMPHOMA_EXAM",
    "fields": "exam_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 180,
    "note": ""
   },
@@ -7000,10 +7000,10 @@
    "table": "LYMPHOMA_EXAM",
    "fields": "metabolic_tumor_volume_ml",
    "check": "not_null",
-   "status": "skipped",
+   "status": "pass",
    "violations": 0,
    "rows_checked": 180,
-   "note": "컬럼 없음: ['metabolic_tumor_volume_ml']"
+   "note": ""
   },
   {
    "rule_id": "SV-1033",
@@ -7014,10 +7014,10 @@
    "table": "LYMPHOMA_EXAM",
    "fields": "metabolic_tumor_volume_ml",
    "check": "type",
-   "status": "skipped",
+   "status": "pass",
    "violations": 0,
    "rows_checked": 180,
-   "note": "컬럼 없음: ['metabolic_tumor_volume_ml']"
+   "note": ""
   },
   {
    "rule_id": "SV-1034",
@@ -7127,7 +7127,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 3,
    "rows_checked": 0,
    "note": ""
   },
@@ -7154,8 +7154,8 @@
    "table": "DEATH,OBSERVATION_PERIOD",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },
@@ -7169,7 +7169,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 16,
+   "violations": 14,
    "rows_checked": 0,
    "note": ""
   },
@@ -7182,8 +7182,8 @@
    "table": "CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,PATHOLOGY_REPORT,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",
    "fields": "",
    "check": "sql",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 6,
    "rows_checked": 0,
    "note": ""
   },
@@ -7295,7 +7295,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 3,
+   "violations": 2,
    "rows_checked": 0,
    "note": ""
   },
@@ -7323,7 +7323,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 4,
+   "violations": 3,
    "rows_checked": 0,
    "note": ""
   },
@@ -7350,8 +7350,8 @@
    "table": "CONDITION_OCCURRENCE,EPISODE",
    "fields": "",
    "check": "sql",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 1,
    "rows_checked": 0,
    "note": ""
   },
@@ -7365,7 +7365,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 5,
    "rows_checked": 0,
    "note": ""
   },
@@ -7410,6 +7410,76 @@
    "violations": 0,
    "rows_checked": 0,
    "note": "필요 테이블 없음: ['PATHOLOGY_TUMOR']"
+  },
+  {
+   "rule_id": "SEMV-LY-001",
+   "name": "B 증상과 세부 증상이 맞물림",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "warning",
+   "table": "LYMPHOMA_ASSESSMENT",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-LY-002",
+   "name": "IPI 점수와 위험군이 맞물림",
+   "category": "Conformance",
+   "subcategory": "value",
+   "severity": "warning",
+   "table": "LYMPHOMA_ASSESSMENT",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-LY-003",
+   "name": "형질전환일은 진단 뒤에",
+   "category": "Plausibility",
+   "subcategory": "temporal",
+   "severity": "error",
+   "table": "CONDITION_OCCURRENCE,LYMPHOMA_EVENT",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-LY-004",
+   "name": "CAR-T 준비 단계의 날짜 순서",
+   "category": "Plausibility",
+   "subcategory": "temporal",
+   "severity": "error",
+   "table": "LYMPHOMA_EVENT",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-LY-005",
+   "name": "Double-hit 판정과 재배열 결과가 맞물림",
+   "category": "Conformance",
+   "subcategory": "value",
+   "severity": "warning",
+   "table": "BIOMARKER",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
   }
  ]
 }

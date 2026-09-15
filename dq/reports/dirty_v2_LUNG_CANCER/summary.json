@@ -22,12 +22,12 @@
   "LUNG_EXAM": 523
  },
  "rules_total": 377,
- "rules_failed": 55,
- "rules_skipped": 1,
+ "rules_failed": 57,
+ "rules_skipped": 2,
  "rules_error": 0,
- "violations_total": 159,
- "violations_error": 142,
- "violations_warning": 17,
+ "violations_total": 236,
+ "violations_error": 156,
+ "violations_warning": 80,
  "by_category": {
   "Completeness": {
    "rules": 122,
@@ -36,13 +36,13 @@
   },
   "Conformance": {
    "rules": 219,
-   "failed": 24,
-   "violations": 67
+   "failed": 25,
+   "violations": 71
   },
   "Plausibility": {
    "rules": 36,
-   "failed": 15,
-   "violations": 44
+   "failed": 16,
+   "violations": 117
   }
  },
  "rules": [
@@ -237,8 +237,8 @@
    "table": "OBSERVATION_PERIOD",
    "fields": "",
    "check": "columns",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 1,
    "rows_checked": 60,
    "note": ""
   },
@@ -349,8 +349,8 @@
    "table": "OBSERVATION_PERIOD",
    "fields": "observation_period_start_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -391,10 +391,10 @@
    "table": "OBSERVATION_PERIOD",
    "fields": "period_type_concept_id",
    "check": "not_null",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
    "rows_checked": 60,
-   "note": ""
+   "note": "컬럼 없음: ['period_type_concept_id']"
   },
   {
    "rule_id": "SV-0026",
@@ -405,10 +405,10 @@
    "table": "OBSERVATION_PERIOD",
    "fields": "period_type_concept_id",
    "check": "type",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
    "rows_checked": 60,
-   "note": ""
+   "note": "컬럼 없음: ['period_type_concept_id']"
   },
   {
    "rule_id": "SV-0027",
@@ -769,8 +769,8 @@
    "table": "VISIT_OCCURRENCE",
    "fields": "visit_end_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 957,
    "note": ""
   },
@@ -1483,8 +1483,8 @@
    "table": "DRUG_EXPOSURE",
    "fields": "drug_exposure_start_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 548,
    "note": ""
   },
@@ -1931,8 +1931,8 @@
    "table": "OBSERVATION",
    "fields": "",
    "check": "columns",
-   "status": "fail",
-   "violations": 1,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 237,
    "note": ""
   },
@@ -2141,10 +2141,10 @@
    "table": "OBSERVATION",
    "fields": "qualifier_concept_id",
    "check": "type",
-   "status": "skipped",
+   "status": "pass",
    "violations": 0,
    "rows_checked": 237,
-   "note": "컬럼 없음: ['qualifier_concept_id']"
+   "note": ""
   },
   {
    "rule_id": "SV-0151",
@@ -2897,8 +2897,8 @@
    "table": "COHORT",
    "fields": "cohort_start_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -3807,8 +3807,8 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "biopsy_differentiation_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 89,
    "note": ""
   },
@@ -4507,8 +4507,8 @@
    "table": "BIOMARKER",
    "fields": "ihc_test_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 208,
    "note": ""
   },
@@ -4549,8 +4549,8 @@
    "table": "BIOMARKER",
    "fields": "molecular_pathology_test_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 208,
    "note": ""
   },
@@ -4591,8 +4591,8 @@
    "table": "BIOMARKER",
    "fields": "mutation_test_method_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 208,
    "note": ""
   },
@@ -4843,8 +4843,8 @@
    "table": "LUNG_EXAM",
    "fields": "imaging_diagnostic_classification_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 523,
    "note": ""
   },
@@ -4998,7 +4998,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 5,
    "rows_checked": 0,
    "note": ""
   },
@@ -5012,7 +5012,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 57,
    "rows_checked": 0,
    "note": ""
   },
@@ -5025,8 +5025,8 @@
    "table": "DEATH,OBSERVATION_PERIOD",
    "fields": "",
    "check": "sql",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 0,
    "note": ""
   },
@@ -5040,7 +5040,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 9,
+   "violations": 19,
    "rows_checked": 0,
    "note": ""
   },
@@ -5067,8 +5067,8 @@
    "table": "VISIT_OCCURRENCE",
    "fields": "",
    "check": "sql",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 1,
    "rows_checked": 0,
    "note": ""
   },
@@ -5082,7 +5082,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 3,
+   "violations": 6,
    "rows_checked": 0,
    "note": ""
   },
@@ -5236,7 +5236,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 4,
+   "violations": 5,
    "rows_checked": 0,
    "note": ""
   },
@@ -5264,7 +5264,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 1,
+   "violations": 2,
    "rows_checked": 0,
    "note": ""
   },
@@ -5291,8 +5291,8 @@
    "table": "BIOMARKER,SPECIMEN",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },

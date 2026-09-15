@@ -475,3 +475,281 @@ rules:
              '흡연 상태가 ' || st.v || ' 인데 흡연량·흡연기간이 기록돼 있다' AS detail
       FROM st JOIN qty ON qty.person_id = st.person_id
       WHERE st.v = 'Never smoker'
+
+  # ================================================================ 유방암
+  - id: SEMV-BC-001
+    name: 생식·산과 기록이 있는 환자는 여성
+    category: Plausibility
+    subcategory: atemporal
+    severity: error
+    scope: [BREAST_CANCER]
+    requires: [BREAST_BASELINE, PERSON]
+    desc: 초경·출산·폐경을 적은 환자가 남성으로 되어 있으면 둘 중 하나가 틀렸다.
+    sql: |
+      SELECT b.person_id, CAST(b.breast_baseline_id AS VARCHAR) AS row_key,
+             '생식·산과 기록이 있는데 성별이 남성(' || p.gender_concept_id || ')이다' AS detail
+      FROM BREAST_BASELINE b JOIN PERSON p ON p.person_id = b.person_id
+      WHERE p.gender_concept_id = '8507'
+        AND (b.menarche_age IS NOT NULL OR b.menopause_yn = 1 OR b.parity_yn = 1)
+
+  - id: SEMV-BC-002
+    name: 폐경 기록의 앞뒤가 맞음
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: [BREAST_CANCER]
+    requires: [BREAST_BASELINE]
+    desc: 폐경하지 않았다면 폐경 나이가 없어야 하고, 폐경 나이는 초경 나이보다 뒤여야 한다.
+    sql: |
+      SELECT person_id, CAST(breast_baseline_id AS VARCHAR) AS row_key,
+             CASE WHEN menopause_yn = 0 AND menopause_age > 0
+                  THEN '폐경하지 않았다고 적고 폐경 나이 ' || menopause_age || ' 를 적었다'
+                  ELSE '폐경 나이 ' || menopause_age || ' 가 초경 나이 ' || menarche_age || ' 보다 이르다' END AS detail
+      FROM BREAST_BASELINE
+      WHERE (menopause_yn = 0 AND menopause_age IS NOT NULL AND menopause_age > 0)
+         OR (menopause_age IS NOT NULL AND menopause_age > 0 AND menarche_age IS NOT NULL
+             AND menopause_age <= menarche_age)
+
+  - id: SEMV-BC-003
+    name: 출산 기록의 앞뒤가 맞음
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: [BREAST_CANCER]
+    requires: [BREAST_BASELINE]
+    desc: 출산한 적이 없다면 자녀 수와 첫 출산 나이가 없어야 한다. 첫 출산은 초경 뒤다.
+    sql: |
+      SELECT person_id, CAST(breast_baseline_id AS VARCHAR) AS row_key,
+             CASE WHEN parity_yn = 0 AND (number_of_children > 0 OR first_birth_age > 0)
+                  THEN '출산력이 없다고 적고 자녀 ' || number_of_children || '명, 첫 출산 나이 ' || first_birth_age || ' 를 적었다'
+                  ELSE '첫 출산 나이 ' || first_birth_age || ' 가 초경 나이 ' || menarche_age || ' 보다 이르다' END AS detail
+      FROM BREAST_BASELINE
+      WHERE (parity_yn = 0 AND (number_of_children > 0 OR first_birth_age > 0))
+         OR (first_birth_age IS NOT NULL AND first_birth_age > 0 AND menarche_age IS NOT NULL
+             AND first_birth_age < menarche_age)
+
+  # ================================================================ 대장암
+  - id: SEMV-CC-001
+    name: 직장 MRI 거리의 앞뒤가 맞음
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: [COLORECTAL_CANCER]
+    requires: [COLORECTAL_EXAM]
+    desc: 항문연까지의 거리는 항문직장경계부까지의 거리보다 멀다(항문연이 더 바깥이다).
+    sql: |
+      SELECT person_id, CAST(colorectal_exam_id AS VARCHAR) AS row_key,
+             '항문연 거리 ' || mri_distance_anal_verge_cm || ' cm 가 항문직장경계부 거리 '
+             || mri_distance_anorectal_junction_cm || ' cm 보다 가깝다' AS detail
+      FROM COLORECTAL_EXAM
+      WHERE mri_distance_anal_verge_cm IS NOT NULL AND mri_distance_anorectal_junction_cm IS NOT NULL
+        AND mri_distance_anal_verge_cm < mri_distance_anorectal_junction_cm
+
+  - id: SEMV-CC-002
+    name: 개복 전환과 사유가 맞물림
+    category: Conformance
+    subcategory: value
+    severity: warning
+    scope: [COLORECTAL_CANCER]
+    requires: [COLORECTAL_SURGERY_DETAIL]
+    desc: 개복으로 전환했다면 사유가 있어야 하고, 전환하지 않았다면 사유가 없어야 한다.
+    sql: |
+      SELECT person_id, CAST(colorectal_surgery_detail_id AS VARCHAR) AS row_key,
+             CASE WHEN conversion_to_open_yn = 1 THEN '개복 전환인데 사유가 비어 있다'
+                  ELSE '전환하지 않았는데 사유가 적혀 있다: ' || conversion_reason END AS detail
+      FROM COLORECTAL_SURGERY_DETAIL
+      WHERE (conversion_to_open_yn = 1 AND (conversion_reason IS NULL OR TRIM(conversion_reason) IN ('', '해당없음')))
+         OR (conversion_to_open_yn = 0 AND conversion_reason IS NOT NULL
+             AND TRIM(conversion_reason) NOT IN ('', '해당없음'))
+
+  # ================================================================ MASLD
+  - id: SEMV-MA-001
+    name: FIB-4 다시 계산했을 때 맞음
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: [MASLD]
+    requires: [MASLD_ASSESSMENT, MEASUREMENT, PERSON]
+    desc: |
+      FIB-4 = 나이 x AST / (혈소판 x sqrt(ALT)). 같은 날(±7일) 검사값으로 다시 계산해 크게 어긋나면
+      점수나 검사값 중 하나가 틀렸다. 검사값이 갖춰지지 않은 행은 보지 않는다.
+    sql: |
+      WITH lab AS (
+        SELECT m.person_id, m.measurement_date d,
+               MAX(CASE WHEN m.measurement_concept_id = '3013721' THEN m.value_as_number END) ast,
+               MAX(CASE WHEN m.measurement_concept_id = '3006923' THEN m.value_as_number END) alt,
+               MAX(CASE WHEN m.measurement_concept_id = '3024929' THEN m.value_as_number END) plt
+        FROM MEASUREMENT m GROUP BY m.person_id, m.measurement_date
+      )
+      SELECT a.person_id, CAST(a.masld_assessment_id AS VARCHAR) AS row_key,
+             'FIB-4 ' || a.fib4_index || ' 가 검사값으로 계산한 '
+             || ROUND((EXTRACT(YEAR FROM a.assessment_date) - p.year_of_birth) * lab.ast / (lab.plt * SQRT(lab.alt)), 2)
+             || ' 와 크게 다르다' AS detail
+      FROM MASLD_ASSESSMENT a
+      JOIN PERSON p ON p.person_id = a.person_id
+      JOIN lab ON lab.person_id = a.person_id AND ABS(lab.d - a.assessment_date) <= 7
+      WHERE a.fib4_index IS NOT NULL AND lab.ast IS NOT NULL AND lab.alt IS NOT NULL AND lab.plt IS NOT NULL
+        AND lab.alt > 0 AND lab.plt > 0
+        AND ABS(a.fib4_index - (EXTRACT(YEAR FROM a.assessment_date) - p.year_of_birth) * lab.ast / (lab.plt * SQRT(lab.alt))) > 1.0
+
+  - id: SEMV-MA-002
+    name: 심장대사 위험인자가 하나 이상
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: [MASLD]
+    requires: [MASLD_EXAM, CONDITION_OCCURRENCE, MEASUREMENT]
+    desc: |
+      MASLD 는 정의상 심장대사 위험인자를 하나 이상 동반한다. 진단(제2형 당뇨·고혈압·이상지질혈증·비만)도
+      없고 BMI 도 23 미만이면 그 환자는 MASLD 정의를 만족하지 않는다.
+    sql: |
+      WITH risk AS (
+        SELECT DISTINCT person_id FROM CONDITION_OCCURRENCE
+        WHERE condition_concept_id IN ('201826', '320128', '432867', '433736')
+        UNION
+        SELECT DISTINCT person_id FROM MEASUREMENT
+        WHERE measurement_concept_id = '3038553' AND value_as_number >= 23
+      )
+      SELECT e.person_id, CAST(e.person_id AS VARCHAR) AS row_key,
+             '심장대사 위험인자(당뇨·고혈압·이상지질혈증·비만 진단 또는 BMI>=23)가 하나도 없다' AS detail
+      FROM (SELECT DISTINCT person_id FROM MASLD_EXAM) e
+      LEFT JOIN risk ON risk.person_id = e.person_id
+      WHERE risk.person_id IS NULL
+
+  # ================================================================ 당뇨병
+  - id: SEMV-DM-001
+    name: 해마다 HbA1c 를 잰다
+    category: Completeness
+    subcategory: value
+    severity: warning
+    scope: [DIABETES]
+    requires: [MEASUREMENT, VISIT_OCCURRENCE]
+    desc: 방문이 있었던 해에는 HbA1c 가 한 번은 있어야 한다. 당뇨 관리의 기본 검사다.
+    sql: |
+      WITH yrs AS (
+        SELECT DISTINCT person_id, EXTRACT(YEAR FROM visit_start_date) y FROM VISIT_OCCURRENCE
+      ), a1c AS (
+        SELECT DISTINCT person_id, EXTRACT(YEAR FROM measurement_date) y
+        FROM MEASUREMENT WHERE measurement_concept_id = '3004410'
+      )
+      SELECT yrs.person_id, CAST(yrs.person_id AS VARCHAR) || ':' || CAST(yrs.y AS VARCHAR) AS row_key,
+             yrs.y || '년에 방문은 있는데 HbA1c 가 없다' AS detail
+      FROM yrs LEFT JOIN a1c ON a1c.person_id = yrs.person_id AND a1c.y = yrs.y
+      WHERE a1c.person_id IS NULL
+
+  - id: SEMV-DM-002
+    name: 혈당강하제 처방은 진단 뒤에
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: [DIABETES]
+    requires: [DRUG_EXPOSURE, CONDITION_OCCURRENCE]
+    desc: 제2형 당뇨 진단보다 먼저 혈당강하제를 처방할 수 없다.
+    sql: |
+      WITH dx AS (
+        SELECT person_id, MIN(condition_start_date) d FROM CONDITION_OCCURRENCE
+        WHERE condition_concept_id = '201826' GROUP BY person_id
+      ), rx AS (
+        SELECT person_id, MIN(drug_exposure_start_date) d FROM DRUG_EXPOSURE
+        WHERE drug_concept_id IN ('1503297', '1597756', '1580747', '45774435', '1502905', '1583722')
+        GROUP BY person_id
+      )
+      SELECT rx.person_id, CAST(rx.person_id AS VARCHAR) AS row_key,
+             '첫 혈당강하제 처방 ' || rx.d || ' 가 당뇨 진단 ' || dx.d || ' 보다 이르다' AS detail
+      FROM rx JOIN dx ON dx.person_id = rx.person_id
+      WHERE rx.d < dx.d
+
+  # ================================================================ 림프종
+  - id: SEMV-LY-001
+    name: B 증상과 세부 증상이 맞물림
+    category: Plausibility
+    subcategory: atemporal
+    severity: warning
+    scope: [LYMPHOMA]
+    requires: [LYMPHOMA_ASSESSMENT]
+    desc: B 증상이 있다고 적었으면 발열·야간발한·체중감소 중 하나는 있어야 하고, 없다고 적었으면 셋 다 없어야 한다.
+    sql: |
+      SELECT person_id, CAST(lymphoma_assessment_id AS VARCHAR) AS row_key,
+             CASE WHEN b_symptoms_yn = 1 THEN 'B 증상이 있다고 적었는데 발열·야간발한·체중감소가 모두 없다'
+                  ELSE 'B 증상이 없다고 적었는데 세부 증상이 있다' END AS detail
+      FROM LYMPHOMA_ASSESSMENT
+      WHERE (b_symptoms_yn = 1 AND COALESCE(fever_yn, 0) = 0 AND COALESCE(night_sweats_yn, 0) = 0
+             AND COALESCE(weight_loss_percent_6m, 0) < 10)
+         OR (b_symptoms_yn = 0 AND (COALESCE(fever_yn, 0) = 1 OR COALESCE(night_sweats_yn, 0) = 1
+             OR COALESCE(weight_loss_percent_6m, 0) >= 10))
+
+  - id: SEMV-LY-002
+    name: IPI 점수와 위험군이 맞물림
+    category: Conformance
+    subcategory: value
+    severity: warning
+    scope: [LYMPHOMA]
+    requires: [LYMPHOMA_ASSESSMENT]
+    desc: IPI 0~1 저위험, 2 저중간, 3 고중간, 4~5 고위험. 점수와 위험군이 어긋나면 둘 중 하나가 틀렸다.
+    sql: |
+      SELECT a.person_id, CAST(a.lymphoma_assessment_id AS VARCHAR) AS row_key,
+             'IPI 점수 ' || a.ipi_score || ' 인데 위험군이 ' || k.code || ' 다' AS detail
+      FROM LYMPHOMA_ASSESSMENT a
+      JOIN _ROW_KIND k ON CAST(k.concept_id AS VARCHAR) = CAST(a.ipi_risk_group_concept_id AS VARCHAR)
+      WHERE a.ipi_score IS NOT NULL
+        AND k.code <> CASE WHEN a.ipi_score <= 1 THEN '저위험' WHEN a.ipi_score = 2 THEN '저중간'
+                           WHEN a.ipi_score = 3 THEN '고중간' ELSE '고위험' END
+
+  - id: SEMV-LY-003
+    name: 형질전환일은 진단 뒤에
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: [LYMPHOMA]
+    requires: [LYMPHOMA_EVENT, CONDITION_OCCURRENCE]
+    desc: 조직학적 전환은 처음 진단한 뒤에 일어난다.
+    sql: |
+      WITH dx AS (SELECT person_id, MIN(condition_start_date) d FROM CONDITION_OCCURRENCE GROUP BY person_id)
+      SELECT e.person_id, CAST(e.lymphoma_event_id AS VARCHAR) AS row_key,
+             '전환일 ' || e.transformation_date || ' 가 첫 진단 ' || dx.d || ' 보다 이르다' AS detail
+      FROM LYMPHOMA_EVENT e JOIN dx ON dx.person_id = e.person_id
+      WHERE e.transformation_date IS NOT NULL AND e.transformation_date < dx.d
+
+  - id: SEMV-LY-004
+    name: CAR-T 준비 단계의 날짜 순서
+    category: Plausibility
+    subcategory: temporal
+    severity: error
+    scope: [LYMPHOMA]
+    requires: [LYMPHOMA_EVENT]
+    desc: 성분채집 -> 림프구감소 -> 세포 주입 순서로 일어난다.
+    sql: |
+      SELECT person_id, CAST(lymphoma_event_id AS VARCHAR) AS row_key,
+             '성분채집 ' || apheresis_date || ' / 림프구감소 ' || lymphodepletion_start_date
+             || ' / 주입 ' || car_t_infusion_date || ' 의 순서가 맞지 않는다' AS detail
+      FROM LYMPHOMA_EVENT
+      WHERE car_t_yn = 1 AND apheresis_date IS NOT NULL AND lymphodepletion_start_date IS NOT NULL
+        AND car_t_infusion_date IS NOT NULL
+        AND NOT (apheresis_date <= lymphodepletion_start_date AND lymphodepletion_start_date <= car_t_infusion_date)
+
+  - id: SEMV-LY-005
+    name: Double-hit 판정과 재배열 결과가 맞물림
+    category: Conformance
+    subcategory: value
+    severity: warning
+    scope: [LYMPHOMA]
+    requires: [BIOMARKER]
+    desc: |
+      MYC 재배열이 있으면서 BCL2 나 BCL6 재배열이 함께 있으면 double-hit 이다.
+      재배열 결과와 판정이 어긋나면 둘 중 하나가 틀렸다.
+    sql: |
+      WITH b AS (
+        SELECT b.person_id, b.biomarker_id,
+               kmyc.code myc, kbcl2.code bcl2, kbcl6.code bcl6, kdh.code dh
+        FROM BIOMARKER b
+        LEFT JOIN _ROW_KIND kmyc ON CAST(kmyc.concept_id AS VARCHAR) = CAST(b.myc_rearrangement_result_concept_id AS VARCHAR)
+        LEFT JOIN _ROW_KIND kbcl2 ON CAST(kbcl2.concept_id AS VARCHAR) = CAST(b.bcl2_rearrangement_result_concept_id AS VARCHAR)
+        LEFT JOIN _ROW_KIND kbcl6 ON CAST(kbcl6.concept_id AS VARCHAR) = CAST(b.bcl6_rearrangement_result_concept_id AS VARCHAR)
+        LEFT JOIN _ROW_KIND kdh ON CAST(kdh.concept_id AS VARCHAR) = CAST(b.double_hit_status_concept_id AS VARCHAR)
+      )
+      SELECT person_id, CAST(biomarker_id AS VARCHAR) AS row_key,
+             'MYC ' || COALESCE(myc, '-') || ' / BCL2 ' || COALESCE(bcl2, '-') || ' / BCL6 ' || COALESCE(bcl6, '-')
+             || ' 인데 double-hit 판정이 ' || COALESCE(dh, '-') || ' 다' AS detail
+      FROM b
+      WHERE myc IS NOT NULL AND dh IS NOT NULL
+        AND dh <> CASE WHEN myc = '양성' AND (bcl2 = '양성' OR bcl6 = '양성') THEN '양성' ELSE '음성' END

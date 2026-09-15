@@ -22,7 +22,7 @@
   "BREAST_BASELINE": 60,
   "BREAST_EXAM": 420
  },
- "rules_total": 495,
+ "rules_total": 498,
  "rules_failed": 0,
  "rules_skipped": 0,
  "rules_error": 0,
@@ -41,7 +41,7 @@
    "violations": 0
   },
   "Plausibility": {
-   "rules": 36,
+   "rules": 39,
    "failed": 0,
    "violations": 0
   }
@@ -6970,6 +6970,48 @@
    "subcategory": "atemporal",
    "severity": "warning",
    "table": "PATHOLOGY_TUMOR",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-BC-001",
+   "name": "생식·산과 기록이 있는 환자는 여성",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "error",
+   "table": "BREAST_BASELINE,PERSON",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-BC-002",
+   "name": "폐경 기록의 앞뒤가 맞음",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "warning",
+   "table": "BREAST_BASELINE",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-BC-003",
+   "name": "출산 기록의 앞뒤가 맞음",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "warning",
+   "table": "BREAST_BASELINE",
    "fields": "",
    "check": "sql",
    "status": "pass",

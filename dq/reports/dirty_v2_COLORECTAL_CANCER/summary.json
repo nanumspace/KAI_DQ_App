@@ -4,46 +4,46 @@
  "tables": {
   "PERSON": 60,
   "OBSERVATION_PERIOD": 60,
-  "DEATH": 4,
-  "VISIT_OCCURRENCE": 905,
-  "CONDITION_OCCURRENCE": 111,
-  "PROCEDURE_OCCURRENCE": 360,
-  "DRUG_EXPOSURE": 772,
-  "MEASUREMENT": 1132,
+  "DEATH": 0,
+  "VISIT_OCCURRENCE": 933,
+  "CONDITION_OCCURRENCE": 120,
+  "PROCEDURE_OCCURRENCE": 369,
+  "DRUG_EXPOSURE": 776,
+  "MEASUREMENT": 1140,
   "OBSERVATION": 0,
-  "NOTE": 54,
-  "SPECIMEN": 114,
+  "NOTE": 57,
+  "SPECIMEN": 117,
   "COHORT": 60,
-  "EPISODE": 94,
-  "EPISODE_EVENT": 937,
-  "PATHOLOGY_REPORT": 114,
+  "EPISODE": 97,
+  "EPISODE_EVENT": 953,
+  "PATHOLOGY_REPORT": 117,
   "PATHOLOGY_TUMOR": 0,
   "BIOMARKER": 0,
-  "COLORECTAL_EXAM": 7,
-  "COLORECTAL_SURGERY_DETAIL": 54
+  "COLORECTAL_EXAM": 12,
+  "COLORECTAL_SURGERY_DETAIL": 57
  },
- "rules_total": 459,
- "rules_failed": 49,
- "rules_skipped": 1,
+ "rules_total": 461,
+ "rules_failed": 47,
+ "rules_skipped": 2,
  "rules_error": 0,
- "violations_total": 143,
- "violations_error": 128,
- "violations_warning": 15,
+ "violations_total": 172,
+ "violations_error": 139,
+ "violations_warning": 33,
  "by_category": {
   "Completeness": {
    "rules": 143,
    "failed": 13,
-   "violations": 35
+   "violations": 39
   },
   "Conformance": {
-   "rules": 283,
+   "rules": 284,
    "failed": 21,
-   "violations": 61
+   "violations": 66
   },
   "Plausibility": {
-   "rules": 33,
-   "failed": 15,
-   "violations": 47
+   "rules": 34,
+   "failed": 13,
+   "violations": 67
   }
  },
  "rules": [
@@ -70,8 +70,8 @@
    "table": "PERSON",
    "fields": "",
    "check": "columns",
-   "status": "fail",
-   "violations": 1,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -196,10 +196,10 @@
    "table": "PERSON",
    "fields": "day_of_birth",
    "check": "type",
-   "status": "skipped",
+   "status": "pass",
    "violations": 0,
    "rows_checked": 60,
-   "note": "컬럼 없음: ['day_of_birth']"
+   "note": ""
   },
   {
    "rule_id": "SV-0012",
@@ -436,7 +436,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -450,7 +450,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -464,7 +464,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -478,7 +478,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -492,7 +492,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -506,7 +506,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -518,9 +518,9 @@
    "table": "DEATH",
    "fields": "death_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 4,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -534,7 +534,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -548,7 +548,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -562,7 +562,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4,
+   "rows_checked": 0,
    "note": ""
   },
   {
@@ -590,7 +590,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -604,7 +604,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -618,7 +618,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -632,7 +632,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -646,7 +646,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -660,7 +660,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -674,7 +674,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -688,7 +688,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -702,7 +702,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -716,7 +716,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -728,9 +728,9 @@
    "table": "VISIT_OCCURRENCE",
    "fields": "visit_start_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 905,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -744,7 +744,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -758,7 +758,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -770,9 +770,9 @@
    "table": "VISIT_OCCURRENCE",
    "fields": "visit_end_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 905,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -786,7 +786,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -800,7 +800,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -814,7 +814,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -828,7 +828,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 905,
+   "rows_checked": 933,
    "note": ""
   },
   {
@@ -856,7 +856,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -868,9 +868,9 @@
    "table": "CONDITION_OCCURRENCE",
    "fields": "condition_occurrence_id",
    "check": "pk_unique",
-   "status": "fail",
-   "violations": 2,
-   "rows_checked": 111,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -884,7 +884,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -898,7 +898,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -912,7 +912,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -926,7 +926,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -940,7 +940,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -954,7 +954,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -968,7 +968,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -982,7 +982,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -996,7 +996,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -1010,7 +1010,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -1024,7 +1024,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -1038,7 +1038,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -1052,7 +1052,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -1066,7 +1066,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 111,
+   "rows_checked": 120,
    "note": ""
   },
   {
@@ -1094,7 +1094,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1106,9 +1106,9 @@
    "table": "PROCEDURE_OCCURRENCE",
    "fields": "procedure_occurrence_id",
    "check": "pk_unique",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 360,
+   "status": "fail",
+   "violations": 2,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1122,7 +1122,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1136,7 +1136,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1150,7 +1150,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1162,9 +1162,9 @@
    "table": "PROCEDURE_OCCURRENCE",
    "fields": "person_id",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 360,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1178,7 +1178,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1192,7 +1192,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1206,7 +1206,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1220,7 +1220,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1232,9 +1232,9 @@
    "table": "PROCEDURE_OCCURRENCE",
    "fields": "procedure_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 360,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1248,7 +1248,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1262,7 +1262,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1276,7 +1276,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1290,7 +1290,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1304,7 +1304,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1318,7 +1318,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 360,
+   "rows_checked": 369,
    "note": ""
   },
   {
@@ -1346,7 +1346,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1360,7 +1360,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1374,7 +1374,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1388,7 +1388,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1402,7 +1402,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1416,7 +1416,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1430,7 +1430,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1444,7 +1444,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1456,9 +1456,9 @@
    "table": "DRUG_EXPOSURE",
    "fields": "drug_exposure_start_date",
    "check": "not_null",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 772,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1472,7 +1472,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1484,9 +1484,9 @@
    "table": "DRUG_EXPOSURE",
    "fields": "drug_exposure_start_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 772,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1500,7 +1500,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1514,7 +1514,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1528,7 +1528,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1542,7 +1542,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1556,7 +1556,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1570,7 +1570,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1584,7 +1584,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 772,
+   "rows_checked": 776,
    "note": ""
   },
   {
@@ -1612,7 +1612,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1624,9 +1624,9 @@
    "table": "MEASUREMENT",
    "fields": "measurement_id",
    "check": "pk_unique",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 1132,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1638,9 +1638,9 @@
    "table": "MEASUREMENT",
    "fields": "measurement_id",
    "check": "not_null",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 1132,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1654,7 +1654,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1666,9 +1666,9 @@
    "table": "MEASUREMENT",
    "fields": "person_id",
    "check": "not_null",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 1132,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1682,7 +1682,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1696,7 +1696,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1710,7 +1710,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1722,9 +1722,9 @@
    "table": "MEASUREMENT",
    "fields": "measurement_date",
    "check": "not_null",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 1132,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1738,7 +1738,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1750,9 +1750,9 @@
    "table": "MEASUREMENT",
    "fields": "measurement_date",
    "check": "not_future",
-   "status": "fail",
-   "violations": 4,
-   "rows_checked": 1132,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1766,7 +1766,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1780,7 +1780,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1794,7 +1794,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1808,7 +1808,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1822,7 +1822,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1836,7 +1836,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1850,7 +1850,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1864,7 +1864,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1878,7 +1878,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1892,7 +1892,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -1906,7 +1906,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1132,
+   "rows_checked": 1140,
    "note": ""
   },
   {
@@ -2226,9 +2226,9 @@
    "table": "NOTE",
    "fields": "",
    "check": "columns",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 54,
+   "status": "fail",
+   "violations": 1,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2242,7 +2242,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2256,7 +2256,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2270,7 +2270,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2284,7 +2284,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2298,7 +2298,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2312,7 +2312,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2326,7 +2326,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2340,7 +2340,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2354,7 +2354,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2368,7 +2368,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2382,7 +2382,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2396,7 +2396,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2410,7 +2410,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2422,10 +2422,10 @@
    "table": "NOTE",
    "fields": "encoding_concept_id",
    "check": "not_null",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
-   "rows_checked": 54,
-   "note": ""
+   "rows_checked": 57,
+   "note": "컬럼 없음: ['encoding_concept_id']"
   },
   {
    "rule_id": "SV-0171",
@@ -2436,10 +2436,10 @@
    "table": "NOTE",
    "fields": "encoding_concept_id",
    "check": "type",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
-   "rows_checked": 54,
-   "note": ""
+   "rows_checked": 57,
+   "note": "컬럼 없음: ['encoding_concept_id']"
   },
   {
    "rule_id": "SV-0172",
@@ -2452,7 +2452,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2466,7 +2466,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2480,7 +2480,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2494,7 +2494,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2508,7 +2508,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -2536,7 +2536,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2550,7 +2550,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2564,7 +2564,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2578,7 +2578,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2592,7 +2592,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2606,7 +2606,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2620,7 +2620,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2634,7 +2634,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2648,7 +2648,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2662,7 +2662,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2676,7 +2676,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2690,7 +2690,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2704,7 +2704,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2718,7 +2718,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2732,7 +2732,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2746,7 +2746,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2760,7 +2760,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -2800,8 +2800,8 @@
    "table": "COHORT",
    "fields": "cohort_definition_id,subject_id,cohort_start_date",
    "check": "pk_unique",
-   "status": "fail",
-   "violations": 5,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -2842,8 +2842,8 @@
    "table": "COHORT",
    "fields": "subject_id",
    "check": "not_null",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 60,
    "note": ""
   },
@@ -2912,8 +2912,8 @@
    "table": "COHORT",
    "fields": "cohort_end_date",
    "check": "not_null",
-   "status": "pass",
-   "violations": 0,
+   "status": "fail",
+   "violations": 3,
    "rows_checked": 60,
    "note": ""
   },
@@ -2956,7 +2956,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -2968,9 +2968,9 @@
    "table": "EPISODE",
    "fields": "episode_id",
    "check": "pk_unique",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 94,
+   "status": "fail",
+   "violations": 2,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -2984,7 +2984,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -2998,7 +2998,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3012,7 +3012,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3026,7 +3026,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3040,7 +3040,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3054,7 +3054,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3068,7 +3068,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3082,7 +3082,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3096,7 +3096,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3110,7 +3110,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3122,9 +3122,9 @@
    "table": "EPISODE",
    "fields": "episode_parent_id",
    "check": "type",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 94,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3136,9 +3136,9 @@
    "table": "EPISODE",
    "fields": "episode_number",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 94,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3152,7 +3152,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3166,7 +3166,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3180,7 +3180,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3194,7 +3194,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 94,
+   "rows_checked": 97,
    "note": ""
   },
   {
@@ -3222,7 +3222,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 937,
+   "rows_checked": 953,
    "note": ""
   },
   {
@@ -3236,7 +3236,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 937,
+   "rows_checked": 953,
    "note": ""
   },
   {
@@ -3250,7 +3250,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 937,
+   "rows_checked": 953,
    "note": ""
   },
   {
@@ -3264,7 +3264,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 937,
+   "rows_checked": 953,
    "note": ""
   },
   {
@@ -3278,7 +3278,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 937,
+   "rows_checked": 953,
    "note": ""
   },
   {
@@ -3292,7 +3292,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 937,
+   "rows_checked": 953,
    "note": ""
   },
   {
@@ -3306,7 +3306,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 937,
+   "rows_checked": 953,
    "note": ""
   },
   {
@@ -3320,7 +3320,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 937,
+   "rows_checked": 953,
    "note": ""
   },
   {
@@ -3348,7 +3348,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3362,7 +3362,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3376,7 +3376,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3390,7 +3390,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3404,7 +3404,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3418,7 +3418,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3432,7 +3432,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3446,7 +3446,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3460,7 +3460,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3474,7 +3474,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3488,7 +3488,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3502,7 +3502,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3516,7 +3516,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3530,7 +3530,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3544,7 +3544,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3558,7 +3558,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3570,9 +3570,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "specimen_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 114,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3586,7 +3586,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3600,7 +3600,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3614,7 +3614,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3628,7 +3628,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3642,7 +3642,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3656,7 +3656,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3670,7 +3670,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3684,7 +3684,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3698,7 +3698,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3712,7 +3712,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3726,7 +3726,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3740,7 +3740,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3754,7 +3754,7 @@
    "check": "not_null_either",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3768,7 +3768,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3782,7 +3782,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3796,7 +3796,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3810,7 +3810,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3824,7 +3824,7 @@
    "check": "not_null_either",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3838,7 +3838,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3852,7 +3852,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3866,7 +3866,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3880,7 +3880,7 @@
    "check": "not_null_when",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3894,7 +3894,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3908,7 +3908,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3922,7 +3922,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3936,7 +3936,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3950,7 +3950,7 @@
    "check": "not_null_when",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3962,9 +3962,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "gross_type_concept_id",
    "check": "type",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 114,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3976,9 +3976,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "gross_type_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 114,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -3992,7 +3992,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4006,7 +4006,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4020,7 +4020,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4034,7 +4034,7 @@
    "check": "not_null_when",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4048,7 +4048,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4062,7 +4062,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4076,7 +4076,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4090,7 +4090,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4102,9 +4102,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "tumor_budding_grade_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 114,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4118,7 +4118,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4132,7 +4132,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4144,9 +4144,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "resection_completeness_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 114,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4160,7 +4160,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4174,7 +4174,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4188,7 +4188,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4202,7 +4202,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4216,7 +4216,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4228,9 +4228,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "vascular_invasion_yn",
    "check": "concept_code",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 114,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4244,7 +4244,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4256,9 +4256,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "perineural_invasion_yn",
    "check": "type",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 114,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4270,9 +4270,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "perineural_invasion_yn",
    "check": "concept_code",
-   "status": "fail",
-   "violations": 6,
-   "rows_checked": 114,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4286,7 +4286,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4298,9 +4298,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "invasion_depth_concept_id",
    "check": "type",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 114,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4312,9 +4312,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "invasion_depth_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 114,
+   "status": "fail",
+   "violations": 6,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4328,7 +4328,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4342,7 +4342,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4356,7 +4356,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4370,7 +4370,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4382,9 +4382,9 @@
    "table": "PATHOLOGY_REPORT",
    "fields": "tme_quality_concept_id",
    "check": "concept_set",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 114,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -4398,7 +4398,7 @@
    "check": "group_anchor",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 114,
+   "rows_checked": 117,
    "note": ""
   },
   {
@@ -5056,7 +5056,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5070,7 +5070,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5084,7 +5084,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5098,7 +5098,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5112,7 +5112,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5126,7 +5126,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5140,7 +5140,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5154,7 +5154,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5167,8 +5167,8 @@
    "fields": "exam_date",
    "check": "not_null",
    "status": "fail",
-   "violations": 1,
-   "rows_checked": 7,
+   "violations": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5182,7 +5182,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5194,9 +5194,9 @@
    "table": "COLORECTAL_EXAM",
    "fields": "exam_date",
    "check": "not_future",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 7,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5210,7 +5210,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5224,7 +5224,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5238,7 +5238,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5252,7 +5252,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5266,7 +5266,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5280,7 +5280,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5294,7 +5294,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5308,7 +5308,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5322,7 +5322,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5336,7 +5336,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5350,7 +5350,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5364,7 +5364,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5378,7 +5378,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5392,7 +5392,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5406,7 +5406,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5420,7 +5420,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5434,7 +5434,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5448,7 +5448,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5462,7 +5462,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5476,7 +5476,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5490,7 +5490,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5504,7 +5504,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5518,7 +5518,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5530,9 +5530,9 @@
    "table": "COLORECTAL_EXAM",
    "fields": "mri_extramesorectal_node_yn",
    "check": "concept_code",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 7,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5546,7 +5546,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5560,7 +5560,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5574,7 +5574,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5588,7 +5588,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5602,7 +5602,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 7,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5615,8 +5615,8 @@
    "fields": "exam_date,rectal_tumor_height_cm,mri_invasion_depth_mm,mri_t4b_invaded_organ_concept_id,mri_t4b_invaded_organ_source_value,mri_anterior_peritoneal_relation_concept_id,mri_anterior_peritoneal_relation_source_value,mri_distance_anal_verge_cm,mri_distance_anorectal_junction_cm,mri_circumferential_extent_concept_id,mri_circumferential_extent_source_value,mri_mrf_distance_mm,mri_emvi_yn,mri_mesorectal_node_yn,mri_extramesorectal_node_yn,mri_circumferential_location_concept_id,mri_circumferential_location_source_value,mri_tumor_regression_grade_concept_id,mri_tumor_regression_grade_source_value",
    "check": "group_anchor",
    "status": "fail",
-   "violations": 1,
-   "rows_checked": 7,
+   "violations": 3,
+   "rows_checked": 12,
    "note": ""
   },
   {
@@ -5644,7 +5644,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5658,7 +5658,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5672,7 +5672,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5686,7 +5686,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5700,7 +5700,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5714,7 +5714,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5728,7 +5728,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5742,7 +5742,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5756,7 +5756,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5770,7 +5770,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5784,7 +5784,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5798,7 +5798,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5812,7 +5812,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5824,9 +5824,9 @@
    "table": "COLORECTAL_SURGERY_DETAIL",
    "fields": "preop_obstruction_treatment_yn",
    "check": "concept_code",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 54,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5840,7 +5840,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5854,7 +5854,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5868,7 +5868,7 @@
    "check": "concept_code",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5882,7 +5882,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5896,7 +5896,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5910,7 +5910,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5924,7 +5924,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5938,7 +5938,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5952,7 +5952,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5966,7 +5966,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5980,7 +5980,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -5994,7 +5994,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6006,9 +6006,9 @@
    "table": "COLORECTAL_SURGERY_DETAIL",
    "fields": "anastomosis_method_concept_id",
    "check": "concept_set",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 54,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6022,7 +6022,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6036,7 +6036,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6050,7 +6050,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6064,7 +6064,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6078,7 +6078,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6090,9 +6090,9 @@
    "table": "COLORECTAL_SURGERY_DETAIL",
    "fields": "hipec_yn",
    "check": "concept_code",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 54,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6106,7 +6106,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6120,7 +6120,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6132,9 +6132,9 @@
    "table": "COLORECTAL_SURGERY_DETAIL",
    "fields": "conversion_to_open_yn",
    "check": "concept_code",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 54,
+   "status": "fail",
+   "violations": 3,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6148,7 +6148,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 54,
+   "rows_checked": 57,
    "note": ""
   },
   {
@@ -6161,7 +6161,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 3,
+   "violations": 6,
    "rows_checked": 0,
    "note": ""
   },
@@ -6188,8 +6188,8 @@
    "table": "CONDITION_OCCURRENCE,DEATH,DRUG_EXPOSURE,MEASUREMENT,OBSERVATION,PROCEDURE_OCCURRENCE,SPECIMEN,VISIT_OCCURRENCE",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 2,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },
@@ -6203,7 +6203,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 5,
    "rows_checked": 0,
    "note": ""
   },
@@ -6216,8 +6216,8 @@
    "table": "DEATH,OBSERVATION_PERIOD",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 3,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },
@@ -6231,7 +6231,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 11,
+   "violations": 26,
    "rows_checked": 0,
    "note": ""
   },
@@ -6245,7 +6245,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 3,
+   "violations": 6,
    "rows_checked": 0,
    "note": ""
   },
@@ -6273,7 +6273,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 3,
+   "violations": 6,
    "rows_checked": 0,
    "note": ""
   },
@@ -6370,8 +6370,8 @@
    "table": "CONDITION_OCCURRENCE,DRUG_EXPOSURE,EPISODE,EPISODE_EVENT,PROCEDURE_OCCURRENCE",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 1,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },
@@ -6427,7 +6427,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 5,
    "rows_checked": 0,
    "note": ""
   },
@@ -6455,7 +6455,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 2,
+   "violations": 4,
    "rows_checked": 0,
    "note": ""
   },
@@ -6466,6 +6466,34 @@
    "subcategory": "atemporal",
    "severity": "warning",
    "table": "PATHOLOGY_TUMOR",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-CC-001",
+   "name": "직장 MRI 거리의 앞뒤가 맞음",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "warning",
+   "table": "COLORECTAL_EXAM",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-CC-002",
+   "name": "개복 전환과 사유가 맞물림",
+   "category": "Conformance",
+   "subcategory": "value",
+   "severity": "warning",
+   "table": "COLORECTAL_SURGERY_DETAIL",
    "fields": "",
    "check": "sql",
    "status": "pass",

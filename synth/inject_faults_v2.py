@@ -192,9 +192,10 @@ class InjectorV2:
             df = self.data[t]
             if len(df) < 2 or not all(c in df.columns for c in cols):
                 continue
-            src, dst = self.rows(t, k=2)[:2] if len(self.rows(t, k=2)) == 2 else (None, None)
-            if src is None:
+            picked = self.rows(t, k=2)      # 한 번만 고른다 (부를 때마다 '쓴 행'으로 표시되기 때문)
+            if len(picked) < 2:
                 continue
+            src, dst = picked[0], picked[1]
             before = "+".join(str(df.at[dst, c]) for c in cols)
             for c in cols:
                 df.at[dst, c] = df.at[src, c]
@@ -229,18 +230,26 @@ class InjectorV2:
             for i in self.rows(t, mask=mask):
                 self.put("ANCHOR_MISSING", "Completeness", t, i, a, "", r["id"])
 
-        # ---- 컬럼 자체를 없앤다
+        self.semantic()
+        self.drop_column()      # 맨 끝에 한다 — 아래 설명 참고
+        return self
+
+    def drop_column(self):
+        """컬럼 하나를 통째로 없앤다.
+
+        맨 마지막에, 그리고 **다른 오류가 쓰지 않은 컬럼**만 고른다. 앞서 심은 오류의 컬럼을 지우면
+        그 오류는 검사할 근거가 사라져 '못 잡았다'로 보인다(실제로 days_supply 를 지워 그런 일이 났다).
+        """
+        used_cols = {(m["table"], m["field"]) for m in self.manifest}
         for r in self.sample_rules("columns", n=1):
             t = r["table"]
             df = self.data[t]
-            drop = [c for c in df.columns if c not in (str(SPEC[t]["pk"]).split("+")[0].strip(), "person_id")]
+            keep = {str(SPEC[t]["pk"]).split("+")[0].strip(), "person_id"}
+            drop = [c for c in df.columns if c not in keep and (t, c) not in used_cols]
             if drop:
                 c = drop[len(drop) // 2]
                 self.log("COLUMN_MISSING", "Conformance", t, None, c, "(컬럼 삭제)", r["id"])
                 self.dropped_columns.setdefault(t, []).append(c)
-
-        self.semantic()
-        return self
 
     # ------------------------------------------------- 의미 규칙용(손으로 적음)
     def semantic(self):

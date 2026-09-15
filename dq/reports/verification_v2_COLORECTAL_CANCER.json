@@ -1,27 +1,27 @@
 {
  "cohort": "COLORECTAL_CANCER",
  "clean": {
-  "rules": 459,
+  "rules": 461,
   "violations": 0,
   "failed_rules": 0,
   "false_positive_rate": 0.0
  },
  "dirty": {
-  "rules": 459,
-  "violations": 143,
-  "failed_rules": 49
+  "rules": 461,
+  "violations": 172,
+  "failed_rules": 47
  },
- "faults_total": 102,
- "faults_detected": 102,
+ "faults_total": 105,
+ "faults_detected": 105,
  "recall": 1.0,
- "fault_types": 18,
- "fault_types_fully_detected": 18,
+ "fault_types": 17,
+ "fault_types_fully_detected": 17,
  "missed": [],
  "by_type": [
   {
    "fault_type": "ANCHOR_MISSING",
-   "n": 4,
-   "detected": 4,
+   "n": 6,
+   "detected": 6,
    "recall": 1.0
   },
   {
@@ -38,8 +38,8 @@
   },
   {
    "fault_type": "CONCEPT_OUT_OF_SET",
-   "n": 6,
-   "detected": 6,
+   "n": 9,
+   "detected": 9,
    "recall": 1.0
   },
   {
@@ -50,12 +50,6 @@
   },
   {
    "fault_type": "EPISODE_END_BEFORE_START",
-   "n": 2,
-   "detected": 2,
-   "recall": 1.0
-  },
-  {
-   "fault_type": "EVENT_AFTER_DEATH",
    "n": 2,
    "detected": 2,
    "recall": 1.0
@@ -130,33 +124,31 @@
  "by_category": [
   {
    "category": "Completeness",
-   "n": 31,
-   "detected": 31,
+   "n": 33,
+   "detected": 33,
    "recall": 1.0
   },
   {
    "category": "Conformance",
-   "n": 45,
-   "detected": 45,
+   "n": 48,
+   "detected": 48,
    "recall": 1.0
   },
   {
    "category": "Plausibility",
-   "n": 26,
-   "detected": 26,
+   "n": 24,
+   "detected": 24,
    "recall": 1.0
   }
  ],
  "collateral_rules": [
   "SEMV-COM-004",
-  "SEMV-COM-005",
   "SEMV-COM-006",
   "SEMV-COM-007",
-  "SEMV-EP-002",
   "SEMV-EP-003",
   "SEMV-PA-003",
+  "SV-0113",
   "SV-0250",
-  "SV-0334",
   "SV-0696"
  ]
 }

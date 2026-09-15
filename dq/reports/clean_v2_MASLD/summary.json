@@ -5,23 +5,23 @@
   "PERSON": 60,
   "OBSERVATION_PERIOD": 60,
   "DEATH": 0,
-  "VISIT_OCCURRENCE": 449,
-  "CONDITION_OCCURRENCE": 208,
-  "PROCEDURE_OCCURRENCE": 81,
+  "VISIT_OCCURRENCE": 465,
+  "CONDITION_OCCURRENCE": 226,
+  "PROCEDURE_OCCURRENCE": 82,
   "DRUG_EXPOSURE": 0,
-  "MEASUREMENT": 2016,
+  "MEASUREMENT": 2080,
   "OBSERVATION": 0,
   "NOTE": 0,
-  "SPECIMEN": 21,
+  "SPECIMEN": 22,
   "COHORT": 60,
   "EPISODE": 60,
   "EPISODE_EVENT": 60,
-  "PATHOLOGY_REPORT": 21,
+  "PATHOLOGY_REPORT": 22,
   "MASLD_EXAM": 60,
-  "MASLD_ASSESSMENT": 309,
-  "MASLD_EVENT": 309
+  "MASLD_ASSESSMENT": 325,
+  "MASLD_EVENT": 325
  },
- "rules_total": 383,
+ "rules_total": 385,
  "rules_failed": 0,
  "rules_skipped": 1,
  "rules_error": 0,
@@ -40,7 +40,7 @@
    "violations": 0
   },
   "Plausibility": {
-   "rules": 35,
+   "rules": 37,
    "failed": 0,
    "violations": 0
   }
@@ -589,7 +589,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -603,7 +603,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -617,7 +617,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -631,7 +631,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -645,7 +645,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -659,7 +659,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -673,7 +673,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -687,7 +687,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -701,7 +701,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -715,7 +715,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -729,7 +729,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -743,7 +743,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -757,7 +757,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -771,7 +771,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -785,7 +785,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -799,7 +799,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -813,7 +813,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -827,7 +827,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 465,
    "note": ""
   },
   {
@@ -855,7 +855,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -869,7 +869,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -883,7 +883,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -897,7 +897,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -911,7 +911,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -925,7 +925,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -939,7 +939,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -953,7 +953,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -967,7 +967,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -981,7 +981,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -995,7 +995,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -1009,7 +1009,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -1023,7 +1023,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -1037,7 +1037,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -1051,7 +1051,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -1065,7 +1065,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 208,
+   "rows_checked": 226,
    "note": ""
   },
   {
@@ -1093,7 +1093,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1107,7 +1107,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1121,7 +1121,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1135,7 +1135,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1149,7 +1149,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1163,7 +1163,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1177,7 +1177,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1191,7 +1191,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1205,7 +1205,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1219,7 +1219,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1233,7 +1233,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1247,7 +1247,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1261,7 +1261,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1275,7 +1275,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1289,7 +1289,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1303,7 +1303,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1317,7 +1317,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 81,
+   "rows_checked": 82,
    "note": ""
   },
   {
@@ -1611,7 +1611,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1625,7 +1625,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1639,7 +1639,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1653,7 +1653,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1667,7 +1667,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1681,7 +1681,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1695,7 +1695,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1709,7 +1709,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1723,7 +1723,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1737,7 +1737,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1751,7 +1751,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1765,7 +1765,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1779,7 +1779,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1793,7 +1793,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1807,7 +1807,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1821,7 +1821,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1835,7 +1835,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1849,7 +1849,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1863,7 +1863,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1877,7 +1877,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1891,7 +1891,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -1905,7 +1905,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2016,
+   "rows_checked": 2080,
    "note": ""
   },
   {
@@ -2535,7 +2535,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2549,7 +2549,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2563,7 +2563,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2577,7 +2577,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2591,7 +2591,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2605,7 +2605,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2619,7 +2619,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2633,7 +2633,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2647,7 +2647,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2661,7 +2661,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2675,7 +2675,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2689,7 +2689,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2703,7 +2703,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2717,7 +2717,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2731,7 +2731,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2745,7 +2745,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -2759,7 +2759,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3347,7 +3347,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3361,7 +3361,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3375,7 +3375,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3389,7 +3389,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3403,7 +3403,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3417,7 +3417,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3431,7 +3431,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3445,7 +3445,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3459,7 +3459,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3473,7 +3473,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3487,7 +3487,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3501,7 +3501,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3515,7 +3515,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3529,7 +3529,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3543,7 +3543,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3557,7 +3557,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3571,7 +3571,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3585,7 +3585,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3599,7 +3599,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3613,7 +3613,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3627,7 +3627,7 @@
    "check": "not_null_either",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3641,7 +3641,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3655,7 +3655,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3669,7 +3669,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3683,7 +3683,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3697,7 +3697,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3711,7 +3711,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3725,7 +3725,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3739,7 +3739,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3753,7 +3753,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3767,7 +3767,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3781,7 +3781,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3795,7 +3795,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3809,7 +3809,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3823,7 +3823,7 @@
    "check": "not_null_when",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3837,7 +3837,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -3851,7 +3851,7 @@
    "check": "group_anchor",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 21,
+   "rows_checked": 22,
    "note": ""
   },
   {
@@ -4243,7 +4243,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4257,7 +4257,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4271,7 +4271,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4285,7 +4285,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4299,7 +4299,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4313,7 +4313,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4327,7 +4327,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4341,7 +4341,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4355,7 +4355,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4369,7 +4369,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4383,7 +4383,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4397,7 +4397,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4411,7 +4411,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4425,7 +4425,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4439,7 +4439,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4453,7 +4453,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4467,7 +4467,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4481,7 +4481,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4495,7 +4495,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4509,7 +4509,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4523,7 +4523,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4537,7 +4537,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4551,7 +4551,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4565,7 +4565,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4579,7 +4579,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4593,7 +4593,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4607,7 +4607,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4621,7 +4621,7 @@
    "check": "concept_set",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4635,7 +4635,7 @@
    "check": "group_anchor",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4663,7 +4663,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4677,7 +4677,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4691,7 +4691,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4705,7 +4705,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4719,7 +4719,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4733,7 +4733,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4747,7 +4747,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4761,7 +4761,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4775,7 +4775,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4789,7 +4789,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4803,7 +4803,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4817,7 +4817,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4831,7 +4831,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4845,7 +4845,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4859,7 +4859,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4873,7 +4873,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4887,7 +4887,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4901,7 +4901,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4915,7 +4915,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4929,7 +4929,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4943,7 +4943,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4957,7 +4957,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4971,7 +4971,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4985,7 +4985,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -4999,7 +4999,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -5013,7 +5013,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -5027,7 +5027,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -5041,7 +5041,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -5055,7 +5055,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -5069,7 +5069,7 @@
    "check": "concept_code",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -5083,7 +5083,7 @@
    "check": "group_anchor",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 309,
+   "rows_checked": 325,
    "note": ""
   },
   {
@@ -5407,6 +5407,34 @@
    "violations": 0,
    "rows_checked": 0,
    "note": "필요 테이블 없음: ['PATHOLOGY_TUMOR']"
+  },
+  {
+   "rule_id": "SEMV-MA-001",
+   "name": "FIB-4 다시 계산했을 때 맞음",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "warning",
+   "table": "MASLD_ASSESSMENT,MEASUREMENT,PERSON",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
+  },
+  {
+   "rule_id": "SEMV-MA-002",
+   "name": "심장대사 위험인자가 하나 이상",
+   "category": "Plausibility",
+   "subcategory": "atemporal",
+   "severity": "warning",
+   "table": "CONDITION_OCCURRENCE,MASLD_EXAM,MEASUREMENT",
+   "fields": "",
+   "check": "sql",
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 0,
+   "note": ""
   }
  ]
 }

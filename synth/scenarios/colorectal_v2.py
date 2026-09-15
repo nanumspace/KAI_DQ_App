@@ -148,6 +148,7 @@ def generate(ctx: CtxV2, n=100):
                                                       pos=pos_ln, tot=tot_ln, bd=bd, tme=tme),
                      note_type=44814640, note_class=36716165, vid=sv)
             stoma = rectum and ctx.bern(0.45)
+            converted = ctx.bern(0.08)      # 전환 여부와 사유는 한 번에 정해야 앞뒤가 맞는다
             ctx.ext("COLORECTAL_SURGERY_DETAIL", p, vid=sv, procedure_occurrence_id=proc,
                     preop_obstruction_treatment_yn=1 if ctx.bern(0.1) else 0,
                     stoma_yn=1 if stoma else 0,
@@ -158,8 +159,8 @@ def generate(ctx: CtxV2, n=100):
                     anastomosis_height_cm=round(ctx.rand(2.0, 12.0), 1) if rectum else None,
                     splenic_flexure_mobilization_yn=1 if ctx.bern(0.3) else 0,
                     hipec_yn=1 if (stage == "IV" and ctx.bern(0.1)) else 0,
-                    conversion_to_open_yn=1 if ctx.bern(0.08) else 0,
-                    conversion_reason="유착" if ctx.bern(0.08) else "해당없음")
+                    conversion_to_open_yn=1 if converted else 0,
+                    conversion_reason="유착" if converted else "해당없음")
 
         # ---- 5) 보조 항암요법
         if stage in ("III", "IV"):
@@ -198,8 +199,9 @@ def _mri_row(ctx, p, vid, day, stage, first):
     """직장 MRI 한 행. 재평가일 때만 mrTRG 를 적는다(치료 전에는 잴 것이 없다)."""
     ctx.ext("COLORECTAL_EXAM", p, vid=vid, exam_date=day,
             rectal_tumor_height_cm=round(ctx.rand(2.0, 14.0), 1),
-            mri_distance_anal_verge_cm=round(ctx.rand(2.0, 15.0), 1),
-            mri_distance_anorectal_junction_cm=round(ctx.rand(0.5, 10.0), 1),
+            # 항문연이 항문직장경계부보다 바깥이므로 거리도 더 멀다. 따로 뽑으면 앞뒤가 어긋난다.
+            mri_distance_anal_verge_cm=(verge := round(ctx.rand(3.0, 15.0), 1)),
+            mri_distance_anorectal_junction_cm=round(max(0.5, verge - ctx.rand(1.0, 3.0)), 1),
             mri_t4b_invaded_organ_concept_id=ctx.cs("CL_MRI_T4B_INVADED_ORGAN",
                                                     ctx.choice(["PROSTATE", "VAGINA", "BLADDER", "OTHER"])
                                                     if stage == "IV" else "OTHER"),

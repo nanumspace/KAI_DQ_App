@@ -1,15 +1,15 @@
 {
  "cohort": "DIABETES",
  "clean": {
-  "rules": 339,
+  "rules": 341,
   "violations": 0,
   "failed_rules": 0,
   "false_positive_rate": 0.0
  },
  "dirty": {
-  "rules": 339,
-  "violations": 138,
-  "failed_rules": 36
+  "rules": 341,
+  "violations": 198,
+  "failed_rules": 37
  },
  "faults_total": 83,
  "faults_detected": 83,
@@ -119,8 +119,9 @@
  ],
  "collateral_rules": [
   "SEMV-COM-004",
+  "SEMV-COM-005",
   "SEMV-COM-006",
-  "SEMV-EP-003",
+  "SEMV-DM-001",
   "SV-0209",
   "SV-0411"
  ]

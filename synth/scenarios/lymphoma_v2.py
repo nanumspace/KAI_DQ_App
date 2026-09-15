@@ -106,13 +106,19 @@ def generate(ctx: CtxV2, n=100):
                 mediastinal_mass_ratio=round(ctx.rand(0.1, 0.45), 2))
 
         # ---- 2) 예후지수
-        risk = RISK[min(3, ipi if not hodgkin else ctx.randint(0, 3))]
+        # 위험군은 IPI 점수에서 나온다(0~1 저위험, 2 저중간, 3 고중간, 4~5 고위험).
+        risk = RISK[0] if ipi <= 1 else RISK[1] if ipi == 2 else RISK[2] if ipi == 3 else RISK[3]
         b_sym = ctx.bern(0.35 if advanced else 0.12)
+        # B 증상이 있다면 발열·야간발한·체중감소(10% 이상) 중 하나는 반드시 있다(그래야 B 증상이다).
+        fever = b_sym and ctx.bern(0.6)
+        sweats = b_sym and ctx.bern(0.7)
+        wloss = round(ctx.rand(10.0, 15.0), 1) if (b_sym and not (fever or sweats)) else (
+            round(ctx.rand(5.0, 15.0), 1) if b_sym else 0.0)
         ctx.ext("LYMPHOMA_ASSESSMENT", p, vid=vid, assessment_date=index,
                 b_symptoms_yn=1 if b_sym else 0,
-                fever_yn=1 if (b_sym and ctx.bern(0.6)) else 0,
-                night_sweats_yn=1 if (b_sym and ctx.bern(0.7)) else 0,
-                weight_loss_percent_6m=round(ctx.rand(5.0, 15.0), 1) if b_sym else 0.0,
+                fever_yn=1 if fever else 0,
+                night_sweats_yn=1 if sweats else 0,
+                weight_loss_percent_6m=wloss,
                 prognostic_index_date=index, ipi_score=ipi,
                 ipi_risk_group_concept_id=ctx.cs("RISK_GROUP", risk), ipi_risk_group_source_value=risk,
                 aaipi_score=min(3, ipi), nccn_ipi_score=min(8, ipi + ctx.randint(0, 3)),

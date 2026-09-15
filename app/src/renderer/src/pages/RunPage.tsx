@@ -9,6 +9,9 @@ function bytes(n: number): string { return n < 1024 * 1024 ? `${(n / 1024).toFix
 
 const LEVEL: Record<string, { cls: string; label: string }> = { error: { cls: "error", label: "오류" }, warn: { cls: "warning", label: "주의" }, info: { cls: "gray", label: "참고" } };
 
+/** 경로의 마지막 칸 (윈도우의 역슬래시도 함께 본다) */
+const leaf = (p: string) => p.split(/[\\/]/).filter(Boolean).slice(-1)[0] ?? p;
+
 export function RunPage({ nav }: { nav: Nav }) {
   const [cohorts, setCohorts] = useState<CohortInfo[]>([]);
   const [cohort, setCohort] = useState("");
@@ -51,6 +54,14 @@ export function RunPage({ nav }: { nav: Nav }) {
     const mapping = Object.fromEntries(Object.entries(plan.mapping).filter(([, v]) => v !== id));
     setPlan(await api.checkInput(cohort, candidates, mapping));
   };
+  /** 한 폴더에서 온 파일을 한꺼번에 뺀다 (폴더를 잘못 넣었을 때) */
+  const removeFolder = async (folder: string) => {
+    if (!plan) return;
+    const gone = new Set(plan.candidates.filter((c) => c.folder === folder).map((c) => c.id));
+    const candidates = plan.candidates.filter((c) => !gone.has(c.id));
+    const mapping = Object.fromEntries(Object.entries(plan.mapping).filter(([, v]) => !gone.has(v)));
+    setPlan(await api.checkInput(cohort, candidates, mapping));
+  };
   const changeCohort = (id: string) => { setCohort(id); setPlan(null); setResult(null); setOutputs(null); setErr(null); };
   const template = async (kind: TemplateKind) => {
     setBusy("template"); setMsg(null);
@@ -71,6 +82,12 @@ export function RunPage({ nav }: { nav: Nav }) {
     try { setPreview({ c, data: await api.previewSource(c) }); } catch (e) { setErr(String((e as Error).message ?? e)); }
   };
   const unmapped = useMemo(() => plan ? plan.candidates.filter((c) => !Object.values(plan.mapping).includes(c.id)) : [], [plan]);
+  /** 넣은 폴더 목록 (넣은 차례 그대로) */
+  const folders = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const c of plan?.candidates ?? []) m.set(c.folder, (m.get(c.folder) ?? 0) + 1);
+    return [...m].map(([folder, count]) => ({ folder, count }));
+  }, [plan]);
 
   // ---------------------------------------------------------------- ③ 실행
   const run = async () => {
@@ -98,7 +115,7 @@ export function RunPage({ nav }: { nav: Nav }) {
       {msg && <div className="callout" style={{ marginBottom: 12 }}>{msg}</div>}
 
       {/* ① */}
-      <Card num={1} title="코호트와 입력 파일" sub="파일 하나가 테이블 하나입니다. CSV 여러 개, 또는 시트당 테이블 하나인 엑셀 파일 하나를 넣습니다.">
+      <Card num={1} title="코호트와 입력 파일" sub="파일 하나가 테이블 하나입니다. CSV 여러 개, 시트당 테이블 하나인 엑셀 파일, 폴더 여러 개를 섞어 넣을 수 있습니다.">
         <div className="grid" style={{ gridTemplateColumns: "280px 1fr 300px", gap: 16 }}>
           <div className="form">
             <label>코호트
@@ -110,10 +127,13 @@ export function RunPage({ nav }: { nav: Nav }) {
           </div>
           <div className={`dropzone ${drag ? "drag" : ""}`} onDragOver={(e) => { e.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)} onDrop={onDrop}>
             <div style={{ fontSize: 15, fontWeight: 600, color: "var(--navy)" }}>여기에 파일이나 폴더를 끌어다 놓으세요</div>
-            <div style={{ color: "var(--muted)", fontSize: 12.5, margin: "6px 0 12px" }}>CSV(UTF-8 또는 EUC-KR) · 엑셀(.xlsx) · 테이블별 파일이 든 폴더</div>
+            <div style={{ color: "var(--muted)", fontSize: 12.5, margin: "6px 0 12px" }}>
+              CSV(UTF-8 또는 EUC-KR) · 엑셀(.xlsx) · 테이블별 파일이 든 폴더<br />
+              폴더는 여러 개 넣어도 됩니다 — 서식을 바꾼 폴더와 EHR 추출본 폴더가 따로여도 그대로 넣으세요.
+            </div>
             <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
               <button className="btn primary" disabled={!!busy} onClick={async () => addPaths(await api.chooseFiles())}>파일 선택</button>
-              <button className="btn" disabled={!!busy} onClick={async () => { const d = await api.chooseDirectory("테이블 파일이 든 폴더 선택"); if (d) addPaths([d]); }}>폴더 선택</button>
+              <button className="btn" disabled={!!busy} onClick={async () => { const ds = await api.chooseDirectories("테이블 파일이 든 폴더 선택 (여러 개 고를 수 있습니다)"); if (ds.length) addPaths(ds); }}>폴더 선택</button>
             </div>
             {busy === "inspect" && <div style={{ marginTop: 10, fontSize: 12 }}>파일을 읽는 중…</div>}
           </div>
@@ -131,7 +151,17 @@ export function RunPage({ nav }: { nav: Nav }) {
         </div>
         {plan && plan.candidates.length > 0 && (
           <div style={{ marginTop: 14 }}>
-            <div className="sub" style={{ fontWeight: 600, color: "var(--navy)" }}>넣은 파일 {plan.candidates.length}개</div>
+            <div className="sub" style={{ fontWeight: 600, color: "var(--navy)" }}>넣은 파일 {plan.candidates.length}개{folders.length > 1 ? ` · 폴더 ${folders.length}곳` : ""}</div>
+            {folders.length > 1 && (
+              <div className="chips" style={{ margin: "6px 0 8px" }}>
+                {folders.map((f) => (
+                  <span key={f.folder} className="chip" title={f.folder}>
+                    {leaf(f.folder)} · {f.count}개
+                    <button className="chip-x" disabled={busy === "run"} title="이 폴더에서 온 파일 모두 빼기" onClick={() => removeFolder(f.folder)}>×</button>
+                  </span>
+                ))}
+              </div>
+            )}
             <div className="tblwrap short">
               <table className="tbl">
                 <thead><tr><th>파일 / 시트</th><th>종류</th><th>인코딩</th><th className="num">행</th><th className="num">컬럼</th><th className="num">크기</th><th>대응 테이블</th><th></th></tr></thead>
@@ -139,7 +169,10 @@ export function RunPage({ nav }: { nav: Nav }) {
                   const t = Object.entries(plan.mapping).find(([, v]) => v === c.id)?.[0];
                   return (
                     <tr key={c.id}>
-                      <td className="ellipsis" title={c.path}>{c.name}</td><td>{c.kind === "xlsx" ? "엑셀 시트" : "CSV"}</td>
+                      <td className="ellipsis" title={c.path}>
+                        {c.name}
+                        {folders.length > 1 && <div style={{ color: "var(--muted)", fontSize: 11 }}>{leaf(c.folder)}</div>}
+                      </td><td>{c.kind === "xlsx" ? "엑셀 시트" : "CSV"}</td>
                       <td>{c.error ? <span className="pill error">읽기 실패</span> : c.encoding}</td>
                       <td className="num">{c.error ? "-" : fmt(c.rows)}</td><td className="num">{c.columns.length || "-"}</td><td className="num">{bytes(c.sizeBytes)}</td>
                       <td>{t ? <span className="mono">{t}</span> : <span className="pill warning">대응 없음</span>}</td>
@@ -166,7 +199,9 @@ export function RunPage({ nav }: { nav: Nav }) {
                   <td style={{ minWidth: 260 }}>
                     <select value={t.candidateId ?? ""} onChange={(e) => remap(t.table, e.target.value)} disabled={busy === "run"} style={{ padding: "5px 8px" }}>
                       <option value="">(없음)</option>
-                      {plan.candidates.filter((c) => !c.error).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                      {plan.candidates.filter((c) => !c.error).map((c) => (
+                        <option key={c.id} value={c.id}>{folders.length > 1 ? `${c.name}  (${leaf(c.folder)})` : c.name}</option>
+                      ))}
                     </select>
                     {t.candidateId && !t.auto && <span style={{ fontSize: 11, color: "var(--muted)", marginLeft: 6 }}>직접 지정</span>}
                   </td>

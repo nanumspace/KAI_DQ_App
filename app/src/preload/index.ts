@@ -14,6 +14,7 @@ const api: Api = {
   listCohorts: () => ipcRenderer.invoke("cohorts:list"),
   listRules: () => ipcRenderer.invoke("rules:list"),
   chooseDirectory: (title) => ipcRenderer.invoke("dialog:directory", title),
+  chooseDirectories: (title) => ipcRenderer.invoke("dialog:directories", title),
   chooseFiles: () => ipcRenderer.invoke("dialog:files"),
   pathsForFiles: (files) => files.map((f) => webUtils.getPathForFile(f)).filter(Boolean),
   inspectInput: (cohort, paths, existing) => ipcRenderer.invoke("input:inspect", cohort, paths, existing),

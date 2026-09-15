@@ -208,6 +208,10 @@ function registerIpc(): void {
     const r = await dialog.showOpenDialog(win!, { title: title ?? "디렉터리 선택", properties: ["openDirectory"] });
     return r.canceled ? null : r.filePaths[0];
   });
+  ipcMain.handle("dialog:directories", async (_e, title?: string) => {
+    const r = await dialog.showOpenDialog(win!, { title: title ?? "폴더 선택", properties: ["openDirectory", "multiSelections"] });
+    return r.canceled ? [] : r.filePaths;
+  });
   ipcMain.handle("dialog:files", async () => {
     const r = await dialog.showOpenDialog(win!, { title: "CSV 또는 엑셀 파일 선택", properties: ["openFile", "multiSelections"],
       filters: [{ name: "CSV · 엑셀", extensions: ["csv", "tsv", "txt", "xlsx", "xlsm", "xls"] }] });
@@ -292,6 +296,30 @@ async function smoke(): Promise<void> {
     log(`xlsx plan: candidates=${planX.candidates.length} mapped=${Object.keys(planX.mapping).length} errors=${planX.errors} warnings=${planX.warnings}`);
     const recX = await runValidation({ cohort: "LUNG_CANCER", candidates: planX.candidates, mapping: planX.mapping, today: "2026-09-07", label: "dirty 엑셀 입력" });
     log(`run ${recX.run_id}: rules=${recX.rules_total} violations=${recX.violations_total} (엑셀)`);
+    let planFolders: InputPlan | null = null;
+    // 폴더 두 곳을 한 번에 넣는 길: v2 는 서식을 바꾼 폴더와 EHR 추출본 폴더가 따로 온다.
+    {
+      const src = path.join(synth, `clean${sfx}/LUNG_CANCER`);
+      const tables = cohortOf("LUNG_CANCER").tables.filter((t) => fs.existsSync(path.join(src, `${t}.csv`)));
+      const half = Math.ceil(tables.length / 2);
+      const dirs = [path.join(out, "split/EHR추출본"), path.join(out, "split/서식변환결과")];
+      dirs.forEach((d) => fs.mkdirSync(d, { recursive: true }));
+      tables.forEach((t, i) => fs.copyFileSync(path.join(src, `${t}.csv`), path.join(dirs[i < half ? 0 : 1], `${t}.csv`)));
+      const plan2 = inspect("LUNG_CANCER", dirs);
+      planFolders = plan2;
+      log(`폴더 2곳: 후보 ${plan2.candidates.length}개, 대응 ${Object.keys(plan2.mapping).length}/${tables.length}, 오류 ${plan2.errors} 주의 ${plan2.warnings}`);
+      const rec2 = await runValidation({ cohort: "LUNG_CANCER", candidates: plan2.candidates, mapping: plan2.mapping, today: "2026-09-07", label: "폴더 2곳 입력" });
+      log(`run ${rec2.run_id}: rules=${rec2.rules_total} violations=${rec2.violations_total} (폴더 2곳)`);
+      // 상위 폴더 하나만 넣어도 아래 두 폴더를 찾아야 한다
+      const planP = inspect("LUNG_CANCER", [path.join(out, "split")]);
+      log(`상위 폴더 1곳: 후보 ${planP.candidates.length}개, 대응 ${Object.keys(planP.mapping).length}/${tables.length}`);
+      // 같은 이름이 두 폴더에 있으면 어느 것을 쓰는지 말해야 한다
+      fs.copyFileSync(path.join(src, "PERSON.csv"), path.join(dirs[1], "PERSON.csv"));
+      const planD = inspect("LUNG_CANCER", dirs);
+      const dup = planD.tables.find((t) => t.table === "PERSON")?.issues.filter((i) => i.text.includes("같은 이름")) ?? [];
+      log(`이름 겹침: 후보 ${planD.candidates.length}개, PERSON 안내 ${dup.length}건 — ${dup[0]?.text ?? "(없음)"}`);
+      fs.rmSync(path.join(dirs[1], "PERSON.csv"));
+    }
     let crfPayload: unknown = null;
     // v2 서식 경로: 빈 양식을 만들고, 채워진 서식을 레코드로 되돌린다
     {
@@ -332,7 +360,8 @@ async function smoke(): Promise<void> {
       crfPayload = { inDir: crfIn, result: { outDir: crfOut, ...rc } };
     }
     // 화면 캡처: 검증 실행 화면은 대응표 상태를 보기 위해 렌더러에 계획을 넣어 준다
-    win!.webContents.send("smoke:plan", planX);
+    // 화면은 폴더 2곳을 넣은 모습으로 찍는다 (엑셀 경로는 위에서 실행으로 확인했다)
+    win!.webContents.send("smoke:plan", planFolders ?? planX);
     for (const page of ["run", "crf", "report", "findings", "dashboard", "rules", "monitor", "settings"]) {
       win!.webContents.send("nav", page);
       // 화면이 붙은 뒤에 보내야 한다 — 그 화면은 열릴 때 비로소 듣기 시작한다

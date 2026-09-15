@@ -54,15 +54,31 @@ function countCsvRows(text: string): number {
 const EXT_CSV = new Set([".csv", ".txt", ".tsv"]);
 const EXT_XLSX = new Set([".xlsx", ".xlsm", ".xls"]);
 
-/** 폴더는 그 안의 CSV/엑셀 파일로 펼친다 (하위 폴더는 보지 않음) */
+function filesIn(dir: string): string[] {
+  const out: string[] = [];
+  for (const f of fs.readdirSync(dir).sort()) {
+    const ext = path.extname(f).toLowerCase();
+    if (!f.startsWith(".") && !f.startsWith("_") && (EXT_CSV.has(ext) || EXT_XLSX.has(ext))) out.push(path.join(dir, f));
+  }
+  return out;
+}
+
+/**
+ * 폴더는 그 안의 CSV/엑셀 파일로 펼친다.
+ * 폴더에 직접 든 파일이 하나도 없으면 바로 아래 폴더까지만 들여다본다 —
+ * v2 는 서식을 바꾼 폴더와 EHR 추출본 폴더가 따로 오므로, 그 둘을 담은 상위 폴더를
+ * 통째로 끌어다 놓는 일이 흔하다. 그보다 깊이는 보지 않는다.
+ */
 export function expandPaths(paths: string[]): string[] {
   const out: string[] = [];
   for (const p of paths) {
     if (!fs.existsSync(p)) continue;
     if (fs.statSync(p).isDirectory()) {
-      for (const f of fs.readdirSync(p).sort()) {
-        const ext = path.extname(f).toLowerCase();
-        if (!f.startsWith(".") && !f.startsWith("_") && (EXT_CSV.has(ext) || EXT_XLSX.has(ext))) out.push(path.join(p, f));
+      const here = filesIn(p);
+      if (here.length) { out.push(...here); continue; }
+      for (const d of fs.readdirSync(p).sort()) {
+        const sub = path.join(p, d);
+        if (!d.startsWith(".") && !d.startsWith("_") && fs.existsSync(sub) && fs.statSync(sub).isDirectory()) out.push(...filesIn(sub));
       }
     } else out.push(p);
   }
@@ -84,7 +100,7 @@ export function cellToString(v: unknown): string {
 }
 
 function inspectCsv(p: string): SourceCandidate {
-  const base = { id: p, kind: "csv" as const, path: p, name: path.basename(p), sizeBytes: fs.statSync(p).size };
+  const base = { id: p, kind: "csv" as const, path: p, name: path.basename(p), folder: path.dirname(p), sizeBytes: fs.statSync(p).size };
   try {
     const { text, encoding } = readText(p);
     const delimiter = path.extname(p).toLowerCase() === ".tsv" ? "\t" : ",";
@@ -109,11 +125,11 @@ function inspectXlsx(p: string): SourceCandidate[] {
     return wb.SheetNames.map((sheet) => {
       const rows = sheetRows(wb.Sheets[sheet]);
       const columns = (rows[0] ?? []).map((c) => String(c).trim());
-      return { id: `${p}#${sheet}`, kind: "xlsx" as const, path: p, sheet, name: `${path.basename(p)} / ${sheet}`,
+      return { id: `${p}#${sheet}`, kind: "xlsx" as const, path: p, sheet, name: `${path.basename(p)} / ${sheet}`, folder: path.dirname(p),
         rows: Math.max(0, rows.length - 1), columns, sample: rows.slice(1, SAMPLE_ROWS + 1), encoding: "엑셀", sizeBytes: size };
     });
   } catch (e) {
-    return [{ id: p, kind: "xlsx", path: p, name: path.basename(p), rows: 0, columns: [], sample: [], encoding: "엑셀", sizeBytes: size, error: (e as Error).message }];
+    return [{ id: p, kind: "xlsx", path: p, name: path.basename(p), folder: path.dirname(p), rows: 0, columns: [], sample: [], encoding: "엑셀", sizeBytes: size, error: (e as Error).message }];
   }
 }
 
@@ -129,6 +145,18 @@ export function inspectPaths(paths: string[]): SourceCandidate[] {
 
 // ------------------------------------------------------------------ 자동 대응
 const norm = (s: string) => s.toUpperCase().replace(/[^A-Z0-9]/g, "");
+
+/** 후보의 이름(시트명 또는 확장자 뺀 파일명)을 테이블 이름과 견줄 수 있게 정규화 */
+function nameOfCandidate(c: SourceCandidate): string {
+  return norm(c.sheet ?? path.basename(c.path, path.extname(c.path)));
+}
+
+/** 폴더를 화면에 짧게 적는다 (상위 한 칸까지) */
+export function folderLabel(dir: string): string {
+  const parent = path.basename(path.dirname(dir));
+  const here = path.basename(dir);
+  return parent && parent !== here && parent !== path.sep ? `${parent}/${here}` : here;
+}
 
 function headerSimilarity(columns: string[], t: SpecTable): number {
   if (!columns.length) return 0;
@@ -146,13 +174,13 @@ export function autoMatch(tables: string[], spec: Spec, candidates: SourceCandid
   const byLen = [...tables].sort((a, b) => b.length - a.length); // 긴 이름 먼저 (VISIT_OCCURRENCE 가 VISIT 보다 먼저)
   // 1) 파일명(또는 시트명)이 테이블명과 같음
   for (const t of byLen) {
-    const hit = cands.find((c) => !used.has(c.id) && (norm(c.sheet ?? path.basename(c.path, path.extname(c.path))) === norm(t)));
+    const hit = cands.find((c) => !used.has(c.id) && nameOfCandidate(c) === norm(t));
     if (hit) { mapping[t] = hit.id; used.add(hit.id); }
   }
   // 2) 파일명이 테이블명을 포함
   for (const t of byLen) {
     if (mapping[t]) continue;
-    const hit = cands.find((c) => !used.has(c.id) && norm(c.sheet ?? path.basename(c.path, path.extname(c.path))).includes(norm(t)));
+    const hit = cands.find((c) => !used.has(c.id) && nameOfCandidate(c).includes(norm(t)));
     if (hit) { mapping[t] = hit.id; used.add(hit.id); }
   }
   // 3) 헤더 유사도 (명세 컬럼의 60% 이상이 있으면)
@@ -197,6 +225,12 @@ export function checkTables(tables: string[], spec: Spec, candidates: SourceCand
     out.missingColumns = specCols.filter((n) => !have.has(n));
     out.extraColumns = c.columns.filter((n) => !specCols.includes(n) && !(ALIASES[n] && specCols.includes(ALIASES[n])));
     if (c.rows === 0) issues.push({ level: "warn", text: "데이터 행이 없습니다 (헤더만)." });
+    // 폴더를 여럿 넣으면 같은 이름의 파일이 겹칠 수 있다. 어느 것을 쓰는지 말해 준다.
+    const sameName = candidates.filter((x) => !x.error && nameOfCandidate(x) === norm(table));
+    if (sameName.length > 1) {
+      const others = sameName.filter((x) => x.id !== c.id).map((x) => folderLabel(x.folder));
+      issues.push({ level: "warn", text: `같은 이름의 파일이 ${sameName.length}개 있습니다. 지금은 '${folderLabel(c.folder)}' 것을 씁니다 (다른 곳: ${others.join(", ")}).` });
+    }
     if (out.missingColumns.includes(st.pk)) issues.push({ level: "error", text: `기본키 컬럼 ${st.pk} 이(가) 없습니다.` });
     if (table !== "PERSON" && specCols.includes("person_id") && out.missingColumns.includes("person_id")) issues.push({ level: "error", text: "person_id 컬럼이 없습니다." });
     const otherMissing = out.missingColumns.filter((n) => n !== st.pk && n !== "person_id");

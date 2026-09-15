@@ -32,6 +32,8 @@ export interface SourceCandidate {
   sheet?: string;
   /** 표시 이름 (파일명 또는 파일명/시트명) */
   name: string;
+  /** 이 파일이 있던 폴더. 폴더를 여럿 넣었을 때 같은 이름을 가려내는 데 쓴다. */
+  folder: string;
   rows: number;
   columns: string[];
   /** 앞 20행 표본 (사전 점검용) */
@@ -140,6 +142,8 @@ export interface Api {
   listCohorts(): Promise<CohortInfo[]>;
   listRules(): Promise<RuleInfo[]>;
   chooseDirectory(title?: string): Promise<string | null>;
+  /** 폴더 여러 개 (서식 변환 결과 + EHR 추출본처럼 나뉘어 오는 입력용) */
+  chooseDirectories(title?: string): Promise<string[]>;
   chooseFiles(): Promise<string[]>;
   /** 드래그 앤 드롭으로 받은 File 객체들의 실제 경로 */
   pathsForFiles(files: File[]): string[];

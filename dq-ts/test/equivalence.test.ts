@@ -45,31 +45,48 @@ describe("Python 참조 구현과 동등성", () => {
 });
 
 // ---------------------------------------------------------------- v2 경로
-// v2 는 아직 폐암만 옮겨져 있다. v1 과 나란히 돌려 두 구현이 같은 판정을 내는지 본다.
+// v2 도 6개 코호트를 모두 돌려, Python 참조 구현과 위반 행까지 같은지 본다.
+// 두 구현이 갈라지면 여기서 먼저 걸린다(실제로 위반 0 일 때 머리글 처리가 달랐던 것을 이 시험이 잡았다).
 describe("v2: Python 참조 구현과 동등성", () => {
-  const V2_COHORT = "LUNG_CANCER";
   const v2Out = path.join(getRoot(), "dq-ts/output/test-reports-v2");
-  const pyDir = (kind: string) => path.join(getRoot(), `dq/reports/${kind}_v2_${V2_COHORT}`);
-  const hasPy = fs.existsSync(path.join(pyDir("clean"), "summary.json"));
-  const hasData = fs.existsSync(path.join(getRoot(), `synth/output/clean_v2/${V2_COHORT}`));
+  const pyDir = (kind: string, cohort: string) => path.join(getRoot(), `dq/reports/${kind}_v2_${cohort}`);
+  const dataDir = (kind: string, cohort: string) => path.join(getRoot(), `synth/output/${kind}_v2/${cohort}`);
+  // 데이터와 Python 보고서가 둘 다 있는 코호트만 본다(아직 안 만든 것은 건너뛴다).
+  const ready = COHORTS.filter((c) =>
+    fs.existsSync(dataDir("clean", c)) && fs.existsSync(path.join(pyDir("clean", c), "summary.json")));
 
   beforeAll(async () => {
-    if (!hasData) return;
     fs.rmSync(v2Out, { recursive: true, force: true });
-    for (const kind of ["clean", "dirty"]) {
-      const data = path.join(getRoot(), `synth/output/${kind}_v2/${V2_COHORT}`);
-      if (!fs.existsSync(data)) continue;
-      await runEngine({ cohort: V2_COHORT, today: TODAY, spec: "v2", data, out: path.join(v2Out, `${kind}_${V2_COHORT}`) });
+    for (const c of ready) for (const kind of ["clean", "dirty"]) {
+      if (!fs.existsSync(dataDir(kind, c))) continue;
+      await runEngine({ cohort: c, today: TODAY, spec: "v2", data: dataDir(kind, c), out: path.join(v2Out, `${kind}_${c}`) });
     }
-  }, 120_000);
+  }, 300_000);
 
-  it.skipIf(!hasPy || !hasData)("clean·dirty 두 실행의 규칙 결과와 위반 행이 같다", () => {
-    for (const kind of ["clean", "dirty"]) {
-      const py = path.join(pyDir(kind), "findings.csv");
-      const ts = path.join(v2Out, `${kind}_${V2_COHORT}`, "findings.csv");
-      if (!fs.existsSync(py) || !fs.existsSync(ts)) continue;
-      const norm = (p: string) => fs.readFileSync(p, "utf-8").replace(/^﻿/, "").split(/\r?\n/).filter(Boolean).sort();
-      expect(norm(ts), `${kind} 의 위반 행이 Python 과 다르다`).toEqual(norm(py));
+  it("6개 코호트가 모두 v2 로 옮겨져 있다", () => {
+    expect(ready).toEqual(COHORTS);
+  });
+
+  for (const c of COHORTS) {
+    it(`${c}: clean·dirty 의 위반 행이 Python 과 같다`, () => {
+      const norm = (p: string) => fs.readFileSync(p, "utf-8").replace(/^\uFEFF/, "").split(/\r?\n/).filter(Boolean).sort();
+      let compared = 0;
+      for (const kind of ["clean", "dirty"]) {
+        const py = path.join(pyDir(kind, c), "findings.csv");
+        const ts = path.join(v2Out, `${kind}_${c}`, "findings.csv");
+        if (!fs.existsSync(py) || !fs.existsSync(ts)) continue;
+        expect(norm(ts), `${c} ${kind} 의 위반 행이 Python 과 다르다`).toEqual(norm(py));
+        compared += 1;
+      }
+      expect(compared, `${c} 를 대조할 보고서가 없다`).toBe(2);
+    });
+  }
+
+  it("깨끗한 데이터에서는 어느 코호트도 위반이 없다", () => {
+    for (const c of ready) {
+      const p = path.join(v2Out, `clean_${c}`, "findings.csv");
+      const rows = fs.readFileSync(p, "utf-8").split(/\r?\n/).filter(Boolean);
+      expect(rows.length, `${c} 의 깨끗한 데이터에 위반이 있다`).toBe(1);   // 머리글 한 줄만
     }
   });
 });

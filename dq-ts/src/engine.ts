@@ -8,6 +8,19 @@ import { runStructural } from "./structural.js";
 import { runSemantic } from "./semantic.js";
 import type { Finding, RawTable, RuleStat, Summary, Spec, Concepts, StructuralRule, SemanticRule } from "./types.js";
 
+/**
+ * 보고서에 싣는 예시에서 데이터 값을 가린다. report.md 는 병원 밖으로 나갈 수 있는 파일이라
+ * 문장의 모양(어느 컬럼이 어떻게 어긋났는지)만 남기고 값(ID·날짜·수치·원천 문자열)은 '…' 로 바꾼다.
+ * 규칙: 따옴표 안, '=' 뒤, 날짜, 그리고 식별자 밖의 숫자. dq/engine.py 의 mask_values 와 같아야 한다.
+ */
+export function maskValues(detail: string): string {
+  return detail
+    .replace(/'[^']*'/g, "'…'")
+    .replace(/=\S+/g, "=…")
+    .replace(/\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?/g, "…")
+    .replace(/(?<![A-Za-z_\d.])\d+(?:\.\d+)?(?![A-Za-z_\d])/g, "…");
+}
+
 export const FINDING_COLUMNS = ["rule_id", "rule_name", "category", "severity", "table", "field", "row_key", "person_id", "detail"];
 
 export type ProgressStage = "load" | "structural" | "semantic" | "write";
@@ -181,12 +194,12 @@ export class Engine {
     const ex = new Map<string, string[]>();
     for (const f of this.findings) {
       const a = ex.get(f.rule_id) ?? [];
-      if (a.length < 2) { a.push(f.detail); ex.set(f.rule_id, a); }
+      if (a.length < 2) { a.push(maskValues(f.detail)); ex.set(f.rule_id, a); }
     }
     for (const r of s.rules) if (r.status === "fail")
       L.push(`| ${r.rule_id} ${r.name} | ${r.category} | ${r.severity} | ${r.table} | ${r.violations} | ${(ex.get(r.rule_id) ?? []).join(" / ").slice(0, 150)} |`);
     const errs = s.rules.filter((r) => r.status === "error");
-    if (errs.length) L.push("", "## 규칙 실행 오류", "", ...errs.map((r) => `- ${r.rule_id}: ${r.note}`));
+    if (errs.length) L.push("", "## 규칙 실행 오류", "", ...errs.map((r) => `- ${r.rule_id}: ${maskValues(r.note ?? "")}`));
     return L.join("\n") + "\n";
   }
 }

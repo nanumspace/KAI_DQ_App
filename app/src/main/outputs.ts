@@ -10,7 +10,7 @@ import { checkLabel } from "@shared/labels";
 export const APP_VERSION = "0.1.0";
 
 const FILES: Omit<OutputFile, "path" | "size">[] = [
-  { key: "report", name: "report.md", label: "검증 보고서", desc: "요약, 분류별 집계, 실패 규칙과 예시. 사람이 읽는 결과.", shareable: true },
+  { key: "report", name: "report.md", label: "검증 보고서", desc: "요약, 분류별 집계, 실패 규칙과 예시(값은 가림). 사람이 읽는 결과.", shareable: true },
   { key: "findings", name: "findings.csv", label: "위반 행 목록 (CSV)", desc: "규칙, 테이블, 행 키, 환자 ID, 상세. 병원 내부에서 데이터를 고칠 때 씁니다.", shareable: false },
   { key: "rules", name: "rule_results.csv", label: "규칙별 결과 (CSV)", desc: "규칙 전체의 통과·실패·건너뜀과 위반 수, 검사 행 수.", shareable: true },
   { key: "submission", name: "submission.json", label: "중앙 제출용 집계", desc: "환자 단위 정보를 뺀 규칙별 건수와 테이블 행 수. 병원 밖으로 보내는 유일한 파일.", shareable: true },

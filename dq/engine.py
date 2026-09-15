@@ -16,6 +16,7 @@
 """
 import argparse, io, json, os, re, sys, datetime as dt
 from collections import OrderedDict, defaultdict
+import re
 import pandas as pd
 import yaml
 import duckdb
@@ -31,6 +32,20 @@ FLOAT_RE = re.compile(r"^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$")
 
 def load_yaml(p):
     return yaml.safe_load(open(os.path.join(ROOT, p), encoding="utf-8"))
+
+
+_MASK_QUOTED = re.compile(r"'[^']*'")
+_MASK_EQ = re.compile(r"=\S+")
+_MASK_DATE = re.compile(r"\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?")
+_MASK_NUM = re.compile(r"(?<![A-Za-z_\d.])\d+(?:\.\d+)?(?![A-Za-z_\d])")
+
+
+def mask_values(detail):
+    """보고서 예시에서 데이터 값을 가린다. dq-ts/src/engine.ts 의 maskValues 와 같아야 한다."""
+    s = _MASK_QUOTED.sub("'…'", detail)
+    s = _MASK_EQ.sub("=…", s)
+    s = _MASK_DATE.sub("…", s)
+    return _MASK_NUM.sub("…", s)
 
 
 class Engine:
@@ -459,13 +474,13 @@ class Engine:
             ex = defaultdict(list)
             for f in self.findings:
                 if len(ex[f["rule_id"]]) < 2:
-                    ex[f["rule_id"]].append(f["detail"])
+                    ex[f["rule_id"]].append(mask_values(f["detail"]))
             for r in s["rules"]:
                 if r["status"] == "fail":
                     fh.write(f"| {r['rule_id']} {r['name']} | {r['category']} | {r['severity']} | {r['table']} | {r['violations']} | {' / '.join(ex[r['rule_id']])[:150]} |\n")
             errs = [r for r in s["rules"] if r["status"] == "error"]
             if errs:
-                fh.write("\n## 규칙 실행 오류\n\n" + "\n".join(f"- {r['rule_id']}: {r['note']}" for r in errs) + "\n")
+                fh.write("\n## 규칙 실행 오류\n\n" + "\n".join(f"- {r['rule_id']}: {mask_values(r['note'] or '')}" for r in errs) + "\n")
         return s
 
 

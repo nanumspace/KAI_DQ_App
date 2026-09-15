@@ -68,6 +68,15 @@ describe("v2: Python 참조 구현과 동등성", () => {
   });
 
   for (const c of COHORTS) {
+    it(`${c}: clean·dirty 의 보고서(report.md)가 Python 과 같다 — 예시의 값 가리기까지`, () => {
+      for (const kind of ["clean", "dirty"]) {
+        const py = path.join(pyDir(kind, c), "report.md");
+        const ts = path.join(v2Out, `${kind}_${c}`, "report.md");
+        if (!fs.existsSync(py) || !fs.existsSync(ts)) continue;
+        expect(fs.readFileSync(ts, "utf-8"), `${c} ${kind} 의 report.md 가 Python 과 다르다`).toBe(fs.readFileSync(py, "utf-8"));
+      }
+    });
+
     it(`${c}: clean·dirty 의 위반 행이 Python 과 같다`, () => {
       const norm = (p: string) => fs.readFileSync(p, "utf-8").replace(/^\uFEFF/, "").split(/\r?\n/).filter(Boolean).sort();
       let compared = 0;

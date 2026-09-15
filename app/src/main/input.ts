@@ -9,6 +9,47 @@ import type { SourceCandidate, TableCheck, InputPlan, PreviewData, InputIssue } 
 
 const SAMPLE_ROWS = 20;
 const ALIASES: Record<string, string> = { antp_therapy_id: "antp_id" };
+/** 병원 내보내기가 빈 값 대신 적어 두는 글자들. 이것은 데이터가 아니라 도구의 흔적이라 빈 값으로 본다. */
+const NULL_STRINGS = new Set(["NULL", "null", "Null", "NA", "N/A", "n/a", "#N/A", "None", "nan", "NaN"]);
+
+/**
+ * 첫 줄을 보고 구분자를 정한다. 쉼표가 기본이지만 유럽식 엑셀은 세미콜론을, 일부 도구는 탭을 쓴다.
+ * 따옴표 밖의 글자만 센다.
+ */
+export function sniffDelimiter(text: string, ext: string): string {
+  if (ext === ".tsv") return "\t";
+  const nl = text.indexOf("\n");
+  const head = nl < 0 ? text : text.slice(0, nl);
+  const count: Record<string, number> = { ",": 0, ";": 0, "\t": 0, "|": 0 };
+  let q = false;
+  for (const ch of head) {
+    if (ch === '"') q = !q;
+    else if (!q && ch in count) count[ch]++;
+  }
+  const best = Object.entries(count).sort((a, b) => b[1] - a[1])[0];
+  return best[1] > 0 ? best[0] : ",";
+}
+
+/**
+ * 파일의 컬럼명을 명세 컬럼명으로 잇는다. 그대로 같으면 그대로, 대소문자만 다르면 소문자로,
+ * 알려진 별칭이면 그것으로. 잇지 못한 것은 그대로 둔다(명세에 없는 컬럼).
+ */
+export function columnAliases(columns: string[], specCols: string[]): { map: Record<string, string>; caseFolded: string[]; aliased: string[] } {
+  const exact = new Set(specCols);
+  const lower = new Map(specCols.map((c) => [c.toLowerCase(), c]));
+  const map: Record<string, string> = {};
+  const caseFolded: string[] = [];
+  const aliased: string[] = [];
+  for (const c of columns) {
+    if (exact.has(c)) { map[c] = c; continue; }
+    const byCase = lower.get(c.toLowerCase());
+    if (byCase && !columns.includes(byCase)) { map[c] = byCase; caseFolded.push(c); continue; }
+    const byAlias = ALIASES[c] ?? ALIASES[c.toLowerCase()];
+    if (byAlias && !columns.includes(byAlias)) { map[c] = byAlias; aliased.push(`${c} → ${byAlias}`); continue; }
+    map[c] = c;
+  }
+  return { map, caseFolded, aliased };
+}
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TS_RE = /^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2}(:\d{2}(\.\d+)?)?)?$/;
 
@@ -103,13 +144,27 @@ function inspectCsv(p: string): SourceCandidate {
   const base = { id: p, kind: "csv" as const, path: p, name: path.basename(p), folder: path.dirname(p), sizeBytes: fs.statSync(p).size };
   try {
     const { text, encoding } = readText(p);
-    const delimiter = path.extname(p).toLowerCase() === ".tsv" ? "\t" : ",";
+    if (!text.trim()) return { ...base, rows: 0, columns: [], sample: [], encoding: encoding.label, error: "빈 파일입니다" };
+    const delimiter = sniffDelimiter(text, path.extname(p).toLowerCase());
     const head: string[][] = parse(text, { to_line: SAMPLE_ROWS + 1, relax_column_count: true, skip_empty_lines: true, delimiter });
-    const columns = (head[0] ?? []).map((c) => c.trim());
-    return { ...base, rows: countCsvRows(text), columns, sample: head.slice(1), encoding: encoding.label };
+    const { columns, keep } = headerOf(head[0] ?? []);
+    const sample = head.slice(1).map((r) => keep.map((k) => (r[k] ?? "").trim()));
+    return { ...base, rows: countCsvRows(text), columns, sample, encoding: encoding.label, delimiter: delimiter === "," ? undefined : delimiter };
   } catch (e) {
     return { ...base, rows: 0, columns: [], sample: [], encoding: "?", error: (e as Error).message };
   }
+}
+
+/**
+ * 헤더를 정리한다: 양끝 공백을 걷고, 이름이 빈 끝 컬럼(엑셀이 남기는 ',,,')은 버린다.
+ * keep 은 남긴 컬럼의 원래 자리다 — 값 행도 같은 자리만 가져온다.
+ */
+function headerOf(raw: string[]): { columns: string[]; keep: number[]; dropped: number } {
+  const trimmed = raw.map((c) => String(c).trim());
+  let end = trimmed.length;
+  while (end > 0 && trimmed[end - 1] === "") end--;
+  const keep = Array.from({ length: end }, (_, i) => i);
+  return { columns: trimmed.slice(0, end), keep, dropped: trimmed.length - end };
 }
 
 /** 엑셀의 시트를 문자열 행렬로 (날짜 셀은 ISO 로) */
@@ -124,9 +179,10 @@ function inspectXlsx(p: string): SourceCandidate[] {
     const wb = XLSX.readFile(p, { cellDates: true });
     return wb.SheetNames.map((sheet) => {
       const rows = sheetRows(wb.Sheets[sheet]);
-      const columns = (rows[0] ?? []).map((c) => String(c).trim());
+      const { columns, keep } = headerOf(rows[0] ?? []);
+      const sample = rows.slice(1, SAMPLE_ROWS + 1).map((r) => keep.map((k) => (r[k] ?? "").trim()));
       return { id: `${p}#${sheet}`, kind: "xlsx" as const, path: p, sheet, name: `${path.basename(p)} / ${sheet}`, folder: path.dirname(p),
-        rows: Math.max(0, rows.length - 1), columns, sample: rows.slice(1, SAMPLE_ROWS + 1), encoding: "엑셀", sizeBytes: size };
+        rows: Math.max(0, rows.length - 1), columns, sample, encoding: "엑셀", sizeBytes: size };
     });
   } catch (e) {
     return [{ id: p, kind: "xlsx", path: p, name: path.basename(p), folder: path.dirname(p), rows: 0, columns: [], sample: [], encoding: "엑셀", sizeBytes: size, error: (e as Error).message }];
@@ -141,6 +197,40 @@ export function inspectPaths(paths: string[]): SourceCandidate[] {
     else out.push(inspectCsv(p));
   }
   return out;
+}
+
+// ------------------------------------------------------------------ 값 정규화
+// 내보내기 도구의 흔적을 걷어 낸다. 데이터를 고치는 것이 아니라 표기를 되돌리는 것이라
+// 뜻이 하나로 정해지는 경우만 손댄다: 정수 자리의 '123.0', 날짜 자리의 '2022-01-01 00:00:00',
+// 어디서나 'NULL' 글자와 양끝 공백. '1,234' 나 '2022/01/01' 은 손대지 않는다 — 규칙이 보고한다.
+const INT_FLOAT_RE = /^-?\d+\.0+$/;
+const ZERO_TIME_RE = /^(\d{4}-\d{2}-\d{2})[ T]00:00(:00(\.0+)?)?$/;
+
+export interface NormReport { trimmed: number; nullStrings: number; intFloats: number; zeroTimes: number; droppedColumns: number; caseFolded: number; aliased: number }
+const emptyReport = (): NormReport => ({ trimmed: 0, nullStrings: 0, intFloats: 0, zeroTimes: 0, droppedColumns: 0, caseFolded: 0, aliased: 0 });
+
+/** 한 칸을 정리한다. 무엇을 했는지는 report 에 센다. */
+function normalizeCell(raw: string, type: string, report?: NormReport): string {
+  let v = raw;
+  const t = v.trim();
+  if (t !== v) { v = t; if (report) report.trimmed++; }
+  if (v === "") return v;
+  if (NULL_STRINGS.has(v)) { if (report) report.nullStrings++; return ""; }
+  if ((type === "integer" || type === "bigint") && INT_FLOAT_RE.test(v)) { if (report) report.intFloats++; return v.slice(0, v.indexOf(".")); }
+  if (type === "date") { const m = ZERO_TIME_RE.exec(v); if (m) { if (report) report.zeroTimes++; return m[1]; } }
+  return v;
+}
+
+/** 표본 20행에서 흔적을 센다 (사전 점검 안내용) */
+function sampleMarks(c: SourceCandidate, st: SpecTable, aliasMap: Record<string, string>): NormReport {
+  const r = emptyReport();
+  const typeOf = new Map(st.fields.map((f) => [f.name, f.type as string]));
+  c.columns.forEach((col, j) => {
+    const type = typeOf.get(aliasMap[col]) ?? "varchar";
+    for (const row of c.sample) normalizeCell(row[j] ?? "", type, r);
+  });
+  r.trimmed = 0;   // 표본은 이미 걷어 낸 값이라 세지 않는다
+  return r;
 }
 
 // ------------------------------------------------------------------ 자동 대응
@@ -160,8 +250,8 @@ export function folderLabel(dir: string): string {
 
 function headerSimilarity(columns: string[], t: SpecTable): number {
   if (!columns.length) return 0;
-  const have = new Set(columns.map((c) => ALIASES[c] ?? c));
   const spec = t.fields.map((f) => f.name);
+  const have = new Set(Object.values(columnAliases(columns, spec).map));
   const hit = spec.filter((c) => have.has(c)).length;
   return hit / Math.max(spec.length, 1);
 }
@@ -172,9 +262,11 @@ export function autoMatch(tables: string[], spec: Spec, candidates: SourceCandid
   const used = new Set<string>();
   const cands = candidates.filter((c) => !c.error);
   const byLen = [...tables].sort((a, b) => b.length - a.length); // 긴 이름 먼저 (VISIT_OCCURRENCE 가 VISIT 보다 먼저)
-  // 1) 파일명(또는 시트명)이 테이블명과 같음
+  // 1) 파일명(또는 시트명)이 테이블명과 같음.
+  //    읽지 못한 파일도 이름이 맞으면 그 표에 잇는다 — 그래야 "파일 없음"이 아니라 "읽을 수 없음"으로 그 표 줄에 나온다.
   for (const t of byLen) {
-    const hit = cands.find((c) => !used.has(c.id) && nameOfCandidate(c) === norm(t));
+    const hit = cands.find((c) => !used.has(c.id) && nameOfCandidate(c) === norm(t))
+      ?? candidates.find((c) => c.error && !used.has(c.id) && nameOfCandidate(c) === norm(t));
     if (hit) { mapping[t] = hit.id; used.add(hit.id); }
   }
   // 2) 파일명이 테이블명을 포함
@@ -216,14 +308,19 @@ export function checkTables(tables: string[], spec: Spec, candidates: SourceCand
     }
     if (c.error) { issues.push({ level: "error", text: `파일을 읽을 수 없습니다: ${c.error}` }); return out; }
     out.rows = c.rows;
-    const have = new Set<string>();
-    for (const col of c.columns) {
-      if (ALIASES[col] && !c.columns.includes(ALIASES[col])) { have.add(ALIASES[col]); out.aliases.push(`${col} → ${ALIASES[col]}`); }
-      else have.add(col);
-    }
     const specCols = st.fields.map((f) => f.name);
+    const al = columnAliases(c.columns, specCols);
+    const have = new Set(Object.values(al.map));
+    out.aliases.push(...al.aliased);
     out.missingColumns = specCols.filter((n) => !have.has(n));
-    out.extraColumns = c.columns.filter((n) => !specCols.includes(n) && !(ALIASES[n] && specCols.includes(ALIASES[n])));
+    out.extraColumns = c.columns.filter((n) => !specCols.includes(al.map[n]));
+    if (al.caseFolded.length) issues.push({ level: "info", text: `컬럼명 대소문자가 다릅니다 (${al.caseFolded.length}개, 예: ${al.caseFolded[0]}). 소문자로 맞춰 읽습니다.` });
+    if (c.delimiter) issues.push({ level: "info", text: `구분자가 '${c.delimiter === "\t" ? "탭" : c.delimiter}' 입니다. 그대로 읽습니다.` });
+    // 표본에서 내보내기 흔적을 미리 센다. 실제 정규화는 실행할 때 전체 행에 한다.
+    const marks = sampleMarks(c, st, al.map);
+    if (marks.nullStrings) issues.push({ level: "info", text: `'NULL'·'NA' 같은 글자가 표본에 ${marks.nullStrings}개 있습니다. 빈 값으로 읽습니다.` });
+    if (marks.intFloats) issues.push({ level: "info", text: `정수 컬럼에 '.0' 이 붙은 값이 표본에 ${marks.intFloats}개 있습니다 (예: 100001.0). 정수로 읽습니다.` });
+    if (marks.zeroTimes) issues.push({ level: "info", text: `날짜 컬럼에 '00:00:00' 이 붙은 값이 표본에 ${marks.zeroTimes}개 있습니다. 날짜만 읽습니다.` });
     if (c.rows === 0) issues.push({ level: "warn", text: "데이터 행이 없습니다 (헤더만)." });
     // 폴더를 여럿 넣으면 같은 이름의 파일이 겹칠 수 있다. 어느 것을 쓰는지 말해 준다.
     const sameName = candidates.filter((x) => !x.error && nameOfCandidate(x) === norm(table));
@@ -241,9 +338,10 @@ export function checkTables(tables: string[], spec: Spec, candidates: SourceCand
     // 날짜 형식 표본
     const dateFields = st.fields.filter((f) => (f.type === "date" || f.type === "timestamp") && have.has(f.name));
     for (const f of dateFields) {
-      const idx = c.columns.indexOf(f.name) >= 0 ? c.columns.indexOf(f.name) : c.columns.findIndex((n) => ALIASES[n] === f.name);
+      const idx = c.columns.findIndex((n) => al.map[n] === f.name);
       if (idx < 0) continue;
-      const bad = c.sample.map((r) => r[idx] ?? "").filter((v) => v !== "" && !(f.type === "date" ? DATE_RE : TS_RE).test(v));
+      // 00:00:00 이 붙은 날짜는 정규화가 걷어 내므로 여기서 나무라지 않는다
+      const bad = c.sample.map((r) => normalizeCell(r[idx] ?? "", f.type)).filter((v) => v !== "" && !(f.type === "date" ? DATE_RE : TS_RE).test(v));
       if (bad.length) { issues.push({ level: "warn", text: `${f.name} 날짜 형식이 다릅니다 (예: '${bad[0]}'). YYYY-MM-DD 여야 하며, 이대로면 타입 규칙에 걸립니다.` }); }
     }
     return out;
@@ -267,35 +365,52 @@ export function preview(c: SourceCandidate, limit = 50): PreviewData {
     return { columns: rows[0] ?? [], rows: rows.slice(1, limit + 1), total: c.rows };
   }
   const { text } = readText(c.path);
-  const rows: string[][] = parse(text, { to_line: limit + 1, relax_column_count: true, skip_empty_lines: true, delimiter: path.extname(c.path).toLowerCase() === ".tsv" ? "\t" : "," });
+  const rows: string[][] = parse(text, { to_line: limit + 1, relax_column_count: true, skip_empty_lines: true, delimiter: sniffDelimiter(text, path.extname(c.path).toLowerCase()) });
   return { columns: rows[0] ?? [], rows: rows.slice(1), total: c.rows };
 }
 
 // ------------------------------------------------------------------ 스테이징 (정규화된 입력 폴더)
-/** 대응된 파일을 <TABLE>.csv (UTF-8) 로 옮긴다. 엑셀 시트는 CSV 로 변환하고, EUC-KR 은 UTF-8 로 바꾼다. */
-export function stageInputs(candidates: SourceCandidate[], mapping: Record<string, string>, dir: string): void {
+/**
+ * 대응된 파일을 <TABLE>.csv (UTF-8, 쉼표) 로 옮긴다. 엑셀 시트는 CSV 로, EUC-KR 은 UTF-8 로,
+ * 세미콜론·탭 구분은 쉼표로. 컬럼명은 명세 이름으로 잇고(대소문자·별칭), 값은 normalizeCell 로 정리한다.
+ * 무엇을 얼마나 손댔는지 표별로 돌려준다 — 보고서에 적어 병원이 알 수 있게.
+ */
+export function stageInputs(candidates: SourceCandidate[], mapping: Record<string, string>, dir: string, spec: Spec): Record<string, NormReport> {
   fs.mkdirSync(dir, { recursive: true });
   const byId = new Map(candidates.map((c) => [c.id, c]));
   const opened = new Map<string, XLSX.WorkBook>();
+  const reports: Record<string, NormReport> = {};
   for (const [table, cid] of Object.entries(mapping)) {
     const c = byId.get(cid); if (!c || c.error) continue;
-    const dest = path.join(dir, `${table}.csv`);
+    const st = spec.tables[table]; if (!st) continue;
+    let rows: string[][];
     if (c.kind === "xlsx" && c.sheet !== undefined) {
       let wb = opened.get(c.path);
       if (!wb) { wb = XLSX.readFile(c.path, { cellDates: true }); opened.set(c.path, wb); }
-      const rows = sheetRows(wb.Sheets[c.sheet]);
-      fs.writeFileSync(dest, rows.map((r) => r.map(csvCell).join(",")).join("\n") + "\n", "utf-8");
+      rows = sheetRows(wb.Sheets[c.sheet]);
     } else {
-      const { text, encoding } = readText(c.path);
-      const delimiter = path.extname(c.path).toLowerCase() === ".tsv" ? "\t" : ",";
-      if (encoding.name === "utf-8" && !encoding.bom && delimiter === ",") fs.copyFileSync(c.path, dest);
-      else if (delimiter === ",") fs.writeFileSync(dest, text, "utf-8");
-      else {
-        const rows: string[][] = parse(text, { relax_column_count: true, skip_empty_lines: true, delimiter });
-        fs.writeFileSync(dest, rows.map((r) => r.map(csvCell).join(",")).join("\n") + "\n", "utf-8");
-      }
+      const { text } = readText(c.path);
+      const delimiter = sniffDelimiter(text, path.extname(c.path).toLowerCase());
+      rows = parse(text, { relax_column_count: true, skip_empty_lines: true, delimiter });
     }
+    const report = emptyReport();
+    const { columns: rawCols, keep, dropped } = headerOf(rows[0] ?? []);
+    report.droppedColumns = dropped;
+    const al = columnAliases(rawCols, st.fields.map((f) => f.name));
+    report.caseFolded = al.caseFolded.length;
+    report.aliased = al.aliased.length;
+    const columns = rawCols.map((n) => al.map[n]);
+    const typeOf = new Map(st.fields.map((f) => [f.name, f.type as string]));
+    const types = columns.map((n) => typeOf.get(n) ?? "varchar");
+    const lines = [columns.map(csvCell).join(",")];
+    for (let i = 1; i < rows.length; i++) {
+      const r = rows[i];
+      lines.push(keep.map((k, j) => csvCell(normalizeCell(r[k] ?? "", types[j], report))).join(","));
+    }
+    fs.writeFileSync(path.join(dir, `${table}.csv`), lines.join("\n") + "\n", "utf-8");
+    reports[table] = report;
   }
+  return reports;
 }
 
 // ------------------------------------------------------------------ 입력 양식

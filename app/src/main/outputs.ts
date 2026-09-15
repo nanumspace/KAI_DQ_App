@@ -4,6 +4,7 @@ import path from "node:path";
 import { writeCsv } from "@engine/csv.js";
 import type { Summary, RuleStat } from "@engine/types.js";
 import type { OutputFile, RunOutputs } from "@shared/types";
+import type { NormReport } from "./input";
 import { checkLabel } from "@shared/labels";
 
 export const APP_VERSION = "0.1.0";
@@ -17,8 +18,9 @@ const FILES: Omit<OutputFile, "path" | "size">[] = [
 ];
 
 /** 엔진 출력(report/findings/summary) 위에 rule_results.csv 와 submission.json 을 더한다 */
-export function writeExtraOutputs(runDir: string, summary: Summary, meta: { cohortKor: string; label: string; runId: string }): void {
+export function writeExtraOutputs(runDir: string, summary: Summary, meta: { cohortKor: string; label: string; runId: string }, norm: Record<string, NormReport> = {}): void {
   const rules = summary.rules as RuleStat[];
+  appendNormalization(path.join(runDir, "report.md"), norm);
   writeCsv(path.join(runDir, "rule_results.csv"),
     ["rule_id", "name", "category", "subcategory", "severity", "check", "table", "fields", "status", "violations", "rows_checked", "note"],
     rules.map((r) => ({ ...r })));
@@ -34,6 +36,8 @@ export function writeExtraOutputs(runDir: string, summary: Summary, meta: { coho
     run_date: summary.run_date, generated_at: new Date().toISOString(),
     tables: summary.tables,
     rows_total: Object.values(summary.tables).reduce((a, b) => a + b, 0),
+    // 내보내기 흔적을 얼마나 걷어 냈는지 (환자 단위 값 없음). 중앙이 기관별 내보내기 상태를 알 수 있다.
+    normalization: Object.fromEntries(Object.entries(norm).filter(([, r]) => Object.values(r).some((n) => n > 0))),
     rules: { total: summary.rules_total, failed: summary.rules_failed, skipped: summary.rules_skipped, error: summary.rules_error },
     violations: { total: summary.violations_total, error: summary.violations_error, warning: summary.violations_warning },
     by_category: summary.by_category,
@@ -62,4 +66,22 @@ export function exportBundle(runDir: string, runId: string, destRoot: string): s
     ...FILES.map((f) => `- ${f.name}: ${f.label}. ${f.desc}${f.shareable ? "" : " [외부 제출 금지]"}`), "",
     "중앙에 제출할 때는 submission.json 만 보냅니다. findings.csv 는 환자 단위 정보가 있어 병원 밖으로 내보내지 않습니다.", ""].join("\n"), "utf-8");
   return dest;
+}
+
+const NORM_LABEL: Record<keyof NormReport, string> = {
+  caseFolded: "컬럼명 대소문자를 소문자로", aliased: "별칭 컬럼명을 명세 이름으로", droppedColumns: "이름 없는 끝 컬럼 버림", trimmed: "값의 양끝 공백 걷음",
+  nullStrings: "'NULL'·'NA' 글자를 빈 값으로", intFloats: "정수의 '.0' 걷음", zeroTimes: "날짜의 '00:00:00' 걷음",
+};
+
+/** 실행할 때 입력에 손댄 것이 있으면 보고서 끝에 적는다. 없으면 아무것도 적지 않는다. */
+function appendNormalization(reportPath: string, norm: Record<string, NormReport>): void {
+  const rows: string[] = [];
+  for (const [table, r] of Object.entries(norm)) {
+    for (const [k, n] of Object.entries(r) as Array<[keyof NormReport, number]>) if (n > 0) rows.push(`| ${table} | ${NORM_LABEL[k]} | ${n.toLocaleString("ko-KR")} |`);
+  }
+  if (!rows.length || !fs.existsSync(reportPath)) return;
+  const text = ["", "## 입력 정규화", "",
+    "검증 전에 내보내기 도구의 흔적을 걷어 냈습니다. 데이터를 고친 것이 아니라 표기를 되돌린 것이며, 아래 항목은 규칙 위반으로 세지 않았습니다.", "",
+    "| 테이블 | 한 일 | 건수 |", "|---|---|---|", ...rows, ""].join("\n");
+  fs.appendFileSync(reportPath, text, "utf-8");
 }

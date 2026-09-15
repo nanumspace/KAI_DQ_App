@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "smoke": "electron-vite build && KAI_SMOKE=1 electron .",
     "dist:mac": "electron-vite build && electron-builder --mac --arm64 --publish never",
-    "dist:win": "electron-vite build && electron-builder --win --x64 --arm64 --publish never"
+    "dist:win": "electron-vite build && electron-builder --win --x64 --arm64 --publish never",
+    "test": "vitest run"
   },
   "dependencies": {
     "@duckdb/node-api": "^1.5.5-r.4",
@@ -34,7 +35,8 @@
     "react-dom": "^19.1.0",
     "recharts": "^3.0.0",
     "typescript": "^5.9.0",
-    "vite": "^7.0.0"
+    "vite": "^7.0.0",
+    "vitest": "^5.0.1"
   },
   "build": {
     "appId": "kr.kai.quality-validator",

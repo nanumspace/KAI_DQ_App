@@ -1,6 +1,6 @@
 // 명세 · 규칙 · 결과 타입
 
-export type FieldType = "integer" | "float" | "varchar" | "text" | "date" | "timestamp";
+export type FieldType = "integer" | "bigint" | "float" | "varchar" | "text" | "date" | "timestamp";
 
 export interface SpecField {
   name: string;

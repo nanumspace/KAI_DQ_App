@@ -40,6 +40,8 @@ export interface SourceCandidate {
   sample: string[][];
   encoding: string;
   sizeBytes: number;
+  /** 쉼표가 아닐 때만 (';' 또는 '\t') */
+  delimiter?: string;
   error?: string;
 }
 

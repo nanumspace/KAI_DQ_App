@@ -153,11 +153,13 @@ function runValidation(req: RunRequest): Promise<RunRecord> {
   running = true;
   const progress = (stage: string, done: number, total: number, text: string, pct: number) =>
     win?.webContents.send("run:progress", { runId, stage, done, total, text, pct });
+  let norm: Record<string, input.NormReport> = {};
   return new Promise<RunRecord>((resolve, reject) => {
     const finish = (fn: () => void) => { running = false; fn(); };
     try {
       progress("stage", 0, 1, "입력 파일을 UTF-8 CSV 로 정규화하는 중", 2);
-      input.stageInputs(req.candidates, req.mapping, inputDir);
+      norm = input.stageInputs(req.candidates, req.mapping, inputDir, spec());
+      fs.writeFileSync(path.join(outDir, "normalization.json"), JSON.stringify(norm, null, 2), "utf-8");
     } catch (e) { finish(() => reject(e)); return; }
     const child = utilityProcess.fork(path.join(__dirname, "worker.js"), [], { serviceName: "kai-dq-engine" });
     child.on("message", async (m: any) => {
@@ -168,7 +170,7 @@ function runValidation(req: RunRequest): Promise<RunRecord> {
       } else if (m.type === "done") {
         try {
           const summary = m.summary as Summary;
-          writeExtraOutputs(outDir, summary, { cohortKor: info.kor, label, runId });
+          writeExtraOutputs(outDir, summary, { cohortKor: info.kor, label, runId }, norm);
           const findings = readCsv(path.join(outDir, "findings.csv"));
           const rec = await db.insertRun({ runId, cohort: req.cohort, cohortKor: info.kor, label, dataDir: firstPath ? path.dirname(firstPath) : inputDir, createdAt: now.toISOString(), summary, findings });
           progress("done", 1, 1, "완료", 100);

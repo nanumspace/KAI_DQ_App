@@ -16,7 +16,7 @@ from framework import Ctx, PROFILES, ROOT
 
 SCENARIOS = {"LUNG_CANCER": "lung", "BREAST_CANCER": "breast", "COLORECTAL_CANCER": "colorectal",
              "MASLD": "masld", "DIABETES": "diabetes", "LYMPHOMA": "lymphoma"}
-SCENARIOS_V2 = {"LUNG_CANCER": "lung_v2"}   # 옮긴 만큼 늘린다
+SCENARIOS_V2 = {"LUNG_CANCER": "lung_v2", "DIABETES": "diabetes_v2", "MASLD": "masld_v2", "COLORECTAL_CANCER": "colorectal_v2", "LYMPHOMA": "lymphoma_v2", "BREAST_CANCER": "breast_v2"}   # 옮긴 만큼 늘린다
 
 
 def run(cohort, n, seed, out, spec="v1"):

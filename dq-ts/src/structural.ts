@@ -149,16 +149,33 @@ export function runStructural(ctx: StructuralContext, rules: StructuralRule[], s
     } else if (chk === "concept_set_empty") {
       st.status = "skipped"; st.note = `값 집합 ${p.concept_set} 이 비어 있어 검사할 수 없다`;
     } else if (chk === "not_null_when") {
-      // v2: 한 표에 여러 종류의 행이 앉는다. 그 종류일 때만 필수다.
+      // v2: 필수 여부가 다른 컬럼의 값에 걸린다. 조건은 모두 만족해야 필수다.
       const f = fields[0];
-      const wc = p.when_column as string, wcode = p.when_code as string;
-      const kindCol = df.cols.get(wc);
-      if (!kindCol) { st.status = "skipped"; st.note = `행 종류 컬럼 ${wc} 없음`; continue; }
+      const wc = p.when_column as string | undefined, wcode = p.when_code as string | undefined;
+      const wf = p.when_filled as string | undefined;
+      const wcc = p.when_contains_column as string | undefined, wct = p.when_contains_text as string | undefined;
+      const wec = p.when_equals_column as string | undefined, wev = p.when_equals_value as string | undefined;
+      const kindCol = wc ? df.cols.get(wc) : undefined;
+      const filledCol = wf ? df.cols.get(wf) : undefined;
+      const containsCol = wcc ? df.cols.get(wcc) : undefined;
+      const equalsCol = wec ? df.cols.get(wec) : undefined;
+      if ((wc && !kindCol) || (wf && !filledCol) || (wcc && !containsCol) || (wec && !equalsCol)) {
+        st.status = "skipped";
+        st.note = `조건 컬럼 ${wc && !kindCol ? wc : wf && !filledCol ? wf : wcc && !containsCol ? wcc : wec} 없음`;
+        continue;
+      }
+      const why: string[] = [];
+      if (wcode) why.push(`${wcode} 행`);
+      if (wf) why.push(`${wf} 이 채워진 행`);
+      if (wcc) why.push(`${wcc} 에 '${wct}' 가 든 행`);
+      if (wec) why.push(`${wec} 이 ${wev} 인 행`);
       const vals = col(f);
       for (let i = 0; i < df.n; i++) {
-        if (ctx.codeOfConcept?.get(kindCol[i]) === wcode && vals[i] === "") {
-          sink.add(rule, table, f, pkcol[i], pid[i], `${wcode} 행인데 ${f} 가 비어 있다`);
-        }
+        if (kindCol && ctx.codeOfConcept?.get(kindCol[i]) !== wcode) continue;
+        if (filledCol && filledCol[i] === "") continue;
+        if (containsCol && !containsCol[i].includes(wct ?? "")) continue;
+        if (equalsCol && equalsCol[i] !== String(wev)) continue;
+        if (vals[i] === "") sink.add(rule, table, f, pkcol[i], pid[i], `${why.join(" 이고 ")} 인데 ${f} 가 비어 있다`);
       }
     } else if (chk === "not_null_either") {
       // v2: 참조표를 싣기 전에는 concept_id 를 못 채우므로 원천값이라도 있어야 한다

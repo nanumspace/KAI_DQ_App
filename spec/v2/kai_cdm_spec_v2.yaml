@@ -1063,6 +1063,9 @@ tables:
       - LUNG_CANCER
       applies_when:
         report_type_concept_id: SURGICAL
+        _contains:
+        - surgical_histologic_diagnosis_source_value
+        - Adenocarcinoma
     - name: adenocarcinoma_predominant_subtype_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1937,7 +1940,7 @@ tables:
       cohorts:
       - BREAST_CANCER
     - name: reference_sequence
-      type: float
+      type: varchar
       unit: null
       pattern: null
       event_date: null
@@ -1947,7 +1950,7 @@ tables:
       cohorts:
       - BREAST_CANCER
     - name: dna_variant_a
-      type: float
+      type: varchar
       unit: null
       pattern: null
       event_date: null
@@ -1957,7 +1960,7 @@ tables:
       cohorts:
       - BREAST_CANCER
     - name: dna_variant_b
-      type: float
+      type: varchar
       unit: null
       pattern: null
       event_date: null
@@ -1967,7 +1970,7 @@ tables:
       cohorts:
       - BREAST_CANCER
     - name: dna_variant_c
-      type: float
+      type: varchar
       unit: null
       pattern: null
       event_date: null
@@ -3515,6 +3518,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      applies_when:
+        _filled: mri_invasion_depth_mm
     - name: mri_tumor_regression_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4614,6 +4619,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - transformation_yn
+        - '1'
     - name: transformation_from_subtype_concept_id
       type: bigint
       concept_set: LYMPHOMA_SUBTYPE
@@ -4623,6 +4632,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - transformation_yn
+        - '1'
     - name: transformation_from_subtype_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4640,6 +4653,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - transformation_yn
+        - '1'
     - name: transformation_to_subtype_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4666,6 +4683,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - sct_yn
+        - '1'
     - name: sct_type_concept_id
       type: bigint
       concept_set: SCT_TYPE
@@ -4675,6 +4696,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - sct_yn
+        - '1'
     - name: sct_type_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4701,6 +4726,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - car_t_yn
+        - '1'
     - name: car_t_target_concept_id
       type: bigint
       concept_set: SCT_TYPE
@@ -4710,6 +4739,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - car_t_yn
+        - '1'
     - name: car_t_target_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4728,6 +4761,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - car_t_yn
+        - '1'
     - name: lymphodepletion_start_date
       type: date
       unit: null
@@ -4738,6 +4775,10 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      applies_when:
+        _equals:
+        - car_t_yn
+        - '1'
   LYMPHOMA_EXAM:
     name: LYMPHOMA_EXAM
     layer: K-AI 확장

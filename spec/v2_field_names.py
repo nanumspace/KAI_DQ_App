@@ -208,4 +208,9 @@ TYPE_OVERRIDE = {
     "clinical_tnm": ("varchar", r"^(y?c)?T(is|0|X|[1-4][a-c]?)N([0-3][a-c]?|X)M(0|1[a-c]?|X)$"), "pathologic_tnm": ("varchar", r"^(y?p)?T(is|0|X|[1-4][a-c]?)N([0-3][a-c]?|X)M(0|1[a-c]?|X)$"),
     "hvpg_mmhg": ("float", None), "gestational_diabetes_yn": ("integer", None), "age_at_diagnosis": ("integer", None), "diagnosis_name": ("varchar", None),
     "score_input_lab_name": ("varchar", None), "pft_item": ("varchar", None), "prognostic_score_value": ("float", None),
+    # 염기서열 이름과 변이 표기는 글자다. 배치표에서 수치로 잡혀 있어 바로잡는다.
+    # (예: reference_sequence "GRCh38", dna_variant_a "NM_007294.4:c.68_69del" — HGVS 표기)
+    "reference_sequence": ("varchar", None),
+    "dna_variant_a": ("varchar", None), "dna_variant_b": ("varchar", None), "dna_variant_c": ("varchar", None),
+    "protein_variant_a": ("varchar", None), "protein_variant_b": ("varchar", None), "protein_variant_c": ("varchar", None),
 }

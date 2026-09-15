@@ -33,7 +33,7 @@ from v2_field_names import FIELD_NAMES, UNITS, CODELIST_OVERRIDE, TYPE_OVERRIDE 
 from v2_omop_map import CONCEPT_ID_BASE, OMOP_TABLES, SEED_CONCEPTS, FORM_MAP  # noqa: E402
 from v2_reference_tables import REFERENCE_TABLES, FIELD_REFERENCES, TABLE_REFERENCES  # noqa: E402
 from v2_legacy_triage import classify as triage_legacy, BUCKETS as LEGACY_BUCKETS  # noqa: E402
-from v2_row_kinds import ROW_KINDS, NEEDS_REVIEW  # noqa: E402
+from v2_row_kinds import ROW_KINDS, NEEDS_REVIEW, EXTRA_CONDITIONS  # noqa: E402
 from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, SNOMED_SCALES, LOINC_SOURCE, LOINC_FIELD_CODES,  # noqa: E402
                                PFT_ITEMS, ALCOHOL_ITEMS, COMORBIDITY_ITEMS, DRUG_CLASS_ITEMS)
 
@@ -212,7 +212,10 @@ def _add_row_kind_fields():
 
 _add_row_kind_fields()
 placeholder = sorted({f["codelist"] for F in forms.values() for f in F["fields"].values() if f.get("codelist") and str(f["codelist"]).startswith("CL_")})
-placeholder = sorted(set(placeholder) | {rk["codelist"] for rk in ROW_KINDS.values()})   # 2.2: 행 종류 코드표
+placeholder = sorted(set(placeholder) | {rk["codelist"] for rk in ROW_KINDS.values()}   # 2.2: 행 종류 코드표
+                     # 2.2: CL_ 로 시작하지 않아도 우리가 값을 정의한 코드표는 만든다(TUMOR_SITE 등)
+                     | {f["codelist"] for F in forms.values() for f in F["fields"].values()
+                        if f.get("codelist") in VALUE_SETS})
 # 2.2: 한 표에 여러 종류의 행이 앉는 곳에는 '행 종류' 코드표를 더한다(조건부 필수의 근거).
 for _rk in ROW_KINDS.values():
     VALUE_SETS.setdefault(_rk["codelist"], _rk["values"])
@@ -405,6 +408,23 @@ def ext_table(F):
                   and not c.get("key") and not c.get("event_date") and not c["name"].endswith("_source_value")):
                 # 키와 사건 날짜는 어느 종류에나 있으므로 분류 대상이 아니다
                 warnings.append(f"{F['name']}.{c['name']} 은 필수인데 어느 행 종류에 해당하는지 정하지 않았다 (spec/v2_row_kinds.py)")
+    # 2.2: 필수 여부가 행 종류가 아니라 다른 컬럼의 값에 걸리는 경우
+    for c in cols:
+        need = EXTRA_CONDITIONS.get((F["name"], c["name"]))
+        if not need:
+            continue
+        if isinstance(need, tuple) and len(need) == 3:
+            col_name, _, val = need; mode = "_equals"
+        elif isinstance(need, tuple):
+            col_name, val = need; mode = "_contains"
+        else:
+            col_name, val, mode = need, None, "_filled"
+        if not any(x["name"] == col_name for x in cols):
+            warnings.append(f"{F['name']}.{c['name']} 의 조건 컬럼 {col_name} 가 그 표에 없다 (spec/v2_row_kinds.py)")
+        elif mode == "_filled":
+            c.setdefault("applies_when", {})["_filled"] = col_name
+        else:
+            c.setdefault("applies_when", {})[mode] = [col_name, val]
     return cols
 for fn_ in EXT_FORMS:
     F = forms[fn_]

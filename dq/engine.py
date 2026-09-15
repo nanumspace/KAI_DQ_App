@@ -206,14 +206,36 @@ class Engine:
             elif chk == "concept_set_empty":
                 st["status"] = "skipped"; st["note"] = f"값 집합 {p['concept_set']} 이 비어 있어 검사할 수 없다"
             elif chk == "not_null_when":
-                # v2: 한 표에 여러 종류의 행이 앉는다. 그 종류일 때만 필수다.
-                f = fields[0]; wc, wcode = p["when_column"], p["when_code"]
-                if wc not in df.columns:
-                    st["status"] = "skipped"; st["note"] = f"행 종류 컬럼 {wc} 없음"; continue
-                kind = df[wc].map(lambda v: self.code_of_concept.get(str(v), ""))
-                bad = (kind == wcode) & (df[f] == "")
+                # v2: 필수 여부가 다른 컬럼의 값에 걸린다. 조건은 모두 만족해야 필수다.
+                f = fields[0]
+                sel = pd.Series(True, index=df.index); why = []
+                wc, wcode = p.get("when_column"), p.get("when_code")
+                if wc:
+                    if wc not in df.columns:
+                        st["status"] = "skipped"; st["note"] = f"조건 컬럼 {wc} 없음"; continue
+                    sel &= df[wc].map(lambda v: self.code_of_concept.get(str(v), "")) == wcode
+                    why.append(f"{wcode} 행")
+                wf = p.get("when_filled")
+                if wf:
+                    if wf not in df.columns:
+                        st["status"] = "skipped"; st["note"] = f"조건 컬럼 {wf} 없음"; continue
+                    sel &= df[wf] != ""
+                    why.append(f"{wf} 이 채워진 행")
+                wcc, wct = p.get("when_contains_column"), p.get("when_contains_text")
+                if wcc:
+                    if wcc not in df.columns:
+                        st["status"] = "skipped"; st["note"] = f"조건 컬럼 {wcc} 없음"; continue
+                    sel &= df[wcc].str.contains(wct, regex=False, na=False)
+                    why.append(f"{wcc} 에 '{wct}' 가 든 행")
+                wec, wev = p.get("when_equals_column"), p.get("when_equals_value")
+                if wec:
+                    if wec not in df.columns:
+                        st["status"] = "skipped"; st["note"] = f"조건 컬럼 {wec} 없음"; continue
+                    sel &= df[wec] == str(wev)
+                    why.append(f"{wec} 이 {wev} 인 행")
+                bad = sel & (df[f] == "")
                 for i in df.index[bad]:
-                    self.add(rule, table, f, pkcol[i], pid[i], f"{wcode} 행인데 {f} 가 비어 있다")
+                    self.add(rule, table, f, pkcol[i], pid[i], f"{' 이고 '.join(why)} 인데 {f} 가 비어 있다")
             elif chk == "not_null_either":
                 # v2: 참조표를 싣기 전에는 concept_id 를 채울 수 없으므로 원천값이라도 있어야 한다
                 cols = [c for c in p["columns"] if c in df.columns]
@@ -408,7 +430,11 @@ class Engine:
 
     def write(self, out_dir):
         os.makedirs(out_dir, exist_ok=True)
-        pd.DataFrame(self.findings).to_csv(os.path.join(out_dir, "findings.csv"), index=False, encoding="utf-8-sig")
+        # 위반이 없어도 머리글은 쓴다. 빈 DataFrame 을 그대로 쓰면 컬럼조차 없는 파일이 되어
+        # 읽는 쪽이 '형식이 잘못된 파일'로 본다(TypeScript 구현과도 어긋난다).
+        cols = ["rule_id", "rule_name", "category", "severity", "table", "field", "row_key", "person_id", "detail"]
+        pd.DataFrame(self.findings, columns=cols).to_csv(
+            os.path.join(out_dir, "findings.csv"), index=False, encoding="utf-8-sig")
         s = self.summary()
         json.dump(s, open(os.path.join(out_dir, "summary.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=str)
         with open(os.path.join(out_dir, "report.md"), "w", encoding="utf-8") as fh:

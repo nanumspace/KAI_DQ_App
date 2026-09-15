@@ -11,6 +11,11 @@ PATHOLOGY_REPORT 는 생검 병리와 수술 병리를 **같은 표에 각각 �
     각 컬럼에 `applies_when` 을 붙인다.
   - generate_structural_rules.py 가 그것을 조건부 필수 규칙으로 바꾼다.
 
+필수 여부가 행 종류가 아니라 **다른 컬럼의 값**에 걸리는 것도 있다. 폐선암 우세 아형은
+수술 병리이면서 조직형이 선암일 때만 해당하고, 직장 MRI 의 mrTRG 는 선행치료 뒤 재평가일
+때만 잰다. 그래서 EXTRA_CONDITIONS 에 '어느 컬럼이 비어 있지 않을 때만 필수' 를 더 걸 수 있다.
+조건은 모두 만족해야 필수가 된다.
+
 APPLIES 의 분류는 '그 소견을 어느 검체에서 판정하는가'로 나눈 것이며, 임상적으로
 다시 볼 필요가 있다. 확실하지 않은 것은 BOTH 로 두었다(양쪽 모두에서 요구한다는 뜻이라
 가장 엄격하다). 팀 검토에서 고칠 자리는 이 파일 하나다.
@@ -81,11 +86,32 @@ ROW_KINDS = {
     ),
 }
 
-# 행 종류만으로는 아직 못 푸는 것이 하나 있다.
-#   adenocarcinoma_predominant_subtype 은 수술 병리에서 보지만 '선암일 때만' 해당한다.
-#   즉 필수 여부가 행 종류가 아니라 조직형에 걸린다. 지금 구조로는 표현할 수 없어,
-#   수술 병리인데 선암이 아닌 행에서 규칙이 걸린다(가상데이터에서 확인됨).
-#   조직형까지 보는 조건이 필요하면 applies_when 을 여러 조건으로 넓혀야 한다.
+# 행 종류 말고 다른 컬럼의 값에도 걸리는 것들.
+#   key: (테이블, 컬럼) -> 함께 채워져 있어야 필수가 되는 컬럼
+# 뜻: '그 컬럼이 채워진 행에서만 이 컬럼이 필수다'. 행 종류 조건이 있으면 그것과 함께 만족해야 한다.
+# 조건은 세 가지로 적는다.
+#   ("표", "컬럼"): "다른컬럼"                      그 컬럼이 **채워져 있을 때만** 필수
+#   ("표", "컬럼"): ("다른컬럼", "들어갈 글자")        그 컬럼 값에 그 글자가 **들어 있을 때만** 필수
+#   ("표", "컬럼"): ("다른컬럼", "=", "값")           그 컬럼이 그 값일 때만 필수 (예/아니오 칸에 쓴다)
+EXTRA_CONDITIONS = {
+    # 폐선암 우세 아형은 조직형이 선암일 때만 매긴다. 진단명은 조직형이 무엇이든 적히므로
+    # '채워졌는가'로는 가릴 수 없고 값에 'Adenocarcinoma' 가 들어 있는지를 봐야 한다.
+    ("PATHOLOGY_REPORT", "adenocarcinoma_predominant_subtype_concept_id"):
+        ("surgical_histologic_diagnosis_source_value", "Adenocarcinoma"),
+    # mrTRG(치료 반응 등급)는 선행치료를 한 뒤 재평가 MRI 에서만 잰다.
+    # 재평가 MRI 에서는 침윤 깊이를 다시 재므로 그 값이 있는 행에서만 요구한다.
+    ("COLORECTAL_EXAM", "mri_tumor_regression_grade_concept_id"): "mri_invasion_depth_mm",
+    # 림프종: 일어나지 않은 사건의 날짜·종류를 요구할 수 없다.
+    ("LYMPHOMA_EVENT", "transformation_date"): ("transformation_yn", "=", "1"),
+    ("LYMPHOMA_EVENT", "transformation_from_subtype_concept_id"): ("transformation_yn", "=", "1"),
+    ("LYMPHOMA_EVENT", "transformation_to_subtype_concept_id"): ("transformation_yn", "=", "1"),
+    ("LYMPHOMA_EVENT", "sct_date"): ("sct_yn", "=", "1"),
+    ("LYMPHOMA_EVENT", "sct_type_concept_id"): ("sct_yn", "=", "1"),
+    ("LYMPHOMA_EVENT", "car_t_infusion_date"): ("car_t_yn", "=", "1"),
+    ("LYMPHOMA_EVENT", "car_t_target_concept_id"): ("car_t_yn", "=", "1"),
+    ("LYMPHOMA_EVENT", "apheresis_date"): ("car_t_yn", "=", "1"),
+    ("LYMPHOMA_EVENT", "lymphodepletion_start_date"): ("car_t_yn", "=", "1"),
+}
 
 # 위 applies 에서 BOTH 로 둔 것 중 임상 검토가 필요하다고 표시한 것. 보고서에 그대로 싣는다.
 NEEDS_REVIEW = {

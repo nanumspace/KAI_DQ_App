@@ -112,6 +112,7 @@ def generate(ctx: CtxV2, n=100):
                           biopsy_method_concept_id=ctx.cs("CL_BIOPSY_METHOD", "ENDOSCOPIC"),
                           biopsy_method_source_value="기관지내시경 생검",
                           biopsy_site_concept_id=ctx.cs("CL_BIOPSY_SITE", "PRIMARY"),
+                          biopsy_adequacy_concept_id=ctx.cs("CL_BIOPSY_ADEQUACY", "ADEQUATE"),
                           biopsy_site_detail_concept_id=ctx.cs("CL_BIOPSY_SITE_DETAIL", lobe_cd),
                           biopsy_site_detail_source_value=lobe_nm,
                           biopsy_histologic_diagnosis_source_value=HIST[hist][0],

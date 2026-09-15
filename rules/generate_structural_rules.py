@@ -147,11 +147,34 @@ if V2:
                         "not_null_either", fields=pair, params=prm, scope=scope,
                         desc=f"{fn} 이 비면 원천값이라도 있어야 한다. 참조표를 싣기 전에는 원천값만 남는다.")
                 elif aw:
-                    # 한 표에 여러 종류의 행이 앉는 곳이다. 그 종류일 때만 필수다.
-                    col, code = next(iter(aw.items()))
-                    add(nid("SV"), f"{tname}.{fn} 필수({code} 행)", "Completeness", "value", tname, "not_null_when",
-                        fields=[fn], params=dict(when_column=col, when_code=code), scope=scope,
-                        desc=f"{col} 이 {code} 인 행에서는 {fn} 이 NULL 일 수 없다.")
+                    # 필수 여부가 다른 컬럼의 값에 걸린다. 조건은 모두 만족해야 한다.
+                    #   '컬럼: 코드'   그 컬럼이 그 코드일 때   (예: 행 종류가 수술 병리)
+                    #   '_filled: 컬럼' 그 컬럼이 채워져 있을 때 (예: 선행치료 뒤 재평가라 침윤 깊이를 다시 잼)
+                    kind = {k: v for k, v in aw.items() if not k.startswith("_")}
+                    filled = aw.get("_filled")
+                    contains = aw.get("_contains")
+                    equals = aw.get("_equals")
+                    when_col, when_code = next(iter(kind.items()), (None, None))
+                    empty_set = f.get("concept_set") and not SET_IDS.get(f["concept_set"]) and not SET_CODES.get(f["concept_set"])
+                    tag = f"({when_code} 행)" if when_code else ""
+                    tag += f"({filled} 있을 때)" if filled else ""
+                    tag += f"({contains[0]} 에 '{contains[1]}' 일 때)" if contains else ""
+                    tag += f"({equals[0]}={equals[1]} 일 때)" if equals else ""
+                    prm = dict()
+                    if when_col: prm.update(when_column=when_col, when_code=when_code)
+                    if filled: prm.update(when_filled=filled)
+                    if contains: prm.update(when_contains_column=contains[0], when_contains_text=contains[1])
+                    if equals: prm.update(when_equals_column=equals[0], when_equals_value=equals[1])
+                    add(nid("SV"), f"{tname}.{fn} 필수{tag}", "Completeness", "value", tname, "not_null_when",
+                        fields=[fn], params=prm, scope=scope,
+                        severity="warning" if empty_set else "error",
+                        desc=(f"{fn} 은 " + " 그리고 ".join(
+                                  ([f"{when_col} 이 {when_code} 이고"] if when_col else []) +
+                                  ([f"{filled} 이 채워진"] if filled else []) +
+                                  ([f"{contains[0]} 에 '{contains[1]}' 가 든"] if contains else []) +
+                                  ([f"{equals[0]} 이 {equals[1]} 인"] if equals else [])) + " 행에서 NULL 일 수 없다."
+                              if not empty_set else
+                              f"{fn} 은 이 조건에서 필수지만 값 집합 {f['concept_set']} 이 비어 있어 채울 근거가 없다."))
                 else:
                     empty_set = f.get("concept_set") and not SET_IDS.get(f["concept_set"]) and not SET_CODES.get(f["concept_set"])
                     add(nid("SV"), f"{tname}.{fn} 필수", "Completeness", "value", tname, "not_null", fields=[fn],
@@ -182,7 +205,10 @@ if V2:
                 add(nid("SV"), f"{tname}.{fn} 값 집합({cs}) 비어 있음", "Conformance", "value", tname, "concept_set_empty",
                     fields=[fn], params=dict(concept_set=cs), severity="warning", scope=scope,
                     desc=f"{cs} 에 아직 값이 없어 {fn} 을 검사할 수 없다. 값 집합을 채우면 검사가 생긴다.")
-            if f["type"] == "date":
+            # 이미 일어난 일을 적는 날짜만 미래를 막는다. 진행 중인 것의 종료 예정일(약물 종료일 등)은
+            # 미래가 정상이라, 막으면 복약 중인 처방마다 오탐이 난다. 퇴원일은 미래일 수 없어 예외로 둔다.
+            ongoing_end = fn.endswith("_end_date") and fn != "visit_end_date"
+            if f["type"] == "date" and not ongoing_end:
                 add(nid("SV"), f"{tname}.{fn} 미래 날짜 금지", "Plausibility", "temporal", tname, "not_future",
                     fields=[fn], scope=scope, desc=f"{fn} 은 검증 실행일보다 미래일 수 없다.")
         # v1 의 그룹 anchor 자리. v2 는 서식마다 사건 날짜 한 개를 둔다.

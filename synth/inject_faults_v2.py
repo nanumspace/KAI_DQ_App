@@ -40,6 +40,9 @@ class InjectorV2:
         self.tables = list(PROFILES[cohort]["omop_tables"]) + list(PROFILES[cohort]["extension_tables"])
         self.data, self.manifest, self.n = {}, [], 0
         self.dropped_columns = {}
+        # 이미 오류를 심은 행. 한 행에 둘을 심으면 서로를 가린다
+        # (예: 참조를 끊어 놓으면 그 행의 날짜 불일치는 JOIN 이 안 돼 드러나지 않는다).
+        self.used = set()
         code_item = pd.read_csv(os.path.join(ROOT, "spec/v2/vocab/CONCEPT_SET_ITEM.csv"), dtype=str, keep_default_na=False)
         self.kind_of = dict(zip(code_item["concept_id"], code_item["code"]))
 
@@ -75,11 +78,19 @@ class InjectorV2:
         self.log(ftype, category, table, i, field, value, rule_id, note, original=before)
 
     def rows(self, table, mask=None, k=None):
+        """오류를 심을 행을 고른다. 아직 손대지 않은 행을 먼저 쓴다."""
         df = self.data[table]
-        idx = df.index if mask is None else df.index[mask]
-        if not len(idx):
+        idx = list(df.index if mask is None else df.index[mask])
+        if not idx:
             return []
-        return list(self.rng.choice(idx, size=min(k or self.k, len(idx)), replace=False))
+        # 자리가 모자라면 적게 심는다. 같은 행에 둘을 심으면 서로를 가려 '못 잡았다'로 보인다.
+        free = [i for i in idx if (table, i) not in self.used]
+        if not free:
+            return []
+        picked = list(self.rng.choice(free, size=min(k or self.k, len(free)), replace=False))
+        for i in picked:
+            self.used.add((table, i))
+        return picked
 
     # ------------------------------------------------- 규칙에서 거꾸로 만들기
     def applicable(self, check):
@@ -111,16 +122,42 @@ class InjectorV2:
             for i in self.rows(r["table"], mask=self.data[r["table"]][f] != ""):
                 self.put("REQUIRED_NULL", "Completeness", r["table"], i, f, "", r["id"])
 
-        # ---- 그 행 종류에서만 필수인 값을 비운다
+        # ---- 조건이 맞는 행에서만 필수인 값을 비운다
+        # 조건은 세 가지다: 행 종류(when_column/when_code), 다른 칸이 채워짐(when_filled),
+        # 다른 칸의 값(when_contains_*, when_equals_*). 규칙이 보는 것과 같은 조건으로 행을 골라야
+        # 심은 오류가 실제로 규칙에 걸린다.
         for r in self.sample_rules("not_null_when"):
             t, f = r["table"], r["fields"][0]
-            wc, code = r["params"]["when_column"], r["params"]["when_code"]
+            p_ = r["params"]
             df = self.data[t]
-            if wc not in df.columns:
-                continue
-            mask = (df[f] != "") & df[wc].map(lambda v: self.kind_of.get(v) == code)
+            mask = df[f] != ""
+            note = []
+            wc, code = p_.get("when_column"), p_.get("when_code")
+            if wc:
+                if wc not in df.columns:
+                    continue
+                mask &= df[wc].map(lambda v: self.kind_of.get(v) == code)
+                note.append(f"{code} 행")
+            wf = p_.get("when_filled")
+            if wf:
+                if wf not in df.columns:
+                    continue
+                mask &= df[wf] != ""
+                note.append(f"{wf} 있음")
+            wcc, wct = p_.get("when_contains_column"), p_.get("when_contains_text")
+            if wcc:
+                if wcc not in df.columns:
+                    continue
+                mask &= df[wcc].str.contains(wct, regex=False, na=False)
+                note.append(f"{wcc}⊃{wct}")
+            wec, wev = p_.get("when_equals_column"), p_.get("when_equals_value")
+            if wec:
+                if wec not in df.columns:
+                    continue
+                mask &= df[wec] == str(wev)
+                note.append(f"{wec}={wev}")
             for i in self.rows(t, mask=mask):
-                self.put("REQUIRED_NULL_WHEN", "Completeness", t, i, f, "", r["id"], note=f"{code} 행")
+                self.put("REQUIRED_NULL_WHEN", "Completeness", t, i, f, "", r["id"], note=" ".join(note))
 
         # ---- 코드도 원천값도 없게 만든다
         for r in self.sample_rules("not_null_either"):
@@ -158,9 +195,12 @@ class InjectorV2:
             src, dst = self.rows(t, k=2)[:2] if len(self.rows(t, k=2)) == 2 else (None, None)
             if src is None:
                 continue
-            self.log("PK_DUP", "Conformance", t, dst, "+".join(cols), df.at[src, cols[0]], r["id"])
+            before = "+".join(str(df.at[dst, c]) for c in cols)
             for c in cols:
                 df.at[dst, c] = df.at[src, c]
+            # 복사한 뒤에 적는다. PK 를 베꼈으므로 기록해야 할 키는 바뀐 쪽이다.
+            self.log("PK_DUP", "Conformance", t, dst, "+".join(cols),
+                     "+".join(str(df.at[src, c]) for c in cols), r["id"], original=before)
 
         # ---- 값 집합 밖의 concept_id / 코드를 넣는다
         for r in self.sample_rules("concept_set"):
@@ -217,12 +257,14 @@ class InjectorV2:
                 self.put("VISIT_BEFORE_BIRTH", "Plausibility", "VISIT_OCCURRENCE", i, "visit_start_date",
                          "1890-01-01", "SEMV-COM-002")
         if "DEATH" in d and len(d["DEATH"]) and "MEASUREMENT" in d:
-            dead = set(d["DEATH"]["person_id"])
+            death_of = dict(zip(d["DEATH"]["person_id"], d["DEATH"]["death_date"]))
             m = d["MEASUREMENT"]
-            mask = m["person_id"].isin(dead)
+            mask = m["person_id"].isin(death_of)
             for i in self.rows("MEASUREMENT", mask=mask, k=2):
+                # 그 환자의 사망일보다 뒤여야 한다. 고정 날짜를 쓰면 사망일이 더 뒤인 환자에게는 걸리지 않는다.
+                after = (pd.to_datetime(death_of[m.at[i, "person_id"]]) + pd.Timedelta(days=7)).date().isoformat()
                 self.put("EVENT_AFTER_DEATH", "Plausibility", "MEASUREMENT", i, "measurement_date",
-                         "2026-08-31", "SEMV-COM-003")
+                         after, "SEMV-COM-003")
         if "DRUG_EXPOSURE" in d:
             for i in self.rows("DRUG_EXPOSURE"):
                 self.put("DAYS_SUPPLY_MISMATCH", "Plausibility", "DRUG_EXPOSURE", i, "days_supply",

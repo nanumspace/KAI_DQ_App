@@ -174,6 +174,28 @@ VALUE_SETS = {
     "CL_ADVERSE_EVENT_TYPE_CONCEPT_ID": [  # 기록 출처 유형 (TYPE_REGISTRY/TYPE_EHR/TYPE_DERIVED 씨앗과 동일한 뜻)
         ("REGISTRY", "등록 서식 입력", "Registry (CRF entry)"), ("EHR", "전자의무기록", "EHR"), ("DERIVED", "파생", "Derived"),
     ],
+    # ---------------- 2.2 에서 채움: 저장 컬럼이 가리키는데 비어 있던 값 집합 3종
+    "TUMOR_SITE": [  # 수술 후 외과병리에서 종양이 있던 자리. 부위 상세는 CL_BIOPSY_SITE_DETAIL 로 따로 받는다.
+        ("PRIMARY", "원발 부위", "Primary tumor site"), ("ANASTOMOSIS", "문합부", "Anastomotic site"),
+        ("MARGIN", "절제연 근처", "Near resection margin"), ("MULTIFOCAL", "다발성", "Multifocal"),
+        ("RESIDUAL", "잔존 병변", "Residual lesion"), ("OTHER", "기타", "Other"),
+    ],
+    "BIOMARKER_METHOD": [  # 분자·세포유전검사 방법 (WHO/ICC 진단에 쓰이는 대표 기법)
+        ("NGS", "차세대염기서열분석", "Next generation sequencing"), ("PCR", "중합효소연쇄반응", "Polymerase chain reaction"),
+        ("RT_PCR", "역전사 중합효소연쇄반응", "Reverse transcription PCR"), ("FISH", "형광제자리부합법", "Fluorescence in situ hybridization"),
+        ("IHC", "면역조직화학염색", "Immunohistochemistry"), ("KARYOTYPE", "핵형분석", "Conventional karyotyping"),
+        ("SANGER", "생어 염기서열분석", "Sanger sequencing"), ("FLOW", "유세포분석", "Flow cytometry"),
+        ("ARRAY", "마이크로어레이", "Microarray"), ("OTHER", "기타", "Other"),
+    ],
+    "LYMPHOMA_SUBTYPE": [  # 형질전환 전후의 림프종 아형. CL_HISTOLOGIC_SUBTYPE 과 같은 값을 쓴다.
+        ("DLBCL", "미만성 거대B세포림프종(DLBCL, NOS)", "Diffuse large B-cell lymphoma, NOS"),
+        ("FL", "여포림프종", "Follicular lymphoma"), ("MCL", "외투세포림프종", "Mantle cell lymphoma"),
+        ("MZL", "변연부림프종", "Marginal zone lymphoma"), ("BL", "버킷림프종", "Burkitt lymphoma"),
+        ("CLL_SLL", "만성림프구성백혈병·소림프구림프종", "Chronic lymphocytic leukemia / small lymphocytic lymphoma"),
+        ("CHL", "고전적 호지킨림프종", "Classic Hodgkin lymphoma"),
+        ("PTCL_NOS", "말초T세포림프종(NOS)", "Peripheral T-cell lymphoma, NOS"),
+        ("HGBL", "고등급 B세포림프종", "High-grade B-cell lymphoma"), ("OTHER", "기타·미분류", "Other/not otherwise specified"),
+    ],
 }
 # 예/아니오(is_serious) 는 새 값을 만들지 않고 기존 YN 값 집합을 그대로 가리킨다.
 ALIAS_CODELIST = {"CL_IS_SERIOUS": "YN"}

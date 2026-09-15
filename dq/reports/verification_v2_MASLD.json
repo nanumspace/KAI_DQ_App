@@ -1,0 +1,127 @@
+{
+ "cohort": "MASLD",
+ "clean": {
+  "rules": 383,
+  "violations": 0,
+  "failed_rules": 0,
+  "false_positive_rate": 0.0
+ },
+ "dirty": {
+  "rules": 383,
+  "violations": 153,
+  "failed_rules": 38
+ },
+ "faults_total": 90,
+ "faults_detected": 90,
+ "recall": 1.0,
+ "fault_types": 13,
+ "fault_types_fully_detected": 13,
+ "missed": [],
+ "by_type": [
+  {
+   "fault_type": "ANCHOR_MISSING",
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "CODE_OUT_OF_SET",
+   "n": 9,
+   "detected": 9,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "COLUMN_MISSING",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "CONCEPT_OUT_OF_SET",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FK_BROKEN",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FUTURE_DATE",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PK_DUP",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_EITHER_NULL",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_NULL",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_NULL_WHEN",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "TYPE_BAD",
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_BEFORE_BIRTH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_END_BEFORE_START",
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0
+  }
+ ],
+ "by_category": [
+  {
+   "category": "Completeness",
+   "n": 33,
+   "detected": 33,
+   "recall": 1.0
+  },
+  {
+   "category": "Conformance",
+   "n": 40,
+   "detected": 40,
+   "recall": 1.0
+  },
+  {
+   "category": "Plausibility",
+   "n": 17,
+   "detected": 17,
+   "recall": 1.0
+  }
+ ],
+ "collateral_rules": [
+  "SEMV-COM-004",
+  "SEMV-COM-006",
+  "SEMV-COM-007",
+  "SV-0776",
+  "SV-0802"
+ ]
+}

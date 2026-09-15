@@ -1,14 +1,14 @@
 {
  "cohort": "LUNG_CANCER",
  "clean": {
-  "rules": 383,
-  "violations": 3,
-  "failed_rules": 1,
-  "false_positive_rate": null
+  "rules": 377,
+  "violations": 0,
+  "failed_rules": 0,
+  "false_positive_rate": 0.0
  },
  "dirty": {
-  "rules": 383,
-  "violations": 162,
+  "rules": 377,
+  "violations": 159,
   "failed_rules": 55
  },
  "faults_total": 113,
@@ -154,12 +154,12 @@
   "SEMV-EP-002",
   "SEMV-EP-003",
   "SEMV-EP-004",
+  "SEMV-LC-001",
   "SEMV-PA-003",
   "SV-0015",
-  "SV-0041",
-  "SV-0117",
-  "SV-0256",
-  "SV-0417",
-  "SV-0592"
+  "SV-0040",
+  "SV-0113",
+  "SV-0250",
+  "SV-0411"
  ]
 }

@@ -284,19 +284,18 @@ BREAST_CANCER          0 위반        105건      105    1.0
 ## 다음 단계 (2.2)
 
 - **3단계 (진행 중): v1 과 병행하며 v2 경로를 만든다.** 병원이 쓰던 v1 을 끊지 않고 둘을 견주어 보기 위해서다. v2 가 안정되면 v1 을 재단한다.
-  - ✅ 규칙 생성기: `python rules/generate_structural_rules.py --spec v2` → `rules/rules_structural_v2.yaml` (1,045개)
+  - ✅ 규칙 생성기: `python rules/generate_structural_rules.py --spec v2` → `rules/rules_structural_v2.yaml` (1,038개)
   - ✅ 가상데이터: **6개 코호트 전부** 옮겼다 — `python synth/generate.py --spec v2 --all`
     - `synth/framework_v2.py` 가 v2 저장 테이블에 적고, `scenarios/lung_v2.py` 가 여정을 기술한다. 여정 자체는 v1 과 같다.
     - 명세에 없는 컬럼을 쓰거나 값 집합에 없는 코드를 쓰면 생성이 그 자리에서 멈춘다.
     - 6개 코호트 모두 깨끗한 데이터에서 **위반 0**, 오류를 심으면 **재현율 1.0**.
-  - 🔸 엔진: `python dq/engine.py --spec v2 --cohort LUNG_CANCER --data synth/output/clean_v2/LUNG_CANCER --out dq/reports/v2_LUNG_CANCER`
+  - ✅ 엔진: `python dq/engine.py --spec v2 --cohort LUNG_CANCER --data synth/output/clean_v2/LUNG_CANCER --out dq/reports/v2_LUNG_CANCER`
     - v2 명세·프로필·값 집합을 읽고, v2 전용 검사 5종(`concept_set`·`concept_code`·`not_null_when`·`not_null_either`·복합 PK)을 더했다.
-    - 폐암 가상데이터에서 규칙 357개 중 1개 위반(위 '남은 1건'). v1 경로는 규칙 427개·위반 0으로 그대로다.
-    - 의미 규칙은 `rules/rules_semantic_v2.yaml` 에 26개를 새로 썼다(아래).
-    - 구조 357 + 의미 26 = **383개 규칙**, 폐암 가상데이터에서 위반 1건(위 '남은 1건').
+    - 6개 코호트 전부 깨끗한 데이터에서 **위반 0**. v1 경로는 규칙 427개·위반 0으로 그대로다.
+    - 의미 규칙은 `rules/rules_semantic_v2.yaml` 에 **40개**(공통 23 · 코호트별 17)를 새로 썼다. 코호트가 실제로 도는 규칙 수는 341~531개다.
     - TypeScript 엔진도 `--spec v2` 로 같은 규칙을 돌린다: `npm run engine -- --spec v2 --cohort LUNG_CANCER --data ... --out ...`
-      두 구현이 clean·dirty 두 실행에서 **위반 행까지 완전히 같다**(`dq-ts/test/equivalence.test.ts`).
-  - 🔸 오류 주입·검출 평가: `python dq/run_all.py --spec v2` 로 생성→검증→주입→검증→평가를 한 번에 돈다.
+      **6개 코호트 전부** clean·dirty 두 실행에서 위반 행까지 완전히 같다(`dq-ts/test/equivalence.test.ts`, 시험 26개).
+  - ✅ 오류 주입·검출 평가: `python dq/run_all.py --spec v2` 로 생성→검증→주입→검증→평가를 한 번에 돈다.
     - **6개 코호트 전부 오탐 0 · 재현율 1.0** (주입 83~113건/코호트).
   - ✅ 앱: 서식→레코드 변환기(`dq-ts/src/crf.ts`), `crf:convert` IPC, **서식 변환** 화면, 빈 서식 양식 내려받기.
   - ✅ 앱 엔진 v2 전환: 앱의 기본 명세가 **v2** 가 됐다 (설정 → 명세 판에서 v1 도 고를 수 있다).

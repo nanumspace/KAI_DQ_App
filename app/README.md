@@ -82,6 +82,8 @@ npm run typecheck
 npm run build          # out/ 생성
 npm run smoke          # 빌드 후 자동 점검: 폐암 clean(CSV) · 당뇨 dirty(CSV) · 폐암 dirty(엑셀 한 파일) 실행, 서식 변환, 화면 8개 PNG 캡처
                        # KAI_SMOKE_OUT 로 결과 위치, KAI_SMOKE_SPEC=v1|v2 로 명세 판 지정
+                       # 설치본에서도 돈다: KAI_SMOKE=1 "release/mac-arm64/Quality Validator.app/Contents/MacOS/Quality Validator"
+                       # (설치본에는 synth/ 가 없어 내장 견본으로 돌고 dirty 단계는 건너뛴다)
 ```
 
 개발 모드에서는 명세 위치가 저장소 루트(`app/..`)이고, 실행 이력은 OS 의 앱 데이터 폴더(`~/Library/Application Support/kai-quality-validator` 또는 `%APPDATA%`)에 저장됩니다.
@@ -105,6 +107,7 @@ npm run dist:win             # Windows 빌드만 (토큰 서명 훅 build/sign-w
 
 - v2 로 스모크 시험: 폐암 clean 377규칙 위반 0, 당뇨 dirty 341규칙 위반 198, 폐암 dirty 엑셀(시트 18개) 위반 236 — CLI(`dq-ts`, `dq/`)와 같은 수.
 - 서식 경로: 빈 양식 12개 생성, 서식 4개 80행 → 레코드 80건(확인할 점 0건), 화면 8개 캡처.
+- 설치본(`electron-builder --mac dir`)을 직접 띄워 확인: 내장 명세만으로 v2 규칙 1,078개를 읽고 견본 데이터로 377규칙 위반 0, 폴더 2곳 입력·서식 변환·화면 8개 모두 동작. 번들에 `spec/v2/`(어휘 CSV 포함)와 v1·v2 견본이 들어가고 `vocab/ref/` 는 빠진다(29MB).
 - 폴더 여러 개 입력: 폐암 clean 을 두 폴더로 쪼개 넣어 18개 표 전부 자동 대응, 위반 0 (한 폴더로 넣었을 때와 같음). 그 둘을 담은 상위 폴더 하나만 넣어도 같은 결과. 같은 이름이 두 폴더에 있으면 어느 것을 쓰는지 안내 1건.
 - `KAI_SMOKE_SPEC=v1 npm run smoke` 로 v1 회귀 없음 확인 (427규칙 위반 0/172, 392규칙 위반 950).
 

@@ -273,14 +273,21 @@ async function smoke(): Promise<void> {
     // 켜져 있는 명세 판의 가상데이터를 쓴다 (v2 는 clean_v2 / dirty_v2)
     const sfx = isV2() ? "_v2" : "";
     const synth = path.join(config.root, "synth/output");
-    log(`명세 ${config.specVersion} · 규칙 ${rules().length}개`);
+    // 설치본에는 synth/ 가 없고 내장 견본만 있다. 그때는 견본으로 돈다(dirty 는 없어 건너뛴다).
+    const dataOf = (kind: "clean" | "dirty", cohort: string): string | null => {
+      const cands = [path.join(synth, `${kind}${sfx}/${cohort}`)];
+      if (kind === "clean") cands.push(path.join(config.root, sfx ? "samples_v2" : "samples", cohort));
+      return cands.find((d) => fs.existsSync(path.join(d, "PERSON.csv"))) ?? null;
+    };
+    log(`명세 ${config.specVersion} · 규칙 ${rules().length}개 · ${config.packaged ? "설치본" : "개발 모드"}`);
     // 엑셀 입력 경로 시험: 폐암 dirty 를 엑셀 한 파일(시트당 테이블)로 만들어 넣는다
     const xlsxPath = path.join(out, "LUNG_CANCER_dirty.xlsx");
-    {
+    const dirtyLung = dataOf("dirty", "LUNG_CANCER");
+    if (dirtyLung) {
       const XLSX = await import("xlsx");
       const wb = XLSX.utils.book_new();
       for (const t of cohortOf("LUNG_CANCER").tables) {
-        const p = path.join(synth, `dirty${sfx}/LUNG_CANCER`, `${t}.csv`);
+        const p = path.join(dirtyLung, `${t}.csv`);
         if (!fs.existsSync(p)) continue;
         const raw = readCsv(p);
         const rows = [raw.columns, ...Array.from({ length: raw.n }, (_, i) => raw.columns.map((c) => raw.cols.get(c)![i]))];
@@ -288,19 +295,24 @@ async function smoke(): Promise<void> {
       }
       XLSX.writeFile(wb, xlsxPath);
     }
-    for (const [cohort, dir, label] of [["LUNG_CANCER", path.join(synth, `clean${sfx}/LUNG_CANCER`), "clean 가상데이터"], ["DIABETES", path.join(synth, `dirty${sfx}/DIABETES`), "dirty 가상데이터"]] as const) {
+    for (const [cohort, kind, label] of [["LUNG_CANCER", "clean", "clean 가상데이터"], ["DIABETES", "dirty", "dirty 가상데이터"]] as const) {
+      const dir = dataOf(kind, cohort);
+      if (!dir) { log(`${cohort} ${kind} 데이터가 없어 건너뜀`); continue; }
       const rec = await runFromDir(cohort, dir, "2026-09-07", label);
       log(`run ${rec.run_id}: rules=${rec.rules_total} violations=${rec.violations_total}`);
     }
-    const planX = inspect("LUNG_CANCER", [xlsxPath]);
-    log(`xlsx plan: candidates=${planX.candidates.length} mapped=${Object.keys(planX.mapping).length} errors=${planX.errors} warnings=${planX.warnings}`);
-    const recX = await runValidation({ cohort: "LUNG_CANCER", candidates: planX.candidates, mapping: planX.mapping, today: "2026-09-07", label: "dirty 엑셀 입력" });
-    log(`run ${recX.run_id}: rules=${recX.rules_total} violations=${recX.violations_total} (엑셀)`);
+    const planX = dirtyLung ? inspect("LUNG_CANCER", [xlsxPath]) : null;
+    if (planX) {
+      log(`xlsx plan: candidates=${planX.candidates.length} mapped=${Object.keys(planX.mapping).length} errors=${planX.errors} warnings=${planX.warnings}`);
+      const recX = await runValidation({ cohort: "LUNG_CANCER", candidates: planX.candidates, mapping: planX.mapping, today: "2026-09-07", label: "dirty 엑셀 입력" });
+      log(`run ${recX.run_id}: rules=${recX.rules_total} violations=${recX.violations_total} (엑셀)`);
+    }
     let planFolders: InputPlan | null = null;
     // 폴더 두 곳을 한 번에 넣는 길: v2 는 서식을 바꾼 폴더와 EHR 추출본 폴더가 따로 온다.
     {
-      const src = path.join(synth, `clean${sfx}/LUNG_CANCER`);
-      const tables = cohortOf("LUNG_CANCER").tables.filter((t) => fs.existsSync(path.join(src, `${t}.csv`)));
+      const src = dataOf("clean", "LUNG_CANCER");
+      const tables = src ? cohortOf("LUNG_CANCER").tables.filter((t) => fs.existsSync(path.join(src, `${t}.csv`))) : [];
+      if (!src || !tables.length) { log("폴더 2곳: 데이터가 없어 건너뜀"); } else {
       const half = Math.ceil(tables.length / 2);
       const dirs = [path.join(out, "split/EHR추출본"), path.join(out, "split/서식변환결과")];
       dirs.forEach((d) => fs.mkdirSync(d, { recursive: true }));
@@ -319,6 +331,7 @@ async function smoke(): Promise<void> {
       const dup = planD.tables.find((t) => t.table === "PERSON")?.issues.filter((i) => i.text.includes("같은 이름")) ?? [];
       log(`이름 겹침: 후보 ${planD.candidates.length}개, PERSON 안내 ${dup.length}건 — ${dup[0]?.text ?? "(없음)"}`);
       fs.rmSync(path.join(dirs[1], "PERSON.csv"));
+      }
     }
     let crfPayload: unknown = null;
     // v2 서식 경로: 빈 양식을 만들고, 채워진 서식을 레코드로 되돌린다
@@ -337,7 +350,7 @@ async function smoke(): Promise<void> {
       const crfSpec = loadCrfSpec();
       for (const form of formsForCohort(crfSpec, "LUNG_CANCER")) {
         if (form.mapping) continue;                       // 투영 서식은 되돌릴 수 없다
-        const src = path.join(synth, "clean_v2/LUNG_CANCER", `${form.name}.csv`);
+        const src = path.join(dataOf("clean", "LUNG_CANCER") ?? "", `${form.name}.csv`);
         if (!fs.existsSync(src)) continue;
         const df = readCsv(src);
         const names = form.fields.map((f) => f.name);
@@ -361,7 +374,7 @@ async function smoke(): Promise<void> {
     }
     // 화면 캡처: 검증 실행 화면은 대응표 상태를 보기 위해 렌더러에 계획을 넣어 준다
     // 화면은 폴더 2곳을 넣은 모습으로 찍는다 (엑셀 경로는 위에서 실행으로 확인했다)
-    win!.webContents.send("smoke:plan", planFolders ?? planX);
+    if (planFolders ?? planX) win!.webContents.send("smoke:plan", planFolders ?? planX);
     for (const page of ["run", "crf", "report", "findings", "dashboard", "rules", "monitor", "settings"]) {
       win!.webContents.send("nav", page);
       // 화면이 붙은 뒤에 보내야 한다 — 그 화면은 열릴 때 비로소 듣기 시작한다

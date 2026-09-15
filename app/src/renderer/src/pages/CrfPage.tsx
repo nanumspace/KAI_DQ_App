@@ -18,6 +18,9 @@ export function CrfPage() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
+  // 자동 점검 모드에서는 메인이 변환 결과를 넣어 준다 (화면이 결과까지 그려지는지 보기 위해)
+  useEffect(() => api.onSmokeCrf((x) => { setInDir(x.inDir); setResult(x.result); }), []);
+
   useEffect(() => {
     api.listCohorts().then((cs) => { setCohorts(cs); if (cs[0]) setCohort(cs[0].id); }).catch((e) => setErr(String(e)));
   }, []);
@@ -75,7 +78,7 @@ export function CrfPage() {
         <>
           <Card title="변환 결과" sub={`서식 ${formCount}개 ${rowCount}행 → 레코드 ${recCount}건`}>
             <div className="kv">
-              <span>저장 위치</span><code>{result.outDir}</code>
+              <span className="k">저장 위치</span><code>{result.outDir}</code>
             </div>
             <p className="muted" style={{ marginTop: 8 }}>
               이 폴더를 <b>검증 실행</b> 화면에서 입력으로 고르면 됩니다.

@@ -34,6 +34,7 @@ const api: Api = {
   openPath: (p) => ipcRenderer.invoke("shell:open", p),
   onNav: (cb) => on("nav", cb),
   onSmokePlan: (cb) => on("smoke:plan", cb),
+  onSmokeCrf: (cb) => on("smoke:crf", cb),
 };
 
 contextBridge.exposeInMainWorld("api", api);

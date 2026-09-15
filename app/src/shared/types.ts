@@ -158,6 +158,8 @@ export interface Api {
   onNav(cb: (page: string) => void): () => void;
   /** 자동 점검 모드에서 메인이 넣어 주는 입력 계획 (화면 캡처용) */
   onSmokePlan(cb: (plan: InputPlan) => void): () => void;
+  /** 자동 점검 모드에서 메인이 넣어 주는 서식 변환 결과 (화면 캡처용) */
+  onSmokeCrf(cb: (x: { inDir: string; result: CrfConvertResult }) => void): () => void;
 }
 
 // ------------------------------------------------------------------ 서식 → 레코드 변환 (v2)

@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { app, BrowserWindow, ipcMain, dialog, shell, utilityProcess } from "electron";
-import { setRoot, loadSpec, loadProfiles, loadStructuralRules, loadSemanticRules, readCsv, convertCrfDirectory, writeCrfTemplates } from "@engine/index.js";
+import { setRoot, loadSpec, loadProfiles, loadStructuralRules, loadSemanticRules, readCsv, convertCrfDirectory, writeCrfTemplates, loadCrfSpec, formsForCohort } from "@engine/index.js";
 import type { Summary, Spec } from "@engine/types.js";
 import type { AppConfig, CohortInfo, RuleInfo, RunRequest, RunRecord, RunDetail, FindingsQuery, Dashboard, InputPlan, SourceCandidate, TemplateKind, OutputFile } from "@shared/types";
 import { readConfig, writeConfig } from "./config";
@@ -258,11 +258,53 @@ async function smoke(): Promise<void> {
     log(`xlsx plan: candidates=${planX.candidates.length} mapped=${Object.keys(planX.mapping).length} errors=${planX.errors} warnings=${planX.warnings}`);
     const recX = await runValidation({ cohort: "LUNG_CANCER", candidates: planX.candidates, mapping: planX.mapping, today: "2026-09-07", label: "dirty 엑셀 입력" });
     log(`run ${recX.run_id}: rules=${recX.rules_total} violations=${recX.violations_total} (엑셀)`);
+    let crfPayload: unknown = null;
+    // v2 서식 경로: 빈 양식을 만들고, 채워진 서식을 레코드로 되돌린다
+    {
+      const blank = path.join(out, "crf-blank");
+      const files = writeCrfTemplates("LUNG_CANCER", blank);
+      log(`crf 빈 양식 ${files.length}개 → ${blank}`);
+      // 병원이 채운 서식 대신, 가상데이터의 확장 저장을 서식 모양으로 되돌려 쓴다
+      const crfIn = path.join(out, "crf-in");
+      fs.mkdirSync(crfIn, { recursive: true });
+      const toCode = new Map<string, string>();
+      for (const line of fs.readFileSync(path.join(config.root, "spec/v2/vocab/CONCEPT_SET_ITEM.csv"), "utf-8").split(/\r?\n/).slice(1)) {
+        const [, conceptId, code] = line.split(",");
+        if (conceptId) toCode.set(conceptId, code ?? "");
+      }
+      const crfSpec = loadCrfSpec();
+      for (const form of formsForCohort(crfSpec, "LUNG_CANCER")) {
+        if (form.mapping) continue;                       // 투영 서식은 되돌릴 수 없다
+        const src = path.join(config.root, "synth/output/clean_v2/LUNG_CANCER", `${form.name}.csv`);
+        if (!fs.existsSync(src)) continue;
+        const df = readCsv(src);
+        const names = form.fields.map((f) => f.name);
+        const lines = [names.join(",")];
+        for (let i = 0; i < Math.min(df.n, 20); i++) {
+          lines.push(form.fields.map((f) => {
+            const col = f.target?.column;
+            const v = col && df.cols.has(col) ? df.cols.get(col)![i] : "";
+            const out = col?.endsWith("_concept_id") && f.codelist ? (toCode.get(v) ?? v) : v;
+            return /[",\n]/.test(out) ? `"${out.replace(/"/g, '""')}"` : out;
+          }).join(","));
+        }
+        fs.writeFileSync(path.join(crfIn, `${form.name}.csv`), lines.join("\n") + "\n", "utf-8");
+      }
+      const crfOut = path.join(out, "crf-out");
+      const rc = convertCrfDirectory({ cohort: "LUNG_CANCER", inDir: crfIn, outDir: crfOut });
+      const rows = Object.values(rc.formsRead).reduce((a, b) => a + b, 0);
+      const recs = Object.values(rc.tablesWritten).reduce((a, b) => a + b, 0);
+      log(`crf 변환: 서식 ${Object.keys(rc.formsRead).length}개 ${rows}행 → 레코드 ${recs}건, 확인할 점 ${rc.issues.length}건, EHR 표 ${rc.tablesFromEhr.length}개`);
+      crfPayload = { inDir: crfIn, result: { outDir: crfOut, ...rc } };
+    }
     // 화면 캡처: 검증 실행 화면은 대응표 상태를 보기 위해 렌더러에 계획을 넣어 준다
     win!.webContents.send("smoke:plan", planX);
-    for (const page of ["run", "report", "findings", "dashboard", "rules", "monitor", "settings"]) {
+    for (const page of ["run", "crf", "report", "findings", "dashboard", "rules", "monitor", "settings"]) {
       win!.webContents.send("nav", page);
-      await wait(page === "dashboard" || page === "run" ? 2500 : 1500);
+      // 화면이 붙은 뒤에 보내야 한다 — 그 화면은 열릴 때 비로소 듣기 시작한다
+      await wait(400);
+      if (page === "crf" && crfPayload) win!.webContents.send("smoke:crf", crfPayload);
+      await wait(page === "dashboard" || page === "run" ? 2100 : 1100);
       const img = await win!.webContents.capturePage();
       fs.writeFileSync(path.join(out, `${page}.png`), img.toPNG());
       log(`captured ${page}`);

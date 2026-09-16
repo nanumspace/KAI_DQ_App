@@ -1,7 +1,7 @@
 {
   "name": "kai-quality-validator",
   "productName": "Quality Validator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "K-AI 질환별 코호트 데이터 품질검증 프로그램",
   "license": "Apache-2.0",

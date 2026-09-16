@@ -8,6 +8,7 @@
 | [`feedback.md`](feedback.md) | 기관이 채워 보내는 피드백 양식 |
 | [`feedback_rules.csv`](feedback_rules.csv) | 규칙 단위 이의를 표로 적을 때 쓰는 헤더 |
 | [`aggregate.py`](aggregate.py) | 중앙이 여러 기관의 `submission.json` 을 모아 규칙별로 집계하는 도구 |
+| [`review/`](review/) | 임상 검토 묶음: 병리 보고서 조건부 필수 10건, v1→v2 미승격 필드 575건 (`build_review.py` 가 만듦) |
 
 ## 참여 기관이 할 일
 
@@ -68,6 +69,13 @@
 - [ ] 규칙 가운데 **한 기관에서만 우는 것** — 그 기관의 내보내기나 관행일 가능성이 크다
 - [ ] 실행 시간과 메모리 (2,000명 규모까지는 확인했다)
 - [ ] 보고서가 담당자에게 읽히는가, 조치 안내가 도움이 되는가
+
+## 임상 검토 (파일럿과 나란히)
+
+`review/` 의 두 표는 임상 검토자에게 따로 보냅니다.
+
+- `pathology_conditional_review.xlsx` — PATHOLOGY_REPORT 컬럼 10개가 생검·수술 어느 보고서에 필수인지. 지금은 '둘 다'로 두어 규칙이 느슨합니다. 답이 오면 `spec/v2_row_kinds.py` 의 `NEEDS_REVIEW` 를 비우고 `applies` 에 옮깁니다.
+- `legacy_fields_review.xlsx` — v1 컬럼 575개 중 v2 에 자리가 없는 것. '대응 없음' 83건과 '부분 일치' 149건만 보면 됩니다. 병원이 "이 항목 어디 갔나요" 물을 때의 답이기도 합니다.
 
 ## 문의
 

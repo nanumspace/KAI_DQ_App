@@ -77,7 +77,7 @@ export function SettingsPage() {
         </Card>
         <Card title="정보">
           <div className="kv">
-            <span className="k">프로그램</span><span>Quality Validator v0.1.0</span>
+            <span className="k">프로그램</span><span>Quality Validator v0.2.0</span>
             <span className="k">엔진</span><span>kai-dq-engine (TypeScript) · DuckDB</span>
             <span className="k">규칙 체계</span><span>Kahn 3축 (적합성 · 완전성 · 타당성) · 심각도 오류/경고</span>
           </div>

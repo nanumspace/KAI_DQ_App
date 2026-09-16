@@ -50,7 +50,7 @@ export function App() {
             <span className="icon">{m.icon}</span>{m.label}
           </button>
         ))}
-        <div className="foot">{foot}<br />v0.1.0</div>
+        <div className="foot">{foot}<br />v0.2.0</div>
       </aside>
       <main className="main">
         {page === "dashboard" && <Dashboard key={version} nav={nav} />}

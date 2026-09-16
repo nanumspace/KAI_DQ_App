@@ -14,6 +14,9 @@ import { writeExtraOutputs, runOutputs, exportBundle } from "./outputs";
 const SMOKE = process.env.KAI_SMOKE === "1";
 if (SMOKE) app.setPath("userData", path.join(process.env.KAI_SMOKE_OUT ?? app.getPath("temp"), "kai-smoke-userdata"));
 
+/** 서식 변환이 만드는 행 ID 의 시작. EHR 추출본과 같은 표에 앉으므로 부딪히지 않을 높은 구간을 쓴다. */
+const CRF_ID_BASE = 9_000_000_000;
+
 let win: BrowserWindow | null = null;
 let config: AppConfig;
 
@@ -99,7 +102,7 @@ function inspect(cohort: string, paths: string[], existing: SourceCandidate[] = 
   return input.buildPlan(cohort, info.tables, spec(), candidates, undefined, requiredTables(info.tables));
 }
 
-function check(cohort: string, candidates: SourceCandidate[], mapping: Record<string, string>): InputPlan {
+function check(cohort: string, candidates: SourceCandidate[], mapping: Record<string, string[]>): InputPlan {
   return input.buildPlan(cohort, cohortOf(cohort).tables, spec(), candidates, mapping, requiredTables(cohortOf(cohort).tables));
 }
 
@@ -148,7 +151,7 @@ function runValidation(req: RunRequest): Promise<RunRecord> {
   const outDir = path.join(runsDir(), runId);
   const inputDir = path.join(outDir, "input");
   const today = req.today || config.defaultToday || now.toISOString().slice(0, 10);
-  const firstPath = req.candidates.find((c) => c.id === Object.values(req.mapping)[0])?.path ?? "";
+  const firstPath = req.candidates.find((c) => c.id === Object.values(req.mapping)[0]?.[0])?.path ?? "";
   const label = req.label?.trim() || path.basename(path.dirname(firstPath) || firstPath) || req.cohort;
   running = true;
   const progress = (stage: string, done: number, total: number, text: string, pct: number) =>
@@ -220,13 +223,14 @@ function registerIpc(): void {
     return r.canceled ? [] : r.filePaths;
   });
   ipcMain.handle("input:inspect", (_e, cohort: string, paths: string[], existing?: SourceCandidate[]) => inspect(cohort, paths, existing));
-  ipcMain.handle("input:check", (_e, cohort: string, candidates: SourceCandidate[], mapping: Record<string, string>) => check(cohort, candidates, mapping));
+  ipcMain.handle("input:check", (_e, cohort: string, candidates: SourceCandidate[], mapping: Record<string, string[]>) => check(cohort, candidates, mapping));
   ipcMain.handle("input:preview", (_e, c: SourceCandidate) => input.preview(c));
   ipcMain.handle("template:export", (_e, cohort: string, kind: TemplateKind) => exportTemplate(cohort, kind));
   // v2: 서식 CSV 가 든 폴더를 저장 레코드로 바꾼다. 결과 폴더를 그대로 검증에 넣을 수 있다.
   ipcMain.handle("crf:convert", (_e, req: { cohort: string; inDir: string; outDir?: string }) => {
     const outDir = req.outDir ?? path.join(app.getPath("userData"), "crf-staging", req.cohort);
-    const r = convertCrfDirectory({ cohort: req.cohort, inDir: req.inDir, outDir });
+    // 변환이 만드는 행의 ID 는 높은 예약 구간에서 매긴다. EHR 추출본의 ID 와 한 표에서 만나기 때문이다.
+    const r = convertCrfDirectory({ cohort: req.cohort, inDir: req.inDir, outDir, idBase: CRF_ID_BASE });
     return { outDir, ...r };
   });
   ipcMain.handle("run:start", (_e, req: RunRequest) => runValidation(req));
@@ -319,19 +323,30 @@ async function smoke(): Promise<void> {
       const dirs = [path.join(out, "split/EHR추출본"), path.join(out, "split/서식변환결과")];
       dirs.forEach((d) => fs.mkdirSync(d, { recursive: true }));
       tables.forEach((t, i) => fs.copyFileSync(path.join(src, `${t}.csv`), path.join(dirs[i < half ? 0 : 1], `${t}.csv`)));
+      // MEASUREMENT 는 두 폴더에 반씩 나눠 둔다 — EHR 추출본의 검사 결과와 서식 변환의 병기 평가가 한 표를 나눠 갖는 모양.
+      // 합쳐 읽어야 위반 0 이 나온다.
+      {
+        const lines = fs.readFileSync(path.join(src, "MEASUREMENT.csv"), "utf-8").split(/\r?\n/).filter(Boolean);
+        const cut = Math.ceil((lines.length - 1) / 2);
+        fs.writeFileSync(path.join(dirs[0], "MEASUREMENT.csv"), [lines[0], ...lines.slice(1, 1 + cut)].join("\n") + "\n", "utf-8");
+        fs.writeFileSync(path.join(dirs[1], "MEASUREMENT.csv"), [lines[0], ...lines.slice(1 + cut)].join("\n") + "\n", "utf-8");
+      }
       const plan2 = inspect("LUNG_CANCER", dirs);
       planFolders = plan2;
-      log(`폴더 2곳: 후보 ${plan2.candidates.length}개, 대응 ${Object.keys(plan2.mapping).length}/${tables.length}, 오류 ${plan2.errors} 주의 ${plan2.warnings}`);
+      const mt = plan2.tables.find((t) => t.table === "MEASUREMENT")!;
+      log(`폴더 2곳: 후보 ${plan2.candidates.length}개, 대응 ${Object.keys(plan2.mapping).length}/${tables.length}, 오류 ${plan2.errors} 주의 ${plan2.warnings} · MEASUREMENT ${mt.candidateIds.length}개 파일 ${mt.rows}행`);
       const rec2 = await runValidation({ cohort: "LUNG_CANCER", candidates: plan2.candidates, mapping: plan2.mapping, today: "2026-09-07", label: "폴더 2곳 입력" });
       log(`run ${rec2.run_id}: rules=${rec2.rules_total} violations=${rec2.violations_total} (폴더 2곳)`);
       // 상위 폴더 하나만 넣어도 아래 두 폴더를 찾아야 한다
       const planP = inspect("LUNG_CANCER", [path.join(out, "split")]);
       log(`상위 폴더 1곳: 후보 ${planP.candidates.length}개, 대응 ${Object.keys(planP.mapping).length}/${tables.length}`);
-      // 같은 이름이 두 폴더에 있으면 어느 것을 쓰는지 말해야 한다
+      // 같은 이름이 두 폴더에 있으면 합쳐 읽는다. PERSON 을 두 벌 넣으면 행이 두 배가 되고 PK 중복이 나와야 한다.
       fs.copyFileSync(path.join(src, "PERSON.csv"), path.join(dirs[1], "PERSON.csv"));
       const planD = inspect("LUNG_CANCER", dirs);
-      const dup = planD.tables.find((t) => t.table === "PERSON")?.issues.filter((i) => i.text.includes("같은 이름")) ?? [];
-      log(`이름 겹침: 후보 ${planD.candidates.length}개, PERSON 안내 ${dup.length}건 — ${dup[0]?.text ?? "(없음)"}`);
+      const pt = planD.tables.find((t) => t.table === "PERSON")!;
+      log(`이름 겹침: PERSON 후보 ${pt.candidateIds.length}개 → ${pt.rows}행 — ${pt.issues.find((i) => i.text.includes("합쳐"))?.text ?? "(안내 없음)"}`);
+      const recD = await runValidation({ cohort: "LUNG_CANCER", candidates: planD.candidates, mapping: planD.mapping, today: "2026-09-07", label: "PERSON 두 벌" });
+      log(`run ${recD.run_id}: rules=${recD.rules_total} violations=${recD.violations_total} (PERSON 두 벌 → PK 중복이어야 함)`);
       fs.rmSync(path.join(dirs[1], "PERSON.csv"));
       }
     }
@@ -368,7 +383,7 @@ async function smoke(): Promise<void> {
         fs.writeFileSync(path.join(crfIn, `${form.name}.csv`), lines.join("\n") + "\n", "utf-8");
       }
       const crfOut = path.join(out, "crf-out");
-      const rc = convertCrfDirectory({ cohort: "LUNG_CANCER", inDir: crfIn, outDir: crfOut });
+      const rc = convertCrfDirectory({ cohort: "LUNG_CANCER", inDir: crfIn, outDir: crfOut, idBase: CRF_ID_BASE });
       const rows = Object.values(rc.formsRead).reduce((a, b) => a + b, 0);
       const recs = Object.values(rc.tablesWritten).reduce((a, b) => a + b, 0);
       log(`crf 변환: 서식 ${Object.keys(rc.formsRead).length}개 ${rows}행 → 레코드 ${recs}건, 확인할 점 ${rc.issues.length}건, EHR 표 ${rc.tablesFromEhr.length}개`);

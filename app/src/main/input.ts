@@ -256,26 +256,31 @@ function headerSimilarity(columns: string[], t: SpecTable): number {
   return hit / Math.max(spec.length, 1);
 }
 
-/** 파일 이름 → 테이블 이름 → 헤더 유사도 순으로 대응시킨다 */
-export function autoMatch(tables: string[], spec: Spec, candidates: SourceCandidate[]): Record<string, string> {
-  const mapping: Record<string, string> = {};
+/**
+ * 파일 이름 → 테이블 이름 → 헤더 유사도 순으로 대응시킨다.
+ * 이름이 테이블과 같은 파일이 여러 폴더에서 오면 모두 그 테이블로 잇는다(합쳐 읽는다).
+ * v2 는 EHR 추출본과 서식 변환 결과가 같은 OMOP 표(MEASUREMENT 등)를 나눠 갖기 때문이다.
+ */
+export function autoMatch(tables: string[], spec: Spec, candidates: SourceCandidate[]): Record<string, string[]> {
+  const mapping: Record<string, string[]> = {};
   const used = new Set<string>();
   const cands = candidates.filter((c) => !c.error);
   const byLen = [...tables].sort((a, b) => b.length - a.length); // 긴 이름 먼저 (VISIT_OCCURRENCE 가 VISIT 보다 먼저)
-  // 1) 파일명(또는 시트명)이 테이블명과 같음.
-  //    읽지 못한 파일도 이름이 맞으면 그 표에 잇는다 — 그래야 "파일 없음"이 아니라 "읽을 수 없음"으로 그 표 줄에 나온다.
+  // 1) 파일명(또는 시트명)이 테이블명과 같음 — 전부.
+  //    읽지 못한 파일도 이름이 맞으면 잇는다. 그래야 "파일 없음"이 아니라 "읽을 수 없음"으로 그 표 줄에 나온다.
   for (const t of byLen) {
-    const hit = cands.find((c) => !used.has(c.id) && nameOfCandidate(c) === norm(t))
-      ?? candidates.find((c) => c.error && !used.has(c.id) && nameOfCandidate(c) === norm(t));
-    if (hit) { mapping[t] = hit.id; used.add(hit.id); }
+    const hits = candidates.filter((c) => !used.has(c.id) && nameOfCandidate(c) === norm(t));
+    const ok = hits.filter((c) => !c.error);
+    const pick = ok.length ? ok : hits.slice(0, 1);
+    if (pick.length) { mapping[t] = pick.map((c) => c.id); pick.forEach((c) => used.add(c.id)); }
   }
-  // 2) 파일명이 테이블명을 포함
+  // 2) 파일명이 테이블명을 포함 (하나만)
   for (const t of byLen) {
     if (mapping[t]) continue;
     const hit = cands.find((c) => !used.has(c.id) && nameOfCandidate(c).includes(norm(t)));
-    if (hit) { mapping[t] = hit.id; used.add(hit.id); }
+    if (hit) { mapping[t] = [hit.id]; used.add(hit.id); }
   }
-  // 3) 헤더 유사도 (명세 컬럼의 60% 이상이 있으면)
+  // 3) 헤더 유사도 (명세 컬럼의 60% 이상이면, 하나만)
   for (const t of tables) {
     if (mapping[t]) continue;
     let best: SourceCandidate | null = null, bestScore = 0;
@@ -284,71 +289,78 @@ export function autoMatch(tables: string[], spec: Spec, candidates: SourceCandid
       const s = headerSimilarity(c.columns, spec.tables[t]);
       if (s > bestScore) { best = c; bestScore = s; }
     }
-    if (best && bestScore >= 0.6) { mapping[t] = best.id; used.add(best.id); }
+    if (best && bestScore >= 0.6) { mapping[t] = [best.id]; used.add(best.id); }
   }
   return mapping;
 }
 
 // ------------------------------------------------------------------ 사전 점검
-export function checkTables(tables: string[], spec: Spec, candidates: SourceCandidate[], mapping: Record<string, string>, auto: Record<string, string>, requiredTables: string[] = ["PERSON"]): TableCheck[] {
+export function checkTables(tables: string[], spec: Spec, candidates: SourceCandidate[], mapping: Record<string, string[]>, auto: Record<string, string[]>, requiredTables: string[] = ["PERSON"]): TableCheck[] {
   const byId = new Map(candidates.map((c) => [c.id, c]));
   const req = new Set(requiredTables);
+  const same = (a: string[] = [], b: string[] = []) => a.length === b.length && a.every((x, i) => x === b[i]);
   return tables.map((table) => {
     const st = spec.tables[table];
     const required = req.has(table);
-    const cid = mapping[table] ?? null;
-    const c = cid ? byId.get(cid) ?? null : null;
+    const ids = (mapping[table] ?? []).filter((id) => byId.has(id));
+    const cs = ids.map((id) => byId.get(id)!);
     const issues: InputIssue[] = [];
-    const out: TableCheck = { table, kor: st.kor, required, candidateId: cid, auto: !!cid && auto[table] === cid, rows: null, missingColumns: [], extraColumns: [], aliases: [], issues };
-    if (!c) {
+    const out: TableCheck = { table, kor: st.kor, required, candidateIds: ids, auto: ids.length > 0 && same(auto[table], ids), rows: null, missingColumns: [], extraColumns: [], aliases: [], issues };
+    if (!cs.length) {
       issues.push(required
         ? { level: "error", text: "파일이 없습니다. 이 테이블 없이는 검증할 수 없습니다." }
         : { level: "warn", text: "파일이 없습니다. 이 테이블의 규칙은 건너뛰고 '테이블 없음'으로 보고됩니다. 해당 사례가 없더라도 헤더만 있는 빈 파일을 넣어 주세요." });
       return out;
     }
-    if (c.error) { issues.push({ level: "error", text: `파일을 읽을 수 없습니다: ${c.error}` }); return out; }
-    out.rows = c.rows;
+    const broken = cs.filter((c) => c.error);
+    if (broken.length) { for (const c of broken) issues.push({ level: "error", text: `파일을 읽을 수 없습니다 (${c.name}): ${c.error}` }); return out; }
+    out.rows = cs.reduce((n, c) => n + c.rows, 0);
     const specCols = st.fields.map((f) => f.name);
-    const al = columnAliases(c.columns, specCols);
-    const have = new Set(Object.values(al.map));
-    out.aliases.push(...al.aliased);
-    out.missingColumns = specCols.filter((n) => !have.has(n));
-    out.extraColumns = c.columns.filter((n) => !specCols.includes(al.map[n]));
-    if (al.caseFolded.length) issues.push({ level: "info", text: `컬럼명 대소문자가 다릅니다 (${al.caseFolded.length}개, 예: ${al.caseFolded[0]}). 소문자로 맞춰 읽습니다.` });
-    if (c.delimiter) issues.push({ level: "info", text: `구분자가 '${c.delimiter === "\t" ? "탭" : c.delimiter}' 입니다. 그대로 읽습니다.` });
-    // 표본에서 내보내기 흔적을 미리 센다. 실제 정규화는 실행할 때 전체 행에 한다.
-    const marks = sampleMarks(c, st, al.map);
-    if (marks.nullStrings) issues.push({ level: "info", text: `'NULL'·'NA' 같은 글자가 표본에 ${marks.nullStrings}개 있습니다. 빈 값으로 읽습니다.` });
-    if (marks.intFloats) issues.push({ level: "info", text: `정수 컬럼에 '.0' 이 붙은 값이 표본에 ${marks.intFloats}개 있습니다 (예: 100001.0). 정수로 읽습니다.` });
-    if (marks.zeroTimes) issues.push({ level: "info", text: `날짜 컬럼에 '00:00:00' 이 붙은 값이 표본에 ${marks.zeroTimes}개 있습니다. 날짜만 읽습니다.` });
-    if (c.rows === 0) issues.push({ level: "warn", text: "데이터 행이 없습니다 (헤더만)." });
-    // 폴더를 여럿 넣으면 같은 이름의 파일이 겹칠 수 있다. 어느 것을 쓰는지 말해 준다.
-    const sameName = candidates.filter((x) => !x.error && nameOfCandidate(x) === norm(table));
-    if (sameName.length > 1) {
-      const others = sameName.filter((x) => x.id !== c.id).map((x) => folderLabel(x.folder));
-      issues.push({ level: "warn", text: `같은 이름의 파일이 ${sameName.length}개 있습니다. 지금은 '${folderLabel(c.folder)}' 것을 씁니다 (다른 곳: ${others.join(", ")}).` });
+    // 합칠 때는 컬럼을 이름으로 맞춘다. 파일마다 컬럼이 다르면 없는 자리는 빈 값이 된다 — 그것을 말해 준다.
+    if (cs.length > 1) {
+      issues.push({ level: "info", text: `${cs.length}개 파일을 합쳐 읽습니다: ${cs.map((c) => `${folderLabel(c.folder)} ${c.rows.toLocaleString("ko-KR")}행`).join(" + ")}.` });
+      const sets = cs.map((c) => new Set(Object.values(columnAliases(c.columns, specCols).map)));
+      const all = new Set(sets.flatMap((x) => [...x]));
+      const uneven = cs.filter((_, i) => sets[i].size !== all.size);
+      if (uneven.length) issues.push({ level: "warn", text: `합치는 파일들의 컬럼 구성이 다릅니다 (${uneven.map((c) => folderLabel(c.folder)).join(", ")}). 없는 컬럼은 빈 값으로 채웁니다.` });
     }
+    const have = new Set<string>();
+    for (const c of cs) {
+      const al = columnAliases(c.columns, specCols);
+      for (const v of Object.values(al.map)) have.add(v);
+      for (const a of al.aliased) if (!out.aliases.includes(a)) out.aliases.push(a);
+      if (al.caseFolded.length) issues.push({ level: "info", text: `컬럼명 대소문자가 다릅니다 (${al.caseFolded.length}개, 예: ${al.caseFolded[0]}). 소문자로 맞춰 읽습니다.` });
+      if (c.delimiter) issues.push({ level: "info", text: `구분자가 '${c.delimiter === "\t" ? "탭" : c.delimiter}' 입니다. 그대로 읽습니다.` });
+      // 표본에서 내보내기 흔적을 미리 센다. 실제 정규화는 실행할 때 전체 행에 한다.
+      const marks = sampleMarks(c, st, al.map);
+      if (marks.nullStrings) issues.push({ level: "info", text: `'NULL'·'NA' 같은 글자가 표본에 ${marks.nullStrings}개 있습니다. 빈 값으로 읽습니다.` });
+      if (marks.intFloats) issues.push({ level: "info", text: `정수 컬럼에 '.0' 이 붙은 값이 표본에 ${marks.intFloats}개 있습니다 (예: 100001.0). 정수로 읽습니다.` });
+      if (marks.zeroTimes) issues.push({ level: "info", text: `날짜 컬럼에 '00:00:00' 이 붙은 값이 표본에 ${marks.zeroTimes}개 있습니다. 날짜만 읽습니다.` });
+      if (c.columns.some((n, i) => c.columns.indexOf(n) !== i)) issues.push({ level: "error", text: `중복된 컬럼명이 있습니다 (${c.name}).` });
+      if (c.rows === 0) issues.push({ level: "warn", text: `데이터 행이 없습니다 (헤더만): ${c.name}` });
+      // 날짜 형식 표본
+      for (const f of st.fields) {
+        if (f.type !== "date" && f.type !== "timestamp") continue;
+        const idx = c.columns.findIndex((n) => al.map[n] === f.name);
+        if (idx < 0) continue;
+        // 00:00:00 이 붙은 날짜는 정규화가 걷어 내므로 여기서 나무라지 않는다
+        const bad = c.sample.map((r) => normalizeCell(r[idx] ?? "", f.type)).filter((v) => v !== "" && !(f.type === "date" ? DATE_RE : TS_RE).test(v));
+        if (bad.length) issues.push({ level: "warn", text: `${f.name} 날짜 형식이 다릅니다 (예: '${bad[0]}'). YYYY-MM-DD 여야 하며, 이대로면 타입 규칙에 걸립니다.` });
+      }
+    }
+    out.missingColumns = specCols.filter((n) => !have.has(n));
+    out.extraColumns = [...new Set(cs.flatMap((c) => { const m = columnAliases(c.columns, specCols).map; return c.columns.filter((n) => !specCols.includes(m[n])); }))];
     if (out.missingColumns.includes(st.pk)) issues.push({ level: "error", text: `기본키 컬럼 ${st.pk} 이(가) 없습니다.` });
     if (table !== "PERSON" && specCols.includes("person_id") && out.missingColumns.includes("person_id")) issues.push({ level: "error", text: "person_id 컬럼이 없습니다." });
     const otherMissing = out.missingColumns.filter((n) => n !== st.pk && n !== "person_id");
     if (otherMissing.length) issues.push({ level: "warn", text: `명세 컬럼 ${otherMissing.length}개 없음: ${otherMissing.slice(0, 6).join(", ")}${otherMissing.length > 6 ? " …" : ""}` });
     if (out.extraColumns.length) issues.push({ level: "info", text: `명세에 없는 컬럼 ${out.extraColumns.length}개 (무시됨): ${out.extraColumns.slice(0, 6).join(", ")}${out.extraColumns.length > 6 ? " …" : ""}` });
     for (const a of out.aliases) issues.push({ level: "info", text: `별칭 컬럼 해석: ${a}` });
-    if (c.columns.some((n, i) => c.columns.indexOf(n) !== i)) issues.push({ level: "error", text: "중복된 컬럼명이 있습니다." });
-    // 날짜 형식 표본
-    const dateFields = st.fields.filter((f) => (f.type === "date" || f.type === "timestamp") && have.has(f.name));
-    for (const f of dateFields) {
-      const idx = c.columns.findIndex((n) => al.map[n] === f.name);
-      if (idx < 0) continue;
-      // 00:00:00 이 붙은 날짜는 정규화가 걷어 내므로 여기서 나무라지 않는다
-      const bad = c.sample.map((r) => normalizeCell(r[idx] ?? "", f.type)).filter((v) => v !== "" && !(f.type === "date" ? DATE_RE : TS_RE).test(v));
-      if (bad.length) { issues.push({ level: "warn", text: `${f.name} 날짜 형식이 다릅니다 (예: '${bad[0]}'). YYYY-MM-DD 여야 하며, 이대로면 타입 규칙에 걸립니다.` }); }
-    }
     return out;
   });
 }
 
-export function buildPlan(cohort: string, tables: string[], spec: Spec, candidates: SourceCandidate[], mapping?: Record<string, string>, requiredTables?: string[]): InputPlan {
+export function buildPlan(cohort: string, tables: string[], spec: Spec, candidates: SourceCandidate[], mapping?: Record<string, string[]>, requiredTables?: string[]): InputPlan {
   const auto = autoMatch(tables, spec, candidates);
   const m = mapping ?? auto;
   const checks = checkTables(tables, spec, candidates, m, auto, requiredTables);
@@ -375,37 +387,48 @@ export function preview(c: SourceCandidate, limit = 50): PreviewData {
  * 세미콜론·탭 구분은 쉼표로. 컬럼명은 명세 이름으로 잇고(대소문자·별칭), 값은 normalizeCell 로 정리한다.
  * 무엇을 얼마나 손댔는지 표별로 돌려준다 — 보고서에 적어 병원이 알 수 있게.
  */
-export function stageInputs(candidates: SourceCandidate[], mapping: Record<string, string>, dir: string, spec: Spec): Record<string, NormReport> {
+export function stageInputs(candidates: SourceCandidate[], mapping: Record<string, string[]>, dir: string, spec: Spec): Record<string, NormReport> {
   fs.mkdirSync(dir, { recursive: true });
   const byId = new Map(candidates.map((c) => [c.id, c]));
   const opened = new Map<string, XLSX.WorkBook>();
   const reports: Record<string, NormReport> = {};
-  for (const [table, cid] of Object.entries(mapping)) {
-    const c = byId.get(cid); if (!c || c.error) continue;
-    const st = spec.tables[table]; if (!st) continue;
-    let rows: string[][];
+  const readRows = (c: SourceCandidate): string[][] => {
     if (c.kind === "xlsx" && c.sheet !== undefined) {
       let wb = opened.get(c.path);
       if (!wb) { wb = XLSX.readFile(c.path, { cellDates: true }); opened.set(c.path, wb); }
-      rows = sheetRows(wb.Sheets[c.sheet]);
-    } else {
-      const { text } = readText(c.path);
-      const delimiter = sniffDelimiter(text, path.extname(c.path).toLowerCase());
-      rows = parse(text, { relax_column_count: true, skip_empty_lines: true, delimiter });
+      return sheetRows(wb.Sheets[c.sheet]);
     }
+    const { text } = readText(c.path);
+    return parse(text, { relax_column_count: true, skip_empty_lines: true, delimiter: sniffDelimiter(text, path.extname(c.path).toLowerCase()) });
+  };
+  for (const [table, ids] of Object.entries(mapping)) {
+    const cs = ids.map((id) => byId.get(id)).filter((c): c is SourceCandidate => !!c && !c.error);
+    const st = spec.tables[table]; if (!st || !cs.length) continue;
     const report = emptyReport();
-    const { columns: rawCols, keep, dropped } = headerOf(rows[0] ?? []);
-    report.droppedColumns = dropped;
-    const al = columnAliases(rawCols, st.fields.map((f) => f.name));
-    report.caseFolded = al.caseFolded.length;
-    report.aliased = al.aliased.length;
-    const columns = rawCols.map((n) => al.map[n]);
+    const specCols = st.fields.map((f) => f.name);
     const typeOf = new Map(st.fields.map((f) => [f.name, f.type as string]));
+    // 파일마다 (명세 이름으로 이은 컬럼, 남긴 자리, 값 행) 을 읽어 둔다. 합칠 컬럼은 처음 본 차례대로 모은다.
+    const parts: Array<{ cols: string[]; keep: number[]; rows: string[][] }> = [];
+    const columns: string[] = [];
+    for (const c of cs) {
+      const rows = readRows(c);
+      const { columns: rawCols, keep, dropped } = headerOf(rows[0] ?? []);
+      report.droppedColumns += dropped;
+      const al = columnAliases(rawCols, specCols);
+      report.caseFolded += al.caseFolded.length;
+      report.aliased += al.aliased.length;
+      const cols = rawCols.map((n) => al.map[n]);
+      for (const n of cols) if (!columns.includes(n)) columns.push(n);
+      parts.push({ cols, keep, rows: rows.slice(1) });
+    }
     const types = columns.map((n) => typeOf.get(n) ?? "varchar");
     const lines = [columns.map(csvCell).join(",")];
-    for (let i = 1; i < rows.length; i++) {
-      const r = rows[i];
-      lines.push(keep.map((k, j) => csvCell(normalizeCell(r[k] ?? "", types[j], report))).join(","));
+    for (const part of parts) {
+      // 이 파일의 자리 → 합친 컬럼의 자리
+      const at = columns.map((n) => { const j = part.cols.indexOf(n); return j < 0 ? -1 : part.keep[j]; });
+      for (const r of part.rows) {
+        lines.push(at.map((k, j) => csvCell(k < 0 ? "" : normalizeCell(r[k] ?? "", types[j], report))).join(","));
+      }
     }
     fs.writeFileSync(path.join(dir, `${table}.csv`), lines.join("\n") + "\n", "utf-8");
     reports[table] = report;

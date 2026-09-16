@@ -52,7 +52,8 @@ export interface TableCheck {
   kor: string;
   /** 없으면 검증 자체가 무의미한 테이블 (PERSON, 질환 특화) */
   required: boolean;
-  candidateId: string | null;
+  /** 이 테이블로 읽는 후보들 (없으면 빈 배열, 합치면 둘 이상) */
+  candidateIds: string[];
   auto: boolean;
   rows: number | null;
   missingColumns: string[];
@@ -64,7 +65,11 @@ export interface TableCheck {
 export interface InputPlan {
   cohort: string;
   candidates: SourceCandidate[];
-  mapping: Record<string, string>; // table → candidateId
+  /**
+   * 테이블 → 그 테이블로 읽을 후보들. 보통 하나다.
+   * 같은 이름의 파일이 다른 폴더에서 오면(EHR 추출본의 MEASUREMENT 와 서식 변환의 MEASUREMENT) 둘을 합쳐 읽는다.
+   */
+  mapping: Record<string, string[]>;
   tables: TableCheck[];
   errors: number;
   warnings: number;
@@ -80,7 +85,7 @@ export type TemplateKind = "csv" | "xlsx" | "spec" | "sample" | "crf";   // crf:
 export interface RunRequest {
   cohort: string;
   candidates: SourceCandidate[];
-  mapping: Record<string, string>;
+  mapping: Record<string, string[]>;
   today?: string;
   label?: string;
 }
@@ -150,7 +155,7 @@ export interface Api {
   /** 드래그 앤 드롭으로 받은 File 객체들의 실제 경로 */
   pathsForFiles(files: File[]): string[];
   inspectInput(cohort: string, paths: string[], existing?: SourceCandidate[]): Promise<InputPlan>;
-  checkInput(cohort: string, candidates: SourceCandidate[], mapping: Record<string, string>): Promise<InputPlan>;
+  checkInput(cohort: string, candidates: SourceCandidate[], mapping: Record<string, string[]>): Promise<InputPlan>;
   previewSource(candidate: SourceCandidate): Promise<PreviewData>;
   exportTemplate(cohort: string, kind: TemplateKind): Promise<string | null>;
   /** v2: 서식 CSV 폴더를 저장 레코드로 바꾼다 */

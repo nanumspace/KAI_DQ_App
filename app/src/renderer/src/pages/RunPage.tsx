@@ -9,6 +9,16 @@ function bytes(n: number): string { return n < 1024 * 1024 ? `${(n / 1024).toFix
 
 const LEVEL: Record<string, { cls: string; label: string }> = { error: { cls: "error", label: "오류" }, warn: { cls: "warning", label: "주의" }, info: { cls: "gray", label: "참고" } };
 
+/** 대응표 드롭다운에서 '합침' 상태를 나타내는 값 */
+const MERGED = "\u0000merged";
+
+/** 후보 id 들을 모든 테이블의 대응에서 뺀다. 빈 대응은 지운다. */
+function dropIds(mapping: Record<string, string[]>, gone: Set<string>): Record<string, string[]> {
+  const out: Record<string, string[]> = {};
+  for (const [t, ids] of Object.entries(mapping)) { const keep = ids.filter((id) => !gone.has(id)); if (keep.length) out[t] = keep; }
+  return out;
+}
+
 /** 경로의 마지막 칸 (윈도우의 역슬래시도 함께 본다) */
 const leaf = (p: string) => p.split(/[\\/]/).filter(Boolean).slice(-1)[0] ?? p;
 
@@ -51,7 +61,7 @@ export function RunPage({ nav }: { nav: Nav }) {
   const removeCandidate = async (id: string) => {
     if (!plan) return;
     const candidates = plan.candidates.filter((c) => c.id !== id);
-    const mapping = Object.fromEntries(Object.entries(plan.mapping).filter(([, v]) => v !== id));
+    const mapping = dropIds(plan.mapping, new Set([id]));
     setPlan(await api.checkInput(cohort, candidates, mapping));
   };
   /** 한 폴더에서 온 파일을 한꺼번에 뺀다 (폴더를 잘못 넣었을 때) */
@@ -59,8 +69,7 @@ export function RunPage({ nav }: { nav: Nav }) {
     if (!plan) return;
     const gone = new Set(plan.candidates.filter((c) => c.folder === folder).map((c) => c.id));
     const candidates = plan.candidates.filter((c) => !gone.has(c.id));
-    const mapping = Object.fromEntries(Object.entries(plan.mapping).filter(([, v]) => !gone.has(v)));
-    setPlan(await api.checkInput(cohort, candidates, mapping));
+    setPlan(await api.checkInput(cohort, candidates, dropIds(plan.mapping, gone)));
   };
   const changeCohort = (id: string) => { setCohort(id); setPlan(null); setResult(null); setOutputs(null); setErr(null); };
   const template = async (kind: TemplateKind) => {
@@ -73,15 +82,16 @@ export function RunPage({ nav }: { nav: Nav }) {
   // ---------------------------------------------------------------- ② 대응표
   const remap = async (table: string, cid: string) => {
     if (!plan) return;
-    const mapping = { ...plan.mapping };
-    if (cid) { for (const [t, v] of Object.entries(mapping)) if (v === cid && t !== table) delete mapping[t]; mapping[table] = cid; }
-    else delete mapping[table];
+    // 직접 고르면 그 파일 하나만 쓴다 (합쳐 읽던 것은 풀린다). 다른 표에 있던 같은 파일은 거기서 뺀다.
+    const mapping = cid ? dropIds(plan.mapping, new Set([cid])) : { ...plan.mapping };
+    if (cid) mapping[table] = [cid]; else delete mapping[table];
     setPlan(await api.checkInput(cohort, plan.candidates, mapping));
   };
   const showPreview = async (c: SourceCandidate) => {
     try { setPreview({ c, data: await api.previewSource(c) }); } catch (e) { setErr(String((e as Error).message ?? e)); }
   };
-  const unmapped = useMemo(() => plan ? plan.candidates.filter((c) => !Object.values(plan.mapping).includes(c.id)) : [], [plan]);
+  const unmapped = useMemo(() => plan ? plan.candidates.filter((c) => !Object.values(plan.mapping).some((ids) => ids.includes(c.id))) : [], [plan]);
+  const nameOf = (id: string) => { const c = plan?.candidates.find((x) => x.id === id); return c ? (folders.length > 1 ? `${c.name} (${leaf(c.folder)})` : c.name) : id; };
   /** 넣은 폴더 목록 (넣은 차례 그대로) */
   const folders = useMemo(() => {
     const m = new Map<string, number>();
@@ -166,7 +176,7 @@ export function RunPage({ nav }: { nav: Nav }) {
               <table className="tbl">
                 <thead><tr><th>파일 / 시트</th><th>종류</th><th>인코딩</th><th className="num">행</th><th className="num">컬럼</th><th className="num">크기</th><th>대응 테이블</th><th></th></tr></thead>
                 <tbody>{plan.candidates.map((c) => {
-                  const t = Object.entries(plan.mapping).find(([, v]) => v === c.id)?.[0];
+                  const t = Object.entries(plan.mapping).find(([, ids]) => ids.includes(c.id))?.[0];
                   return (
                     <tr key={c.id}>
                       <td className="ellipsis" title={c.path}>
@@ -197,13 +207,14 @@ export function RunPage({ nav }: { nav: Nav }) {
                 <tr key={t.table}>
                   <td style={{ whiteSpace: "nowrap" }}><span className="mono">{t.table}</span><div style={{ color: "var(--muted)", fontSize: 11 }}>{t.kor}{t.required ? " · 필수" : ""}</div></td>
                   <td style={{ minWidth: 260 }}>
-                    <select value={t.candidateId ?? ""} onChange={(e) => remap(t.table, e.target.value)} disabled={busy === "run"} style={{ padding: "5px 8px" }}>
+                    <select value={t.candidateIds.length === 1 ? t.candidateIds[0] : t.candidateIds.length ? MERGED : ""} onChange={(e) => { if (e.target.value !== MERGED) remap(t.table, e.target.value); }} disabled={busy === "run"} style={{ padding: "5px 8px" }}>
+                      {t.candidateIds.length > 1 && <option value={MERGED}>{t.candidateIds.map((id) => nameOf(id)).join(" + ")} (합침)</option>}
                       <option value="">(없음)</option>
                       {plan.candidates.filter((c) => !c.error).map((c) => (
                         <option key={c.id} value={c.id}>{folders.length > 1 ? `${c.name}  (${leaf(c.folder)})` : c.name}</option>
                       ))}
                     </select>
-                    {t.candidateId && !t.auto && <span style={{ fontSize: 11, color: "var(--muted)", marginLeft: 6 }}>직접 지정</span>}
+                    {t.candidateIds.length > 0 && !t.auto && <span style={{ fontSize: 11, color: "var(--muted)", marginLeft: 6 }}>직접 지정</span>}
                   </td>
                   <td className="num">{t.rows === null ? "-" : fmt(t.rows)}</td>
                   <td>

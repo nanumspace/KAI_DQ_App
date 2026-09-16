@@ -37,3 +37,4 @@ synth/output/clean_v2/
 
 # v2 오류 주입 출력
 synth/output/dirty_v2/
+pilot/out/

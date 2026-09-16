@@ -1,5 +1,7 @@
 # 가상데이터
 
+> **이 문서는 v1 생성기를 설명합니다.** v2 는 `synth/framework_v2.py` 와 `synth/scenarios/*_v2.py`(6개 코호트), `synth/inject_faults_v2.py`(규칙에서 오류 유형을 뽑는 주입기)로 같은 여정을 v2 저장 구조에 적습니다. `python synth/generate.py --spec v2 --all`. 명세에 없는 컬럼이나 값 집합에 없는 코드를 쓰면 그 자리에서 멈추고, 사망을 여정 뒤에 정하면 걸쇠에 걸립니다.
+
 검증 프로그램의 개발과 시험에 쓰는 데이터는 모두 가상데이터입니다. 저장소의 `synth/output/`에 들어 있는 CSV는 실제 환자와 무관하며, 같은 시드로 다시 생성하면 같은 내용이 나옵니다.
 
 ## 생성 프레임워크 (`synth/framework.py`)

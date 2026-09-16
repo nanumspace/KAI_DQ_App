@@ -15,6 +15,11 @@ export const CHECK_LABELS: Record<string, string> = {
   columns: "컬럼 구성 불일치",
   table_present: "테이블 누락",
   sql: "논리·교차 검증",
+  // v2
+  concept_set: "값 집합 밖 concept",
+  concept_code: "값 집합 밖 코드",
+  not_null_when: "조건부 필수값 누락",
+  not_null_either: "둘 중 하나 필수",
 };
 
 export function checkLabel(check: string): string {
@@ -50,6 +55,10 @@ export function rateStatus(pct: number): { label: string; color: string } {
 
 /** 검사 유형별 조치 안내 */
 export const CHECK_GUIDES: Record<string, string> = {
+  concept_set: "값 집합에 없는 concept_id 입니다. 컬럼 명세서의 값 집합에서 concept_id 를 확인합니다. 서식에서 왔다면 서식 양식 README 의 코드를 씁니다.",
+  concept_code: "값 집합에 없는 코드입니다. 예/아니오는 1·0·9 처럼 값 집합의 코드를 그대로 씁니다.",
+  not_null_when: "행의 종류나 다른 값에 따라 필수인 항목이 비어 있습니다. 예: 수술 병리 보고서에는 절제연 상태가 있어야 합니다.",
+  not_null_either: "둘 중 하나는 있어야 하는 항목이 둘 다 비어 있습니다. 예: concept_id 나 원천값(source_value) 중 하나.",
   not_null: "필수 항목이 비어 있습니다. 원천 시스템에서 값을 보완하거나, 사전의 필수 여부를 재확인합니다.",
   type: "값의 형식이 명세와 다릅니다. 날짜는 YYYY-MM-DD, 숫자는 숫자만 넣습니다.",
   range: "값이 타당 범위를 벗어났습니다. 단위 오류나 입력 오류인지 확인합니다.",

@@ -5,7 +5,7 @@
 | 문서 | 내용 |
 |---|---|
 | [overview.md](overview.md) | 배경, 코호트 DB 구조, 설계 원칙 세 가지, 5단계 계획과 현재 상태 |
-| [spec-and-rules.md](spec-and-rules.md) | 기계 판독 명세의 속성, 특화 테이블의 이벤트 그룹 행 단위, 규칙 카탈로그 1,196개 |
+| [spec-and-rules.md](spec-and-rules.md) | 기계 판독 명세의 속성, 특화 테이블의 이벤트 그룹 행 단위, 규칙 카탈로그 (v1 1,196개 · v2 는 spec/v2/README.md) |
 | [synthetic-data.md](synthetic-data.md) | 가상데이터 생성 프레임워크, 질환별 환자 여정 시나리오, 오류 주입과 정답 manifest |
 | [engine.md](engine.md) | 검증 엔진 세 층(Python · TypeScript · 앱), 검출 성능과 해석의 한계, 앱 구조 |
 | [reproduce.md](reproduce.md) | 환경 준비, 전체 파이프라인 재현, 앱 개발·빌드·배포, CI |

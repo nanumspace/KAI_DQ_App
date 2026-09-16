@@ -1,5 +1,7 @@
 # 명세와 규칙 카탈로그
 
+> **이 문서는 v1 명세와 규칙(16 테이블 · 1,105 필드 · 규칙 1,196개)을 설명합니다.** 현재 앱의 기본은 **v2** 입니다: `spec/v2/kai_cdm_spec_v2.yaml`(표 30개 · 필드 547개), `rules/rules_structural_v2.yaml`(1,038개, `python rules/generate_structural_rules.py --spec v2`), `rules/rules_semantic_v2.yaml`(40개). v2 에서 더해진 검사는 값 집합(`concept_set`·`concept_code`), 조건부 필수(`not_null_when`·`not_null_either`), 복합 PK 입니다. 자세한 것은 [`spec/v2/README.md`](../spec/v2/README.md).
+
 ## 기계 판독 명세 (`spec/`)
 
 데이터 사전(엑셀 16개 시트)을 `spec/build_spec.py`가 파싱해 필드마다 다음 속성을 부여한 YAML 명세를 만듭니다. 원본 사전 파일은 공개 저장소에 포함되지 않으며, 생성된 명세 YAML이 공개 산출물입니다.

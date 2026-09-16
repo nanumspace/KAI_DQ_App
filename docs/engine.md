@@ -1,5 +1,7 @@
 # 검증 엔진과 앱
 
+> **검출 성능 표는 v1 기준입니다.** v2 는 6개 코호트(100명) 모두 clean 위반 0, 주입 오류 601건 전부 검출(재현율 1.00)이며 `python dq/run_all.py --spec v2` 로 재현합니다. 2,000명 규모에서도 위반 0, 코호트당 3초 안팎입니다. TypeScript 엔진은 v2 에서도 Python 과 위반 행·보고서가 바이트까지 같습니다(`dq-ts/test/equivalence.test.ts`, 32개 시험).
+
 ## Python 참조 구현 (`dq/`)
 
 ```

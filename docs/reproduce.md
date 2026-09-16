@@ -1,5 +1,7 @@
 # 재현과 빌드
 
+> **명령의 기본은 v1 입니다. v2 는 `--spec v2` 를 붙입니다**: `python rules/generate_structural_rules.py --spec v2`, `python dq/run_all.py --spec v2`, `npm run engine -- --spec v2 …`. 파이썬 의존은 `uv run --with pyyaml --with pandas --with numpy --with duckdb python …` 로 넣습니다.
+
 ## 환경
 
 | 구성 | 요구 사항 |

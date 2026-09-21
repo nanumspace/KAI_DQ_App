@@ -233,7 +233,11 @@ for p in placeholder:
 still_empty = sorted(set(placeholder) - set(VALUE_SETS))
 
 # ================================================================ 3. K-AI 어휘 (concept_id ≥ 10,000,000,000, 등록부로 고정)
+# 등록부는 출력 폴더의 것을 쓰되, --out 으로 새 폴더에 만들 때는 저장소의 것을 물려받는다.
+# 그러지 않으면 concept_id 가 전부 새로 매겨져 앱·규칙·가상데이터와 어긋난다.
 reg_path = os.path.join(VOCAB, "concept_registry.json")
+if not os.path.exists(reg_path):
+    reg_path = os.path.join(ROOT, "spec/v2/vocab/concept_registry.json")
 registry = json.load(open(reg_path, encoding="utf-8")) if os.path.exists(reg_path) else {}
 next_id = max([CONCEPT_ID_BASE] + list(registry.values())) + 1
 concepts = collections.OrderedDict()
@@ -551,7 +555,7 @@ def clean(f):
     if f.get("also"): o["also"] = f["also"]
     if f.get("v1_hint"): o["v1_hint"] = f["v1_hint"]
     return dict(o)
-spec = collections.OrderedDict(meta=dict(name="K-AI 질환별 코호트 데이터 모델", version="2.0.0-draft", source=os.path.basename(XLSX), generated_by="spec/build_spec_v2.py", generated_at=TODAY,
+spec = collections.OrderedDict(meta=dict(name="K-AI 질환별 코호트 데이터 모델", version="2.0.0", source=os.path.basename(XLSX), generated_by="spec/build_spec_v2.py", generated_at=TODAY,
     concept_id="K-AI 어휘 · 64비트 정수 · 10,000,000,000 부터 · vocab/CONCEPT.csv",
     principles=["저장 테이블은 OMOP CDM 5.4 + Oncology(EPISODE, EPISODE_EVENT)의 이름·컬럼을 그대로 쓴다", "concept_id 는 OMOP 이 아니라 K-AI 어휘이며, 표준 코드(SNOMED·LOINC·MedDRA)는 CONCEPT.concept_code 에 보관한다",
                 "병원은 CRF 서식을 채우고 앱이 서식→레코드 규칙으로 저장 테이블을 만든다", "OMOP 에 자리가 없는 병리 세부·질환 항목은 K-AI 확장 테이블(OMOP 관례: *_concept_id + *_source_value)", "한 테이블 = 행 단위 하나"]),

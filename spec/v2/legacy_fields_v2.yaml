@@ -2913,18 +2913,6 @@ triage:
     v1: MASLD.antp_id
     desc: ANTP_THERAPY 테이블에 대한 외래키이다.
     match: ''
-  - dest: LUNG_CRF
-    v1: LUNG_CANCER.file_id
-    desc: 이미지 및 영상 파일에 대한 외래키이다.
-    match: ''
-  - dest: PATHOLOGY_REPORT
-    v1: LYMPHOMA.file_id
-    desc: PET/CT, CT, MRI 또는 병리 이미지 파일의 외래키이다.
-    match: ''
-  - dest: BREAST_CRF
-    v1: BREAST_CANCER.file_id
-    desc: 이미지 및 영상 파일에 대한 외래키이다.
-    match: ''
   코드·명칭 쌍의 명칭쪽:
   - dest: LUNG_CRF
     v1: LUNG_CANCER.imex_smct_nm
@@ -3488,10 +3476,6 @@ triage:
     desc: 생체검사를 시행한 폐의 상세 위치를 나타내는 코드값이다.
     match: 생체검사 시행 폐 상세 위치
   - dest: PATHOLOGY_REPORT
-    v1: LUNG_CANCER.bpsy_mthd_kncd
-    desc: 생체검사 시행 방법을 나타내는 코드값이다.
-    match: 생체검사 시행 방법
-  - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.htlg_dfgd_cd
     desc: 생체검사에 따른 조직학적 분화도를 나타내는 코드값이다.
     match: 생체검사에 따른 조직학적 진단명
@@ -3532,10 +3516,6 @@ triage:
     desc: 과거 결핵 여부를 나타내는 코드값이다.
     match: 과거 결핵 여부
   - dest: PATHOLOGY_REPORT
-    v1: LUNG_CANCER.mhis_cncr_yn_noans_spcd
-    desc: 과거 암 병력 여부를 나타내는 코드값이다.
-    match: 과거 암 병력 여부
-  - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.ecog_cd
     desc: 암 환자의 기능 상태 지수 코드값으로 5가지의 점수로 환자의 기능 상태 표현한다.
     match: 베타세포 기능 지수(HOMA-beta)
@@ -3559,10 +3539,6 @@ triage:
     v1: BREAST_CANCER.pstv_slnd_cnt
     desc: 암 침윤이 확인된 감시림프절 개수이다.
     match: 침윤된 감시림프절 개수
-  - dest: PATHOLOGY_REPORT
-    v1: BREAST_CANCER.bpsy_mthd_kncd
-    desc: 생체검사 방법을 나타내는 코드값이다.
-    match: 생체검사 시행 방법
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.imem_kncd
     desc: 면역조직화학병리 검사를 나타내는 코드값이다.
@@ -3596,17 +3572,9 @@ triage:
     desc: 과거 고혈압 여부를 나타내는 코드값이다.
     match: 과거 고혈압 여부
   - dest: PATHOLOGY_REPORT
-    v1: BREAST_CANCER.mhis_dbt_yn_noans_spcd
-    desc: 과거 당뇨병 여부를 나타내는 코드값이다.
-    match: 과거 제2형 당뇨병 여부
-  - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.mhis_lvds_yn_noans_spcd
     desc: 과거 간질환 여부를 나타내는 코드값이다.
     match: 과거 간질환 여부
-  - dest: PATHOLOGY_REPORT
-    v1: BREAST_CANCER.mhis_cncr_yn_noans_spcd
-    desc: 과거 암 병력 여부를 나타내는 코드값이다.
-    match: 과거 암 병력 여부
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.mhis_cncr_kncd
     desc: 과거 암 병력 중 암종을 나타내는 코드값이다.
@@ -3756,17 +3724,9 @@ triage:
     desc: 수술 후 외과병리를 통해 확인된 조직학적 진단 명칭이다.
     match: 수술 후 외과병리를 통해 확인된 조직학적 진단명
   - dest: SURGERY
-    v1: LUNG_CANCER.oprt_prps_cd
-    desc: 수술 목적을 나타내는 코드값이다.
-    match: 수술 목적
-  - dest: SURGERY
     v1: LUNG_CANCER.oprt_site_cd
     desc: 수술 부위를 나타내는 코드값이다.
     match: 수술 후 외과병리 조직 채취 부위
-  - dest: SURGERY
-    v1: LUNG_CANCER.oprt_mtcd
-    desc: 폐암 수술 방법을 나타내는 코드값이다.
-    match: 수술 방법
   - dest: SURGERY
     v1: LUNG_CANCER.srgc_ptem_ymd
     desc: 수술 후 외과병리를 시행한 연월일이다.
@@ -3823,10 +3783,6 @@ triage:
     v1: BREAST_CANCER.htlg_diag_nm_po
     desc: 수술 후 외과병리를 통해 확인된 조직학적 진단 명칭이다.
     match: 수술 후 외과병리를 통해 확인된 조직학적 진단명
-  - dest: SURGERY
-    v1: BREAST_CANCER.oprt_prps_cd
-    desc: 수술 목적을 나타내는 코드값이다.
-    match: 수술 목적
   - dest: SURGERY
     v1: BREAST_CANCER.oprt_site_cd
     desc: 수술 부위를 나타내는 코드값이다.
@@ -4222,10 +4178,6 @@ triage:
     desc: 가족의 암 병력 존재 시 암종을 나타내는 코드값이다.
     match: 가족의 암 병력 암종
   - dest: FAMILY_HISTORY
-    v1: LUNG_CANCER.fmhs_etc_yn_noans_spcd
-    desc: 가족의 기타 병력 여부를 나타내는 코드값이다.
-    match: 가족의 암 병력 여부
-  - dest: FAMILY_HISTORY
     v1: BREAST_CANCER.pt_fm_rlcd
     desc: 가족력 존재 시 가족과의 관계를 나타내는 코드값이다.
     match: 가족력 대상자와의 관계
@@ -4277,937 +4229,987 @@ triage:
     v1: LYMPHOMA.transformation_to_subtype
     desc: 전환 후 확진된 림프종 아형이다.
     match: 전환 후 림프종 아형
-  부분 일치:
+  대응 확인(검토 완료):
   - dest: ANTP_THERAPY
     v1: LYMPHOMA.treatment_end_date
     desc: 해당 치료 line의 종료일이다.
-    match: 현재 치료 line 번호
+    match: ANTP_THERAPY.antp_end_date
   - dest: ANTP_THERAPY
     v1: LYMPHOMA.response_assessment_timepoint
     desc: '반응평가 시점이다. 예: baseline, interim PET2, end of treatment, follow-up.'
-    match: 질환 반응평가 기준일
+    match: RESPONSE_ASSESSMENT.반응평가 시점
+  - dest: LUNG_CRF
+    v1: LUNG_CANCER.imex_ymd
+    desc: 영상검사를 시행한 연월일이다.
+    match: PROCEDURE_OCCURRENCE.procedure_date · *_EXAM.검사일
+  - dest: LUNG_CRF
+    v1: LUNG_CANCER.imex_smct_cd
+    desc: 영상검사에 매핑된 SNOMED CT 코드값으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
+    match: PROCEDURE_OCCURRENCE.procedure_concept_id (SNOMED)
   - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.shis_yn_noans_spcd
     desc: 흡연력 여부를 나타내는 코드값이다.
-    match: 흡연력 여부
+    match: 파생 변수 · 흡연력 여부
   - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.smok_dtrn_ycnt
     desc: 총 흡연기간(년 수)이다.
-    match: 총 흡연기간
+    match: 파생 변수 · 총 흡연기간
   - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.mhis_etc_rptd_cont_cd
     desc: 과거 기타 호흡기질환의 내용을 나타내는 코드값이다.
-    match: 과거 췌장질환 여부
+    match: 파생 변수 · 과거 기타 호흡기질환 내용
+  - dest: PATHOLOGY_REPORT
+    v1: LUNG_CANCER.bpsy_mthd_kncd
+    desc: 생체검사 시행 방법을 나타내는 코드값이다.
+    match: PATHOLOGY_REPORT.생체검사 시행 방법
   - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.imem_ymd
     desc: 면역조직화학병리 검사를 시행한 연월일이다.
-    match: 면역조직화학병리 검사
+    match: BIOMARKER.검사일
   - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.imem_opn_cd
     desc: 면역조직화학병리 검사소견을 나타내는 코드값이다.
-    match: 면역조직화학병리 검사
+    match: BIOMARKER.면역조직화학병리 검사 (마커별 결과 컬럼)
   - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.mlem_ymd
     desc: 분자병리 검사를 시행한 연월일이다.
-    match: 분자병리 검사
+    match: BIOMARKER.검사일
+  - dest: PATHOLOGY_REPORT
+    v1: LUNG_CANCER.mhis_cncr_yn_noans_spcd
+    desc: 과거 암 병력 여부를 나타내는 코드값이다.
+    match: 파생 변수 · 과거 암 병력 여부
   - dest: PATHOLOGY_REPORT
     v1: LUNG_CANCER.etc_mhis_yn_noans_spcd
     desc: 과거 기타질환 여부를 나타내는 코드값이다.
-    match: 과거 췌장질환 여부
+    match: 파생 변수 · 과거 병력 여부
+  - dest: PATHOLOGY_REPORT
+    v1: LUNG_CANCER.bpsy_ymd
+    desc: 생체검사를 시행한 연월일이다.
+    match: PATHOLOGY_REPORT.검체 채취일 · SPECIMEN.specimen_date
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.bpsy_site_cd
     desc: 생체검사를 시행한 부위를 나타내는 코드값이다.
-    match: 폐 종양 원발 부위
+    match: PATHOLOGY_REPORT.생체검사 대상 부위 or 검체
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.bpsy_site_latr_cd
     desc: 생체검사를 시행한 부위의 편측성을 나타내는 코드값이다.
-    match: 원발종양 편측성
+    match: PATHOLOGY_REPORT.생체검사 부위 편측성
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.sgpt_micf_ex_yn_spcd
     desc: 미세석회화 여부를 나타내는 코드값이다.
-    match: 유방촬영술상 미세석회화 여부
+    match: PATHOLOGY_REPORT.미세석회화 여부
+  - dest: PATHOLOGY_REPORT
+    v1: BREAST_CANCER.resi_tumr_cd
+    desc: Residual Tumor을 나타내는 코드값이다.
+    match: PATHOLOGY_REPORT.잔존종양(Residual Tumor) 분류
+  - dest: PATHOLOGY_REPORT
+    v1: BREAST_CANCER.bpsy_mthd_kncd
+    desc: 생체검사 방법을 나타내는 코드값이다.
+    match: PATHOLOGY_REPORT.생체검사 시행 방법
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.imem_ymd
     desc: 면역조직화학병리 검사를 시행한 연월일이다.
-    match: 면역조직화학병리 검사
+    match: BIOMARKER.검사일
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.imem_opn_cd
     desc: 면역조직화학병리 검사소견을 나타내는 코드값이다.
-    match: 면역조직화학병리 검사
+    match: BIOMARKER.면역조직화학병리 검사 (마커별 결과 컬럼)
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.mlem_ymd
     desc: 분자병리 검사를 시행한 연월일이다.
-    match: 분자병리 검사
+    match: BIOMARKER.검사일
+  - dest: PATHOLOGY_REPORT
+    v1: BREAST_CANCER.mhis_dbt_yn_noans_spcd
+    desc: 과거 당뇨병 여부를 나타내는 코드값이다.
+    match: 파생 변수 · 과거 당뇨병 여부
+  - dest: PATHOLOGY_REPORT
+    v1: BREAST_CANCER.mhis_cncr_yn_noans_spcd
+    desc: 과거 암 병력 여부를 나타내는 코드값이다.
+    match: 파생 변수 · 과거 암 병력 여부
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.etc_mhis_yn_noans_spcd
     desc: 과거 기타질환 여부를 나타내는 코드값이다.
-    match: 과거 췌장질환 여부
+    match: 파생 변수 · 과거 병력 여부
+  - dest: PATHOLOGY_REPORT
+    v1: BREAST_CANCER.bpsy_ymd
+    desc: 생체검사를 시행한 연월일이다.
+    match: PATHOLOGY_REPORT.검체 채취일 · SPECIMEN.specimen_date
   - dest: PATHOLOGY_REPORT
     v1: BREAST_CANCER.rcrd_ymd
     desc: 건강정보 기록 연월일로 입원기록지 또는 간호초기평가에서 추출하는 경우 입원일을 기준으로 한다.
-    match: 조혈모세포 주입 또는 이식일
+    match: OBSERVATION.observation_date (흡연·음주·운동 파생 변수의 기록일)
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.imem_rslt_cont
     desc: 병리과 전문의의 면역조직화학병리 판독 최종 결론 내용이다.
-    match: 최종 추적관찰일
+    match: BIOMARKER 마커별 결과 컬럼 · 결론 전문은 NOTE
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.mlem_rslt_cont
     desc: 병리과 전문의의 분자병리 판독 최종 결론 내용이다.
-    match: 최종 추적관찰일
+    match: BIOMARKER 마커별 결과 컬럼 · 결론 전문은 NOTE
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.bpsy_rslt_cont
     desc: 생체검사 전체 결과 내용이다.
-    match: 췌도 자가항체(GAD 항체) 결과
-  - dest: PATHOLOGY_REPORT
-    v1: COLORECTAL_CANCER.impt_read_ymd
-    desc: 면역조직화학병리 조직을 판독한 연월일이다.
-    match: 면역조직화학병리 검사
-  - dest: PATHOLOGY_REPORT
-    v1: COLORECTAL_CANCER.mlpt_read_ymd
-    desc: 분자병리 조직을 판독한 연월일이다.
-    match: 분자병리 검사
-  - dest: PATHOLOGY_REPORT
-    v1: COLORECTAL_CANCER.bpsy_read_ymd
-    desc: 생체검사 조직을 판독한 연월일이다.
-    match: 생체검사 직장 세부 부위 상세
-  - dest: PATHOLOGY_REPORT
-    v1: COLORECTAL_CANCER.ohad_hstr_yn_noans_spcd
-    desc: 타병원 진단 후 전원 여부를 나타내는 코드값이다.
-    match: 출산 후 1년 이내 진단 여부
+    match: PATHOLOGY_REPORT.생체검사에 따른 조직학적 진단명 · 전문은 NOTE
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.mlem_opn_cd
     desc: 분자병리 검사소견을 나타내는 코드값이다.
-    match: 분자병리 검사
+    match: BIOMARKER.분자병리 검사 (마커별 결과 컬럼)
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.bpsy_site_cd
     desc: 생체검사시 조직을 획득한 부위를 나타내는 코드값이다.
-    match: 폐 종양 원발 부위
+    match: PATHOLOGY_REPORT.생체검사 대상 부위 or 검체
+  - dest: PATHOLOGY_REPORT
+    v1: COLORECTAL_CANCER.gros_tpcd
+    desc: Gross type 분류를 나타내는 코드(major)값이다.
+    match: PATHOLOGY_REPORT.Gross type 분류 명칭
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.inva_dgre_cd
     desc: 침윤의 정도를 나타내는 코드값이다.
-    match: 종양 침윤 깊이 정도
+    match: PATHOLOGY_REPORT.종양 침윤 깊이 정도
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.bpsy_mthd_kncd
     desc: 생체검사를 시행한 방법을 나타내는 코드값이다.
-    match: 임신 방법
+    match: PATHOLOGY_REPORT.생체검사 시행 방법
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.imem_ymd
     desc: 면역조직화학병리 검사를 시행한 연월일이다.
-    match: 면역조직화학병리 검사
+    match: BIOMARKER.검사일
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.imem_opn_cd
     desc: 면역조직화학병리 검사소견을 나타내는 코드값이다.
-    match: 면역조직화학병리 검사
+    match: BIOMARKER.면역조직화학병리 검사 (마커별 결과 컬럼)
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.mlem_ymd
     desc: 분자병리 검사를 시행한 연월일이다.
-    match: 분자병리 검사
+    match: BIOMARKER.검사일
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.tumr_hght_vl
     desc: 종양의 높이 크기(cm)이다.
-    match: 종양의 림프관·혈관 침윤 여부
+    match: PATHOLOGY_TUMOR (종양 크기 치수)
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.mhis_dbt_yn_noans_spcd
     desc: 과거 당뇨 여부를 나타내는 코드값이다.
-    match: 과거 췌장질환 여부
+    match: 파생 변수 · 과거 당뇨병 여부
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.mhis_cncr_yn_noans_spcd
     desc: 과거 암 여부를 나타내는 코드값이다.
-    match: 과거 췌장질환 여부
+    match: 파생 변수 · 과거 암 병력 여부
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.etc_mhis_yn_noans_spcd
     desc: 과거 기타질환 여부를 나타내는 코드값이다.
-    match: 과거 췌장질환 여부
+    match: 파생 변수 · 과거 병력 여부
+  - dest: PATHOLOGY_REPORT
+    v1: COLORECTAL_CANCER.bpsy_ymd
+    desc: 생체검사를 시행한 연월일이다.
+    match: PATHOLOGY_REPORT.검체 채취일 · SPECIMEN.specimen_date
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.rcrd_ymd
     desc: 건강정보 기록 연월일로 입원기록지 또는 간호초기평가에서 추출하는 경우 입원일을 기준으로 한다.
-    match: 조혈모세포 주입 또는 이식일
+    match: OBSERVATION.observation_date (흡연·음주·운동 파생 변수의 기록일)
   - dest: PATHOLOGY_REPORT
     v1: MASLD.lver_fbrs_grnm
     desc: 주위 간실질의 간섬유화 등급명칭이다.
-    match: 주위 장기 침범(T4b)
+    match: PATHOLOGY_REPORT.간실질 섬유화 등급명
   - dest: PATHOLOGY_REPORT
     v1: MASLD.drnk_dtrn_ycnt
     desc: 총 음주기간(년)이다.
-    match: 총 음주기간
+    match: 파생 변수 · 총 음주기간
   - dest: PATHOLOGY_REPORT
     v1: MASLD.shis_yn_noans_spcd
     desc: 흡연력 여부를 나타내는 코드값이다.
-    match: 흡연력 여부
+    match: 파생 변수 · 흡연력 여부
   - dest: PATHOLOGY_REPORT
     v1: MASLD.smok_dtrn_ycnt
     desc: 총 흡연기간(년 수)이다.
-    match: 총 흡연기간
+    match: 파생 변수 · 총 흡연기간
   - dest: PATHOLOGY_REPORT
     v1: MASLD.exercise_ycnt
     desc: 총 운동기간(년)이다.
-    match: 총 운동기간
+    match: 파생 변수 · 총 운동기간
   - dest: PATHOLOGY_REPORT
     v1: MASLD.rcrd_ymd
     desc: 건강정보 기록 연월일로 입원기록지 또는 간호초기평가에서 추출하는 경우 입원일을 기준으로 한다.
-    match: 조혈모세포 주입 또는 이식일
+    match: OBSERVATION.observation_date (흡연·음주·운동 파생 변수의 기록일)
   - dest: PATHOLOGY_REPORT
     v1: LYMPHOMA.biopsy_date
     desc: 확진 또는 재평가를 위한 조직 생검 시행일이다.
-    match: 확진
+    match: PATHOLOGY_REPORT.검체 채취일
   - dest: PATHOLOGY_REPORT
     v1: LYMPHOMA.biopsy_method
     desc: '생검 방법이다. 예: excisional, incisional, core needle, bone marrow biopsy.'
-    match: 코어 생검(총생검)
+    match: PATHOLOGY_REPORT.생체검사 시행 방법
   - dest: PATHOLOGY_REPORT
     v1: LYMPHOMA.ihc_test_date
     desc: 면역조직화학검사 시행일이다.
-    match: 장루 복원 수술 시행일
+    match: BIOMARKER.검사일
+  - dest: SURGERY
+    v1: LUNG_CANCER.oprt_ymd
+    desc: 수술을 시행한 연월일이다.
+    match: SURGERY.수술 시행일
   - dest: SURGERY
     v1: LUNG_CANCER.oprt_kncd
     desc: 수술을 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드 또는 EDI 코드값이다.
-    match: 조혈모세포 주입 또는 이식일
+    match: SURGERY.수술명 (EDI 참조표)
+  - dest: SURGERY
+    v1: LUNG_CANCER.oprt_prps_cd
+    desc: 수술 목적을 나타내는 코드값이다.
+    match: SURGERY.수술 목적
+  - dest: SURGERY
+    v1: LUNG_CANCER.oprt_mtcd
+    desc: 폐암 수술 방법을 나타내는 코드값이다.
+    match: SURGERY.수술 방법
+  - dest: SURGERY
+    v1: BREAST_CANCER.oprt_ymd
+    desc: 수술을 시행한 연월일이다.
+    match: SURGERY.수술 시행일
+  - dest: SURGERY
+    v1: BREAST_CANCER.oprt_kncd
+    desc: 수술을 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드, EDI 코드값이다.
+    match: SURGERY.수술명 (EDI 참조표)
+  - dest: SURGERY
+    v1: BREAST_CANCER.oprt_prps_cd
+    desc: 수술 목적을 나타내는 코드값이다.
+    match: SURGERY.수술 목적
   - dest: SURGERY
     v1: BREAST_CANCER.oprt_mtcd
     desc: 유방암 수술방법을 나타내는 코드값이다.
-    match: 유방암 진단 시 임신 여부
+    match: SURGERY.수술 방법
   - dest: SURGERY
     v1: BREAST_CANCER.afop_asmt_item_cd
     desc: 수술치료 후 평가내용을 기재하는 항목 코드값이다.
-    match: 폐기능검사 항목
+    match: STAGING.수술치료 후 평가 내용
   - dest: SURGERY
     v1: COLORECTAL_CANCER.anes_mthd_etc_cont
     desc: 문합 방법이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
-    match: 문합 방법 세부 내용
+    match: COLORECTAL_SURGERY_DETAIL.문합 방법 (원천값)
+  - dest: SURGERY
+    v1: COLORECTAL_CANCER.anes_mthd_detl_clsf_etc_cont
+    desc: 문합방법 세부내용이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    match: COLORECTAL_SURGERY_DETAIL.문합 방법 세부 내용 (원천값)
   - dest: SURGERY
     v1: COLORECTAL_CANCER.afop_asmt_item_etc_cont
     desc: 수술치료평가 또는 mRECIST 항목이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
-    match: 조혈모세포 주입 또는 이식일
+    match: STAGING.수술치료 후 평가 내용 (원천값)
   - dest: SURGERY
     v1: COLORECTAL_CANCER.ima_ligt_loca_spcd
     desc: IMA (Inferior mesenteric artery) ligation 위치를 나타내는 코드값이다.
-    match: 장루 복원 수술 위치
+    match: COLORECTAL_SURGERY_DETAIL.IMA ligation 위치
+  - dest: SURGERY
+    v1: COLORECTAL_CANCER.anes_mthd_detl_spcd
+    desc: 문합방법 세부내용을 나타내는 코드값이다.
+    match: COLORECTAL_SURGERY_DETAIL.문합 방법 세부 내용
   - dest: SURGERY
     v1: COLORECTAL_CANCER.afoc_trtm_mtcd
     desc: 합병증에 대한 치료방법을 나타내는 코드값이다.
-    match: 합병증 치료방법
+    match: ADVERSE_EVENT.합병증 치료방법
+  - dest: SURGERY
+    v1: COLORECTAL_CANCER.oprt_ymd
+    desc: 수술을 시행한 연월일이다.
+    match: SURGERY.수술 시행일
   - dest: SURGERY
     v1: COLORECTAL_CANCER.oprt_kncd
     desc: 주된 수술 코드로 병원에서 사용하는 LOCAL 코드, EDI 코드 등을 기준으로 한다.
-    match: 장루 복원 수술 위치
+    match: SURGERY.수술명 (EDI 참조표)
+  - dest: SURGERY
+    v1: COLORECTAL_CANCER.oprt_prps_cd
+    desc: 수술목적을 나타내는 코드값이다.
+    match: SURGERY.수술 목적
   - dest: SURGERY
     v1: COLORECTAL_CANCER.oprt_mtcd
     desc: 대장암 수술방법을 나타내는 코드값이다.
-    match: 유전성 대장암 여부
+    match: SURGERY.수술 방법
   - dest: SURGERY
     v1: COLORECTAL_CANCER.afop_asmt_item_cd
     desc: 수술치료 후 평가내용을 기재하는 항목을 나타내는 코드값이다.
-    match: 폐기능검사 항목
+    match: STAGING.수술치료 후 평가 내용
   - dest: SURGERY
     v1: LYMPHOMA.stem_cell_transplant_type
     desc: '조혈모세포이식 유형이다. 예: autologous, allogeneic.'
-    match: 조혈모세포이식 유형
+    match: LYMPHOMA_EVENT.조혈모세포이식 유형
+  - dest: CONDITION_OCCURRENCE
+    v1: LUNG_CANCER.diag_cd
+    desc: 원내 진단코드를 나타내는 코드값이다.
+    match: CONDITION_OCCURRENCE.condition_source_value
   - dest: CONDITION_OCCURRENCE
     v1: LUNG_CANCER.diag_kcd_cd
     desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단코드로 KCD 코드값이다.
-    match: 세부 진단명
+    match: CONDITION_OCCURRENCE.condition_concept_id (KCD) · COHORT_INDEX.세부 진단명
   - dest: CONDITION_OCCURRENCE
     v1: LUNG_CANCER.diag_smct_cd
     desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단코드를 나타내는 코드값이다.
-    match: 세부 진단명
+    match: CONDITION_OCCURRENCE.condition_concept_id · COHORT_INDEX.세부 진단명
+  - dest: CONDITION_OCCURRENCE
+    v1: LUNG_CANCER.cexm_ymd
+    desc: 진단검사를 시행한 연월일이다.
+    match: MEASUREMENT.measurement_date
+  - dest: CONDITION_OCCURRENCE
+    v1: LUNG_CANCER.cexm_kncd
+    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    match: MEASUREMENT.measurement_source_value
+  - dest: CONDITION_OCCURRENCE
+    v1: LUNG_CANCER.cexm_loinc_cd
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
+    match: MEASUREMENT.measurement_concept_id (LOINC)
+  - dest: CONDITION_OCCURRENCE
+    v1: LUNG_CANCER.imex_kncd
+    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    match: PROCEDURE_OCCURRENCE.procedure_source_value
   - dest: CONDITION_OCCURRENCE
     v1: BREAST_CANCER.diag_smct_cd
     desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단코드값이다.
-    match: 출산 후 1년 이내 진단 여부
+    match: CONDITION_OCCURRENCE.condition_concept_id · COHORT_INDEX.세부 진단명
+  - dest: CONDITION_OCCURRENCE
+    v1: BREAST_CANCER.cexm_ymd
+    desc: 진단검사를 시행한 연월일이다.
+    match: MEASUREMENT.measurement_date
+  - dest: CONDITION_OCCURRENCE
+    v1: BREAST_CANCER.cexm_kncd
+    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    match: MEASUREMENT.measurement_source_value
+  - dest: CONDITION_OCCURRENCE
+    v1: BREAST_CANCER.cexm_loinc_cd
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
+    match: MEASUREMENT.measurement_concept_id (LOINC)
+  - dest: CONDITION_OCCURRENCE
+    v1: BREAST_CANCER.imex_kncd
+    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    match: PROCEDURE_OCCURRENCE.procedure_source_value
+  - dest: CONDITION_OCCURRENCE
+    v1: COLORECTAL_CANCER.diag_cd
+    desc: 원내 진단코드를 나타내는 코드값이다.
+    match: CONDITION_OCCURRENCE.condition_source_value
   - dest: CONDITION_OCCURRENCE
     v1: COLORECTAL_CANCER.diag_kcd_cd
     desc: 암, 기타암, 기타질환 종류명 하위의 세부 진단코드로 KCD 코드값이다.
-    match: 세부 진단명
+    match: CONDITION_OCCURRENCE.condition_concept_id (KCD) · COHORT_INDEX.세부 진단명
   - dest: CONDITION_OCCURRENCE
     v1: COLORECTAL_CANCER.diag_smct_cd
     desc: 암, 기타암, 기타질환 종류명 하위로 들어가는 세부 진단코드값이다.
-    match: 출산 후 1년 이내 진단 여부
+    match: CONDITION_OCCURRENCE.condition_concept_id · COHORT_INDEX.세부 진단명
+  - dest: CONDITION_OCCURRENCE
+    v1: COLORECTAL_CANCER.cexm_ymd
+    desc: 진단검사를 시행한 연월일이다.
+    match: MEASUREMENT.measurement_date
+  - dest: CONDITION_OCCURRENCE
+    v1: COLORECTAL_CANCER.cexm_kncd
+    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    match: MEASUREMENT.measurement_source_value
+  - dest: CONDITION_OCCURRENCE
+    v1: COLORECTAL_CANCER.cexm_loinc_cd
+    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
+    match: MEASUREMENT.measurement_concept_id (LOINC)
+  - dest: CONDITION_OCCURRENCE
+    v1: COLORECTAL_CANCER.imex_kncd
+    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
+    match: PROCEDURE_OCCURRENCE.procedure_source_value
+  - dest: CONDITION_OCCURRENCE
+    v1: MASLD.imex_kncd
+    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드, EDI 코드값이다.
+    match: PROCEDURE_OCCURRENCE.procedure_source_value
+  - dest: CONDITION_OCCURRENCE
+    v1: LYMPHOMA.diagnosis_date
+    desc: 림프종을 최초로 확진한 날짜이다.
+    match: COHORT_INDEX.최초 림프종 진단일
   - dest: BIOMARKER
     v1: LUNG_CANCER.gmt_ymd
     desc: 유전자 돌연변이검사를 시행한 연월일이다.
-    match: 유전자 돌연변이검사 방법
+    match: BIOMARKER.검사일
+  - dest: BIOMARKER
+    v1: LUNG_CANCER.drug_prsc_ymd
+    desc: 약제를 처방한 연월일이다.
+    match: DRUG_EXPOSURE.drug_exposure_start_date
   - dest: BIOMARKER
     v1: LUNG_CANCER.drug_prsc_capa
     desc: 처방된 약제의 1회 투여 용량이다.
-    match: 투여 중단(일시)
+    match: DRUG_EXPOSURE.quantity
   - dest: BIOMARKER
     v1: LUNG_CANCER.drug_prsc_capa_unit_cd
     desc: 처방된 약제의 1회 투여 용량 단위를 나타내는 코드값이다.
-    match: 투여 중단(일시)
+    match: DRUG_EXPOSURE.dose_unit_source_value
+  - dest: BIOMARKER
+    v1: LUNG_CANCER.drug_prsc_dcnt
+    desc: 약제 처방일수이다.
+    match: DRUG_EXPOSURE.days_supply
   - dest: BIOMARKER
     v1: LUNG_CANCER.clnc_tumr_prty_cd
     desc: 임상 종양특성을 나타내는 코드값이다.
-    match: 초진 시 임상 병기
+    match: STAGING.임상 종양 특성
   - dest: BIOMARKER
     v1: BREAST_CANCER.fertility_treatment_type_other
     desc: fertility_treatment_type가 4(기타)인 경우 치료 종류를 직접 기입한 값이다.
-    match: 현재 치료 line 번호
+    match: BREAST_BASELINE.가임력 보존 치료 기타 내용
   - dest: BIOMARKER
     v1: BREAST_CANCER.pregnancy_outcome
     desc: '임신 결과를 나타내는 코드값이다.
 
       1=Chemical preg, 2=Clinical preg, 3=Abortion, 4=Live birth'
-    match: 치료 후 임신 시도 여부
+    match: BREAST_BASELINE.임신 결과
   - dest: BIOMARKER
     v1: BREAST_CANCER.gmvx_ymd
     desc: 생식세포 변이검사를 시행한 연월일이다.
-    match: 생식세포 변이검사 유전자 종류
+    match: BIOMARKER.검사일
   - dest: BIOMARKER
     v1: BREAST_CANCER.pavr_detect_yn_spcd
     desc: Pathogenic Variant 검출 여부를 나타내는 코드값이다.
-    match: Unclassified Variant 검출 여부
+    match: BIOMARKER.Pathogenic 검출 여부
   - dest: BIOMARKER
     v1: BREAST_CANCER.uncl_varnt_detect_yn_spcd
     desc: Unclassified Variant 검출 여부를 나타내는 코드값이다.
-    match: Unclassified Variant 검출 여부
+    match: BIOMARKER.Unclassified Variant 검출 여부
   - dest: BIOMARKER
     v1: BREAST_CANCER.dna_vainf_b_cd
     desc: DNA 변이 정보 B를 나타내는 코드값이다.
-    match: 아미노산 변이 정보 C
+    match: BIOMARKER.DNA 변이 정보 B 값
   - dest: BIOMARKER
     v1: BREAST_CANCER.dna_vainf_c_cd
     desc: DNA 변이 정보 C를 나타내는 코드값이다.
-    match: 아미노산 변이 정보 C
+    match: BIOMARKER.DNA 변이 정보 C 값
+  - dest: BIOMARKER
+    v1: BREAST_CANCER.drug_prsc_ymd
+    desc: 약제를 처방한 연월일이다.
+    match: DRUG_EXPOSURE.drug_exposure_start_date
   - dest: BIOMARKER
     v1: BREAST_CANCER.drug_prsc_capa
     desc: 처방된 약제의 1회 투여 용량이다.
-    match: 투여 중단(일시)
+    match: DRUG_EXPOSURE.quantity
   - dest: BIOMARKER
     v1: BREAST_CANCER.drug_prsc_capa_unit_cd
     desc: 처방된 약제 용량 단위를 나타내는 코드값이다.
-    match: 용량 변경 없음
+    match: DRUG_EXPOSURE.dose_unit_source_value
+  - dest: BIOMARKER
+    v1: BREAST_CANCER.drug_prsc_dcnt
+    desc: 약제 처방일수이다.
+    match: DRUG_EXPOSURE.days_supply
   - dest: BIOMARKER
     v1: BREAST_CANCER.clnc_tumr_prty_cd
     desc: 임상 종양특성을 나타내는 코드값이다.
-    match: 초진 시 임상 병기
+    match: STAGING.임상 종양 특성
+  - dest: BIOMARKER
+    v1: COLORECTAL_CANCER.drug_prsc_ymd
+    desc: 약제를 처방한 연월일이다.
+    match: DRUG_EXPOSURE.drug_exposure_start_date
   - dest: BIOMARKER
     v1: COLORECTAL_CANCER.drug_prsc_capa
     desc: 처방된 약제의 1회 투여 용량이다.
-    match: 투여 중단(일시)
+    match: DRUG_EXPOSURE.quantity
   - dest: BIOMARKER
     v1: COLORECTAL_CANCER.drug_prsc_capa_unit_cd
     desc: 처방된 약제 용량 단위를 나타내는 코드값이다.
-    match: 용량 변경 없음
+    match: DRUG_EXPOSURE.dose_unit_source_value
+  - dest: BIOMARKER
+    v1: COLORECTAL_CANCER.drug_prsc_dcnt
+    desc: 약제 처방일수이다.
+    match: DRUG_EXPOSURE.days_supply
   - dest: BIOMARKER
     v1: COLORECTAL_CANCER.clnc_tumr_prty_cd
     desc: 임상 종양특성을 나타내는 코드값이다.
-    match: 초진 시 임상 병기
+    match: STAGING.임상 종양 특성
+  - dest: BIOMARKER
+    v1: MASLD.drug_prsc_ymd
+    desc: 약제 처방 연월일이다.
+    match: DRUG_EXPOSURE.drug_exposure_start_date
   - dest: BIOMARKER
     v1: LYMPHOMA.lymphoma_group
     desc: '림프종 대분류이다. 예: Hodgkin lymphoma, non-Hodgkin lymphoma.'
-    match: 최초 림프종 진단일
+    match: COHORT_INDEX.림프종 대분류
   - dest: BIOMARKER
     v1: LYMPHOMA.classification_version
     desc: 진단에 사용한 WHO 또는 ICC 분류체계와 버전이다.
-    match: 조혈모세포 주입 또는 이식일
+    match: COHORT_INDEX.WHO/ICC 기준 조직학적 아형 (분류 판은 원천값에)
   - dest: BIOMARKER
     v1: LYMPHOMA.unexplained_fever_yn
     desc: 감염 등 다른 원인으로 설명되지 않는 발열 여부이다.
-    match: 원인불명 발열 여부
+    match: LYMPHOMA_ASSESSMENT.원인불명 발열 여부
   - dest: BIOMARKER
     v1: LYMPHOMA.ipi_risk_group
     desc: IPI 위험군이다.
-    match: Oncotype DX 위험군
+    match: LYMPHOMA_ASSESSMENT.IPI 위험군
   - dest: BIOMARKER
     v1: LYMPHOMA.mipi_c_risk_group
     desc: Ki-67을 반영한 MIPI-c 위험군이다.
-    match: Oncotype DX 위험군
+    match: LYMPHOMA_ASSESSMENT.MIPI-c 위험군
+  - dest: BIOMARKER
+    v1: LYMPHOMA.hodgkin_ips_score
+    desc: 진행성 Hodgkin lymphoma의 International Prognostic Score(IPS)이다.
+    match: LYMPHOMA_ASSESSMENT.호지킨림프종 IPS 총점
   - dest: BIOMARKER
     v1: LYMPHOMA.pit_score
     desc: 말초 T세포 림프종의 Prognostic Index for T-cell lymphoma(PIT) 점수이다.
-    match: 활동능력(ECOG) 점수
+    match: LYMPHOMA_ASSESSMENT.말초T세포림프종 PIT 총점
   - dest: BIOMARKER
     v1: LYMPHOMA.response_criteria
     desc: '적용한 반응평가 기준이다. 예: Lugano 2014, LYRIC, Cheson.'
-    match: 질환 반응평가 기준일
+    match: RESPONSE_ASSESSMENT.적용 반응평가 기준
   - dest: BIOMARKER
     v1: LYMPHOMA.anatomic_response
     desc: '해부학적 반응이다. 예: CR, PR, SD, PD.'
-    match: 해부학적 반응
+    match: RESPONSE_ASSESSMENT.해부학적 반응
   - dest: BIOMARKER
     v1: LYMPHOMA.progression_date
     desc: 질병 진행을 최초 확인한 날짜이다.
-    match: 최초 림프종 진단일
+    match: RESPONSE_ASSESSMENT.질환 경과 상태 + 기준일 · ANTP_THERAPY.days_to_progression
   - dest: STAGING
     v1: LUNG_CANCER.mtdg_ymd
     desc: 암 전이 진단 연월일이다.
-    match: 출산 후 1년 이내 진단 여부
+    match: STAGING.원격 전이 진단일
   - dest: STAGING
     v1: BREAST_CANCER.mtdg_ymd
     desc: 암 전이 진단 연월일이다.
-    match: 출산 후 1년 이내 진단 여부
+    match: STAGING.원격 전이 진단일
   - dest: STAGING
     v1: COLORECTAL_CANCER.mtst_site_etc_cont
     desc: 전이암 부위가 2개 이상이거나 기타인 경우의 상세 내용이다.
-    match: 생체검사 직장 세부 부위 상세
+    match: STAGING.원격 전이 부위 (원천값)
   - dest: STAGING
     v1: COLORECTAL_CANCER.mtdg_ymd
     desc: 암 전이 진단 연월일이다.
-    match: 출산 후 1년 이내 진단 여부
+    match: STAGING.원격 전이 진단일
   - dest: STAGING
     v1: LYMPHOMA.stage_assessment_date
     desc: 림프종 병기를 평가한 날짜이다.
-    match: 최초 림프종 진단일
+    match: STAGING.병기 평가일
+  - dest: STAGING
+    v1: LYMPHOMA.ann_arbor_lugano_stage
+    desc: Ann Arbor/Lugano 병기값이다. I, II, III, IV로 기록한다.
+    match: STAGING.Ann Arbor/Lugano 병기
   - dest: STAGING
     v1: LYMPHOMA.stage_suffix
     desc: 병기 수식자이다. A, B, E, S 또는 복합값을 기록한다.
-    match: 초진 시 임상 병기
+    match: STAGING.병기 수식자
   - dest: STAGING
     v1: LYMPHOMA.staging_method
     desc: '병기 결정에 사용한 방법이다. 예: PET/CT, CT, MRI, bone marrow assessment.'
-    match: 초진 시 임상 병기
+    match: STAGING.병기 결정 방법
   - dest: STAGING
     v1: LYMPHOMA.b_symptom_yn
     desc: 림프종 B symptom 존재 여부이다.
-    match: 측정가능 병변 존재 여부
+    match: LYMPHOMA_ASSESSMENT.B 증상 여부
+  - dest: MEASUREMENT
+    v1: LUNG_CANCER.plex_ymd
+    desc: 폐기능 검사를 시행한 연월일이다.
+    match: MEASUREMENT.measurement_date (PFT_ITEM)
   - dest: MEASUREMENT
     v1: LUNG_CANCER.plex_spcd
     desc: 폐기능 검사 구분을 나타내는 코드값이다.
-    match: 폐암 검사(검사 1) ID
+    match: 파생 변수 · 폐기능검사 항목
   - dest: MEASUREMENT
     v1: LUNG_CANCER.plex_kncd
     desc: 폐기능 검사를 나타내는 코드값이다.
-    match: 폐암 검사(검사 1) ID
+    match: 파생 변수 · 폐기능검사 항목 (MEASUREMENT.measurement_concept_id)
   - dest: MEASUREMENT
     v1: LUNG_CANCER.plex_rslt_vl
     desc: 폐기능 검사 결과값이다.
-    match: 폐암 검사(검사 1) ID
+    match: 파생 변수 · 폐기능검사 결과값
+  - dest: MEASUREMENT
+    v1: LUNG_CANCER.anth_rcrd_ymd
+    desc: 신체계측정보 기록 연월일이다.
+    match: MEASUREMENT.measurement_date (신장·체중)
+  - dest: MEASUREMENT
+    v1: LUNG_CANCER.ht_msrm_vl
+    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
+    match: MEASUREMENT (LOINC 신장 3036277)
+  - dest: MEASUREMENT
+    v1: LUNG_CANCER.wt_msrm_vl
+    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
+    match: MEASUREMENT (LOINC 체중 3025315)
   - dest: MEASUREMENT
     v1: LUNG_CANCER.bmi_vl
     desc: 신체질량지수로 환자의 신장과 체중의 비율을 사용해 계산(체중/(신장)²)하며, 소수점 1자리까지 표기한다.
-    match: 신장 질환
+    match: MEASUREMENT (LOINC BMI 3038553) · 의미 규칙이 신장·체중과 대조
   - dest: MEASUREMENT
     v1: LUNG_CANCER.cexm_rslt_cont
     desc: 진단검사 결과 내용이다.
-    match: 췌도 자가항체(GAD 항체) 결과
+    match: MEASUREMENT.value_as_number · value_source_value
+  - dest: MEASUREMENT
+    v1: LUNG_CANCER.cexm_rslt_unit_cont
+    desc: 진단검사 결과값의 단위이다.
+    match: MEASUREMENT.unit_concept_id · unit_source_value
+  - dest: MEASUREMENT
+    v1: BREAST_CANCER.anth_rcrd_ymd
+    desc: 신체계측정보 기록 연월일이다.
+    match: MEASUREMENT.measurement_date (신장·체중)
+  - dest: MEASUREMENT
+    v1: BREAST_CANCER.ht_msrm_vl
+    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
+    match: MEASUREMENT (LOINC 신장 3036277)
+  - dest: MEASUREMENT
+    v1: BREAST_CANCER.wt_msrm_vl
+    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
+    match: MEASUREMENT (LOINC 체중 3025315)
   - dest: MEASUREMENT
     v1: BREAST_CANCER.bmi_vl
     desc: 신체질량지수로 환자의 신장과 체중의 비율을 사용해 계산(체중/(신장)²)하며, 소수점 1자리까지 표기한다.
-    match: 신장 질환
+    match: MEASUREMENT (LOINC BMI 3038553) · 의미 규칙이 신장·체중과 대조
   - dest: MEASUREMENT
     v1: BREAST_CANCER.cexm_rslt_cont
     desc: 진단검사 결과 내용이다.
-    match: 췌도 자가항체(GAD 항체) 결과
+    match: MEASUREMENT.value_as_number · value_source_value
+  - dest: MEASUREMENT
+    v1: BREAST_CANCER.cexm_rslt_unit_cont
+    desc: 진단검사 결과값의 단위이다.
+    match: MEASUREMENT.unit_concept_id · unit_source_value
+  - dest: MEASUREMENT
+    v1: COLORECTAL_CANCER.anth_rcrd_ymd
+    desc: 신체계측정보 기록 연월일이다.
+    match: MEASUREMENT.measurement_date (신장·체중)
+  - dest: MEASUREMENT
+    v1: COLORECTAL_CANCER.ht_msrm_vl
+    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
+    match: MEASUREMENT (LOINC 신장 3036277)
+  - dest: MEASUREMENT
+    v1: COLORECTAL_CANCER.wt_msrm_vl
+    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
+    match: MEASUREMENT (LOINC 체중 3025315)
   - dest: MEASUREMENT
     v1: COLORECTAL_CANCER.bmi_vl
     desc: 신체질량지수로 환자의 신장과 체중의 비율을 사용해 계산(체중/(신장)²)하며, 소수점 1자리까지 표기한다.
-    match: 신장 질환
+    match: MEASUREMENT (LOINC BMI 3038553) · 의미 규칙이 신장·체중과 대조
   - dest: MEASUREMENT
     v1: COLORECTAL_CANCER.cexm_rslt_cont
     desc: 진단검사 결과 내용이다.
-    match: 췌도 자가항체(GAD 항체) 결과
+    match: MEASUREMENT.value_as_number · value_source_value
+  - dest: MEASUREMENT
+    v1: COLORECTAL_CANCER.cexm_rslt_unit_cont
+    desc: 진단검사 결과값의 단위이다.
+    match: MEASUREMENT.unit_concept_id · unit_source_value
+  - dest: MEASUREMENT
+    v1: MASLD.anth_rcrd_ymd
+    desc: 신체계측정보 기록 연월일이다.
+    match: MEASUREMENT.measurement_date (신장·체중)
+  - dest: MEASUREMENT
+    v1: MASLD.ht_msrm_vl
+    desc: 신장값(cm)으로 1자리까지 표기한다.
+    match: MEASUREMENT (LOINC 신장 3036277)
+  - dest: MEASUREMENT
+    v1: MASLD.wt_msrm_vl
+    desc: 체중값(kg)으로 1자리까지 표기한다.
+    match: MEASUREMENT (LOINC 체중 3025315)
   - dest: MEASUREMENT
     v1: MASLD.bmi_vl
     desc: 신체질량지수로 환자의 신장과 체중의 비율을 사용해 계산(체중/(신장)²)하며, 소수점 1자리까지 표기한다.
-    match: 신장 질환
+    match: MEASUREMENT (LOINC BMI 3038553) · 의미 규칙이 신장·체중과 대조
   - dest: PROCEDURE_OCCURRENCE
     v1: LUNG_CANCER.brex_ymd
     desc: 기관지내시경 검사를 시행한 연월일이다.
-    match: 기관지내시경 검사명
+    match: 파생 변수 · 기관지내시경 검사 시행일 (PROCEDURE_OCCURRENCE)
   - dest: DRUG_EXPOSURE
     v1: LUNG_CANCER.drug_clcd
     desc: 처방된 약제의 분류를 나타내는 코드값이다.
-    match: 재건·성형술 분류
+    match: 값 집합 DRUG_CLASS_SET (ATC) · 파생 변수
   - dest: DRUG_EXPOSURE
     v1: LUNG_CANCER.drug_clnm
     desc: 처방된 약제의 분류 명칭이다.
-    match: 재건·성형술 분류
+    match: 값 집합 DRUG_CLASS_SET (ATC) 라벨
+  - dest: DRUG_EXPOSURE
+    v1: LUNG_CANCER.drin_cd
+    desc: 약제 주성분을 나타내는 코드값이다.
+    match: DRUG_EXPOSURE.drug_concept_id (성분)
+  - dest: DRUG_EXPOSURE
+    v1: LUNG_CANCER.drug_rxnm_cd
+    desc: 약제의 RxNorm 코드값이다.
+    match: DRUG_EXPOSURE.drug_source_concept_id (RxNorm)
+  - dest: DRUG_EXPOSURE
+    v1: LUNG_CANCER.drug_injc_pth_cd
+    desc: 약제 투여경로를 나타내는 코드값이다.
+    match: DRUG_EXPOSURE.route_concept_id
   - dest: DRUG_EXPOSURE
     v1: BREAST_CANCER.drug_clcd
     desc: 처방된 약제 분류를 나타내는 코드값이다.
-    match: 재건·성형술 분류
+    match: 값 집합 DRUG_CLASS_SET (ATC) · 파생 변수
   - dest: DRUG_EXPOSURE
     v1: BREAST_CANCER.drug_clnm
     desc: 처방된 약제 분류 명칭이다.
-    match: 재건·성형술 분류
+    match: 값 집합 DRUG_CLASS_SET (ATC) 라벨
+  - dest: DRUG_EXPOSURE
+    v1: BREAST_CANCER.drin_cd
+    desc: 약제 주성분을 나타내는 코드값이다.
+    match: DRUG_EXPOSURE.drug_concept_id (성분)
+  - dest: DRUG_EXPOSURE
+    v1: BREAST_CANCER.drug_rxnm_cd
+    desc: 약제의 RxNorm 코드값이다.
+    match: DRUG_EXPOSURE.drug_source_concept_id (RxNorm)
+  - dest: DRUG_EXPOSURE
+    v1: BREAST_CANCER.drug_injc_pth_cd
+    desc: 약제 투여경로를 나타내는 코드값이다.
+    match: DRUG_EXPOSURE.route_concept_id
   - dest: DRUG_EXPOSURE
     v1: COLORECTAL_CANCER.drug_mdct_dtrn_mcnt
     desc: 환자에게 처방된 약제 투약기간(개월)이다.
-    match: 최근 6개월 체중감소율
+    match: DRUG_EXPOSURE.drug_exposure_start_date ~ end_date
   - dest: DRUG_EXPOSURE
     v1: COLORECTAL_CANCER.drug_clcd
     desc: 처방된 약제 분류를 나타내는 코드값이다.
-    match: 재건·성형술 분류
+    match: 값 집합 DRUG_CLASS_SET (ATC) · 파생 변수
   - dest: DRUG_EXPOSURE
     v1: COLORECTAL_CANCER.drug_clnm
     desc: 처방된 약제 분류 명칭이다.
-    match: 재건·성형술 분류
+    match: 값 집합 DRUG_CLASS_SET (ATC) 라벨
+  - dest: DRUG_EXPOSURE
+    v1: COLORECTAL_CANCER.drin_cd
+    desc: 약제 주성분을 나타내는 코드값이다.
+    match: DRUG_EXPOSURE.drug_concept_id (성분)
+  - dest: DRUG_EXPOSURE
+    v1: COLORECTAL_CANCER.drug_rxnm_cd
+    desc: 약제의 RxNorm 코드값이다.
+    match: DRUG_EXPOSURE.drug_source_concept_id (RxNorm)
+  - dest: DRUG_EXPOSURE
+    v1: COLORECTAL_CANCER.drug_injc_pth_cd
+    desc: 약제 투여경로를 나타내는 코드값이다.
+    match: DRUG_EXPOSURE.route_concept_id
+  - dest: RADIOTHERAPY
+    v1: LUNG_CANCER.rdt_prsc_ymd
+    desc: 방사선치료를 처방한 연월일이다.
+    match: RADIOTHERAPY.방사선치료 처방일
   - dest: RADIOTHERAPY
     v1: LUNG_CANCER.rdt_kncd
     desc: 방사선치료를 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드 또는 EDI 코드값이다.
-    match: 조혈모세포 주입 또는 이식일
+    match: RADIOTHERAPY.방사선치료명
+  - dest: RADIOTHERAPY
+    v1: BREAST_CANCER.rdt_prsc_ymd
+    desc: 방사선치료를 처방한 연월일이다.
+    match: RADIOTHERAPY.방사선치료 처방일
   - dest: RADIOTHERAPY
     v1: BREAST_CANCER.rdt_kncd
     desc: 방사선치료를 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드 또는 EDI 코드 값이다.
-    match: 조혈모세포 주입 또는 이식일
+    match: RADIOTHERAPY.방사선치료명
   - dest: RADIOTHERAPY
     v1: COLORECTAL_CANCER.rdt_kncd
     desc: 방사선치료 코드값으로 병원에서 사용하는 LOCAL 코드, EDI 코드값이다.
-    match: 방사선치료 총 선량 값(Gy)
+    match: RADIOTHERAPY.방사선치료명
+  - dest: RESPONSE_ASSESSMENT
+    v1: LUNG_CANCER.rldg_ymd
+    desc: 암 재발을 진단한 연월일이다.
+    match: RESPONSE_ASSESSMENT.암 재발 진단일
   - dest: RESPONSE_ASSESSMENT
     v1: LUNG_CANCER.rlps_site_cd
     desc: 재발암 부위를 나타내는 코드값이다.
-    match: 폐 종양 원발 부위
+    match: RESPONSE_ASSESSMENT.암 재발 부위
+  - dest: RESPONSE_ASSESSMENT
+    v1: BREAST_CANCER.rldg_ymd
+    desc: 암 재발을 진단한 연월일이다.
+    match: RESPONSE_ASSESSMENT.암 재발 진단일
   - dest: RESPONSE_ASSESSMENT
     v1: BREAST_CANCER.rlps_site_cd
     desc: 재발암 부위를 나타내는 코드값이다.
-    match: 폐 종양 원발 부위
+    match: RESPONSE_ASSESSMENT.암 재발 부위
+  - dest: RESPONSE_ASSESSMENT
+    v1: COLORECTAL_CANCER.rldg_ymd
+    desc: 암 재발을 진단한 연월일이다.
+    match: RESPONSE_ASSESSMENT.암 재발 진단일
   - dest: RESPONSE_ASSESSMENT
     v1: COLORECTAL_CANCER.rlps_site_cd
     desc: 재발암 부위를 나타내는 코드값이다.
-    match: 폐 종양 원발 부위
+    match: RESPONSE_ASSESSMENT.암 재발 부위
   - dest: RESPONSE_ASSESSMENT
     v1: LYMPHOMA.deauville_score
     desc: FDG PET 기반 Deauville 5-point score(1-5)이다.
-    match: 유세포, PCR 또는 NGS 기반 미세잔존질환(MRD) 결과
+    match: RESPONSE_ASSESSMENT.Deauville 5점 척도
   - dest: RESPONSE_ASSESSMENT
     v1: LYMPHOMA.last_followup_date
     desc: 생존 및 질환 상태를 마지막으로 확인한 날짜이다.
-    match: 최종 추적 시 질환 상태
+    match: COHORT_INDEX.최종 추적관찰일
   - dest: VISIT_OCCURRENCE
     v1: LUNG_CANCER.dsch_ymd
     desc: 퇴원 연월일로 외래 방문 시 visit_start_date와 동일하게 설정한다.
-    match: 퇴원 시 환자 상태
+    match: VISIT_OCCURRENCE.visit_end_date
   - dest: VISIT_OCCURRENCE
     v1: BREAST_CANCER.dsch_ymd
     desc: 퇴원연월일으로 외래 방문 시 visit_start_date와 동일한 기준으로 한다.
-    match: 방문 ID
+    match: VISIT_OCCURRENCE.visit_end_date
   - dest: VISIT_OCCURRENCE
     v1: COLORECTAL_CANCER.dsch_ymd
     desc: 퇴원연월일으로 외래 방문 시 visit_start_date와 동일한 기준으로 한다.
-    match: 방문 ID
+    match: VISIT_OCCURRENCE.visit_end_date
   - dest: FAMILY_HISTORY
     v1: LUNG_CANCER.fmht_rcrd_ymd
     desc: 가족력 기록 연월일이다.
-    match: 당뇨병 가족력 여부
+    match: FAMILY_HISTORY.기록일
   - dest: FAMILY_HISTORY
     v1: LUNG_CANCER.fmht_yn_noans_spcd
     desc: 가족력 여부를 나타내는 코드값이다.
-    match: 당뇨병 가족력 여부
+    match: FAMILY_HISTORY.가족력 여부
+  - dest: FAMILY_HISTORY
+    v1: LUNG_CANCER.fmhs_etc_yn_noans_spcd
+    desc: 가족의 기타 병력 여부를 나타내는 코드값이다.
+    match: FAMILY_HISTORY.가족 질환(암종 외)
   - dest: FAMILY_HISTORY
     v1: BREAST_CANCER.fmht_rcrd_ymd
     desc: 가족력 기록 연월일이다.
-    match: 당뇨병 가족력 여부
+    match: FAMILY_HISTORY.기록일
   - dest: FAMILY_HISTORY
     v1: BREAST_CANCER.fmht_yn_noans_spcd
     desc: 가족력 여부를 나타내는 코드값이다.
-    match: 당뇨병 가족력 여부
+    match: FAMILY_HISTORY.가족력 여부
   - dest: FAMILY_HISTORY
     v1: BREAST_CANCER.pt_fm_rlnm
     desc: 가족력 존재 시 가족과의 관계를 나타내는 명칭이다.
-    match: 측정가능 병변 존재 여부
+    match: FAMILY_HISTORY.가족력 대상자와의 관계
   - dest: FAMILY_HISTORY
     v1: COLORECTAL_CANCER.fmht_here_clcn_clsf_etc_cont
     desc: 유전성 대장암이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
-    match: 유전성 대장암 여부
+    match: 파생 변수 · 유전성 대장암 여부 (원천값)
+  - dest: FAMILY_HISTORY
+    v1: COLORECTAL_CANCER.pt_fmrl_etc_cont
+    desc: 가족관계가 기타인 경우 해당 내용이다.
+    match: FAMILY_HISTORY.가족력 대상자와의 관계 (원천값)
   - dest: FAMILY_HISTORY
     v1: COLORECTAL_CANCER.fmht_rcrd_ymd
     desc: 가족력 기록 연월일이다.
-    match: 당뇨병 가족력 여부
+    match: FAMILY_HISTORY.기록일
   - dest: FAMILY_HISTORY
     v1: COLORECTAL_CANCER.fmht_yn_noans_spcd
     desc: 가족력 여부를 나타내는 코드값이다.
-    match: 당뇨병 가족력 여부
+    match: FAMILY_HISTORY.가족력 여부
   - dest: FAMILY_HISTORY
     v1: COLORECTAL_CANCER.pt_fm_rlnm
     desc: 가족력 존재 시 가족과의 관계를 나타내는 명칭이다.
-    match: 측정가능 병변 존재 여부
+    match: FAMILY_HISTORY.가족력 대상자와의 관계
   - dest: FAMILY_HISTORY
     v1: COLORECTAL_CANCER.fmhs_etc_yn_noans_spcd
     desc: 가족의 기타병력 여부를 나타내는 코드값이다.
-    match: 가족의 암 병력 여부
+    match: FAMILY_HISTORY.가족 질환(암종 외)
+  - dest: OBSERVATION
+    v1: LUNG_CANCER.cc_rcrd_ymd
+    desc: 기록 연월일이다.
+    match: OBSERVATION.observation_date (주증상)
+  - dest: OBSERVATION
+    v1: BREAST_CANCER.cc_rcrd_ymd
+    desc: 기록연월일이다.
+    match: OBSERVATION.observation_date (주증상)
   - dest: OBSERVATION
     v1: COLORECTAL_CANCER.cc_cont
     desc: 입원 시 주증상에 대한 상세 내용이다.
-    match: 입원·연장
+    match: OBSERVATION.value_as_string · NOTE
+  - dest: OBSERVATION
+    v1: COLORECTAL_CANCER.cc_rcrd_ymd
+    desc: 기록 연월일이다.
+    match: OBSERVATION.observation_date (주증상)
   - dest: BREAST_CRF
     v1: BREAST_CANCER.method_of_conception
     desc: '임신 방법을 나타내는 코드값이다.
 
       1=자연임신, 2=배란유도, 3=인공수정, 4=시험관, 5=난자 공여'
-    match: 치료 후 임신 시도 여부
-  - dest: BREAST_CRF
-    v1: BREAST_CANCER.marg_yn_noans_spcd
-    desc: 결혼 여부를 나타내는 코드값이다.
-    match: 결혼 여부
-  - dest: BREAST_CRF
-    v1: BREAST_CANCER.marg_detl_cd
-    desc: 결혼 여부가 무응답이 아닌 경우의 상세 구분을 나타내는 내용이다.
-    match: 생체검사 직장 세부 부위 상세
-  - dest: BREAST_CRF
-    v1: BREAST_CANCER.meno_yn_noans_spcd
-    desc: 폐경 여부를 나타내는 코드값이다.
-    match: 폐경 후 호르몬 대체요법(HRT) 시행 여부
-  - dest: ADVERSE_EVENT
-    v1: COLORECTAL_CANCER.bwpf_yn_unid_spcd
-    desc: 장천공 여부를 나타내는 코드값이다.
-    match: 장천공 여부
-  - dest: ADVERSE_EVENT
-    v1: COLORECTAL_CANCER.inob_yn_unid_spcd
-    desc: 장폐색 여부를 나타내는 코드값이다.
-    match: 장폐색 여부
-  - dest: MASLD_CRF
-    v1: MASLD.file_id
-    desc: 이미지/영상 파일 ID
-    match: 임상적(진찰·영상)
-  - dest: MASLD_CRF
-    v1: MASLD.imex_ymd
-    desc: 영상검사 시행 연월일이다.
-    match: 영상검사 결과 진단적 분류(Diagnostic Classification)
-  - dest: LYMPHOMA_CRF
-    v1: LYMPHOMA.diagnosis_status
-    desc: '진단 상태이다. 예: newly diagnosed, relapsed, refractory, transformed.'
-    match: 출산 후 1년 이내 진단 여부
-  - dest: LYMPHOMA_CRF
-    v1: LYMPHOMA.transformation_date
-    desc: 조직학적 전환을 확진한 날짜이다.
-    match: 조직학적 전환 확정일
-  - dest: LYMPHOMA_CRF
-    v1: LYMPHOMA.pet_suvmax
-    desc: 대표 또는 최고 대사활성 병변의 SUVmax이다.
-    match: 조혈모세포 주입 또는 이식일
-  - dest: LYMPHOMA_CRF
-    v1: LYMPHOMA.car_t_product_source_value
-    desc: CAR-T 제품명 또는 기관 원천값이다.
-    match: 조혈모세포 주입 또는 이식일
-  - dest: LYMPHOMA_CRF
-    v1: LYMPHOMA.leukapheresis_date
-    desc: CAR-T 제조 등을 위한 백혈구성분채집일이다.
-    match: 백혈구성분채집일
-  - dest: DEATH
-    v1: LYMPHOMA.cause_of_death
-    desc: 사망 원인이다. 원자료가 있는 경우 표준 개념과 원천값을 함께 보존한다.
-    match: 사망 원인
-  대응 없음:
-  - dest: LUNG_CRF
-    v1: LUNG_CANCER.imex_ymd
-    desc: 영상검사를 시행한 연월일이다.
-    match: ''
-  - dest: LUNG_CRF
-    v1: LUNG_CANCER.imex_smct_cd
-    desc: 영상검사에 매핑된 SNOMED CT 코드값으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
-    match: ''
-  - dest: PATHOLOGY_REPORT
-    v1: LUNG_CANCER.bpsy_ymd
-    desc: 생체검사를 시행한 연월일이다.
-    match: ''
-  - dest: PATHOLOGY_REPORT
-    v1: BREAST_CANCER.resi_tumr_cd
-    desc: Residual Tumor을 나타내는 코드값이다.
-    match: ''
-  - dest: PATHOLOGY_REPORT
-    v1: BREAST_CANCER.bpsy_ymd
-    desc: 생체검사를 시행한 연월일이다.
-    match: ''
-  - dest: PATHOLOGY_REPORT
-    v1: COLORECTAL_CANCER.gros_tpcd
-    desc: Gross type 분류를 나타내는 코드(major)값이다.
-    match: ''
-  - dest: PATHOLOGY_REPORT
-    v1: COLORECTAL_CANCER.bpsy_ymd
-    desc: 생체검사를 시행한 연월일이다.
-    match: ''
-  - dest: SURGERY
-    v1: LUNG_CANCER.oprt_ymd
-    desc: 수술을 시행한 연월일이다.
-    match: ''
-  - dest: SURGERY
-    v1: BREAST_CANCER.oprt_ymd
-    desc: 수술을 시행한 연월일이다.
-    match: ''
-  - dest: SURGERY
-    v1: BREAST_CANCER.oprt_kncd
-    desc: 수술을 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드, EDI 코드값이다.
-    match: ''
-  - dest: SURGERY
-    v1: COLORECTAL_CANCER.anes_mthd_detl_clsf_etc_cont
-    desc: 문합방법 세부내용이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
-    match: ''
-  - dest: SURGERY
-    v1: COLORECTAL_CANCER.anes_mthd_detl_spcd
-    desc: 문합방법 세부내용을 나타내는 코드값이다.
-    match: ''
-  - dest: SURGERY
-    v1: COLORECTAL_CANCER.oprt_ymd
-    desc: 수술을 시행한 연월일이다.
-    match: ''
-  - dest: SURGERY
-    v1: COLORECTAL_CANCER.oprt_prps_cd
-    desc: 수술목적을 나타내는 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: LUNG_CANCER.diag_cd
-    desc: 원내 진단코드를 나타내는 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: LUNG_CANCER.cexm_ymd
-    desc: 진단검사를 시행한 연월일이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: LUNG_CANCER.cexm_kncd
-    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: LUNG_CANCER.cexm_loinc_cd
-    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: LUNG_CANCER.imex_kncd
-    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: BREAST_CANCER.cexm_ymd
-    desc: 진단검사를 시행한 연월일이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: BREAST_CANCER.cexm_kncd
-    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: BREAST_CANCER.cexm_loinc_cd
-    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: BREAST_CANCER.imex_kncd
-    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: COLORECTAL_CANCER.diag_cd
-    desc: 원내 진단코드를 나타내는 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: COLORECTAL_CANCER.cexm_ymd
-    desc: 진단검사를 시행한 연월일이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: COLORECTAL_CANCER.cexm_kncd
-    desc: 진단검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: COLORECTAL_CANCER.cexm_loinc_cd
-    desc: 원내 진단검사 코드에 매핑되는 LOINC 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: COLORECTAL_CANCER.imex_kncd
-    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 진단검사 LOCAL 코드, EDI 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: MASLD.imex_kncd
-    desc: 영상검사를 나타내는 코드값으로 병원에서 사용하는 LOCAL 코드, EDI 코드값이다.
-    match: ''
-  - dest: CONDITION_OCCURRENCE
-    v1: LYMPHOMA.diagnosis_date
-    desc: 림프종을 최초로 확진한 날짜이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: LUNG_CANCER.drug_prsc_ymd
-    desc: 약제를 처방한 연월일이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: LUNG_CANCER.drug_prsc_dcnt
-    desc: 약제 처방일수이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: BREAST_CANCER.drug_prsc_ymd
-    desc: 약제를 처방한 연월일이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: BREAST_CANCER.drug_prsc_dcnt
-    desc: 약제 처방일수이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: COLORECTAL_CANCER.drug_prsc_ymd
-    desc: 약제를 처방한 연월일이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: COLORECTAL_CANCER.drug_prsc_dcnt
-    desc: 약제 처방일수이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: MASLD.procedure_occurrence_crtn_dt
-    desc: 행위처방 데이터 생성일시이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: MASLD.drug_prsc_ymd
-    desc: 약제 처방 연월일이다.
-    match: ''
-  - dest: BIOMARKER
-    v1: LYMPHOMA.hodgkin_ips_score
-    desc: 진행성 Hodgkin lymphoma의 International Prognostic Score(IPS)이다.
-    match: ''
-  - dest: STAGING
-    v1: LYMPHOMA.ann_arbor_lugano_stage
-    desc: Ann Arbor/Lugano 병기값이다. I, II, III, IV로 기록한다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: LUNG_CANCER.plex_ymd
-    desc: 폐기능 검사를 시행한 연월일이다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: LUNG_CANCER.anth_rcrd_ymd
-    desc: 신체계측정보 기록 연월일이다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: LUNG_CANCER.ht_msrm_vl
-    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: LUNG_CANCER.wt_msrm_vl
-    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: LUNG_CANCER.cexm_rslt_unit_cont
-    desc: 진단검사 결과값의 단위이다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: BREAST_CANCER.anth_rcrd_ymd
-    desc: 신체계측정보 기록 연월일이다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: BREAST_CANCER.ht_msrm_vl
-    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: BREAST_CANCER.wt_msrm_vl
-    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: BREAST_CANCER.cexm_rslt_unit_cont
-    desc: 진단검사 결과값의 단위이다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: COLORECTAL_CANCER.anth_rcrd_ymd
-    desc: 신체계측정보 기록 연월일이다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: COLORECTAL_CANCER.ht_msrm_vl
-    desc: 신장값(cm)으로 소수점 1자리까지 표기한다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: COLORECTAL_CANCER.wt_msrm_vl
-    desc: 체중값(kg)으로 소수점 1자리까지 표기한다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: COLORECTAL_CANCER.cexm_rslt_unit_cont
-    desc: 진단검사 결과값의 단위이다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: MASLD.anth_rcrd_ymd
-    desc: 신체계측정보 기록 연월일이다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: MASLD.ht_msrm_vl
-    desc: 신장값(cm)으로 1자리까지 표기한다.
-    match: ''
-  - dest: MEASUREMENT
-    v1: MASLD.wt_msrm_vl
-    desc: 체중값(kg)으로 1자리까지 표기한다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: LUNG_CANCER.drin_cd
-    desc: 약제 주성분을 나타내는 코드값이다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: LUNG_CANCER.drug_rxnm_cd
-    desc: 약제의 RxNorm 코드값이다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: LUNG_CANCER.drug_injc_pth_cd
-    desc: 약제 투여경로를 나타내는 코드값이다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: BREAST_CANCER.drin_cd
-    desc: 약제 주성분을 나타내는 코드값이다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: BREAST_CANCER.drug_rxnm_cd
-    desc: 약제의 RxNorm 코드값이다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: BREAST_CANCER.drug_injc_pth_cd
-    desc: 약제 투여경로를 나타내는 코드값이다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: COLORECTAL_CANCER.drin_cd
-    desc: 약제 주성분을 나타내는 코드값이다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: COLORECTAL_CANCER.drug_rxnm_cd
-    desc: 약제의 RxNorm 코드값이다.
-    match: ''
-  - dest: DRUG_EXPOSURE
-    v1: COLORECTAL_CANCER.drug_injc_pth_cd
-    desc: 약제 투여경로를 나타내는 코드값이다.
-    match: ''
-  - dest: RADIOTHERAPY
-    v1: LUNG_CANCER.rdt_prsc_ymd
-    desc: 방사선치료를 처방한 연월일이다.
-    match: ''
-  - dest: RADIOTHERAPY
-    v1: BREAST_CANCER.rdt_prsc_ymd
-    desc: 방사선치료를 처방한 연월일이다.
-    match: ''
-  - dest: RESPONSE_ASSESSMENT
-    v1: LUNG_CANCER.rldg_ymd
-    desc: 암 재발을 진단한 연월일이다.
-    match: ''
-  - dest: RESPONSE_ASSESSMENT
-    v1: BREAST_CANCER.rldg_ymd
-    desc: 암 재발을 진단한 연월일이다.
-    match: ''
-  - dest: RESPONSE_ASSESSMENT
-    v1: COLORECTAL_CANCER.rldg_ymd
-    desc: 암 재발을 진단한 연월일이다.
-    match: ''
-  - dest: FAMILY_HISTORY
-    v1: COLORECTAL_CANCER.pt_fmrl_etc_cont
-    desc: 가족관계가 기타인 경우 해당 내용이다.
-    match: ''
-  - dest: OBSERVATION
-    v1: LUNG_CANCER.cc_rcrd_ymd
-    desc: 기록 연월일이다.
-    match: ''
-  - dest: OBSERVATION
-    v1: BREAST_CANCER.cc_rcrd_ymd
-    desc: 기록연월일이다.
-    match: ''
-  - dest: OBSERVATION
-    v1: COLORECTAL_CANCER.cc_src_spcd
-    desc: 주증상 출처(기록지)를 구분하는 코드값이다.
-    match: ''
-  - dest: OBSERVATION
-    v1: COLORECTAL_CANCER.cc_rcrd_ymd
-    desc: 기록 연월일이다.
-    match: ''
+    match: BREAST_BASELINE.임신 방법
   - dest: BREAST_CRF
     v1: BREAST_CANCER.obtr_rcrd_ymd
     desc: 기록 연월일이다.
-    match: ''
+    match: BREAST_BASELINE.기록일
+  - dest: BREAST_CRF
+    v1: BREAST_CANCER.marg_yn_noans_spcd
+    desc: 결혼 여부를 나타내는 코드값이다.
+    match: BREAST_BASELINE.결혼 여부
+  - dest: BREAST_CRF
+    v1: BREAST_CANCER.marg_detl_cd
+    desc: 결혼 여부가 무응답이 아닌 경우의 상세 구분을 나타내는 내용이다.
+    match: BREAST_BASELINE.결혼상태 상세 구분
+  - dest: BREAST_CRF
+    v1: BREAST_CANCER.meno_yn_noans_spcd
+    desc: 폐경 여부를 나타내는 코드값이다.
+    match: BREAST_BASELINE.폐경 여부
   - dest: BREAST_CRF
     v1: BREAST_CANCER.brst_dens_clcd
     desc: Mammography 결과의 Breast Density를 나타내는 코드값이다.
-    match: ''
+    match: BREAST_EXAM.유방촬영술상 유방 밀도
   - dest: BREAST_CRF
     v1: BREAST_CANCER.brst_dens_clnm
     desc: Mammography 결과의 Breast Density 명칭이다.
-    match: ''
+    match: BREAST_EXAM.유방촬영술상 유방 밀도 (라벨)
   - dest: BREAST_CRF
     v1: BREAST_CANCER.micf_yn_unid_spcd
     desc: Mammography 결과의 Microcalcification 여부를 나타내는 코드값이다.
-    match: ''
+    match: PATHOLOGY_REPORT.유방촬영술상 미세석회화 여부
   - dest: BREAST_CRF
     v1: BREAST_CANCER.imex_ymd
     desc: 영상검사를 시행한 연월일이다.
-    match: ''
+    match: PROCEDURE_OCCURRENCE.procedure_date · *_EXAM.검사일
   - dest: BREAST_CRF
     v1: BREAST_CANCER.imex_smct_cd
     desc: 영상검사에 매핑된 SNOMED CT 코드값으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
-    match: ''
+    match: PROCEDURE_OCCURRENCE.procedure_concept_id (SNOMED)
+  - dest: ADVERSE_EVENT
+    v1: COLORECTAL_CANCER.bwpf_yn_unid_spcd
+    desc: 장천공 여부를 나타내는 코드값이다.
+    match: ADVERSE_EVENT.장천공 여부
+  - dest: ADVERSE_EVENT
+    v1: COLORECTAL_CANCER.inob_yn_unid_spcd
+    desc: 장폐색 여부를 나타내는 코드값이다.
+    match: ADVERSE_EVENT.장폐색 여부
   - dest: COLORECTAL_CRF
     v1: COLORECTAL_CANCER.imex_ymd
     desc: 영상검사를 시행한 연월일이다.
-    match: ''
+    match: PROCEDURE_OCCURRENCE.procedure_date · *_EXAM.검사일
   - dest: COLORECTAL_CRF
     v1: COLORECTAL_CANCER.imex_smct_cd
     desc: 영상검사에 매핑된 SNOMED CT 코드값으로 후조합 시, "_" 를 구분자로 합쳐서 데이터를 적재한다.
-    match: ''
+    match: PROCEDURE_OCCURRENCE.procedure_concept_id (SNOMED)
+  - dest: MASLD_CRF
+    v1: MASLD.imex_ymd
+    desc: 영상검사 시행 연월일이다.
+    match: PROCEDURE_OCCURRENCE.procedure_date · *_EXAM.검사일
+  - dest: LYMPHOMA_CRF
+    v1: LYMPHOMA.diagnosis_status
+    desc: '진단 상태이다. 예: newly diagnosed, relapsed, refractory, transformed.'
+    match: COHORT_INDEX.진단 상태
+  - dest: LYMPHOMA_CRF
+    v1: LYMPHOMA.transformation_date
+    desc: 조직학적 전환을 확진한 날짜이다.
+    match: LYMPHOMA_EVENT.조직학적 전환 확정일
+  - dest: LYMPHOMA_CRF
+    v1: LYMPHOMA.pet_suvmax
+    desc: 대표 또는 최고 대사활성 병변의 SUVmax이다.
+    match: LYMPHOMA_EXAM.PET 최고 SUVmax
+  - dest: LYMPHOMA_CRF
+    v1: LYMPHOMA.car_t_product_source_value
+    desc: CAR-T 제품명 또는 기관 원천값이다.
+    match: LYMPHOMA_EVENT.CAR-T 표적 항원 (제품명은 원천값)
+  - dest: LYMPHOMA_CRF
+    v1: LYMPHOMA.leukapheresis_date
+    desc: CAR-T 제조 등을 위한 백혈구성분채집일이다.
+    match: LYMPHOMA_EVENT.백혈구성분채집일
+  - dest: DEATH
+    v1: LYMPHOMA.cause_of_death
+    desc: 사망 원인이다. 원자료가 있는 경우 표준 개념과 원천값을 함께 보존한다.
+    match: DEATH.cause_concept_id · cause_source_value (파생 변수 사망 원인)
+  제외(사유 기록):
+  - dest: PATHOLOGY_REPORT
+    v1: COLORECTAL_CANCER.impt_read_ymd
+    desc: 면역조직화학병리 조직을 판독한 연월일이다.
+    match: 병리 판독일. v2 는 검체 채취일만 둔다 — 판독 소요일이 필요해지면 PATHOLOGY_REPORT 에 report_date 를 더한다
+  - dest: PATHOLOGY_REPORT
+    v1: COLORECTAL_CANCER.mlpt_read_ymd
+    desc: 분자병리 조직을 판독한 연월일이다.
+    match: 병리 판독일. 위와 같다
+  - dest: PATHOLOGY_REPORT
+    v1: COLORECTAL_CANCER.bpsy_read_ymd
+    desc: 생체검사 조직을 판독한 연월일이다.
+    match: 병리 판독일. 위와 같다
+  - dest: PATHOLOGY_REPORT
+    v1: COLORECTAL_CANCER.ohad_hstr_yn_noans_spcd
+    desc: 타병원 진단 후 전원 여부를 나타내는 코드값이다.
+    match: 타병원 진단 후 전원 여부. 코호트 정의 항목이 아니며 필요하면 OBSERVATION 한 개념으로 받는다
+  - dest: BIOMARKER
+    v1: MASLD.procedure_occurrence_crtn_dt
+    desc: 행위처방 데이터 생성일시이다.
+    match: 행위처방 레코드의 생성 일시. 임상 값이 아니라 원천 시스템의 감사 정보
+  - dest: OBSERVATION
+    v1: COLORECTAL_CANCER.cc_src_spcd
+    desc: 주증상 출처(기록지)를 구분하는 코드값이다.
+    match: 주증상을 어느 기록지에서 옮겼는지. OBSERVATION.observation_type_concept_id 가 출처 종류를 맡는다
+  부분 일치: []
+  대응 없음:
+  - dest: LUNG_CRF
+    v1: LUNG_CANCER.file_id
+    desc: 이미지 및 영상 파일에 대한 외래키이다.
+    match: 영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다
+  - dest: PATHOLOGY_REPORT
+    v1: LYMPHOMA.file_id
+    desc: PET/CT, CT, MRI 또는 병리 이미지 파일의 외래키이다.
+    match: 영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다
+  - dest: BREAST_CRF
+    v1: BREAST_CANCER.file_id
+    desc: 이미지 및 영상 파일에 대한 외래키이다.
+    match: 영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다
+  - dest: MASLD_CRF
+    v1: MASLD.file_id
+    desc: 이미지/영상 파일 ID
+    match: 영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다

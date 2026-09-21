@@ -155,12 +155,11 @@ DROPPED = {
     "mlpt_read_ymd": "병리 판독일. 위와 같다",
     "bpsy_read_ymd": "병리 판독일. 위와 같다",
     "ohad_hstr_yn_noans_spcd": "타병원 진단 후 전원 여부. 코호트 정의 항목이 아니며 필요하면 OBSERVATION 한 개념으로 받는다",
+    "file_id": "영상·이미지 파일 참조. 코호트 DB 는 영상 파일을 담지 않는다 (2026-09-21 결정). 담게 되면 IMAGE 확장 표를 둔다",
 }
 
-# v2 에 자리가 없고 팀이 정해야 하는 것.
-PENDING = {
-    "file_id": "영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다",
-}
+# v2 에 자리가 없고 팀이 정해야 하는 것. 지금은 비어 있다.
+PENDING = {}
 
 
 def _nouns(text):
@@ -192,6 +191,9 @@ def classify(legacy_rows, v1_field_names, v1_desc, v2_labels):
         why = PENDING.get(key) or PENDING.get(name)
         if why:
             row["match"] = why; out["대응 없음"].append(row); continue
+        why = DROPPED.get(key) or DROPPED.get(name)
+        if why:
+            row["match"] = why; out["제외(사유 기록)"].append(row); continue
         if name.endswith("_id") and ("외래키" in desc or "식별자" in desc):
             out["키·외래키"].append(row); continue
         if any(name.endswith(s) and (name[: -len(s)] + c) in v1_field_names.get(table, ()) for s, c in PAIR_SUFFIX):

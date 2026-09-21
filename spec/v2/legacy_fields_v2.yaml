@@ -5171,6 +5171,10 @@ triage:
     desc: 사망 원인이다. 원자료가 있는 경우 표준 개념과 원천값을 함께 보존한다.
     match: DEATH.cause_concept_id · cause_source_value (파생 변수 사망 원인)
   제외(사유 기록):
+  - dest: LUNG_CRF
+    v1: LUNG_CANCER.file_id
+    desc: 이미지 및 영상 파일에 대한 외래키이다.
+    match: 영상·이미지 파일 참조. 코호트 DB 는 영상 파일을 담지 않는다 (2026-09-21 결정). 담게 되면 IMAGE 확장 표를 둔다
   - dest: PATHOLOGY_REPORT
     v1: COLORECTAL_CANCER.impt_read_ymd
     desc: 면역조직화학병리 조직을 판독한 연월일이다.
@@ -5187,6 +5191,10 @@ triage:
     v1: COLORECTAL_CANCER.ohad_hstr_yn_noans_spcd
     desc: 타병원 진단 후 전원 여부를 나타내는 코드값이다.
     match: 타병원 진단 후 전원 여부. 코호트 정의 항목이 아니며 필요하면 OBSERVATION 한 개념으로 받는다
+  - dest: PATHOLOGY_REPORT
+    v1: LYMPHOMA.file_id
+    desc: PET/CT, CT, MRI 또는 병리 이미지 파일의 외래키이다.
+    match: 영상·이미지 파일 참조. 코호트 DB 는 영상 파일을 담지 않는다 (2026-09-21 결정). 담게 되면 IMAGE 확장 표를 둔다
   - dest: BIOMARKER
     v1: MASLD.procedure_occurrence_crtn_dt
     desc: 행위처방 데이터 생성일시이다.
@@ -5195,21 +5203,13 @@ triage:
     v1: COLORECTAL_CANCER.cc_src_spcd
     desc: 주증상 출처(기록지)를 구분하는 코드값이다.
     match: 주증상을 어느 기록지에서 옮겼는지. OBSERVATION.observation_type_concept_id 가 출처 종류를 맡는다
-  부분 일치: []
-  대응 없음:
-  - dest: LUNG_CRF
-    v1: LUNG_CANCER.file_id
-    desc: 이미지 및 영상 파일에 대한 외래키이다.
-    match: 영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다
-  - dest: PATHOLOGY_REPORT
-    v1: LYMPHOMA.file_id
-    desc: PET/CT, CT, MRI 또는 병리 이미지 파일의 외래키이다.
-    match: 영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다
   - dest: BREAST_CRF
     v1: BREAST_CANCER.file_id
     desc: 이미지 및 영상 파일에 대한 외래키이다.
-    match: 영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다
+    match: 영상·이미지 파일 참조. 코호트 DB 는 영상 파일을 담지 않는다 (2026-09-21 결정). 담게 되면 IMAGE 확장 표를 둔다
   - dest: MASLD_CRF
     v1: MASLD.file_id
     desc: 이미지/영상 파일 ID
-    match: 영상·이미지 파일 참조. v1 은 파일 외래키를 두었으나 v2 저장 구조에는 파일 표가 없다 — 코호트 DB 가 영상 파일을 담는지부터 정해야 한다
+    match: 영상·이미지 파일 참조. 코호트 DB 는 영상 파일을 담지 않는다 (2026-09-21 결정). 담게 되면 IMAGE 확장 표를 둔다
+  부분 일치: []
+  대응 없음: []

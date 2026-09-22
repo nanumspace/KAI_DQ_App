@@ -33,6 +33,7 @@ from v2_field_names import FIELD_NAMES, UNITS, CODELIST_OVERRIDE, TYPE_OVERRIDE 
 from v2_omop_map import CONCEPT_ID_BASE, OMOP_TABLES, SEED_CONCEPTS, FORM_MAP  # noqa: E402
 from v2_reference_tables import REFERENCE_TABLES, FIELD_REFERENCES, TABLE_REFERENCES  # noqa: E402
 from v2_legacy_triage import classify as triage_legacy, BUCKETS as LEGACY_BUCKETS  # noqa: E402
+from v2_omop_columns_ko import OMOP_COLUMNS_KO  # noqa: E402
 from v2_row_kinds import ROW_KINDS, NEEDS_REVIEW, EXTRA_CONDITIONS  # noqa: E402
 from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, SNOMED_SCALES, LOINC_SOURCE, LOINC_FIELD_CODES, SNOMED_FIELD_CODES,  # noqa: E402
                                PFT_ITEMS, ALCOHOL_ITEMS, COMORBIDITY_ITEMS, DRUG_CLASS_ITEMS)
@@ -98,7 +99,7 @@ def codelist_for(row, name, kind):
     return cl
 def tier_of(g): g = str(g or ""); return "필수" if g.startswith("필수") else ("권고" if g.startswith("권고") else "보류")
 def new_field(name, kor, ty, kind, tier, **kw):
-    f = dict(name=name, kor=kor, type=ty, value_kind=kind, tier=tier, required=False, codelist=None, unit=None, standard=None, pattern=None, vocabulary=None, cohorts=set(), also=[], v1_hint=[], desc=None)
+    f = dict(name=name, kor=kor, type=ty, value_kind=kind, tier=tier, required=False, codelist=None, unit=None, standard=None, pattern=None, vocabulary=None, cohorts=set(), also=[], v1_hint=[], desc=None, note=None)
     f.update(kw); return f
 
 derived, scores = [], []
@@ -130,7 +131,8 @@ for r in ITEMS:
         elif tier == "권고" and f["tier"] == "보류": f["tier"] = "권고"
     f["cohorts"].add(cohort)
     if r.get("현 명세 대응 필드") and f"{r['현 테이블']}.{r['현 명세 대응 필드']}" not in f["v1_hint"]: f["v1_hint"].append(f"{r['현 테이블']}.{r['현 명세 대응 필드']}")
-    if r.get("메모") and r["메모"] not in (f["desc"] or ""): f["desc"] = ((f["desc"] + "; ") if f["desc"] else "") + r["메모"]
+    # 배치표 '메모'는 설계 메모(저장 방식·검토 사항)이지 필드 설명이 아니다. 비고로 두고 설명은 따로 짓는다.
+    if r.get("메모") and r["메모"] not in (f.get("note") or ""): f["note"] = ((f["note"] + "; ") if f.get("note") else "") + r["메모"]
 for d in list(DISEASE_CRF):
     if d in forms and not forms[d]["fields"]: del forms[d]
 
@@ -416,7 +418,7 @@ def ext_table(F):
     # 2.2: 행 종류 컬럼은 _add_row_kind_fields() 가 서식 필드로 넣어 두었으므로
     # 아래 반복에서 다른 닫힌 범주 필드와 똑같이 만들어진다. 여기서 또 만들면 컬럼이 겹친다.
     for f in F["fields"].values():
-        base = dict(kor=f["kor"], tier=f["tier"], required=bool(f.get("required")), cohorts=sorted(f["cohorts"]))
+        base = dict(kor=f["kor"], tier=f["tier"], required=bool(f.get("required")), cohorts=sorted(f["cohorts"]), desc=(f.get("desc") or None), note=(f.get("note") or None))
         if f.get("key"): cols.append(dict(name=f["name"], type="bigint", key=f["key"], ref=f.get("ref"), **base)); continue
         vk = f["value_kind"]
         if vk in ("닫힌 범주", "열린 표준 코드"):
@@ -454,6 +456,53 @@ def ext_table(F):
 for fn_ in EXT_FORMS:
     F = forms[fn_]
     tables[fn_] = dict(name=fn_, layer="K-AI 확장", kor=F["kor"], grain=F["grain"], pk=F["pk"], parent=F.get("parent"), desc=F["desc"], cohorts=sorted(F["cohorts"]), fields=ext_table(F))
+
+# ================================================================ 4.5 컬럼 사전 보강 (한글·설명·참조)
+# 사전(dictionary_v2.xlsx)의 '저장컬럼' 시트가 OMOP 표는 한글 없이, 확장 표는 설명 없이 나오던 것을 여기서 채운다.
+# OMOP 컬럼은 spec/v2_omop_columns_ko.py 의 사전에서, 확장 컬럼은 서식 필드가 가진 것(값 집합·단위·조건·등급)으로 짓는다.
+def _cond_text(aw):
+    out = []
+    for k, v in (aw or {}).items():
+        if k == "_filled": out.append(f"{v} 가 채워졌을 때만")
+        elif k == "_contains": out.append(f"{v[0]} 에 '{v[1]}' 이 들어 있을 때만")
+        elif k == "_equals": out.append(f"{v[0]} = {v[1]} 일 때만")
+        else: out.append(f"{k} = {v} 일 때만")
+    return " · ".join(out)
+def _labels_of(cs):
+    items = concept_sets.get(cs, {}).get("items") or []
+    labs = [it["label"] for it in items[:4]]
+    return ", ".join(labs) + (" …" if len(items) > 4 else "")
+_omop_filled = 0; _ext_composed = 0
+for _tname, _T in tables.items():
+    for _c in _T["fields"]:
+        if _T["layer"] == "OMOP":
+            _k = OMOP_COLUMNS_KO.get((_tname, _c["name"]))
+            if not _k: warnings.append(f"OMOP 컬럼 사전에 {_tname}.{_c['name']} 이 없다 (spec/v2_omop_columns_ko.py)"); continue
+            _c["kor"] = _k["kor"]
+            if _c.get("desc") and _c["desc"] != _k["desc"]: _c["note"] = _c["desc"]
+            _c["desc"] = _k["desc"]
+            if _k.get("ref") and not _c.get("ref"): _c["ref"] = _k["ref"]; _c.setdefault("key", "fk")
+            if _k.get("vocab") and not _c.get("concept_set"): _c["vocab_hint"] = _k["vocab"]
+            _omop_filled += 1
+        else:
+            if _c.get("desc"): continue
+            kor = _c.get("kor") or _c["name"]
+            if _c.get("key") == "pk": d = "행 고유키"
+            elif _c.get("key") == "fk": d = f"{_c.get('ref')} 참조"
+            elif _c.get("concept_set") == "YN": d = f"{kor}. 1 예 · 0 아니오 · 9 모름"
+            elif _c.get("concept_set"): d = f"{kor}. 값 집합 {_c['concept_set']} 의 concept_id ({_labels_of(_c['concept_set'])})"
+            elif _c.get("vocabulary"): d = f"{kor}. {_c['vocabulary']} 참조표의 concept_id"
+            elif _c.get("event_date"): d = f"{kor}. 이 행의 기준 사건일"
+            elif _c["type"] == "date": d = f"{kor} (YYYY-MM-DD)"
+            elif _c.get("unit"): d = f"{kor} ({_c['unit']})"
+            elif _c["type"] in ("float", "integer", "bigint"): d = f"{kor} (수치)"
+            else: d = f"{kor}. 자유 기재"
+            if _c.get("applies_when"): d += f" — {_cond_text(_c['applies_when'])} 해당"
+            if _c.get("tier"): d += f" [자문 {_c['tier']}]"
+            _c["desc"] = d; _ext_composed += 1
+# OMOP 컬럼 사전에 남는 항목(표에서 없어진 컬럼)이 있으면 알린다
+for (_t, _cn) in OMOP_COLUMNS_KO:
+    if _t not in tables or all(c["name"] != _cn for c in tables[_t]["fields"]): warnings.append(f"OMOP 컬럼 사전의 {_t}.{_cn} 이 표에 없다")
 
 # ================================================================ 5. 서식 → 레코드 매핑 (필드별 target)
 def resolve_target(form, f):
@@ -635,7 +684,10 @@ for _i, _t in enumerate([
     "",
     "시트",
     "  저장테이블      DB 에 실제로 만드는 표 30개 (OMOP CDM 5.4 표 14 + K-AI 확장 표 16). 행 단위(grain)와 부모 표를 적었습니다.",
-    "  저장컬럼        그 표들의 컬럼 547개. 타입, 키, 참조, 값 집합(concept_set), 등급(tier), 필수 여부, 적용 코호트.",
+    "  저장컬럼        그 표들의 컬럼 547개. 한글·설명은 모든 컬럼에 있습니다. '참조'는 다른 표를 가리키는 키 컬럼에만, '값 집합'은 값이 정해진",
+    "                  컬럼(*_concept_id·예/아니오)에만 채워집니다 — 비어 있으면 참조·값 집합이 없는 컬럼입니다. OMOP 의 concept 컬럼에는 값이 오는",
+    "                  어휘(LOINC·K-AI Type…)를 적었습니다. '필수'는 규칙이 NULL 을 막는 컬럼이고, 자문 등급(필수·권고·보류)은 설명 끝에 있습니다.",
+    "                  '비고'는 배치표의 설계 메모(저장 방식·검토 사항)입니다.",
     "  서식            병원 담당자가 채우는 서식 24종의 필드와 그 필드가 어느 표의 어느 컬럼(또는 레코드)이 되는지(target).",
     "  CONCEPT         K-AI 어휘. *_concept_id 컬럼에 들어가는 값과 그 값을 묶는 개념 전부.",
     "  CONCEPT_SET     값 집합(옛 코드표)과 소속 concept. 검증기는 '값이 집합 안에 있는가'를 봅니다.",
@@ -665,7 +717,7 @@ def target_text(t):
     return "키/기준"
 ws = xw["Sheet"]; ws.title = "저장테이블"   # 기본 시트를 쓴다 (active 는 이제 '읽는 법')
 sheet(ws, ["테이블", "층", "한글", "행 단위", "고유키", "필드 수", "설명"], [[n, T["layer"], T["kor"], T["grain"], T["pk"], len(T["fields"]), T["desc"]] for n, T in tables.items()], [26, 10, 18, 24, 26, 7, 70])
-sheet(xw.create_sheet("저장컬럼"), ["테이블", "컬럼", "타입", "필수", "한글", "값 집합", "참조", "설명"], [[n, f["name"], f["type"], "Y" if f.get("required") else "", f.get("kor") or "", f.get("concept_set") or "", f.get("ref") or "", f.get("desc") or ""] for n, T in tables.items() for f in T["fields"]], [26, 34, 9, 6, 28, 22, 34, 50])
+sheet(xw.create_sheet("저장컬럼"), ["테이블", "컬럼", "타입", "필수", "한글", "값 집합", "참조", "설명", "비고(설계 메모)"], [[n, f["name"], f["type"], "Y" if f.get("required") else "", f.get("kor") or "", f.get("concept_set") or f.get("vocab_hint") or "", f.get("ref") or "", f.get("desc") or "", f.get("note") or ""] for n, T in tables.items() for f in T["fields"]], [26, 34, 9, 6, 28, 30, 34, 70, 36])
 sheet(xw.create_sheet("서식"), ["서식", "종류", "필드", "한글", "타입", "값 종류", "등급", "코드표(값 집합)", "단위", "저장 위치", "적용 코호트", "같은 뜻 항목"],
       [[n, "OMOP 투영" if n in FORM_MAP else "확장 저장", f["name"], f["kor"], f["type"], f["value_kind"], f["tier"], f.get("codelist") or "", f.get("unit") or "", target_text(f["target"]), ", ".join(COHORT_KOR[c] for c in sorted(f["cohorts"])), "; ".join(f.get("also") or [])] for n, F in forms.items() for f in F["fields"].values()], [24, 10, 30, 30, 8, 12, 6, 22, 8, 46, 26, 30])
 sheet(xw.create_sheet("CONCEPT"), ["concept_id", "한글", "영문", "domain", "vocabulary", "class", "code", "standard (S 값 / C 분류)", "표준 매핑 후보", "key (고정 식별자)"], [[c["concept_id"], c["concept_name_ko"], c["concept_name_en"], c["domain_id"], c["vocabulary_id"], c["concept_class_id"], c["concept_code"], c["standard_concept"], c["standard_hint"], c["key"]] for c in concepts.values()], [14, 30, 30, 12, 10, 12, 22, 8, 30, 40])

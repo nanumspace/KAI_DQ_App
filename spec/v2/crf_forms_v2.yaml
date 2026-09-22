@@ -108,7 +108,6 @@ forms:
       value_kind: 날짜
       tier: 필수
       concept_id: 10000000371
-      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
       target:
         kind: anchor
         table: CONDITION_OCCURRENCE
@@ -132,7 +131,6 @@ forms:
       tier: 필수
       standard: SNOMED/ICD-O-3/KCD
       concept_id: 10000000372
-      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
       target:
         kind: anchor
         table: CONDITION_OCCURRENCE
@@ -155,7 +153,6 @@ forms:
       codelist: CL_DIAGNOSIS_SUBTYPE
       standard: SNOMED/ICD-O-3/KCD
       concept_id: 10000000373
-      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
       target:
         kind: attr
         table: OBSERVATION
@@ -177,7 +174,6 @@ forms:
       codelist: CL_MASLD_DIAGNOSIS_BASIS
       standard: SNOMED/ICD-O-3/KCD
       concept_id: 10000000374
-      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
       target:
         kind: attr
         table: OBSERVATION
@@ -197,7 +193,6 @@ forms:
       codelist: DM_TYPE
       standard: SNOMED/ICD-O-3/KCD
       concept_id: 10000000375
-      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
       target:
         kind: attr
         table: OBSERVATION
@@ -217,7 +212,6 @@ forms:
       value_kind: 수치
       tier: 필수
       concept_id: 10000000376
-      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
       target:
         kind: attr
         table: OBSERVATION
@@ -235,7 +229,6 @@ forms:
       value_kind: 수치
       tier: 필수
       concept_id: 10000000377
-      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
       target:
         kind: attr
         table: OBSERVATION
@@ -255,7 +248,6 @@ forms:
       codelist: YN
       standard: SNOMED/ICD-O-3/KCD
       concept_id: 10000000378
-      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
       target:
         kind: attr
         table: OBSERVATION
@@ -273,7 +265,6 @@ forms:
       value_kind: 날짜
       tier: 필수
       concept_id: 10000000379
-      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
       target:
         kind: anchor
         table: CONDITION_OCCURRENCE
@@ -288,7 +279,6 @@ forms:
       tier: 필수
       codelist: CL_DIAGNOSIS_STATUS
       concept_id: 10000000380
-      desc: 유병 기간·진단 나이는 진단일에서 파생 가능
       target:
         kind: attr
         table: OBSERVATION
@@ -310,7 +300,6 @@ forms:
       codelist: CL_LYMPHOMA_CATEGORY
       standard: SNOMED/ICD-O-3/KCD
       concept_id: 10000000381
-      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
       target:
         kind: attr
         table: OBSERVATION
@@ -332,7 +321,6 @@ forms:
       codelist: CL_CELL_LINEAGE
       standard: SNOMED/ICD-O-3/KCD
       concept_id: 10000000382
-      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
       target:
         kind: attr
         table: OBSERVATION
@@ -354,7 +342,6 @@ forms:
       codelist: CL_HISTOLOGIC_SUBTYPE
       standard: SNOMED/ICD-O-3/KCD
       concept_id: 10000000383
-      desc: 코호트 정의 진단은 CONDITION FK, 아형은 코드표
       target:
         kind: attr
         table: OBSERVATION
@@ -376,7 +363,6 @@ forms:
       codelist: LAST_STATUS
       standard: SNOMED
       concept_id: 10000000384
-      desc: 최종 추적일·질환 상태·생존 상태
       target:
         kind: attr
         table: OBSERVATION
@@ -397,7 +383,6 @@ forms:
       tier: 필수
       standard: SNOMED
       concept_id: 10000000385
-      desc: 최종 추적일·질환 상태·생존 상태
       target:
         kind: anchor
         table: COHORT
@@ -415,7 +400,6 @@ forms:
       codelist: LAST_STATUS
       standard: SNOMED
       concept_id: 10000000386
-      desc: 최종 추적일·질환 상태·생존 상태
       target:
         kind: attr
         table: OBSERVATION
@@ -503,7 +487,6 @@ forms:
       scale: SNOMED:897275008 American Joint Committee on Cancer, Cancer Staging Manual, 8th edition neoplasm staging system
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000387
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -525,7 +508,6 @@ forms:
       tier: 필수
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000388
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: episode
         table: EPISODE
@@ -543,7 +525,6 @@ forms:
       codelist: CL_PRIMARY_SITE
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000389
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -563,7 +544,6 @@ forms:
       pattern: ^(y?c)?T(is|0|X|[1-4][a-c]?)N([0-3][a-c]?|X)M(0|1[a-c]?|X)$
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000390
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -589,7 +569,6 @@ forms:
       codelist: CL_CLINICAL_TUMOR_FEATURE
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000391
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -611,7 +590,6 @@ forms:
       pattern: ^(y?p)?T(is|0|X|[1-4][a-c]?)N([0-3][a-c]?|X)M(0|1[a-c]?|X)$
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000392
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -637,7 +615,6 @@ forms:
       codelist: YN
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000393
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -657,7 +634,6 @@ forms:
       tier: 필수
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000394
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: OBSERVATION
@@ -683,7 +659,6 @@ forms:
       codelist: CL_DISTANT_METASTASIS_SITE
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000395
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -708,7 +683,6 @@ forms:
       tier: 필수
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000396
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -729,7 +703,6 @@ forms:
       codelist: CL_PRIMARY_SIDEDNESS
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000397
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -769,7 +742,6 @@ forms:
       tier: 필수
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000399
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -789,7 +761,6 @@ forms:
       required: true
       event_date: true
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: skip
         note: 키·기준 필드
@@ -805,7 +776,6 @@ forms:
       codelist: STAGE_SYSTEM
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000400
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -827,7 +797,6 @@ forms:
       codelist: STAGE_LUGANO
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000401
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -849,7 +818,6 @@ forms:
       codelist: STAGE_MODIFIER
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000402
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -871,7 +839,6 @@ forms:
       codelist: CL_STAGING_METHOD
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000403
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -891,7 +858,6 @@ forms:
       codelist: CL_PRIMARY_INVOLVED_SITE
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000404
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -912,7 +878,6 @@ forms:
       tier: 필수
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000405
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -932,7 +897,6 @@ forms:
       codelist: YN
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000406
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -953,7 +917,6 @@ forms:
       tier: 필수
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000407
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -975,7 +938,6 @@ forms:
       codelist: CL_EXTRANODAL_SITES
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000408
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -997,7 +959,6 @@ forms:
       codelist: YN
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000409
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -1019,7 +980,6 @@ forms:
       codelist: YN
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000410
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -1062,7 +1022,6 @@ forms:
       codelist: YN
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000412
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -1084,7 +1043,6 @@ forms:
       codelist: YN
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000413
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -1106,7 +1064,6 @@ forms:
       unit: cm
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000414
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -1128,7 +1085,6 @@ forms:
       unit: cm
       standard: SNOMED AJCC qualifier · OMOP Cancer Modifier
       concept_id: 10000000415
-      desc: 체계·판·임상/병리 구분 필드 동반
       target:
         kind: attr
         table: MEASUREMENT
@@ -1274,7 +1230,6 @@ forms:
       codelist: CL_BIOPSY_METHOD
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000416
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1297,7 +1252,6 @@ forms:
       codelist: CL_BIOPSY_SITE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000417
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1321,7 +1275,6 @@ forms:
       codelist: CL_BIOPSY_SITE_DETAIL
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000418
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1342,7 +1295,6 @@ forms:
       codelist: CL_SURGICAL_SPECIMEN_SITE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000419
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1367,7 +1319,6 @@ forms:
       vocabulary: SNOMED (일부) · 자체 어휘
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000420
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1388,7 +1339,6 @@ forms:
       codelist: CL_BIOPSY_DIFFERENTIATION
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000421
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1409,7 +1359,6 @@ forms:
       vocabulary: SNOMED (일부) · 자체 어휘
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000422
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1432,7 +1381,6 @@ forms:
       vocabulary: SNOMED (일부) · 자체 어휘
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000423
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1449,7 +1397,6 @@ forms:
       codelist: CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000424
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1464,7 +1411,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000425
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1479,7 +1425,6 @@ forms:
       codelist: CL_VPI_GRADE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000426
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1494,7 +1439,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000427
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1571,7 +1515,6 @@ forms:
       codelist: CL_BIOPSY_LATERALITY
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000432
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1586,7 +1529,6 @@ forms:
       codelist: CL_SURGICAL_SPECIMEN_LATERALITY
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000433
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1603,7 +1545,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000434
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1620,7 +1561,6 @@ forms:
       codelist: CL_SURGICAL_HISTOLOGIC_GRADE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000435
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1637,7 +1577,6 @@ forms:
       codelist: CL_DCIS_NUCLEAR_GRADE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000436
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1652,7 +1591,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000437
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1669,7 +1607,6 @@ forms:
       unit: '%'
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000438
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1684,7 +1621,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000439
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1699,7 +1635,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000440
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1716,7 +1651,6 @@ forms:
       codelist: CL_RESECTION_MARGIN_STATUS
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000441
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1733,7 +1667,6 @@ forms:
       codelist: CL_RESIDUAL_TUMOR_R_CLASS
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000442
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1750,7 +1683,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000443
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1766,7 +1698,6 @@ forms:
       tier: 보류
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000444
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1799,7 +1730,6 @@ forms:
       codelist: CL_GROSS_TYPE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000446
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1816,7 +1746,6 @@ forms:
       codelist: CL_PERITONEAL_CYTOLOGY_RESULT
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000447
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1830,7 +1759,6 @@ forms:
       tier: 보류
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000448
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1845,7 +1773,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000449
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1860,7 +1787,6 @@ forms:
       codelist: CL_TUMOR_BUDDING_GRADE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000450
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1875,7 +1801,6 @@ forms:
       codelist: CL_RESECTION_COMPLETENESS
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000451
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1892,7 +1817,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000452
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1909,7 +1833,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000453
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1926,7 +1849,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000454
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1943,7 +1865,6 @@ forms:
       codelist: CL_INVASION_DEPTH
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000455
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1958,7 +1879,6 @@ forms:
       codelist: CL_CRM_STATUS
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000456
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1975,7 +1895,6 @@ forms:
       codelist: CL_TME_QUALITY
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000457
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -1992,7 +1911,6 @@ forms:
       codelist: CL_BIOPSY_ADEQUACY
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000458
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -2014,7 +1932,6 @@ forms:
       vocabulary: SNOMED (일부) · 자체 어휘
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000459
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -2029,7 +1946,6 @@ forms:
       codelist: NAS_STEATOSIS
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000460
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -2044,7 +1960,6 @@ forms:
       codelist: CL_LOBULAR_INFLAMMATION_GRADE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000461
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -2059,7 +1974,6 @@ forms:
       codelist: CL_BALLOONING_GRADE
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000462
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -2087,7 +2001,6 @@ forms:
       tier: 필수
       standard: SNOMED (일부) · 자체 어휘
       concept_id: 10000000464
-      desc: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       target:
         kind: column
         table: PATHOLOGY_REPORT
@@ -2164,7 +2077,6 @@ forms:
       tier: 권고
       standard: SNOMED (tumor size)
       concept_id: 10000000465
-      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
       target:
         kind: column
         table: PATHOLOGY_TUMOR
@@ -2184,7 +2096,6 @@ forms:
       unit: cm
       standard: SNOMED (tumor size)
       concept_id: 10000000466
-      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
       target:
         kind: column
         table: PATHOLOGY_TUMOR
@@ -2204,7 +2115,6 @@ forms:
       unit: cm
       standard: SNOMED (tumor size)
       concept_id: 10000000467
-      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
       target:
         kind: column
         table: PATHOLOGY_TUMOR
@@ -2224,7 +2134,6 @@ forms:
       unit: cm
       standard: SNOMED (tumor size)
       concept_id: 10000000468
-      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
       target:
         kind: column
         table: PATHOLOGY_TUMOR
@@ -2245,7 +2154,6 @@ forms:
       unit: cm
       standard: SNOMED (tumor size)
       concept_id: 10000000469
-      desc: 가로·세로·높이 → 최장경 1개 + 선택 3축
       target:
         kind: column
         table: PATHOLOGY_TUMOR
@@ -2368,7 +2276,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000470
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2389,7 +2296,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000471
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2410,7 +2316,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000472
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2430,7 +2335,6 @@ forms:
       vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000473
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2448,7 +2352,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000474
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2464,7 +2367,6 @@ forms:
       tier: 필수
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000475
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2480,7 +2382,6 @@ forms:
       tier: 필수
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000476
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2496,7 +2397,6 @@ forms:
       tier: 권고
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000477
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2512,7 +2412,6 @@ forms:
       tier: 권고
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000478
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2529,7 +2428,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000479
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2546,7 +2444,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000480
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2563,7 +2460,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000481
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2580,7 +2476,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000482
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2597,7 +2492,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000483
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2614,7 +2508,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000484
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2633,7 +2526,6 @@ forms:
       vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000485
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2649,7 +2541,6 @@ forms:
       tier: 필수
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000486
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2666,7 +2557,6 @@ forms:
       codelist: YN
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000487
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2683,7 +2573,6 @@ forms:
       codelist: YN
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000488
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2699,7 +2588,6 @@ forms:
       tier: 보류
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000489
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2713,7 +2601,6 @@ forms:
       tier: 필수
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000490
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2728,7 +2615,6 @@ forms:
       codelist: RISK_GROUP
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000491
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2743,7 +2629,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000492
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2758,7 +2643,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000493
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2773,7 +2657,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000494
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2788,7 +2671,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000495
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2803,7 +2685,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000496
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2820,7 +2701,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000497
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2837,7 +2717,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000498
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2854,7 +2733,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000499
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2869,7 +2747,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000500
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2884,7 +2761,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000501
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2899,7 +2775,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000502
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2916,7 +2791,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000503
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2931,7 +2805,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000504
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2964,7 +2837,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000506
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2981,7 +2853,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000507
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -2998,7 +2869,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000508
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3015,7 +2885,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000509
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3032,7 +2901,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000510
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3049,7 +2917,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000511
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3066,7 +2933,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000512
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3083,7 +2949,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000513
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3100,7 +2965,6 @@ forms:
       unit: '%'
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000514
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3117,7 +2981,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000515
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3134,7 +2997,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000516
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3151,7 +3013,6 @@ forms:
       codelist: YN
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000517
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3171,7 +3032,6 @@ forms:
       vocabulary: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000518
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3219,7 +3079,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000521
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3236,7 +3095,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000522
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3253,7 +3111,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000523
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3270,7 +3127,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000524
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3287,7 +3143,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000525
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3304,7 +3159,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000526
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3321,7 +3175,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000527
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3338,7 +3191,6 @@ forms:
       codelist: YN
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000528
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3355,7 +3207,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000529
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3370,7 +3221,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000530
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -3387,7 +3237,6 @@ forms:
       codelist: BIOMARKER_RESULT
       standard: LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과)
       concept_id: 10000000531
-      desc: long 형. 마커별 컬럼 금지
       target:
         kind: column
         table: BIOMARKER
@@ -5020,7 +4869,6 @@ forms:
       codelist: YN
       standard: MedDRA + CTCAE
       concept_id: 10000000583
-      desc: 수술 합병증도 이상사례 표로
       target:
         kind: attr
         table: OBSERVATION
@@ -5042,7 +4890,6 @@ forms:
       codelist: YN
       standard: MedDRA + CTCAE
       concept_id: 10000000584
-      desc: 수술 합병증도 이상사례 표로
       target:
         kind: attr
         table: OBSERVATION
@@ -5064,7 +4911,6 @@ forms:
       codelist: CL_COMPLICATION_TREATMENT
       standard: MedDRA + CTCAE
       concept_id: 10000000585
-      desc: 수술 합병증도 이상사례 표로
       target:
         kind: attr
         table: OBSERVATION
@@ -5432,7 +5278,6 @@ forms:
       codelist: YN
       standard: SNOMED (family member)
       concept_id: 10000000596
-      desc: 여부·관계·암종 3항목을 행 하나로 통합
       target:
         kind: skip
         note: 키·기준 필드
@@ -5454,7 +5299,6 @@ forms:
       codelist: FAMILY_RELATION
       standard: SNOMED (family member)
       concept_id: 10000000597
-      desc: 여부·관계·암종 3항목을 행 하나로 통합
       target:
         kind: anchor
         table: OBSERVATION
@@ -5475,7 +5319,6 @@ forms:
       codelist: YN
       standard: SNOMED (family member)
       concept_id: 10000000598
-      desc: 여부·관계·암종 3항목을 행 하나로 통합
       target:
         kind: skip
         note: 키·기준 필드
@@ -5497,7 +5340,6 @@ forms:
       vocabulary: SNOMED (family member)
       standard: SNOMED (family member)
       concept_id: 10000000599
-      desc: 여부·관계·암종 3항목을 행 하나로 통합
       target:
         kind: anchor
         table: OBSERVATION
@@ -5519,7 +5361,6 @@ forms:
       codelist: YN
       standard: SNOMED (family member)
       concept_id: 10000000600
-      desc: 여부·관계·암종 3항목을 행 하나로 통합
       target:
         kind: skip
         note: 키·기준 필드
@@ -5533,7 +5374,6 @@ forms:
       codelist: YN
       standard: SNOMED (family member)
       concept_id: 10000000601
-      desc: 여부·관계·암종 3항목을 행 하나로 통합
       target:
         kind: skip
         note: 키·기준 필드
@@ -5653,7 +5493,6 @@ forms:
       scale: SNOMED:1348266008 Breast Imaging and Reporting and Data System
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000604
-      desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
       target:
         kind: column
         table: LUNG_EXAM
@@ -5668,7 +5507,6 @@ forms:
       unit: cm
       standard: SNOMED (lesion size)
       concept_id: 10000000605
-      desc: 영상 측정 크기는 병리 크기와 구분
       target:
         kind: column
         table: LUNG_EXAM
@@ -5685,7 +5523,6 @@ forms:
       unit: '1'
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000606
-      desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
       target:
         kind: column
         table: LUNG_EXAM
@@ -5700,7 +5537,6 @@ forms:
       codelist: CL_NODULE_RADIOLOGIC_TYPE
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000607
-      desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
       target:
         kind: column
         table: LUNG_EXAM
@@ -5781,7 +5617,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000608
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5798,7 +5633,6 @@ forms:
       codelist: CL_MARITAL_STATUS_DETAIL
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000609
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5812,7 +5646,6 @@ forms:
       tier: 필수
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000610
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5829,7 +5662,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000611
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5846,7 +5678,6 @@ forms:
       codelist: CL_FERTILITY_PRESERVATION_TYPE
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000612
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5862,7 +5693,6 @@ forms:
       tier: 보류
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000613
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5879,7 +5709,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000614
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5895,7 +5724,6 @@ forms:
       tier: 필수
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000615
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5912,7 +5740,6 @@ forms:
       codelist: CL_CONCEPTION_METHOD
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000616
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5929,7 +5756,6 @@ forms:
       codelist: CL_PREGNANCY_OUTCOME
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000617
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5945,7 +5771,6 @@ forms:
       tier: 필수
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000618
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5962,7 +5787,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000619
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5979,7 +5803,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000620
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -5995,7 +5818,6 @@ forms:
       tier: 필수
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000621
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6012,7 +5834,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000622
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6029,7 +5850,6 @@ forms:
       unit: mo
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000623
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6046,7 +5866,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000624
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6063,7 +5882,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000625
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6080,7 +5898,6 @@ forms:
       codelist: CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000626
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6097,7 +5914,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000627
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6113,7 +5929,6 @@ forms:
       tier: 권고
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000628
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6130,7 +5945,6 @@ forms:
       codelist: CL_MENSES_REGULARITY_AFTER_CHEMO
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000629
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6147,7 +5961,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000630
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6163,7 +5976,6 @@ forms:
       tier: 보류
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000631
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6180,7 +5992,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000632
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6197,7 +6008,6 @@ forms:
       codelist: YN
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000633
-      desc: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
       target:
         kind: column
         table: BREAST_BASELINE
@@ -6281,7 +6091,6 @@ forms:
       scale: SNOMED:1348266008 Breast Imaging and Reporting and Data System
       standard: SNOMED/LOINC (일부)
       concept_id: 10000000634
-      desc: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
       target:
         kind: column
         table: BREAST_EXAM
@@ -6379,7 +6188,6 @@ forms:
       unit: cm
       standard: SNOMED (일부)
       concept_id: 10000000636
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6396,7 +6204,6 @@ forms:
       unit: mm
       standard: SNOMED (일부)
       concept_id: 10000000637
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6413,7 +6220,6 @@ forms:
       codelist: CL_MRI_T4B_INVADED_ORGAN
       standard: SNOMED (일부)
       concept_id: 10000000638
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6430,7 +6236,6 @@ forms:
       codelist: CL_MRI_ANTERIOR_PERITONEAL_RELATION
       standard: SNOMED (일부)
       concept_id: 10000000639
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6447,7 +6252,6 @@ forms:
       unit: cm
       standard: SNOMED (일부)
       concept_id: 10000000640
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6464,7 +6268,6 @@ forms:
       unit: cm
       standard: SNOMED (일부)
       concept_id: 10000000641
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6481,7 +6284,6 @@ forms:
       codelist: CL_MRI_CIRCUMFERENTIAL_EXTENT
       standard: SNOMED (일부)
       concept_id: 10000000642
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6498,7 +6300,6 @@ forms:
       unit: mm
       standard: SNOMED (일부)
       concept_id: 10000000643
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6515,7 +6316,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부)
       concept_id: 10000000644
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6532,7 +6332,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부)
       concept_id: 10000000645
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6549,7 +6348,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부)
       concept_id: 10000000646
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6566,7 +6364,6 @@ forms:
       codelist: CL_MRI_CIRCUMFERENTIAL_LOCATION
       standard: SNOMED (일부)
       concept_id: 10000000647
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6583,7 +6380,6 @@ forms:
       codelist: CL_MRI_TUMOR_REGRESSION_GRADE
       standard: SNOMED (일부)
       concept_id: 10000000648
-      desc: 직장 MRI 구조화 판독
       target:
         kind: column
         table: COLORECTAL_EXAM
@@ -6666,7 +6462,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체
       concept_id: 10000000649
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6683,7 +6478,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체
       concept_id: 10000000650
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6700,7 +6494,6 @@ forms:
       codelist: CL_STOMA_REASON
       standard: SNOMED (일부) · 자체
       concept_id: 10000000651
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6717,7 +6510,6 @@ forms:
       codelist: CL_IMA_LIGATION_LEVEL
       standard: SNOMED (일부) · 자체
       concept_id: 10000000652
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6734,7 +6526,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체
       concept_id: 10000000653
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6751,7 +6542,6 @@ forms:
       codelist: CL_ANASTOMOSIS_METHOD
       standard: SNOMED (일부) · 자체
       concept_id: 10000000654
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6767,7 +6557,6 @@ forms:
       tier: 권고
       standard: SNOMED (일부) · 자체
       concept_id: 10000000655
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6784,7 +6573,6 @@ forms:
       unit: cm
       standard: SNOMED (일부) · 자체
       concept_id: 10000000656
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6800,7 +6588,6 @@ forms:
       tier: 보류
       standard: SNOMED (일부) · 자체
       concept_id: 10000000657
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6815,7 +6602,6 @@ forms:
       codelist: CL_WATCH_AND_WAIT_STATUS
       standard: SNOMED (일부) · 자체
       concept_id: 10000000658
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6830,7 +6616,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체
       concept_id: 10000000659
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6847,7 +6632,6 @@ forms:
       codelist: YN
       standard: SNOMED (일부) · 자체
       concept_id: 10000000660
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6863,7 +6647,6 @@ forms:
       tier: 필수
       standard: SNOMED (일부) · 자체
       concept_id: 10000000661
-      desc: 대장암 수술 세부
       target:
         kind: column
         table: COLORECTAL_SURGERY_DETAIL
@@ -6944,7 +6727,6 @@ forms:
       value_kind: 날짜
       tier: 필수
       concept_id: 10000000662
-      desc: 탄성도 행의 검사일
       target:
         kind: column
         table: MASLD_EXAM
@@ -6959,7 +6741,6 @@ forms:
       unit: '%'
       standard: LOINC (일부) · 자체
       concept_id: 10000000663
-      desc: 검사값이지만 방법(장비)과 함께 저장
       target:
         kind: column
         table: MASLD_EXAM
@@ -6974,7 +6755,6 @@ forms:
       unit: kPa
       standard: LOINC (일부) · 자체
       concept_id: 10000000664
-      desc: 검사값이지만 방법(장비)과 함께 저장
       target:
         kind: column
         table: MASLD_EXAM
@@ -6989,7 +6769,6 @@ forms:
       unit: dB/m
       standard: LOINC (일부) · 자체
       concept_id: 10000000665
-      desc: 검사값이지만 방법(장비)과 함께 저장
       target:
         kind: column
         table: MASLD_EXAM
@@ -7004,7 +6783,6 @@ forms:
       unit: kPa
       standard: LOINC (일부) · 자체
       concept_id: 10000000666
-      desc: 검사값이지만 방법(장비)과 함께 저장
       target:
         kind: column
         table: MASLD_EXAM
@@ -7019,7 +6797,6 @@ forms:
       unit: mm[Hg]
       standard: LOINC (일부) · 자체
       concept_id: 10000000667
-      desc: 검사값이지만 방법(장비)과 함께 저장
       target:
         kind: column
         table: MASLD_EXAM
@@ -7034,7 +6811,6 @@ forms:
       unit: kPa
       standard: LOINC (일부) · 자체
       concept_id: 10000000668
-      desc: 검사값이지만 방법(장비)과 함께 저장
       target:
         kind: column
         table: MASLD_EXAM
@@ -7115,7 +6891,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000669
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: MASLD_ASSESSMENT
@@ -7132,7 +6907,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000670
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: MASLD_ASSESSMENT
@@ -7149,7 +6923,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000671
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: MASLD_ASSESSMENT
@@ -7164,7 +6937,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000672
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: MASLD_ASSESSMENT
@@ -7181,7 +6953,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000673
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: MASLD_ASSESSMENT
@@ -7196,7 +6967,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000674
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: MASLD_ASSESSMENT
@@ -7214,7 +6984,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000675
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: MASLD_ASSESSMENT
@@ -7229,7 +6998,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000676
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: MASLD_ASSESSMENT
@@ -7342,7 +7110,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000679
-      desc: 발생일 동반
       target:
         kind: column
         table: MASLD_EVENT
@@ -7357,7 +7124,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000680
-      desc: 발생일 동반
       target:
         kind: column
         table: MASLD_EVENT
@@ -7372,7 +7138,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000681
-      desc: 발생일 동반
       target:
         kind: column
         table: MASLD_EVENT
@@ -7387,7 +7152,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000682
-      desc: 발생일 동반
       target:
         kind: column
         table: MASLD_EVENT
@@ -7402,7 +7166,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000683
-      desc: 발생일 동반
       target:
         kind: column
         table: MASLD_EVENT
@@ -7419,7 +7182,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000684
-      desc: 발생일 동반
       target:
         kind: column
         table: MASLD_EVENT
@@ -7434,7 +7196,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000685
-      desc: 발생일 동반
       target:
         kind: column
         table: MASLD_EVENT
@@ -7610,7 +7371,6 @@ forms:
       standard: SNOMED
       concept_id: 10000000688
       derived_score: true
-      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7624,7 +7384,6 @@ forms:
       tier: 필수
       standard: SNOMED
       concept_id: 10000000689
-      desc: 발생일·평가일 동반
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7639,7 +7398,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000690
-      desc: 발생일·평가일 동반
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7655,7 +7413,6 @@ forms:
       standard: SNOMED
       concept_id: 10000000691
       derived_score: true
-      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7671,7 +7428,6 @@ forms:
       standard: SNOMED
       concept_id: 10000000692
       derived_score: true
-      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7687,7 +7443,6 @@ forms:
       standard: SNOMED
       concept_id: 10000000693
       derived_score: true
-      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7703,7 +7458,6 @@ forms:
       standard: SNOMED
       concept_id: 10000000694
       derived_score: true
-      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7719,7 +7473,6 @@ forms:
       standard: SNOMED
       concept_id: 10000000695
       derived_score: true
-      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7735,7 +7488,6 @@ forms:
       standard: SNOMED
       concept_id: 10000000696
       derived_score: true
-      desc: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7750,7 +7502,6 @@ forms:
       codelist: WAGNER
       standard: SNOMED
       concept_id: 10000000697
-      desc: 발생일·평가일 동반
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7765,7 +7516,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000698
-      desc: 발생일·평가일 동반
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7780,7 +7530,6 @@ forms:
       codelist: YN
       standard: SNOMED
       concept_id: 10000000699
-      desc: 발생일·평가일 동반
       target:
         kind: column
         table: DIABETES_EVENT
@@ -7923,7 +7672,6 @@ forms:
       standard: 자체
       concept_id: 10000000704
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -7940,7 +7688,6 @@ forms:
       standard: 자체
       concept_id: 10000000705
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -7958,7 +7705,6 @@ forms:
       standard: 자체
       concept_id: 10000000706
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -7975,7 +7721,6 @@ forms:
       standard: 자체
       concept_id: 10000000707
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -7992,7 +7737,6 @@ forms:
       standard: 자체
       concept_id: 10000000708
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -8009,7 +7753,6 @@ forms:
       standard: 자체
       concept_id: 10000000709
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -8026,7 +7769,6 @@ forms:
       standard: 자체
       concept_id: 10000000710
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -8043,7 +7785,6 @@ forms:
       standard: 자체
       concept_id: 10000000711
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -8061,7 +7802,6 @@ forms:
       standard: 자체
       concept_id: 10000000712
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -8078,7 +7818,6 @@ forms:
       standard: 자체
       concept_id: 10000000713
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -8093,7 +7832,6 @@ forms:
       standard: 자체
       concept_id: 10000000714
       derived_score: true
-      desc: 구성요소 저장 + 점수는 규칙
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT
@@ -8108,7 +7846,6 @@ forms:
       standard: LOINC (일부)
       concept_id: 10000000715
       derived_score: true
-      desc: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
       target:
         kind: column
         table: LYMPHOMA_ASSESSMENT

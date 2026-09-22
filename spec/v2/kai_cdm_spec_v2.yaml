@@ -63,31 +63,44 @@ tables:
     - name: person_id
       type: bigint
       required: true
-      desc: 환자 고유키(가명)
+      desc: 환자 고유키(가명). 코호트 안에서 유일하며 모든 표가 이 값으로 환자를 가리킨다
+      kor: 환자 ID
+      note: 환자 고유키(가명)
     - name: gender_concept_id
       type: bigint
       required: true
-      desc: 성별 concept
+      desc: 성별. OMOP Gender concept(남 8507 · 여 8532)
+      kor: 성별 concept
+      note: 성별 concept
+      vocab_hint: OMOP Gender
     - name: year_of_birth
       type: integer
       required: true
-      desc: 출생 연도
+      desc: 출생 연도(YYYY). 나이 계산의 기준
+      kor: 출생 연도
+      note: 출생 연도
     - name: month_of_birth
       type: integer
       required: false
-      desc: ''
+      desc: 출생 월(1~12). 모르면 비움
+      kor: 출생 월
     - name: day_of_birth
       type: integer
       required: false
-      desc: ''
+      desc: 출생 일(1~31). 모르면 비움
+      kor: 출생 일
     - name: care_site_id
       type: bigint
       required: false
-      desc: 기관
+      desc: 환자가 속한 기관(병원) 식별자. 기관 코드는 중앙이 부여
+      kor: 기관 ID
+      note: 기관
     - name: gender_source_value
       type: varchar
       required: false
-      desc: 원천 성별값
+      desc: 병원 원천의 성별 표기(M/F 등)
+      kor: 성별 원천값
+      note: 원천 성별값
   OBSERVATION_PERIOD:
     name: OBSERVATION_PERIOD
     layer: OMOP
@@ -106,23 +119,34 @@ tables:
     - name: observation_period_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키
+      kor: 관찰기간 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: observation_period_start_date
       type: date
       required: true
-      desc: 관찰 시작(코호트 진입일 또는 첫 방문)
+      desc: 이 환자의 기록이 신뢰되는 기간의 시작. 코호트 진입일 또는 첫 방문일. 코호트 인덱스 서식이 만든다
+      kor: 관찰 시작일
+      note: 관찰 시작(코호트 진입일 또는 첫 방문)
     - name: observation_period_end_date
       type: date
       required: true
-      desc: 관찰 종료(최종 추적일·사망일)
+      desc: 기록이 신뢰되는 기간의 끝. 최종 추적일 또는 사망일. 이 뒤의 사건은 '관찰기간 밖'으로 보고된다
+      kor: 관찰 종료일
+      note: 관찰 종료(최종 추적일·사망일)
     - name: period_type_concept_id
       type: bigint
       required: true
-      desc: 출처 type
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      note: 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
   DEATH:
     name: DEATH
     layer: OMOP
@@ -141,23 +165,36 @@ tables:
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 환자당 한 행
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: death_date
       type: date
       required: true
-      desc: 사망일
+      desc: 사망 일자. 이 뒤의 임상 사건은 '사망 이후 사건'으로 보고된다
+      kor: 사망일
+      note: 사망일
     - name: death_type_concept_id
       type: bigint
       required: true
-      desc: 출처 type
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      note: 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: cause_concept_id
       type: bigint
       required: false
-      desc: 사망 원인 concept
+      desc: 사망 원인 진단 concept(K-AI 어휘, KCD/SNOMED 매핑). 모르면 비움
+      kor: 사망 원인 concept
+      note: 사망 원인 concept
+      vocab_hint: K-AI 진단 concept (KCD·SNOMED)
     - name: cause_source_value
       type: varchar
       required: false
-      desc: 원천 사망 원인(KCD 등)
+      desc: 병원 원천의 사망 원인 코드(KCD 등)·표기
+      kor: 사망 원인 원천값
+      note: 원천 사망 원인(KCD 등)
   VISIT_OCCURRENCE:
     name: VISIT_OCCURRENCE
     layer: OMOP
@@ -176,36 +213,52 @@ tables:
     - name: visit_occurrence_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키
+      kor: 방문 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: visit_concept_id
       type: bigint
       required: true
-      desc: 입원/외래/응급
+      desc: 입원·외래·응급 중 하나. K-AI Visit concept
+      kor: 방문 종류 concept
+      note: 입원/외래/응급
+      vocab_hint: K-AI Visit (VISIT_INPATIENT · VISIT_OUTPATIENT · VISIT_ER)
     - name: visit_start_date
       type: date
       required: true
-      desc: 입원일·방문일
+      desc: 입원일 또는 외래·응급 방문일
+      kor: 방문 시작일
+      note: 입원일·방문일
     - name: visit_end_date
       type: date
       required: true
-      desc: 퇴원일·방문일
+      desc: 퇴원일. 외래·응급은 방문일과 같다. 시작일보다 앞설 수 없다
+      kor: 방문 종료일
+      note: 퇴원일·방문일
     - name: visit_type_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: discharge_to_concept_id
       type: bigint
       required: false
-      desc: 퇴원 시 상태
+      desc: 퇴원 시 상태(호전·미호전·사망·전원·자의 퇴원·기타). 값 집합 DISCHARGE_STATUS
       concept_set: DISCHARGE_STATUS
+      kor: 퇴원 시 상태 concept
+      note: 퇴원 시 상태
     - name: visit_source_value
       type: varchar
       required: false
-      desc: ''
+      desc: 병원 원천의 방문 구분 표기(IP/OP/ER 등)
+      kor: 방문 원천값
   CONDITION_OCCURRENCE:
     name: CONDITION_OCCURRENCE
     layer: OMOP
@@ -224,39 +277,59 @@ tables:
     - name: condition_occurrence_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키
+      kor: 진단 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: condition_concept_id
       type: bigint
       required: true
-      desc: 진단 concept(SNOMED/KCD 매핑)
+      desc: 진단 개념. K-AI 어휘(KCD·SNOMED 매핑). 코호트 정의 진단은 코호트 인덱스 서식이, 이상사례는 이상사례 서식(MedDRA)이 만든다
+      kor: 진단 concept
+      note: 진단 concept(SNOMED/KCD 매핑)
+      vocab_hint: K-AI 진단 concept (KCD·SNOMED·MedDRA)
     - name: condition_start_date
       type: date
       required: true
-      desc: ''
+      desc: 진단(또는 사건 발생)이 기록된 날
+      kor: 진단일
     - name: condition_end_date
       type: date
       required: false
-      desc: ''
+      desc: 해소된 진단의 종료일. 진행 중이면 비움
+      kor: 진단 종료일
     - name: condition_type_concept_id
       type: bigint
       required: true
-      desc: EHR/Registry
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      note: EHR/Registry
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: condition_status_concept_id
       type: bigint
       required: false
-      desc: 주진단·과거력·합병증 등
+      desc: 주진단·과거력·합병증·이상사례 같은 진단의 성격. 이상사례 행은 AE_STATUS
+      kor: 진단 상태 concept
+      note: 주진단·과거력·합병증 등
+      vocab_hint: K-AI Condition Status
     - name: visit_occurrence_id
       type: bigint
       required: false
-      desc: ''
+      desc: 이 사건이 일어난 방문. VISIT_OCCURRENCE.visit_occurrence_id 참조. 방문에 매달 수 없으면 비움
+      kor: 방문 ID
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      key: fk
     - name: condition_source_value
       type: varchar
       required: false
-      desc: 원천 코드(KCD·MedDRA)
+      desc: 병원 원천의 진단 코드(KCD)·MedDRA 용어·표기
+      kor: 진단 원천값
+      note: 원천 코드(KCD·MedDRA)
   PROCEDURE_OCCURRENCE:
     name: PROCEDURE_OCCURRENCE
     layer: OMOP
@@ -275,43 +348,65 @@ tables:
     - name: procedure_occurrence_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키
+      kor: 시술 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: procedure_concept_id
       type: bigint
       required: true
-      desc: 시술 concept(EDI/SNOMED 매핑)
+      desc: 시술·검사 시행 개념. K-AI 어휘(EDI 행위·SNOMED 매핑). 수술·방사선 서식이 행을 보탠다
+      kor: 시술 concept
+      note: 시술 concept(EDI/SNOMED 매핑)
+      vocab_hint: K-AI 시술 concept (EDI 행위·SNOMED)
     - name: procedure_date
       type: date
       required: true
-      desc: ''
+      desc: 시술·검사를 시행한 날. 방사선 코스는 시작일
+      kor: 시술일
     - name: procedure_end_date
       type: date
       required: false
-      desc: 방사선 코스 종료일 등
+      desc: 여러 날에 걸친 시술의 종료일(방사선 코스 등). 하루짜리는 비움
+      kor: 시술 종료일
+      note: 방사선 코스 종료일 등
     - name: procedure_type_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: modifier_concept_id
       type: bigint
       required: false
-      desc: 접근법(개복/복강경/로봇) 등
+      desc: 접근법(개복·복강경·로봇 등) 같은 시술 수식자. 값 집합 SURG_APPROACH
+      kor: 시술 수식자 concept
+      note: 접근법(개복/복강경/로봇) 등
+      vocab_hint: SURG_APPROACH
     - name: quantity
       type: integer
       required: false
-      desc: 횟수(방사선 분할 등)
+      desc: 시행 횟수. 방사선은 분할 횟수
+      kor: 횟수
+      note: 횟수(방사선 분할 등)
     - name: visit_occurrence_id
       type: bigint
       required: false
-      desc: ''
+      desc: 이 사건이 일어난 방문. VISIT_OCCURRENCE.visit_occurrence_id 참조. 방문에 매달 수 없으면 비움
+      kor: 방문 ID
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      key: fk
     - name: procedure_source_value
       type: varchar
       required: false
-      desc: 원천 코드
+      desc: 병원 원천의 시술 코드(EDI·원내)·명칭
+      kor: 시술 원천값
+      note: 원천 코드
   DRUG_EXPOSURE:
     name: DRUG_EXPOSURE
     layer: OMOP
@@ -330,51 +425,71 @@ tables:
     - name: drug_exposure_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키
+      kor: 약물 노출 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: drug_concept_id
       type: bigint
       required: true
-      desc: 약제 concept(국내 약물코드 매핑)
+      desc: 약제(성분) 개념. K-AI 어휘(국내 약물코드·ATC 매핑). 항암제는 항암요법 에피소드에 EPISODE_EVENT 로 매달린다
+      kor: 약물 concept
+      note: 약제 concept(국내 약물코드 매핑)
+      vocab_hint: K-AI 약물 concept (EDI 약제·ATC)
     - name: drug_exposure_start_date
       type: date
       required: true
-      desc: ''
+      desc: 처방·투여 시작일
+      kor: 투약 시작일
     - name: drug_exposure_end_date
       type: date
       required: false
-      desc: ''
+      desc: 투약 종료(예정)일. 시작일 + 처방일수 - 1 과 맞아야 한다. 진행 중 처방은 미래여도 된다
+      kor: 투약 종료일
     - name: drug_type_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: quantity
       type: float
       required: false
-      desc: ''
+      desc: 처방된 1회 투여 용량(수치). 단위는 dose_unit_source_value
+      kor: 1회 투여 용량
     - name: days_supply
       type: integer
       required: false
-      desc: ''
+      desc: 처방 일수. 시작일·종료일과 맞아야 한다
+      kor: 처방일수
     - name: dose_unit_source_value
       type: varchar
       required: false
-      desc: ''
+      desc: 1회 투여 용량의 단위 표기(mg, IU 등)
+      kor: 용량 단위 원천값
     - name: route_concept_id
       type: bigint
       required: false
-      desc: ''
+      desc: 투여 경로(경구·정맥·피하 등). OMOP Route concept
+      kor: 투여 경로 concept
+      vocab_hint: OMOP Route
     - name: visit_occurrence_id
       type: bigint
       required: false
-      desc: ''
+      desc: 이 사건이 일어난 방문. VISIT_OCCURRENCE.visit_occurrence_id 참조. 방문에 매달 수 없으면 비움
+      kor: 방문 ID
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      key: fk
     - name: drug_source_value
       type: varchar
       required: false
-      desc: ''
+      desc: 병원 원천의 약제 코드(EDI·원내)·명칭
+      kor: 약물 원천값
   MEASUREMENT:
     name: MEASUREMENT
     layer: OMOP
@@ -393,67 +508,101 @@ tables:
     - name: measurement_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키
+      kor: 검사 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: measurement_concept_id
       type: bigint
       required: true
-      desc: 검사·수식자 concept(LOINC/Cancer Modifier/K-AI)
+      desc: 무엇을 쟀는가. 검사(LOINC)·병기·반응·등급 같은 수식자(K-AI Attribute) concept. 병기·반응평가·방사선 서식이 행을 보탠다
+      kor: 검사 항목 concept
+      note: 검사·수식자 concept(LOINC/Cancer Modifier/K-AI)
+      vocab_hint: LOINC · K-AI Attribute (서식 필드 개념)
     - name: measurement_date
       type: date
       required: true
-      desc: ''
+      desc: 검사·평가한 날
+      kor: 검사일
     - name: measurement_type_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: operator_concept_id
       type: bigint
       required: false
-      desc: ''
+      desc: 값 앞의 부등호(<, >, ≤, ≥). 대부분 비움
+      kor: 비교 연산자 concept
+      vocab_hint: OMOP Meas Value Operator
     - name: value_as_number
       type: float
       required: false
-      desc: 수치
+      desc: 검사 결과가 수치일 때의 값. 단위는 unit_concept_id
+      kor: 수치 결과
+      note: 수치
     - name: value_as_concept_id
       type: bigint
       required: false
-      desc: 범주값 concept(병기군·등급·반응 등)
+      desc: 결과가 범주일 때의 값 concept(병기군·등급·반응·양성/음성 등). 값 집합은 measurement_concept_id 가 정한다
+      kor: 범주 결과 concept
+      note: 범주값 concept(병기군·등급·반응 등)
+      vocab_hint: 값 집합의 Value concept
     - name: unit_concept_id
       type: bigint
       required: false
-      desc: UCUM
+      desc: 값의 단위. UCUM 단위 concept
+      kor: 단위 concept
+      note: UCUM
+      vocab_hint: UCUM
     - name: range_low
       type: float
       required: false
-      desc: ''
+      desc: 검사 참고범위의 하한. 병원 기준
+      kor: 참고범위 하한
     - name: range_high
       type: float
       required: false
-      desc: ''
+      desc: 검사 참고범위의 상한. 병원 기준
+      kor: 참고범위 상한
     - name: visit_occurrence_id
       type: bigint
       required: false
-      desc: ''
+      desc: 이 사건이 일어난 방문. VISIT_OCCURRENCE.visit_occurrence_id 참조. 방문에 매달 수 없으면 비움
+      kor: 방문 ID
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      key: fk
     - name: measurement_source_value
       type: varchar
       required: false
-      desc: 원천 검사명
+      desc: 병원 원천의 검사 코드·명칭
+      kor: 검사 원천값
+      note: 원천 검사명
     - name: value_source_value
       type: varchar
       required: false
-      desc: 원천 값(라벨·코드)
+      desc: 결과의 원천 표기(라벨·코드·문자열). 병기 'cT2aN2M1b' 처럼 원천 표기만 남는 항목도 있다
+      kor: 결과 원천값
+      note: 원천 값(라벨·코드)
     - name: measurement_event_id
       type: bigint
       required: false
-      desc: 수식 대상 레코드(진단·에피소드·시술)
+      desc: 이 값이 무엇을 수식하는지(진단·에피소드·시술 레코드의 id). 어느 표인지는 meas_event_field_concept_id
+      kor: 수식 대상 레코드 ID
+      note: 수식 대상 레코드(진단·에피소드·시술)
     - name: meas_event_field_concept_id
       type: bigint
       required: false
-      desc: 수식 대상 테이블·컬럼 concept
+      desc: measurement_event_id 가 가리키는 표·컬럼. K-AI Field concept(F_CONDITION, F_EPISODE, F_PROCEDURE …)
+      kor: 수식 대상 표 concept
+      note: 수식 대상 테이블·컬럼 concept
+      vocab_hint: K-AI Field (F_*)
   OBSERVATION:
     name: OBSERVATION
     layer: OMOP
@@ -472,63 +621,91 @@ tables:
     - name: observation_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키
+      kor: 관찰 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: observation_concept_id
       type: bigint
       required: true
-      desc: 관찰 항목 concept
+      desc: 무엇을 관찰했는가. 가족력·수술 목적·항암 의도 같은 서식 필드 개념(K-AI Attribute)이나 흡연·음주 같은 파생 변수 개념
+      kor: 관찰 항목 concept
+      note: 관찰 항목 concept
+      vocab_hint: K-AI Attribute (서식 필드 개념)
     - name: observation_date
       type: date
       required: true
-      desc: ''
+      desc: 관찰·기록한 날. 서식의 기준일
+      kor: 관찰일
     - name: observation_type_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: value_as_number
       type: float
       required: false
-      desc: ''
+      desc: 관찰 값이 수치일 때(가족 진단 나이, 흡연량 등)
+      kor: 수치 값
     - name: value_as_string
       type: varchar
       required: false
-      desc: ''
+      desc: 관찰 값이 자유 문자열일 때(레지멘명 원천 표기 등)
+      kor: 문자 값
     - name: value_as_concept_id
       type: bigint
       required: false
-      desc: ''
+      desc: 관찰 값이 범주일 때의 값 concept(가족 질환·수술 목적·예/아니오 등)
+      kor: 범주 값 concept
+      vocab_hint: 값 집합의 Value concept
     - name: qualifier_concept_id
       type: bigint
       required: false
-      desc: 가족 관계 등 한정자
+      desc: 값을 한정하는 개념. 가족력에서는 가족 관계(값 집합 FAMILY_RELATION)
+      kor: 한정자 concept
+      note: 가족 관계 등 한정자
+      vocab_hint: FAMILY_RELATION 등
     - name: unit_concept_id
       type: bigint
       required: false
-      desc: ''
+      desc: 값의 단위. UCUM 단위 concept
+      kor: 단위 concept
+      vocab_hint: UCUM
     - name: visit_occurrence_id
       type: bigint
       required: false
-      desc: ''
+      desc: 이 사건이 일어난 방문. VISIT_OCCURRENCE.visit_occurrence_id 참조. 방문에 매달 수 없으면 비움
+      kor: 방문 ID
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      key: fk
     - name: observation_source_value
       type: varchar
       required: false
-      desc: ''
+      desc: 병원 원천의 항목 표기
+      kor: 관찰 원천값
     - name: value_source_value
       type: varchar
       required: false
-      desc: ''
+      desc: 값의 원천 표기(서식에서 고른 코드·라벨)
+      kor: 값 원천값
     - name: observation_event_id
       type: bigint
       required: false
-      desc: 관련 레코드
+      desc: 이 관찰이 속한 기준 레코드(에피소드·시술·진단)의 id. 어느 표인지는 obs_event_field_concept_id
+      kor: 관련 레코드 ID
+      note: 관련 레코드
     - name: obs_event_field_concept_id
       type: bigint
       required: false
-      desc: ''
+      desc: observation_event_id 가 가리키는 표·컬럼. K-AI Field concept(F_EPISODE, F_PROCEDURE …)
+      kor: 관련 표 concept
+      vocab_hint: K-AI Field (F_*)
   NOTE:
     name: NOTE
     layer: OMOP
@@ -547,51 +724,74 @@ tables:
     - name: note_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키
+      kor: 기록 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: note_date
       type: date
       required: true
-      desc: ''
+      desc: 기록·판독문이 작성된 날
+      kor: 기록일
     - name: note_type_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: note_class_concept_id
       type: bigint
       required: true
-      desc: 판독문·병리·경과기록
+      desc: 판독문·병리 보고서·경과기록 같은 기록의 종류
+      kor: 기록 종류 concept
+      note: 판독문·병리·경과기록
+      vocab_hint: OMOP Note class
     - name: note_title
       type: varchar
       required: false
-      desc: ''
+      desc: 기록의 제목. 없으면 비움
+      kor: 기록 제목
     - name: note_text
       type: text
       required: true
-      desc: ''
+      desc: 기록의 전문. 자유 문자열. 개인정보 마스킹은 병원 책임
+      kor: 기록 본문
     - name: encoding_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: 본문 인코딩. UTF-8(32678)
+      kor: 인코딩 concept
+      vocab_hint: OMOP Encoding
     - name: language_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: 본문 언어. 한국어(4175771)·영어(4180186)
+      kor: 언어 concept
+      vocab_hint: OMOP Language
     - name: visit_occurrence_id
       type: bigint
       required: false
-      desc: ''
+      desc: 이 사건이 일어난 방문. VISIT_OCCURRENCE.visit_occurrence_id 참조. 방문에 매달 수 없으면 비움
+      kor: 방문 ID
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+      key: fk
     - name: note_event_id
       type: bigint
       required: false
-      desc: 관련 레코드(검체·시술)
+      desc: 기록이 붙는 레코드(검체·시술)의 id. 어느 표인지는 note_event_field_concept_id
+      kor: 관련 레코드 ID
+      note: 관련 레코드(검체·시술)
     - name: note_event_field_concept_id
       type: bigint
       required: false
-      desc: ''
+      desc: note_event_id 가 가리키는 표·컬럼. K-AI Field concept
+      kor: 관련 표 concept
+      vocab_hint: K-AI Field (F_*)
   SPECIMEN:
     name: SPECIMEN
     layer: OMOP
@@ -610,51 +810,73 @@ tables:
     - name: specimen_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키. 병리 보고서·바이오마커 표가 이 값을 참조한다
+      kor: 검체 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: specimen_concept_id
       type: bigint
       required: true
-      desc: 검체 종류(생검·절제)
+      desc: 생검·절제 같은 검체의 종류. K-AI Specimen concept(SNOMED 매핑)
+      kor: 검체 종류 concept
+      note: 검체 종류(생검·절제)
+      vocab_hint: K-AI Specimen (SNOMED)
     - name: specimen_type_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: specimen_date
       type: date
       required: true
-      desc: 채취일
+      desc: 검체를 채취한 날. 병리 보고서의 검체 채취일과 같아야 한다
+      kor: 검체 채취일
+      note: 채취일
     - name: quantity
       type: float
       required: false
-      desc: ''
+      desc: 검체의 양(수치). 단위는 unit_concept_id. 대부분 비움
+      kor: 검체 양
     - name: unit_concept_id
       type: bigint
       required: false
-      desc: ''
+      desc: 값의 단위. UCUM 단위 concept
+      kor: 단위 concept
+      vocab_hint: UCUM
     - name: anatomic_site_concept_id
       type: bigint
       required: false
-      desc: 채취 부위
+      desc: 검체를 뗀 해부학적 부위(SNOMED body structure)
+      kor: 채취 부위 concept
+      note: 채취 부위
+      vocab_hint: SNOMED body structure
     - name: disease_status_concept_id
       type: bigint
       required: false
-      desc: ''
+      desc: 검체가 종양 조직인지 정상 조직인지 등. 대부분 비움
+      kor: 검체 질환 상태 concept
     - name: specimen_source_id
       type: varchar
       required: false
-      desc: 병리 번호
+      desc: 병원 병리과의 접수·검체 번호
+      kor: 병리 번호
+      note: 병리 번호
     - name: specimen_source_value
       type: varchar
       required: false
-      desc: ''
+      desc: 병원 원천의 검체 종류 표기
+      kor: 검체 원천값
     - name: anatomic_site_source_value
       type: varchar
       required: false
-      desc: ''
+      desc: 병원 원천의 부위 표기
+      kor: 채취 부위 원천값
   COHORT:
     name: COHORT
     layer: OMOP
@@ -673,19 +895,30 @@ tables:
     - name: cohort_definition_id
       type: bigint
       required: true
-      desc: 코호트 concept(폐암 코호트 등)
+      desc: 어느 코호트인가. K-AI Cohort concept(COHORT_LUNG_CANCER …). subject_id·cohort_start_date 와 함께 고유키
+      kor: 코호트 concept
+      note: 코호트 concept(폐암 코호트 등)
+      vocab_hint: K-AI Cohort (COHORT_*)
     - name: subject_id
       type: bigint
       required: true
-      desc: person_id
+      desc: PERSON.person_id 참조(OMOP 관례상 이름이 subject_id)
+      kor: 환자 ID
+      note: person_id
+      ref: PERSON.person_id
+      key: fk
     - name: cohort_start_date
       type: date
       required: true
-      desc: 코호트 진입일(index date)
+      desc: 인덱스 날짜. 코호트 인덱스 서식의 진입일
+      kor: 코호트 진입일
+      note: 코호트 진입일(index date)
     - name: cohort_end_date
       type: date
       required: true
-      desc: 종료일(최종 추적·사망), 미정이면 진입일
+      desc: 최종 추적일 또는 사망일. 미정이면 진입일과 같게 둔다
+      kor: 코호트 종료일
+      note: 종료일(최종 추적·사망), 미정이면 진입일
   EPISODE:
     name: EPISODE
     layer: OMOP
@@ -704,43 +937,65 @@ tables:
     - name: episode_id
       type: bigint
       required: true
-      desc: ''
+      desc: 행 고유키. EPISODE_EVENT 가 이 값으로 사건을 매단다
+      kor: 에피소드 ID
     - name: person_id
       type: bigint
       required: true
-      desc: ''
+      desc: PERSON.person_id 참조. 같은 환자는 모든 표에서 같은 값
+      kor: 환자 ID
+      ref: PERSON.person_id
+      key: fk
     - name: episode_concept_id
       type: bigint
       required: true
-      desc: 질환 에피소드/재발/관해/치료 레지멘/치료 사이클
+      desc: 질환 에피소드·최초 발생·재발/진행·관해·치료 레지멘·치료 사이클 중 하나. K-AI Episode concept
+      kor: 에피소드 종류 concept
+      note: 질환 에피소드/재발/관해/치료 레지멘/치료 사이클
+      vocab_hint: K-AI Episode (EP_*)
     - name: episode_start_date
       type: date
       required: true
-      desc: ''
+      desc: 질환 에피소드는 진단일, 레지멘은 첫 투여일
+      kor: 에피소드 시작일
     - name: episode_end_date
       type: date
       required: false
-      desc: ''
+      desc: 레지멘 종료일 등. 진행 중이면 비움. 매단 약물의 기간과 맞아야 한다
+      kor: 에피소드 종료일
     - name: episode_parent_id
       type: bigint
       required: false
-      desc: 상위 에피소드(질환 ← 레지멘 ← 사이클)
+      desc: 질환 ← 레지멘 ← 사이클의 위 단계. EPISODE.episode_id 참조. 최상위는 비움
+      kor: 상위 에피소드 ID
+      note: 상위 에피소드(질환 ← 레지멘 ← 사이클)
+      ref: EPISODE.episode_id
+      key: fk
     - name: episode_number
       type: integer
       required: false
-      desc: line 번호·사이클 번호
+      desc: 치료 line 번호 또는 사이클 번호
+      kor: 에피소드 번호
+      note: line 번호·사이클 번호
     - name: episode_object_concept_id
       type: bigint
       required: true
-      desc: 대상(질환 concept·레지멘 concept·재발 부위)
+      desc: 무엇에 관한 에피소드인가. 질환 concept·레지멘 concept(HemOnc)·재발 부위 등
+      kor: 에피소드 대상 concept
+      note: 대상(질환 concept·레지멘 concept·재발 부위)
+      vocab_hint: K-AI 진단 concept · HemOnc 레지멘
     - name: episode_type_concept_id
       type: bigint
       required: true
-      desc: ''
+      desc: '레코드가 어디서 왔는지. K-AI Type concept: 등록 서식 입력·전자의무기록·파생 중 하나'
+      kor: 레코드 출처 type
+      vocab_hint: K-AI Type (TYPE_REGISTRY · TYPE_EHR · TYPE_DERIVED)
     - name: episode_source_value
       type: varchar
       required: false
-      desc: 원천 레지멘명 등
+      desc: 원천 레지멘명 등 표기
+      kor: 에피소드 원천값
+      note: 원천 레지멘명 등
   EPISODE_EVENT:
     name: EPISODE_EVENT
     layer: OMOP
@@ -759,15 +1014,23 @@ tables:
     - name: episode_id
       type: bigint
       required: true
-      desc: ''
+      desc: EPISODE.episode_id 참조. (episode_id, event_id, episode_event_field_concept_id) 가 고유키
+      kor: 에피소드 ID
+      ref: EPISODE.episode_id
+      key: fk
     - name: event_id
       type: bigint
       required: true
-      desc: 연결 레코드 id
+      desc: 에피소드에 매단 레코드(약물·진단·시술·검사)의 id. 표마다 id 가 따로 매겨지므로 episode_event_field_concept_id 와 함께 읽어야 한다
+      kor: 연결 레코드 ID
+      note: 연결 레코드 id
     - name: episode_event_field_concept_id
       type: bigint
       required: true
-      desc: 연결 레코드의 테이블·컬럼 concept
+      desc: event_id 가 어느 표의 id 인지. K-AI Field concept(F_DRUG, F_CONDITION, F_PROCEDURE, F_MEASUREMENT …)
+      kor: 연결 표 concept
+      note: 연결 레코드의 테이블·컬럼 concept
+      vocab_hint: K-AI Field (F_*)
   PATHOLOGY_REPORT:
     name: PATHOLOGY_REPORT
     layer: K-AI 확장
@@ -796,6 +1059,8 @@ tables:
       - LUNG_CANCER
       - LYMPHOMA
       - MASLD
+      desc: 이 행이 어느 보고서인지. 필수 항목이 종류마다 달라 먼저 받는다.
+      note: null
     - name: report_type_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -821,6 +1086,8 @@ tables:
       - LUNG_CANCER
       - LYMPHOMA
       - MASLD
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -834,6 +1101,8 @@ tables:
       - LUNG_CANCER
       - LYMPHOMA
       - MASLD
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: specimen_id
       type: bigint
       key: fk
@@ -847,6 +1116,8 @@ tables:
       - LUNG_CANCER
       - LYMPHOMA
       - MASLD
+      desc: SPECIMEN 레코드(검체 종류·부위·채취일)
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -860,6 +1131,8 @@ tables:
       - LUNG_CANCER
       - LYMPHOMA
       - MASLD
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: specimen_date
       type: date
       unit: null
@@ -874,6 +1147,8 @@ tables:
       - LUNG_CANCER
       - LYMPHOMA
       - MASLD
+      desc: 행의 기준 사건일
+      note: null
     - name: biopsy_method_concept_id
       type: bigint
       concept_set: CL_BIOPSY_METHOD
@@ -886,6 +1161,8 @@ tables:
       - COLORECTAL_CANCER
       - LUNG_CANCER
       - LYMPHOMA
+      desc: 생체검사 시행 방법. 값 집합 CL_BIOPSY_METHOD 의 concept_id (코어 생검(총생검), 세침흡인검사, 절제생검, 절개생검 …) — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: biopsy_method_source_value
@@ -911,6 +1188,9 @@ tables:
       - COLORECTAL_CANCER
       - LUNG_CANCER
       - LYMPHOMA
+      desc: 생체검사 대상 부위 or 검체. 값 집합 CL_BIOPSY_SITE 의 concept_id (원발 부위, 국소 림프절, 원격 전이 부위, 기타(직접 기재)) — report_type_concept_id = BIOPSY 일 때만 해당
+        [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: biopsy_site_source_value
@@ -934,6 +1214,8 @@ tables:
       cohorts:
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 생체검사 시행 폐 상세 위치. 값 집합 CL_BIOPSY_SITE_DETAIL 의 concept_id (우상엽, 우중엽, 우하엽, 좌상엽 …) — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: biopsy_site_detail_source_value
@@ -956,6 +1238,9 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 수술 후 외과병리 조직 채취 부위. 값 집합 CL_SURGICAL_SPECIMEN_SITE 의 concept_id (원발 부위, 국소 림프절, 절제연, 기타(직접 기재)) — report_type_concept_id = SURGICAL
+        일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: surgical_specimen_site_source_value
@@ -979,6 +1264,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 생체검사에 따른 조직학적 진단명. SNOMED (일부) · 자체 어휘 참조표의 concept_id — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: biopsy_histologic_diagnosis_source_value
@@ -1001,6 +1288,9 @@ tables:
       cohorts:
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 생체검사 조직학적 분화도. 값 집합 CL_BIOPSY_DIFFERENTIATION 의 concept_id (고분화(Grade 1), 중분화(Grade 2), 저분화(Grade 3), 미분화·역형성(Grade 4) …) — report_type_concept_id
+        = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: biopsy_differentiation_source_value
@@ -1023,6 +1313,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 수술 후 외과병리를 통해 확인된 조직학적 진단명. SNOMED (일부) · 자체 어휘 참조표의 concept_id — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: surgical_histologic_diagnosis_source_value
@@ -1044,6 +1336,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 원발 조직형 진단명. SNOMED (일부) · 자체 어휘 참조표의 concept_id [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: primary_histology_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1061,6 +1355,9 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 폐선암 우세 조직아형. 값 집합 CL_ADENOCARCINOMA_PREDOMINANT_SUBTYPE 의 concept_id (인설상형(lepidic), 선방형(acinar), 유두형(papillary), 미세유두형(micropapillary)
+        …) — report_type_concept_id = SURGICAL 일 때만 · surgical_histologic_diagnosis_source_value 에 'Adenocarcinoma' 이 들어 있을 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
         _contains:
@@ -1082,6 +1379,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 기강내 종양전파(STAS) 여부. 1 예 · 0 아니오 · 9 모름 — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: vpi_grade_concept_id
@@ -1093,6 +1392,9 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 장측흉막침범(VPI) 정도. 값 집합 CL_VPI_GRADE 의 concept_id (PL0(침범 없음), PL1(탄력층 넘어 침범), PL2(장측흉막 표면 침범), PL3(벽측흉막 침범)) — report_type_concept_id
+        = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: vpi_grade_source_value
@@ -1111,6 +1413,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 폐쇄후 폐렴 or 무기폐 동반 여부. 1 예 · 0 아니오 · 9 모름 — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: sentinel_nodes_examined
@@ -1123,6 +1427,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 절제된 감시림프절 개수 (수치) — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         report_type_concept_id: SURGICAL
     - name: sentinel_nodes_positive
@@ -1135,6 +1441,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 침윤된 감시림프절 개수 (수치) — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         report_type_concept_id: SURGICAL
     - name: lymph_nodes_examined
@@ -1148,6 +1456,8 @@ tables:
       cohorts:
       - BREAST_CANCER
       - COLORECTAL_CANCER
+      desc: 절제된 림프절 개수 (수치) — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         report_type_concept_id: SURGICAL
     - name: lymph_nodes_positive
@@ -1161,6 +1471,8 @@ tables:
       cohorts:
       - BREAST_CANCER
       - COLORECTAL_CANCER
+      desc: 침윤된 림프절 개수 (수치) — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         report_type_concept_id: SURGICAL
     - name: biopsy_laterality_concept_id
@@ -1172,6 +1484,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 생체검사 부위 편측성. 값 집합 CL_BIOPSY_LATERALITY 의 concept_id (우측, 좌측, 양측, 해당없음) — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: biopsy_laterality_source_value
@@ -1191,6 +1505,9 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 수술 후 병리 조직 채취 부위 편측성. 값 집합 CL_SURGICAL_SPECIMEN_LATERALITY 의 concept_id (우측, 좌측, 양측, 해당없음(정중)) — report_type_concept_id = SURGICAL
+        일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: surgical_specimen_laterality_source_value
@@ -1209,6 +1526,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 미세석회화 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: surgical_histologic_grade_concept_id
       type: bigint
       concept_set: CL_SURGICAL_HISTOLOGIC_GRADE
@@ -1218,6 +1537,9 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 수술 후 외과병리를 통해 확인된 조직학적 등급. 값 집합 CL_SURGICAL_HISTOLOGIC_GRADE 의 concept_id (Grade 1 (고분화), Grade 2 (중분화), Grade 3 (저분화), Grade 4 (미분화)
+        …) — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: surgical_histologic_grade_source_value
@@ -1237,6 +1559,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 관상피내암(DCIS) 핵등급. 값 집합 CL_DCIS_NUCLEAR_GRADE 의 concept_id (저등급(Grade 1), 중등도(Grade 2), 고등급(Grade 3)) [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: dcis_nuclear_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1253,6 +1577,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 상피내암 동반 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: til_percent
       type: float
       unit: '%'
@@ -1263,6 +1589,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 기질 종양침윤림프구(TIL) 비율 (%) [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: inflammatory_breast_cancer_yn
       type: integer
       concept_set: YN
@@ -1271,6 +1599,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 염증성 유방암 해당 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: lymphovascular_invasion_yn
       type: integer
       concept_set: YN
@@ -1279,6 +1609,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 종양의 림프관·혈관 침윤 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: resection_margin_status_concept_id
       type: bigint
       concept_set: CL_RESECTION_MARGIN_STATUS
@@ -1288,6 +1620,9 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 수술절제면 암조직 잔존 상태. 값 집합 CL_RESECTION_MARGIN_STATUS 의 concept_id (R0(음성), R1(현미경적 잔존), R2(육안적 잔존), 평가 불가) — report_type_concept_id =
+        SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: resection_margin_status_source_value
@@ -1307,6 +1642,9 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 잔존종양(Residual Tumor) 분류. 값 집합 CL_RESIDUAL_TUMOR_R_CLASS 의 concept_id (R0(잔존 없음), R1(현미경적 잔존), R2(육안적 잔존), 평가 불가) — report_type_concept_id
+        = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: residual_tumor_r_class_source_value
@@ -1325,6 +1663,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 유방촬영술상 미세석회화 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: biopsy_rectum_site_detail
       type: text
       unit: null
@@ -1335,6 +1675,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 생체검사 직장 세부 부위 상세. 자유 기재 [자문 보류]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: surgical_tumor_site_concept_id
       type: bigint
       concept_set: TUMOR_SITE
@@ -1344,6 +1686,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 수술 후 외과병리 종양 위치. 값 집합 TUMOR_SITE 의 concept_id (원발 부위, 문합부, 절제연 근처, 다발성 …) — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         report_type_concept_id: SURGICAL
     - name: surgical_tumor_site_source_value
@@ -1363,6 +1707,9 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: Gross type 분류 명칭. 값 집합 CL_GROSS_TYPE 의 concept_id (제1형(용종형), 제2형(경계명확 궤양형), 제3형(침윤성 궤양형), 제4형(미만성 침윤형) …) — report_type_concept_id
+        = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: gross_type_source_value
@@ -1382,6 +1729,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 복강세척 세포검사 결과. 값 집합 CL_PERITONEAL_CYTOLOGY_RESULT 의 concept_id (양성, 음성, 판정 불가·미시행) [자문 권고]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: peritoneal_cytology_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1400,6 +1749,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 종양 내 T세포 침윤 정량화 면역점수 (수치) [자문 보류]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: tumor_deposits_yn
       type: integer
       concept_set: YN
@@ -1408,6 +1759,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 종양침착(tumor deposits, N1c) 여부. 1 예 · 0 아니오 · 9 모름 — report_type_concept_id = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: tumor_budding_grade_concept_id
@@ -1419,6 +1772,9 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 종양출아등급(tumor budding). 값 집합 CL_TUMOR_BUDDING_GRADE 의 concept_id (Bd1(저등급, 0~4개), Bd2(중등도, 5~9개), Bd3(고등급, ≥10개)) — report_type_concept_id
+        = SURGICAL 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: tumor_budding_grade_source_value
@@ -1438,6 +1794,9 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 근치도(절제 정도). 값 집합 CL_RESECTION_COMPLETENESS 의 concept_id (근치적 절제(R0), 비근치적 절제(R1/R2), 미확정) — report_type_concept_id = SURGICAL 일 때만
+        해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: resection_completeness_source_value
@@ -1456,6 +1815,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 림프관 침윤 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: vascular_invasion_yn
       type: integer
       concept_set: YN
@@ -1464,6 +1825,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 혈관 침윤 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: perineural_invasion_yn
       type: integer
       concept_set: YN
@@ -1472,6 +1835,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 신경주위 침윤 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: invasion_depth_concept_id
       type: bigint
       concept_set: CL_INVASION_DEPTH
@@ -1481,6 +1846,9 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 종양 침윤 깊이 정도. 값 집합 CL_INVASION_DEPTH 의 concept_id (상피내(Tis), 점막하층(T1), 고유근층(T2), 장막하·주위지방(T3) …) — report_type_concept_id = SURGICAL
+        일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: invasion_depth_source_value
@@ -1500,6 +1868,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 수술후 외과병리 검사에서 확인된 radial 또는 circumferential margin 의 상태. 값 집합 CL_CRM_STATUS 의 concept_id (음성(>1mm), 양성(≤1mm), 평가 불가) [자문 보류]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
     - name: crm_status_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1517,6 +1887,9 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 전직장간막절제술(TME) 육안적 완전도. 값 집합 CL_TME_QUALITY 의 concept_id (완전(Grade 3), 거의 완전(Grade 2), 불완전(Grade 1)) — report_type_concept_id = SURGICAL
+        일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: SURGICAL
     - name: tme_quality_source_value
@@ -1537,6 +1910,8 @@ tables:
       cohorts:
       - LYMPHOMA
       - MASLD
+      desc: 간 생체검사 검체 적정성. 값 집합 CL_BIOPSY_ADEQUACY 의 concept_id (적정, 부적정·검체 부족, 비진단적) — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: biopsy_adequacy_source_value
@@ -1557,6 +1932,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간실질 섬유화 등급명. SNOMED (일부) · 자체 어휘 참조표의 concept_id — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: liver_fibrosis_grade_name_source_value
@@ -1576,6 +1953,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간 생체검사 지방증 등급. 값 집합 NAS_STEATOSIS 의 concept_id (0, 1, 2, 3) — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: steatosis_grade_source_value
@@ -1595,6 +1974,9 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간 생체검사 소엽 염증 등급. 값 집합 CL_LOBULAR_INFLAMMATION_GRADE 의 concept_id (0(없음), 1(경도, <2 병소/배율시야), 2(중등도, 2~4 병소/배율시야), 3(중증, >4 병소/배율시야))
+        — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: lobular_inflammation_grade_source_value
@@ -1614,6 +1996,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간세포 풍선변성 등급. 값 집합 CL_BALLOONING_GRADE 의 concept_id (0(없음), 1(소수), 2(다수/현저)) — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
     - name: ballooning_grade_source_value
@@ -1633,6 +2017,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 섬유화 병기(NASH CRN). 값 집합 FIBROSIS_STAGE 의 concept_id (F0, F1, F1a, F1b …) — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         report_type_concept_id: BIOPSY
     - name: fibrosis_stage_source_value
@@ -1653,6 +2039,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: NAS 총점 (수치) — report_type_concept_id = BIOPSY 일 때만 해당 [자문 필수]
+      note: 표준 개념 없는 병리 상세는 K-AI 자체 코드
       applies_when:
         report_type_concept_id: BIOPSY
   PATHOLOGY_TUMOR:
@@ -1679,6 +2067,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -1690,6 +2080,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: pathology_report_id
       type: bigint
       key: fk
@@ -1701,6 +2093,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: PATHOLOGY_REPORT.pathology_report_id 참조 [자문 필수]
+      note: null
     - name: tumor_count
       type: integer
       unit: null
@@ -1713,6 +2107,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 병리검사에서 확인된 종양 개수 (수치) [자문 권고]
+      note: 가로·세로·높이 → 최장경 1개 + 선택 3축
     - name: tumor_size_width_cm
       type: float
       unit: cm
@@ -1725,6 +2121,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 종양 가로 크기 (cm) [자문 보류]
+      note: 가로·세로·높이 → 최장경 1개 + 선택 3축
     - name: tumor_size_length_cm
       type: float
       unit: cm
@@ -1737,6 +2135,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 종양 세로 크기 (cm) [자문 보류]
+      note: 가로·세로·높이 → 최장경 1개 + 선택 3축
     - name: tumor_size_height_cm
       type: float
       unit: cm
@@ -1749,6 +2149,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 종양 높이 (cm) [자문 권고]
+      note: 가로·세로·높이 → 최장경 1개 + 선택 3축
     - name: pathologic_tumor_max_diameter_cm
       type: float
       unit: cm
@@ -1761,6 +2163,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 수술 후 병리 종양 최대 직경 (cm) [자문 필수]
+      note: 가로·세로·높이 → 최장경 1개 + 선택 3축
   BIOMARKER:
     name: BIOMARKER
     layer: K-AI 확장
@@ -1789,6 +2193,8 @@ tables:
       - DIABETES
       - LUNG_CANCER
       - LYMPHOMA
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -1802,6 +2208,8 @@ tables:
       - DIABETES
       - LUNG_CANCER
       - LYMPHOMA
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: specimen_id
       type: bigint
       key: fk
@@ -1815,6 +2223,8 @@ tables:
       - DIABETES
       - LUNG_CANCER
       - LYMPHOMA
+      desc: 조직 기반 검사이면 검체 연결
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -1828,6 +2238,8 @@ tables:
       - DIABETES
       - LUNG_CANCER
       - LYMPHOMA
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: test_date
       type: date
       unit: null
@@ -1842,6 +2254,8 @@ tables:
       - DIABETES
       - LUNG_CANCER
       - LYMPHOMA
+      desc: 행의 기준 사건일
+      note: null
     - name: ihc_test_concept_id
       type: bigint
       concept_set: BIOMARKER_RESULT
@@ -1853,6 +2267,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 면역조직화학병리 검사. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: ihc_test_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1874,6 +2290,8 @@ tables:
       - BREAST_CANCER
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 분자병리 검사. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: molecular_pathology_test_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1894,6 +2312,8 @@ tables:
       cohorts:
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 유전자 돌연변이검사 방법. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: mutation_test_method_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1913,6 +2333,8 @@ tables:
       cohorts:
       - COLORECTAL_CANCER
       - LUNG_CANCER
+      desc: 돌연변이검사 시행 유전자 종류. LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과) 참조표의 concept_id [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: mutation_test_gene_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1931,6 +2353,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 유방암 분자아형. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: molecular_subtype_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -1949,6 +2373,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: Reference Sequence 값. 자유 기재 [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: dna_variant_a
       type: varchar
       unit: null
@@ -1959,6 +2385,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: DNA 변이 정보 A 값. 자유 기재 [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: dna_variant_b
       type: varchar
       unit: null
@@ -1969,6 +2397,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: DNA 변이 정보 B 값. 자유 기재 [자문 권고]
+      note: long 형. 마커별 컬럼 금지
     - name: dna_variant_c
       type: varchar
       unit: null
@@ -1979,6 +2409,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: DNA 변이 정보 C 값. 자유 기재 [자문 권고]
+      note: long 형. 마커별 컬럼 금지
     - name: protein_variant_a_concept_id
       type: bigint
       concept_set: BIOMARKER_RESULT
@@ -1988,6 +2420,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 아미노산 변이 정보 A. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 권고]
+      note: long 형. 마커별 컬럼 금지
     - name: protein_variant_a_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2005,6 +2439,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 아미노산 변이 정보 B. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 권고]
+      note: long 형. 마커별 컬럼 금지
     - name: protein_variant_b_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2022,6 +2458,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 아미노산 변이 정보 C. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 권고]
+      note: long 형. 마커별 컬럼 금지
     - name: protein_variant_c_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2039,6 +2477,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 예후예측 유전자 발현검사 종류. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: prognostic_gene_assay_type_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2056,6 +2496,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 예후예측 유전자 발현검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: prognostic_gene_assay_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2073,6 +2515,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 생식세포 변이검사 방법. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: germline_test_method_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2090,6 +2534,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 생식세포 변이검사 유전자 종류. LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과) 참조표의 concept_id [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: germline_test_gene_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2108,6 +2554,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 생식세포 변이검사 결과 내용. 자유 기재 [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: pathogenic_variant_yn
       type: integer
       concept_set: YN
@@ -2116,6 +2564,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: Pathogenic 검출 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: vus_yn
       type: integer
       concept_set: YN
@@ -2124,6 +2574,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: Unclassified Variant 검출 여부. 1 예 · 0 아니오 · 9 모름 [자문 보류]
+      note: long 형. 마커별 컬럼 금지
     - name: pam50_ror_score
       type: integer
       unit: null
@@ -2134,6 +2586,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: PAM50 재발위험(ROR) 점수 (수치) [자문 보류]
+      note: long 형. 마커별 컬럼 금지
     - name: oncotype_rs
       type: float
       unit: null
@@ -2144,6 +2598,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: Oncotype DX 재발점수 (수치) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: oncotype_risk_group_concept_id
       type: bigint
       concept_set: RISK_GROUP
@@ -2153,6 +2609,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: Oncotype DX 위험군. 값 집합 RISK_GROUP 의 concept_id (저위험, 저중간, 고중간, 고위험) [자문 보류]
+      note: long 형. 마커별 컬럼 금지
     - name: oncotype_risk_group_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2170,6 +2628,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: MammaPrint 재발위험 판정. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: mammaprint_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2187,6 +2647,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 유전자 돌연변이검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: mutation_test_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2204,6 +2666,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 췌도 자가항체(GAD 항체) 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: gad_antibody_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2221,6 +2685,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD3 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd3_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2238,6 +2704,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD5 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd5_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2255,6 +2723,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD10 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd10_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2272,6 +2742,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD15 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 권고]
+      note: long 형. 마커별 컬럼 금지
     - name: cd15_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2289,6 +2761,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD19 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd19_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2306,6 +2780,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD20 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd20_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2323,6 +2799,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD22 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd22_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2340,6 +2818,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD23 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd23_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2357,6 +2837,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD30 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd30_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2374,6 +2856,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CD79a 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cd79a_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2391,6 +2875,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: PAX5 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: null
     - name: pax5_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2408,6 +2894,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: BCL2 단백 발현 결과와 양성률. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: bcl2_protein_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2425,6 +2913,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: BCL6 단백 발현 결과와 양성률. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: bcl6_protein_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2442,6 +2932,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: MUM1/IRF4 발현 결과와 양성률. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: mum1_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2459,6 +2951,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: MYC 단백 발현 결과와 양성률. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: myc_protein_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2476,6 +2970,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: Cyclin D1 발현 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: cyclin_d1_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2493,6 +2989,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: SOX11 발현 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: sox11_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2510,6 +3008,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: ALK 발현 또는 재배열 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: alk_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2527,6 +3027,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: PD-L1 발현 결과 및 평가법. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 권고]
+      note: long 형. 마커별 컬럼 금지
     - name: pdl1_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2545,6 +3047,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: Ki-67 증식지수 (%) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: ebv_eber_result_concept_id
       type: bigint
       concept_set: BIOMARKER_RESULT
@@ -2554,6 +3058,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: EBV EBER 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: ebv_eber_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2571,6 +3077,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: DLBCL 세포기원 분류. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: dlbcl_cell_of_origin_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2587,6 +3095,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: MYC/BCL2 이중발현 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: flow_cytometry_summary_concept_id
       type: bigint
       concept_set: null
@@ -2596,6 +3106,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 유세포검사 면역표현형 요약. LOINC (검사) · HGNC/HGVS (변이) · SNOMED (결과) 참조표의 concept_id [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: flow_cytometry_summary_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2614,6 +3126,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 분자·세포유전검사 시행일 (YYYY-MM-DD) [자문 필수]
+      note: null
     - name: molecular_test_method_concept_id
       type: bigint
       concept_set: BIOMARKER_METHOD
@@ -2623,6 +3137,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 분자·세포유전검사 방법. 값 집합 BIOMARKER_METHOD 의 concept_id (차세대염기서열분석, 중합효소연쇄반응, 역전사 중합효소연쇄반응, 형광제자리부합법 …) [자문 필수]
+      note: null
     - name: molecular_test_method_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2640,6 +3156,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: MYC 재배열 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: myc_rearrangement_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2657,6 +3175,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: BCL2 재배열 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: bcl2_rearrangement_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2674,6 +3194,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: BCL6 재배열 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: bcl6_rearrangement_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2691,6 +3213,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: Double-hit/Triple-hit 상태. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: double_hit_status_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2708,6 +3232,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: t(14;18) 전좌 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: t14_18_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2725,6 +3251,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: t(11;14) 전좌 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: t11_14_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2742,6 +3270,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: TP53 변이, 17p 결실 또는 비정상 p53 발현 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: tp53_abnormality_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2758,6 +3288,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: Complex karyotype 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: ig_tcr_clonality_result_concept_id
       type: bigint
       concept_set: BIOMARKER_RESULT
@@ -2767,6 +3299,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: IG/TCR 클론성 검사 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: ig_tcr_clonality_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2784,6 +3318,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 유세포, PCR 또는 NGS 기반 미세잔존질환(MRD) 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 필수]
+      note: long 형. 마커별 컬럼 금지
     - name: mrd_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2801,6 +3337,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 순환종양DNA(ctDNA) 결과. 값 집합 BIOMARKER_RESULT 의 concept_id (양성, 음성, 불명확, 미시행 …) [자문 보류]
+      note: long 형. 마커별 컬럼 금지
     - name: ctdna_result_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2829,6 +3367,8 @@ tables:
       required: true
       cohorts:
       - LUNG_CANCER
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -2838,6 +3378,8 @@ tables:
       required: true
       cohorts:
       - LUNG_CANCER
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -2847,6 +3389,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: exam_date
       type: date
       unit: null
@@ -2857,6 +3401,8 @@ tables:
       required: true
       cohorts:
       - LUNG_CANCER
+      desc: 행의 기준 사건일
+      note: null
     - name: imaging_diagnostic_classification_concept_id
       type: bigint
       concept_set: CL_IMAGING_DIAGNOSTIC_CLASSIFICATION
@@ -2866,6 +3412,9 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 영상검사 결과 진단적 분류(Diagnostic Classification). 값 집합 CL_IMAGING_DIAGNOSTIC_CLASSIFICATION 의 concept_id (0(추가 영상 필요), 1(음성), 2(양성 소견), 3(양성
+        추정) …) [자문 필수]
+      note: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
     - name: imaging_diagnostic_classification_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2884,6 +3433,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 영상검사상 폐 종양 최대 직경 (cm) [자문 필수]
+      note: 영상 측정 크기는 병리 크기와 구분
     - name: ctr_ratio
       type: float
       unit: '1'
@@ -2894,6 +3445,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 고형성분 비율(CTR) (1) [자문 필수]
+      note: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
     - name: nodule_radiologic_type_concept_id
       type: bigint
       concept_set: CL_NODULE_RADIOLOGIC_TYPE
@@ -2903,6 +3456,8 @@ tables:
       required: false
       cohorts:
       - LUNG_CANCER
+      desc: 폐결절 방사선학적 유형. 값 집합 CL_NODULE_RADIOLOGIC_TYPE 의 concept_id (고형(solid), 부분고형(part-solid), 간유리음영(pure GGN)) [자문 필수]
+      note: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
     - name: nodule_radiologic_type_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2931,6 +3486,8 @@ tables:
       required: true
       cohorts:
       - BREAST_CANCER
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -2940,6 +3497,8 @@ tables:
       required: true
       cohorts:
       - BREAST_CANCER
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -2949,6 +3508,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: record_date
       type: date
       unit: null
@@ -2959,6 +3520,8 @@ tables:
       required: true
       cohorts:
       - BREAST_CANCER
+      desc: 행의 기준 사건일
+      note: null
     - name: married_yn
       type: integer
       concept_set: YN
@@ -2967,6 +3530,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 결혼 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: marital_status_detail_concept_id
       type: bigint
       concept_set: CL_MARITAL_STATUS_DETAIL
@@ -2976,6 +3541,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 결혼상태 상세 구분. 값 집합 CL_MARITAL_STATUS_DETAIL 의 concept_id (미혼, 기혼, 이혼, 사별 …) [자문 보류]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: marital_status_detail_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -2994,6 +3561,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 초경 만 나이 (수치) [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: fertility_preservation_yn
       type: integer
       concept_set: YN
@@ -3002,6 +3571,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 가임력 보존 치료 시행 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: fertility_preservation_type_concept_id
       type: bigint
       concept_set: CL_FERTILITY_PRESERVATION_TYPE
@@ -3011,6 +3582,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 가임력 보존 치료 종류. 값 집합 CL_FERTILITY_PRESERVATION_TYPE 의 concept_id (난자 동결보존, 배아 동결보존, 난소조직 동결보존, GnRH 작용제 난소기능 억제 …) [자문 권고]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: fertility_preservation_type_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3029,6 +3602,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 가임력 보존 치료 기타 내용. 자유 기재 [자문 보류]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: parity_yn
       type: integer
       concept_set: YN
@@ -3037,6 +3612,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 출산 경험 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: first_birth_age
       type: integer
       unit: null
@@ -3047,6 +3624,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 첫 출산 만 나이 (수치) [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: conception_method_concept_id
       type: bigint
       concept_set: CL_CONCEPTION_METHOD
@@ -3056,6 +3635,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 임신 방법. 값 집합 CL_CONCEPTION_METHOD 의 concept_id (자연 임신, 체외수정(IVF), 자궁내 인공수정(IUI), 기타 보조생식술) [자문 보류]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: conception_method_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3073,6 +3654,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 임신 결과. 값 집합 CL_PREGNANCY_OUTCOME 의 concept_id (출산(생존아), 사산, 자연유산, 인공유산 …) [자문 권고]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: pregnancy_outcome_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3091,6 +3674,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 출산한 자녀 수 (수치) [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: breastfeeding_yn
       type: integer
       concept_set: YN
@@ -3099,6 +3684,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 모유수유 경험 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: menopause_yn
       type: integer
       concept_set: YN
@@ -3107,6 +3694,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 폐경 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: menopause_age
       type: integer
       unit: null
@@ -3117,6 +3706,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 폐경 만 나이 (수치) [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: hrt_yn
       type: integer
       concept_set: YN
@@ -3125,6 +3716,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 폐경 후 호르몬 대체요법(HRT) 시행 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: hrt_duration_months
       type: float
       unit: mo
@@ -3135,6 +3728,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 호르몬 대체요법(HRT) 시행 기간 (mo) [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: pregnant_at_diagnosis_yn
       type: integer
       concept_set: YN
@@ -3143,6 +3738,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 유방암 진단 시 임신 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: postpartum_diagnosis_yn
       type: integer
       concept_set: YN
@@ -3151,6 +3748,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 출산 후 1년 이내 진단 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: menopausal_status_at_diagnosis_concept_id
       type: bigint
       concept_set: CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS
@@ -3160,6 +3759,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 진단 시점 폐경 상태. 값 집합 CL_MENOPAUSAL_STATUS_AT_DIAGNOSIS 의 concept_id (폐경 전, 폐경이행기, 폐경 후, 미확인) [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: menopausal_status_at_diagnosis_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3176,6 +3777,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 항암 종료 1년 시점 월경 재개 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: first_menses_after_chemo_date
       type: date
       unit: null
@@ -3186,6 +3789,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 항암 치료 후 첫 월경일 (YYYY-MM-DD) [자문 권고]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: menses_regularity_after_chemo_concept_id
       type: bigint
       concept_set: CL_MENSES_REGULARITY_AFTER_CHEMO
@@ -3195,6 +3800,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 항암 치료 후 월경 규칙성. 값 집합 CL_MENSES_REGULARITY_AFTER_CHEMO 의 concept_id (규칙적, 불규칙적, 무월경) [자문 보류]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: menses_regularity_after_chemo_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3211,6 +3818,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 치료 후 임신 시도 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: pregnancy_attempt_start_date
       type: date
       unit: null
@@ -3221,6 +3830,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 치료 후 임신 시도 시작일 (YYYY-MM-DD) [자문 보류]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: pregnancy_success_yn
       type: integer
       concept_set: YN
@@ -3229,6 +3840,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 치료 후 임신 성공 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
     - name: delivery_after_treatment_yn
       type: integer
       concept_set: YN
@@ -3237,6 +3850,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 치료 후 임신에서의 분만 시행 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: 치료 후 월경·임신 항목은 사건 1 로 분리 검토
   BREAST_EXAM:
     name: BREAST_EXAM
     layer: K-AI 확장
@@ -3257,6 +3872,8 @@ tables:
       required: true
       cohorts:
       - BREAST_CANCER
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -3266,6 +3883,8 @@ tables:
       required: true
       cohorts:
       - BREAST_CANCER
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -3275,6 +3894,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: exam_date
       type: date
       unit: null
@@ -3285,6 +3906,8 @@ tables:
       required: true
       cohorts:
       - BREAST_CANCER
+      desc: 행의 기준 사건일
+      note: null
     - name: imaging_diagnostic_classification_concept_id
       type: bigint
       concept_set: CL_IMAGING_DIAGNOSTIC_CLASSIFICATION
@@ -3294,6 +3917,9 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 영상검사 결과 진단적 분류(Diagnostic Classification). 값 집합 CL_IMAGING_DIAGNOSTIC_CLASSIFICATION 의 concept_id (0(추가 영상 필요), 1(음성), 2(양성 소견), 3(양성
+        추정) …) [자문 필수]
+      note: 폐암 영상 구조화 판독. 유방암의 '진단적 분류'는 BI-RADS 로 BREAST_CRF
     - name: imaging_diagnostic_classification_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3311,6 +3937,8 @@ tables:
       required: false
       cohorts:
       - BREAST_CANCER
+      desc: 유방촬영술상 유방 밀도. 값 집합 BIRADS_DENSITY 의 concept_id (A, B, C, D) [자문 필수]
+      note: null
     - name: mammographic_density_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3339,6 +3967,8 @@ tables:
       required: true
       cohorts:
       - COLORECTAL_CANCER
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -3348,6 +3978,8 @@ tables:
       required: true
       cohorts:
       - COLORECTAL_CANCER
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -3357,6 +3989,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: exam_date
       type: date
       unit: null
@@ -3367,6 +4001,8 @@ tables:
       required: true
       cohorts:
       - COLORECTAL_CANCER
+      desc: 행의 기준 사건일
+      note: null
     - name: rectal_tumor_height_cm
       type: float
       unit: cm
@@ -3377,6 +4013,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: Rigid sigmoidoscopy 또는 MRI에서 측정된 직장암 위치 값 (cm) [자문 필수]
+      note: 직장 MRI 구조화 판독
     - name: mri_invasion_depth_mm
       type: float
       unit: mm
@@ -3387,6 +4025,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 T3 이상에서 종양침윤 최대깊이 값(mm) (mm) [자문 보류]
+      note: 직장 MRI 구조화 판독
     - name: mri_t4b_invaded_organ_concept_id
       type: bigint
       concept_set: CL_MRI_T4B_INVADED_ORGAN
@@ -3396,6 +4036,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 T4B에서 침윤된 장기 부위. 값 집합 CL_MRI_T4B_INVADED_ORGAN 의 concept_id (전립선, 정낭, 질, 자궁 …) [자문 필수]
+      note: 직장 MRI 구조화 판독
     - name: mri_t4b_invaded_organ_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3413,6 +4055,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 종양과 전방복막의 관계. 값 집합 CL_MRI_ANTERIOR_PERITONEAL_RELATION 의 concept_id (복막반전부 위, 복막반전부, 복막반전부 아래) [자문 필수]
+      note: 직장 MRI 구조화 판독
     - name: mri_anterior_peritoneal_relation_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3431,6 +4075,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 종양의 하부연과 항문연 사이의 거리 값(cm) (cm) [자문 필수]
+      note: 직장 MRI 구조화 판독
     - name: mri_distance_anorectal_junction_cm
       type: float
       unit: cm
@@ -3441,6 +4087,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 종양의 하부연과 항문직장경계부 사이의 거리 값(cm) (cm) [자문 필수]
+      note: 직장 MRI 구조화 판독
     - name: mri_circumferential_extent_concept_id
       type: bigint
       concept_set: CL_MRI_CIRCUMFERENTIAL_EXTENT
@@ -3450,6 +4098,9 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 종양의 환상 침범 범위(Circumferential tumor location). 값 집합 CL_MRI_CIRCUMFERENTIAL_EXTENT 의 concept_id (<25%, 25~50%, 50~75%, >75%
+        …) [자문 보류]
+      note: 직장 MRI 구조화 판독
     - name: mri_circumferential_extent_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3468,6 +4119,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 직장간막근막에서 종양까지의 최단거리 값(mm) (mm) [자문 보류]
+      note: 직장 MRI 구조화 판독
     - name: mri_emvi_yn
       type: integer
       concept_set: YN
@@ -3476,6 +4129,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 장벽외 혈관침윤(EMVI) 여부. 1 예 · 0 아니오 · 9 모름 [자문 보류]
+      note: 직장 MRI 구조화 판독
     - name: mri_mesorectal_node_yn
       type: integer
       concept_set: YN
@@ -3484,6 +4139,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 직장 간내 림프절전이 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 직장 MRI 구조화 판독
     - name: mri_extramesorectal_node_yn
       type: integer
       concept_set: YN
@@ -3492,6 +4149,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 직장 간외 림프절전이 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 직장 MRI 구조화 판독
     - name: mri_circumferential_location_concept_id
       type: bigint
       concept_set: CL_MRI_CIRCUMFERENTIAL_LOCATION
@@ -3501,6 +4160,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 종양의 환상 위치. 값 집합 CL_MRI_CIRCUMFERENTIAL_LOCATION 의 concept_id (전방, 후방, 좌측방, 우측방 …) [자문 보류]
+      note: 직장 MRI 구조화 판독
     - name: mri_circumferential_location_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3518,6 +4179,9 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: MRI 판독 결과 종양반응등급(Radiologic tumor regression grade). 값 집합 CL_MRI_TUMOR_REGRESSION_GRADE 의 concept_id (mrTRG1(완전반응), mrTRG2, mrTRG3,
+        mrTRG4 …) — mri_invasion_depth_mm 가 채워졌을 때만 해당 [자문 필수]
+      note: 직장 MRI 구조화 판독
       applies_when:
         _filled: mri_invasion_depth_mm
     - name: mri_tumor_regression_grade_source_value
@@ -3548,6 +4212,8 @@ tables:
       required: true
       cohorts:
       - COLORECTAL_CANCER
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -3557,6 +4223,8 @@ tables:
       required: true
       cohorts:
       - COLORECTAL_CANCER
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: procedure_occurrence_id
       type: bigint
       key: fk
@@ -3566,6 +4234,8 @@ tables:
       required: true
       cohorts:
       - COLORECTAL_CANCER
+      desc: PROCEDURE_OCCURRENCE.procedure_occurrence_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -3575,6 +4245,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: preop_obstruction_treatment_yn
       type: integer
       concept_set: YN
@@ -3583,6 +4255,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 수술 전 폐색치료 시행 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 대장암 수술 세부
     - name: stoma_yn
       type: integer
       concept_set: YN
@@ -3591,6 +4265,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 수술 시 장루형성 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 대장암 수술 세부
     - name: stoma_reason_concept_id
       type: bigint
       concept_set: CL_STOMA_REASON
@@ -3600,6 +4276,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 수술 시 장루형성 이유. 값 집합 CL_STOMA_REASON 의 concept_id (전환·보호 장루, 장폐색, 천공, 문합부 누출 예방 …) [자문 필수]
+      note: 대장암 수술 세부
     - name: stoma_reason_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3617,6 +4295,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: IMA (Inferior mesenteric artery) ligation 위치. 값 집합 CL_IMA_LIGATION_LEVEL 의 concept_id (고위 결찰(대동맥 기시부), 저위 결찰(좌결장동맥 원위부)) [자문 보류]
+      note: 대장암 수술 세부
     - name: ima_ligation_level_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3633,6 +4313,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 비장굴곡 가동화 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: 대장암 수술 세부
     - name: anastomosis_method_concept_id
       type: bigint
       concept_set: CL_ANASTOMOSIS_METHOD
@@ -3642,6 +4324,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 문합 방법. 값 집합 CL_ANASTOMOSIS_METHOD 의 concept_id (문합기 사용, 수기 봉합, 문합기+수기 병용) [자문 필수]
+      note: 대장암 수술 세부
     - name: anastomosis_method_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3660,6 +4344,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 문합 방법 세부 내용. 자유 기재 [자문 권고]
+      note: 대장암 수술 세부
     - name: anastomosis_height_cm
       type: float
       unit: cm
@@ -3670,6 +4356,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 문합부 위치 값 (cm) [자문 권고]
+      note: 대장암 수술 세부
     - name: cc_score
       type: integer
       unit: null
@@ -3680,6 +4368,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 완전감축점수(CC score) (수치) [자문 보류]
+      note: 대장암 수술 세부
     - name: watch_and_wait_status_concept_id
       type: bigint
       concept_set: CL_WATCH_AND_WAIT_STATUS
@@ -3689,6 +4379,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 비수술적 경과관찰(watch-and-wait) 상태. 값 집합 CL_WATCH_AND_WAIT_STATUS 의 concept_id (경과관찰 중, 국소 재성장, 수술로 전환, 지속적 임상완전관해) [자문 보류]
+      note: 대장암 수술 세부
     - name: watch_and_wait_status_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -3705,6 +4397,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 온열복강내항암화학요법(HIPEC) 시행 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: 대장암 수술 세부
     - name: conversion_to_open_yn
       type: integer
       concept_set: YN
@@ -3713,6 +4407,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 비개복수술 시행 중 개복수술로 전환 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 대장암 수술 세부
     - name: conversion_reason
       type: text
       unit: null
@@ -3723,6 +4419,8 @@ tables:
       required: false
       cohorts:
       - COLORECTAL_CANCER
+      desc: 비개복수술 시행 중 개복수술로 전환되었을 때 사유. 자유 기재 [자문 필수]
+      note: 대장암 수술 세부
   MASLD_EXAM:
     name: MASLD_EXAM
     layer: K-AI 확장
@@ -3743,6 +4441,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -3752,6 +4452,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -3761,6 +4463,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: exam_date
       type: date
       unit: null
@@ -3771,6 +4475,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: 행의 기준 사건일
+      note: null
     - name: elastography_date
       type: date
       unit: null
@@ -3781,6 +4487,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간 영상·탄성도 검사 시행일 (YYYY-MM-DD) [자문 필수]
+      note: 탄성도 행의 검사일
     - name: mri_pdff_percent
       type: float
       unit: '%'
@@ -3791,6 +4499,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: MRI-PDFF 간지방분율 (%) [자문 필수]
+      note: 검사값이지만 방법(장비)과 함께 저장
     - name: mre_kpa
       type: float
       unit: kPa
@@ -3801,6 +4511,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: MRE 간 경직도 (kPa) [자문 필수]
+      note: 검사값이지만 방법(장비)과 함께 저장
     - name: cap_db_m
       type: float
       unit: dB/m
@@ -3811,6 +4523,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: FibroScan 감쇠계수(CAP) (dB/m) [자문 필수]
+      note: 검사값이지만 방법(장비)과 함께 저장
     - name: lsm_kpa
       type: float
       unit: kPa
@@ -3821,6 +4535,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: FibroScan 간 경직도(LSM) (kPa) [자문 필수]
+      note: 검사값이지만 방법(장비)과 함께 저장
     - name: hvpg_mmhg
       type: float
       unit: mm[Hg]
@@ -3831,6 +4547,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간정맥압력차(HVPG) (mm[Hg]) [자문 권고]
+      note: 검사값이지만 방법(장비)과 함께 저장
     - name: spleen_stiffness_kpa
       type: float
       unit: kPa
@@ -3841,6 +4559,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 비장 경직도 (kPa) [자문 권고]
+      note: 검사값이지만 방법(장비)과 함께 저장
   MASLD_ASSESSMENT:
     name: MASLD_ASSESSMENT
     layer: K-AI 확장
@@ -3861,6 +4581,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -3870,6 +4592,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -3879,6 +4603,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: assessment_date
       type: date
       unit: null
@@ -3889,6 +4615,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: 행의 기준 사건일
+      note: null
     - name: prognostic_score_type
       type: float
       unit: null
@@ -3899,6 +4627,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 대사이상지방간 예후 판단척도 종류 (수치) [자문 필수]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
     - name: prognostic_score_value
       type: float
       unit: null
@@ -3909,6 +4639,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 대사이상지방간 예후 판단척도 산식에 따른 산출 결과 값 (수치) [자문 필수]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
     - name: elf_score
       type: integer
       unit: null
@@ -3919,6 +4651,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: ELF 섬유화 점수 (수치) [자문 필수]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
     - name: fib4_index
       type: float
       unit: null
@@ -3929,6 +4663,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: FIB-4 지수 (수치) [자문 필수]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
     - name: nfs_score
       type: integer
       unit: null
@@ -3939,6 +4675,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: NAFLD 섬유화 점수(NFS) (수치) [자문 보류]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
     - name: apri_score
       type: integer
       unit: null
@@ -3949,6 +4687,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: APRI 점수 (수치) [자문 권고]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
     - name: pro_c3_ng_ml
       type: float
       unit: ng/mL
@@ -3959,6 +4699,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 혈청 PRO-C3 (ng/mL) [자문 권고]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
     - name: nis4_score
       type: integer
       unit: null
@@ -3969,6 +4711,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: NIS4 점수 (수치) [자문 보류]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
     - name: meld_score
       type: integer
       unit: null
@@ -3979,6 +4723,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: MELD(Model for End-stage Liver Disease) 점수 (수치) [자문 필수]
+      note: null
     - name: child_pugh_class_concept_id
       type: bigint
       concept_set: CHILD_PUGH
@@ -3988,6 +4734,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: Child-Pugh(간기능 중증도) 등급. 값 집합 CHILD_PUGH 의 concept_id (A, B, C) [자문 필수]
+      note: null
     - name: child_pugh_class_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4016,6 +4764,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -4025,6 +4775,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -4034,6 +4786,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: event_date
       type: date
       unit: null
@@ -4044,6 +4798,8 @@ tables:
       required: true
       cohorts:
       - MASLD
+      desc: 행의 기준 사건일
+      note: null
     - name: mash_resolution_yn
       type: integer
       concept_set: YN
@@ -4052,6 +4808,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: MASH 소실 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 발생일 동반
     - name: fibrosis_improvement_yn
       type: integer
       concept_set: YN
@@ -4060,6 +4818,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 섬유화 1단계 이상 호전 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 발생일 동반
     - name: cirrhosis_yn
       type: integer
       concept_set: YN
@@ -4068,6 +4828,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간경변증 동반 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 발생일 동반
     - name: decompensation_event_yn
       type: integer
       concept_set: YN
@@ -4076,6 +4838,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간부전 비대상성 사건(복수·정맥류출혈·간성뇌증 등) 발생 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 발생일 동반
     - name: portal_hypertension_yn
       type: integer
       concept_set: YN
@@ -4084,6 +4848,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 문맥압항진증 여부. 1 예 · 0 아니오 · 9 모름 [자문 보류]
+      note: 발생일 동반
     - name: esophageal_varices_yn
       type: integer
       concept_set: YN
@@ -4092,6 +4858,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 내시경으로 확인된 식도정맥류 여부. 1 예 · 0 아니오 · 9 모름 [자문 보류]
+      note: 발생일 동반
     - name: hcc_yn
       type: integer
       concept_set: YN
@@ -4100,6 +4868,8 @@ tables:
       required: false
       cohorts:
       - MASLD
+      desc: 간세포암(HCC) 발생 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 발생일 동반
   DIABETES_BASELINE:
     name: DIABETES_BASELINE
     layer: K-AI 확장
@@ -4120,6 +4890,8 @@ tables:
       required: true
       cohorts:
       - DIABETES
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -4129,6 +4901,8 @@ tables:
       required: true
       cohorts:
       - DIABETES
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -4138,6 +4912,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: record_date
       type: date
       unit: null
@@ -4148,6 +4924,8 @@ tables:
       required: true
       cohorts:
       - DIABETES
+      desc: 행의 기준 사건일
+      note: null
     - name: cgm_use_yn
       type: integer
       concept_set: YN
@@ -4156,6 +4934,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 연속혈당측정기(CGM) 사용 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: null
     - name: insulin_pump_yn
       type: integer
       concept_set: YN
@@ -4164,6 +4944,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 인슐린 펌프/폐회로 시스템 사용 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: null
   DIABETES_EVENT:
     name: DIABETES_EVENT
     layer: K-AI 확장
@@ -4184,6 +4966,8 @@ tables:
       required: true
       cohorts:
       - DIABETES
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -4193,6 +4977,8 @@ tables:
       required: true
       cohorts:
       - DIABETES
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -4202,6 +4988,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: event_date
       type: date
       unit: null
@@ -4212,6 +5000,8 @@ tables:
       required: true
       cohorts:
       - DIABETES
+      desc: 행의 기준 사건일
+      note: null
     - name: hba1c_target_met_yn
       type: integer
       concept_set: YN
@@ -4220,6 +5010,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: HbA1c 7% 미만 목표 달성 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
     - name: severe_hypoglycemia_count
       type: integer
       unit: null
@@ -4230,6 +5022,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 중증 저혈당 발생 횟수 (수치) [자문 필수]
+      note: 발생일·평가일 동반
     - name: hypoglycemia_unawareness_yn
       type: integer
       concept_set: YN
@@ -4238,6 +5032,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 저혈당 무감지증 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 발생일·평가일 동반
     - name: ckd_stage_concept_id
       type: bigint
       concept_set: CKD_STAGE
@@ -4247,6 +5043,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 만성콩팥병(CKD) 병기. 값 집합 CKD_STAGE 의 concept_id (G1, G2, G3a, G3b …) [자문 필수]
+      note: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
     - name: ckd_stage_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4263,6 +5061,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 당뇨병성 케톤산증(DKA) 발생 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
     - name: retinopathy_severity_concept_id
       type: bigint
       concept_set: DR_SEVERITY
@@ -4272,6 +5072,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 당뇨병성 망막병증 중증도 등급. 값 집합 DR_SEVERITY 의 concept_id (없음, 경증 NPDR, 중등도 NPDR, 중증 NPDR …) [자문 필수]
+      note: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
     - name: retinopathy_severity_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4288,6 +5090,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 당뇨병성 황반부종 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
     - name: peripheral_neuropathy_yn
       type: integer
       concept_set: YN
@@ -4296,6 +5100,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 당뇨병성 말초신경병증 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
     - name: foot_ulcer_yn
       type: integer
       concept_set: YN
@@ -4304,6 +5110,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 당뇨병성 족부궤양 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: CKD 병기·HbA1c 목표 달성은 MEASUREMENT 에서 파생 가능
     - name: wagner_grade_concept_id
       type: bigint
       concept_set: WAGNER
@@ -4313,6 +5121,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 족부궤양 Wagner 등급. 값 집합 WAGNER 의 concept_id (0, 1, 2, 3 …) [자문 보류]
+      note: 발생일·평가일 동반
     - name: wagner_grade_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4329,6 +5139,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 심장 자율신경병증 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: 발생일·평가일 동반
     - name: charcot_foot_yn
       type: integer
       concept_set: YN
@@ -4337,6 +5149,8 @@ tables:
       required: false
       cohorts:
       - DIABETES
+      desc: 샤르코 관절병증(Charcot foot) 여부. 1 예 · 0 아니오 · 9 모름 [자문 권고]
+      note: 발생일·평가일 동반
   LYMPHOMA_ASSESSMENT:
     name: LYMPHOMA_ASSESSMENT
     layer: K-AI 확장
@@ -4357,6 +5171,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -4366,6 +5182,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -4375,6 +5193,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: assessment_date
       type: date
       unit: null
@@ -4385,6 +5205,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: 행의 기준 사건일
+      note: null
     - name: b_symptoms_yn
       type: integer
       concept_set: YN
@@ -4393,6 +5215,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: B 증상 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: null
     - name: fever_yn
       type: integer
       concept_set: YN
@@ -4401,6 +5225,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 원인불명 발열 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: null
     - name: night_sweats_yn
       type: integer
       concept_set: YN
@@ -4409,6 +5235,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 야간 발한 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: null
     - name: weight_loss_percent_6m
       type: float
       unit: '%'
@@ -4419,6 +5247,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 최근 6개월 체중감소율 (%) [자문 필수]
+      note: null
     - name: prognostic_index_date
       type: date
       unit: null
@@ -4429,6 +5259,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 예후지수 산정 기준일 (YYYY-MM-DD) [자문 권고]
+      note: 구성요소 저장 + 점수는 규칙
     - name: ipi_score
       type: integer
       unit: null
@@ -4439,6 +5271,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: IPI 총점 (수치) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: ipi_risk_group_concept_id
       type: bigint
       concept_set: RISK_GROUP
@@ -4448,6 +5282,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: IPI 위험군. 값 집합 RISK_GROUP 의 concept_id (저위험, 저중간, 고중간, 고위험) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: ipi_risk_group_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4466,6 +5302,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 연령보정 IPI(aaIPI) 총점 (수치) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: nccn_ipi_score
       type: integer
       unit: null
@@ -4476,6 +5314,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: NCCN-IPI 총점 (수치) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: flipi_score
       type: integer
       unit: null
@@ -4486,6 +5326,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: FLIPI 총점 (수치) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: flipi2_score
       type: integer
       unit: null
@@ -4496,6 +5338,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: FLIPI2 총점 (수치) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: mipi_score
       type: integer
       unit: null
@@ -4506,6 +5350,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: MIPI 점수 (수치) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: mipi_c_risk_group_concept_id
       type: bigint
       concept_set: RISK_GROUP
@@ -4515,6 +5361,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: MIPI-c 위험군. 값 집합 RISK_GROUP 의 concept_id (저위험, 저중간, 고중간, 고위험) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: mipi_c_risk_group_source_value
       type: varchar
       desc: 병원이 고른 코드·라벨 원천값
@@ -4533,6 +5381,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 호지킨림프종 IPS 총점 (수치) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: pit_score
       type: integer
       unit: null
@@ -4543,6 +5393,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 말초T세포림프종 PIT 총점 (수치) [자문 필수]
+      note: 구성요소 저장 + 점수는 규칙
     - name: gelf_high_burden_yn
       type: float
       unit: null
@@ -4553,6 +5405,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: GELF 고종양부담 충족 여부 (수치) [자문 필수]
+      note: 구성요소는 MEASUREMENT, 점수는 규칙으로 재계산·검증
   LYMPHOMA_EVENT:
     name: LYMPHOMA_EVENT
     layer: K-AI 확장
@@ -4573,6 +5427,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -4582,6 +5438,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -4591,6 +5449,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: event_date
       type: date
       unit: null
@@ -4601,6 +5461,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: 행의 기준 사건일
+      note: null
     - name: transformation_yn
       type: integer
       concept_set: YN
@@ -4609,6 +5471,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 고등급 조직학적 전환 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: null
     - name: transformation_date
       type: date
       unit: null
@@ -4619,6 +5483,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 조직학적 전환 확정일 (YYYY-MM-DD) — transformation_yn = 1 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - transformation_yn
@@ -4632,6 +5498,9 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 전환 전 림프종 아형. 값 집합 LYMPHOMA_SUBTYPE 의 concept_id (미만성 거대B세포림프종(DLBCL, NOS), 여포림프종, 외투세포림프종, 변연부림프종 …) — transformation_yn = 1 일 때만
+        해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - transformation_yn
@@ -4653,6 +5522,9 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 전환 후 림프종 아형. 값 집합 LYMPHOMA_SUBTYPE 의 concept_id (미만성 거대B세포림프종(DLBCL, NOS), 여포림프종, 외투세포림프종, 변연부림프종 …) — transformation_yn = 1 일 때만
+        해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - transformation_yn
@@ -4673,6 +5545,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 조혈모세포이식 시행 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: null
     - name: sct_date
       type: date
       unit: null
@@ -4683,6 +5557,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 조혈모세포 주입 또는 이식일 (YYYY-MM-DD) — sct_yn = 1 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - sct_yn
@@ -4696,6 +5572,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 조혈모세포이식 유형. 값 집합 SCT_TYPE 의 concept_id (자가, 동종 형제, 동종 비혈연, 반일치 …) — sct_yn = 1 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - sct_yn
@@ -4716,6 +5594,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CAR-T 세포치료 시행 여부. 1 예 · 0 아니오 · 9 모름 [자문 필수]
+      note: null
     - name: car_t_infusion_date
       type: date
       unit: null
@@ -4726,6 +5606,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CAR-T 세포 주입일 (YYYY-MM-DD) — car_t_yn = 1 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - car_t_yn
@@ -4739,6 +5621,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: CAR-T 표적 항원. 값 집합 SCT_TYPE 의 concept_id (자가, 동종 형제, 동종 비혈연, 반일치 …) — car_t_yn = 1 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - car_t_yn
@@ -4761,6 +5645,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 백혈구성분채집일 (YYYY-MM-DD) — car_t_yn = 1 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - car_t_yn
@@ -4775,6 +5661,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 림프구감소 전처치 시작일 (YYYY-MM-DD) — car_t_yn = 1 일 때만 해당 [자문 필수]
+      note: null
       applies_when:
         _equals:
         - car_t_yn
@@ -4799,6 +5687,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: 행 고유키
+      note: null
     - name: person_id
       type: bigint
       key: fk
@@ -4808,6 +5698,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: PERSON.person_id 참조 [자문 필수]
+      note: null
     - name: visit_occurrence_id
       type: bigint
       key: fk
@@ -4817,6 +5709,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: VISIT_OCCURRENCE.visit_occurrence_id 참조 [자문 권고]
+      note: null
     - name: exam_date
       type: date
       unit: null
@@ -4827,6 +5721,8 @@ tables:
       required: true
       cohorts:
       - LYMPHOMA
+      desc: 행의 기준 사건일
+      note: null
     - name: pet_suvmax
       type: float
       unit: null
@@ -4837,6 +5733,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: PET 최고 SUVmax (수치) [자문 필수]
+      note: null
     - name: metabolic_tumor_volume_ml
       type: float
       unit: mL
@@ -4847,6 +5745,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 대사종양용적(MTV) (mL) [자문 필수]
+      note: null
     - name: total_lesion_glycolysis
       type: float
       unit: null
@@ -4857,6 +5757,8 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 총병변당분해(TLG) (수치) [자문 필수]
+      note: null
     - name: mediastinal_mass_ratio
       type: float
       unit: null
@@ -4867,3 +5769,5 @@ tables:
       required: false
       cohorts:
       - LYMPHOMA
+      desc: 종격동 종괴비(MMR) (수치) [자문 필수]
+      note: null

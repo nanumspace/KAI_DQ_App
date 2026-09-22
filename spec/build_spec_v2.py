@@ -605,6 +605,38 @@ def sheet(ws, header, rows, widths):
     for r in rows: ws.append(r)
     for i, w in enumerate(widths, 1): ws.column_dimensions[get_column_letter(i)].width = w
     ws.freeze_panes = "A2"
+# 첫 시트: 사전을 읽는 법. 열 이름만 보고는 뜻이 안 보이는 것(standard, key)을 여기서 푼다.
+_guide = xw.active; _guide.title = "읽는 법"
+for _i, _t in enumerate([
+    "K-AI 코호트 데이터 사전 v2 — 읽는 법",
+    "",
+    "이 파일은 spec/build_spec_v2.py 가 만듭니다. 손으로 고치지 말고 원천(배치표, spec/v2_*.py)을 고친 뒤 다시 만듭니다.",
+    "",
+    "시트",
+    "  저장테이블      DB 에 실제로 만드는 표 30개 (OMOP CDM 5.4 표 14 + K-AI 확장 표 16). 행 단위(grain)와 부모 표를 적었습니다.",
+    "  저장컬럼        그 표들의 컬럼 547개. 타입, 키, 참조, 값 집합(concept_set), 등급(tier), 필수 여부, 적용 코호트.",
+    "  서식            병원 담당자가 채우는 서식 24종의 필드와 그 필드가 어느 표의 어느 컬럼(또는 레코드)이 되는지(target).",
+    "  CONCEPT         K-AI 어휘. *_concept_id 컬럼에 들어가는 값과 그 값을 묶는 개념 전부.",
+    "  CONCEPT_SET     값 집합(옛 코드표)과 소속 concept. 검증기는 '값이 집합 안에 있는가'를 봅니다.",
+    "  파생변수        입력 항목이 아니라 코어 표에서 계산해 얻는 변수.",
+    "  v1 미승격 필드·분류   v1 컬럼 575개가 v2 어디로 갔는지의 대조표.",
+    "",
+    "CONCEPT 시트의 열",
+    "  concept_id      64비트 정수, 10,000,000,000 부터. 데이터에 저장되는 값입니다. 등록부(vocab/concept_registry.json)가 고정하므로 다시 만들어도 바뀌지 않습니다.",
+    "  vocabulary      이 개념의 출처. KAI = 우리가 정의한 것, SNOMED/LOINC/ATC/MedDRA/KCD/EDI/UCUM = 그 표준의 코드를 그대로 가진 것(code 열).",
+    "  class           개념의 종류. Value = 값 집합의 값 하나, Attribute = 서식 필드를 가리키는 개념, Value set = 값 집합 자체, Scale = 척도, Reference table = 열린 참조표, Unit = 단위 …",
+    "  standard        OMOP 의 standard_concept 과 같은 뜻으로 씁니다.",
+    "                    S = 데이터의 *_concept_id 컬럼에 값으로 넣어도 되는 개념 (값·속성·단위·에피소드 종류).",
+    "                    C = 분류(Classification). 다른 개념을 묶는 개념이라 값으로 넣지 않습니다 (값 집합 자체, 척도, 참조표).",
+    "                  예: '병기 체계'(C) 는 값 집합이고, 그 안의 'AJCC'(S) 가 컬럼에 들어가는 값입니다.",
+    "  표준 매핑 후보   아직 표준 코드를 붙이지 않은 개념에 대해 어느 표준의 무엇이 후보인지 적어 둔 메모.",
+    "  key             사람이 읽는 고정 식별자. 등록부·서식 정의·변환기가 concept_id 대신 이 이름으로 개념을 가리킵니다.",
+    "                    모양: TYPE_EHR(레코드 종류), CS:STAGE_SYSTEM(값 집합), CS:STAGE_SYSTEM:AJCC(값 집합의 값), F_DRUG(EPISODE_EVENT 필드) …",
+    "                  데이터에는 저장되지 않습니다. 사람과 생성기가 쓰는 이름표이고, DB 에는 concept_id 만 들어갑니다.",
+], 1):
+    _guide.cell(row=_i, column=1, value=_t)
+_guide.column_dimensions["A"].width = 150
+
 def target_text(t):
     if t["kind"] in ("anchor", "column"): return f"{t['table']}.{t['column']}"
     if t["kind"] == "attr": return f"{t['table']} 속성 ({t['value_column']}, {t['event_ref']}→{t['event_field']})"
@@ -615,7 +647,7 @@ sheet(ws, ["테이블", "층", "한글", "행 단위", "고유키", "필드 수"
 sheet(xw.create_sheet("저장컬럼"), ["테이블", "컬럼", "타입", "필수", "한글", "값 집합", "참조", "설명"], [[n, f["name"], f["type"], "Y" if f.get("required") else "", f.get("kor") or "", f.get("concept_set") or "", f.get("ref") or "", f.get("desc") or ""] for n, T in tables.items() for f in T["fields"]], [26, 34, 9, 6, 28, 22, 34, 50])
 sheet(xw.create_sheet("서식"), ["서식", "종류", "필드", "한글", "타입", "값 종류", "등급", "코드표(값 집합)", "단위", "저장 위치", "적용 코호트", "같은 뜻 항목"],
       [[n, "OMOP 투영" if n in FORM_MAP else "확장 저장", f["name"], f["kor"], f["type"], f["value_kind"], f["tier"], f.get("codelist") or "", f.get("unit") or "", target_text(f["target"]), ", ".join(COHORT_KOR[c] for c in sorted(f["cohorts"])), "; ".join(f.get("also") or [])] for n, F in forms.items() for f in F["fields"].values()], [24, 10, 30, 30, 8, 12, 6, 22, 8, 46, 26, 30])
-sheet(xw.create_sheet("CONCEPT"), ["concept_id", "한글", "영문", "domain", "vocabulary", "class", "code", "standard", "표준 매핑 후보", "key"], [[c["concept_id"], c["concept_name_ko"], c["concept_name_en"], c["domain_id"], c["vocabulary_id"], c["concept_class_id"], c["concept_code"], c["standard_concept"], c["standard_hint"], c["key"]] for c in concepts.values()], [14, 30, 30, 12, 10, 12, 22, 8, 30, 40])
+sheet(xw.create_sheet("CONCEPT"), ["concept_id", "한글", "영문", "domain", "vocabulary", "class", "code", "standard (S 값 / C 분류)", "표준 매핑 후보", "key (고정 식별자)"], [[c["concept_id"], c["concept_name_ko"], c["concept_name_en"], c["domain_id"], c["vocabulary_id"], c["concept_class_id"], c["concept_code"], c["standard_concept"], c["standard_hint"], c["key"]] for c in concepts.values()], [14, 30, 30, 12, 10, 12, 22, 8, 30, 40])
 sheet(xw.create_sheet("CONCEPT_SET"), ["값 집합", "한글", "concept_id", "코드", "라벨", "비고"], [[k, v["kor"], it["concept_id"], it["code"], it["label"], v.get("note") or ""] for k, v in concept_sets.items() for it in (v["items"] or [dict(concept_id="", code="", label="(비어 있음)")])], [26, 24, 14, 10, 30, 36])
 sheet(xw.create_sheet("파생변수"), ["변수", "한글", "코호트", "원천 테이블", "값 종류", "등급", "concept set", "표준", "메모"], [[d["name"], d["kor"], COHORT_KOR[d["cohort"]], d["source_table"], d["value_kind"], d["tier"], d.get("concept_set") or "", d.get("standard") or "", d.get("note") or ""] for d in derived], [28, 32, 10, 22, 14, 6, 20, 26, 40])
 sheet(xw.create_sheet("v1 미승격 필드"), ["목적지", "v1 필드", "한글", "타입", "처리", "설명"], [[d, e["v1"], e["kor"], e["type"], e["action"], e["desc"]] for d, es in legacy.items() for e in es], [22, 40, 28, 8, 12, 60])

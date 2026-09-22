@@ -34,7 +34,7 @@ from v2_omop_map import CONCEPT_ID_BASE, OMOP_TABLES, SEED_CONCEPTS, FORM_MAP  #
 from v2_reference_tables import REFERENCE_TABLES, FIELD_REFERENCES, TABLE_REFERENCES  # noqa: E402
 from v2_legacy_triage import classify as triage_legacy, BUCKETS as LEGACY_BUCKETS  # noqa: E402
 from v2_row_kinds import ROW_KINDS, NEEDS_REVIEW, EXTRA_CONDITIONS  # noqa: E402
-from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, SNOMED_SCALES, LOINC_SOURCE, LOINC_FIELD_CODES,  # noqa: E402
+from v2_codelists_v21 import (VALUE_SETS, ALIAS_CODELIST, SNOMED_CODES, SNOMED_SCALES, LOINC_SOURCE, LOINC_FIELD_CODES, SNOMED_FIELD_CODES,  # noqa: E402
                                PFT_ITEMS, ALCOHOL_ITEMS, COMORBIDITY_ITEMS, DRUG_CLASS_ITEMS)
 
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -193,6 +193,12 @@ for c in CODES:
 for k, v in V1_CODES.get("embedded", {}).items():
     t, f = k.split(".", 1)
     if t in KEEP_V1: codelists[f"{t}.{f}"] = dict(kor=f, standard=None, note="v1 내장 코드표", values=[dict(code=str(a), label=str(b), snomed=None, snomed_tag=None) for a, b in v.items()])
+# 2.3: 배치표에서 온 코드표(병기군·ECOG·CKD 병기·예/아니오 …)에도 SNOMED_CODES 를 적용한다.
+# 전에는 2.1 에서 새로 채운 값 집합에만 적용돼, 배치표 코드표의 값은 전부 KAI 로 남았다.
+for _cid, _cl in codelists.items():
+    for _v in _cl["values"]:
+        _hit = SNOMED_CODES.get((_cid, _v["code"]))
+        if _hit: _v["snomed"], _v["snomed_tag"] = _hit
 for F in forms.values():
     for f in F["fields"].values():
         if f.get("codelist") and "." in str(f["codelist"]) and f["codelist"] not in codelists: f["codelist"] = "CL_" + f["name"].upper()
@@ -259,6 +265,8 @@ SNOMED_TAG_DOMAIN = {
     "procedure": "Procedure", "regime/therapy": "Procedure", "qualifier value": "Meas Value",
     "morphologic abnormality": "Condition",  # OMOP Oncology 가 조직형을 진단 개념과 함께 쓰는 것에 맞춘다
     "cell": "Observation", "finding": "Observation",
+    "person": "Observation",   # 가족 관계(아버지·어머니…)는 관찰 값이다
+    "tumor staging": "Meas Value",   # 병기 체계 이름은 병기 필드의 값이다
 }
 # finding 중 질환·증상을 가리키는 것은 Observation 이 아니라 Condition 이다.
 # (검체 적정성·혼인 상태처럼 질환이 아닌 상태를 가리키는 finding 은 위 표대로 Observation.)
@@ -287,6 +295,15 @@ for F in forms.values():
         if f.get("key") or f.get("event_date"): continue
         dom = "Measurement" if f["value_kind"] == "수치" or (F["name"] in FORM_MAP and FORM_MAP[F["name"]].get("attr_default") == "MEASUREMENT") else "Observation"
         f["concept_id"] = concept(f"FIELD:{F['name']}:{f['name']}", f["kor"], f["name"], dom, "KAI", "Attribute", f"KAI-{F['name']}-{f['name']}", "S", f.get("standard"))
+# 2.3: 서식 필드 개념(Attribute)에 SNOMED observable entity 를 부여한다 (snowstorm 에서 FSN 확인한 것만).
+# 값이 아니라 "무엇을 재는 필드인가"를 가리키는 개념이다 (예: ECOG 점수 필드 → 423740007).
+snomed_field_applied = []
+for F in forms.values():
+    for f in F["fields"].values():
+        hit = SNOMED_FIELD_CODES.get(f["name"])
+        if hit and f.get("concept_id") in concepts:
+            c = concepts[f["concept_id"]]; c.update(vocabulary_id="SNOMED", concept_class_id="Observable", concept_code=hit[0], standard_hint=hit[1])
+            snomed_field_applied.append((F["name"], f["name"], hit[0]))
 # 2.1: 개별 검사값 FIELD concept 에 LOINC 코드를 부여한다 (로컬 LOINC 2.80 파일에서 확인한 것만)
 loinc_applied = []
 for F in forms.values():
@@ -313,6 +330,10 @@ for _sc in SNOMED_SCALES:
 for (_cl, _code) in SNOMED_CODES:
     if _cl in VALUE_SETS and _code not in {x[0] for x in VALUE_SETS[_cl]}:
         warnings.append(f"{_cl}: 코드표에 없는 값 {_code} 가 SNOMED_CODES 에 있다")
+    elif _cl in codelists and _cl not in VALUE_SETS and _code not in {x["code"] for x in codelists[_cl]["values"]}:
+        warnings.append(f"{_cl}: 코드표에 없는 값 {_code} 가 SNOMED_CODES 에 있다")
+    elif _cl not in codelists and _cl not in VALUE_SETS and _cl not in ("COMORBIDITY_SET",):
+        warnings.append(f"SNOMED_CODES 의 코드표 {_cl} 가 없다")
 
 for cs_id, (kor, dom, items, _adapt, note) in SPECIAL_SETS.items():
     parent = concept(f"CS:{cs_id}", kor, cs_id, dom, "KAI", "Value set", f"KAI-CS-{cs_id}", "C")

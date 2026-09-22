@@ -482,6 +482,110 @@ SNOMED_CODES = {
 # BI-RADS 처럼 범주(0~6) 하나하나를 가리키는 SNOMED 개념은 없는데 "그 필드가 무슨 척도인가"를 가리키는
 # 개념은 있는 경우가 있다. 이런 개념은 값 집합의 항목이 아니라 코드표 자신(=필드의 메타)에 붙인다.
 # key: codelist_id -> (SNOMED concept_id, 영문명). <<273249006 |Assessment scales| 하위에서 확인했다.
+# ================================================================ 2.3 (2026-09-22) · 배치표 코드표의 값 — snowstorm(MAIN 2026-09) 에서 FSN 확인
+# 배치표에서 온 코드표(병기군·ECOG·CKD 병기·예/아니오 …)는 2.1 에서 다루지 않아 전부 KAI 로 남아 있었다.
+# 값 하나하나를 조회해 확인한 것만 넣는다. 매핑하지 않은 값은 그 자리에 이유를 적는다.
+SNOMED_CODES.update({
+    # ---- STAGE_GROUP_AJCC8: SNOMED 의 AJCC 병기군 한정자는 clinical·pathological·yp 부모를 함께 가져 c/p 를 가리지 않는다 → 1:1
+    ("STAGE_GROUP_AJCC8", "0"): ("1222605001", "qualifier value"),       # AJCC stage 0
+    ("STAGE_GROUP_AJCC8", "IA"): ("1222724007", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IA1"): ("1222725008", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IA2"): ("1222726009", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IA3"): ("1222727000", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IB"): ("1222728005", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IIA"): ("1222766008", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IIB"): ("1222769001", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IIIA"): ("1222802001", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IIIB"): ("1222805004", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IIIC"): ("1222806003", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IV"): ("1222837003", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IVA"): ("1222838008", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IVB"): ("1222841004", "qualifier value"),
+    ("STAGE_GROUP_AJCC8", "IVC"): ("1222842006", "qualifier value"),
+    # ---- STAGE_CONTEXT: AJCC 접두 한정자 그대로. r(재병기)은 확인 중
+    ("STAGE_CONTEXT", "c"): ("1382023001", "qualifier value"),           # c (AJCC)
+    ("STAGE_CONTEXT", "p"): ("1382025008", "qualifier value"),           # p (AJCC)
+    ("STAGE_CONTEXT", "yc"): ("1382024007", "qualifier value"),          # yc (AJCC)
+    ("STAGE_CONTEXT", "yp"): ("1382026009", "qualifier value"),          # yp (AJCC)
+    # TNM_T·TNM_N·TNM_M: SNOMED 는 T1 이 아니라 cT1·pT1·ycT1 처럼 접두가 값에 붙는다. 우리는 STAGE_CONTEXT 로 접두를
+    #   따로 받으므로 무접두 값과 1:1 이 없다. 값은 AJCC 8판 표기 그 자체가 표준이라 KAI 로 둔다.
+    # ---- ECOG (finding)
+    ("ECOG", "0"): ("425389002", "finding"), ("ECOG", "1"): ("422512005", "finding"), ("ECOG", "2"): ("422894000", "finding"),
+    ("ECOG", "3"): ("423053003", "finding"), ("ECOG", "4"): ("423237006", "finding"), ("ECOG", "5"): ("423409001", "finding"),
+    # CTCAE_GRADE: SNOMED 에 등급 값 개념이 없다(검색 0건) → KAI
+    # DEAUVILLE: 점수 값 개념이 없다. 척도(708895006)와 observable(708896007)만 있어 필드에 붙인다 → 값은 KAI
+    # ---- CHILD_PUGH (finding)
+    ("CHILD_PUGH", "A"): ("710065009", "finding"), ("CHILD_PUGH", "B"): ("710066005", "finding"), ("CHILD_PUGH", "C"): ("710067001", "finding"),
+    # STAGE_LUGANO I~IV(E): 값 개념이 없다(호지킨 진행기 1297092006 하나뿐) → KAI
+    # ---- RESPONSE (finding). PD·NE 는 대응 개념이 없다 → KAI
+    ("RESPONSE", "CR"): ("399056007", "finding"), ("RESPONSE", "PR"): ("399204005", "finding"), ("RESPONSE", "SD"): ("399178002", "finding"),
+    # ---- CKD_STAGE (disorder)
+    ("CKD_STAGE", "G1"): ("431855005", "disorder"), ("CKD_STAGE", "G2"): ("431856006", "disorder"),
+    ("CKD_STAGE", "G3a"): ("700378005", "disorder"), ("CKD_STAGE", "G3b"): ("700379002", "disorder"),
+    ("CKD_STAGE", "G4"): ("431857002", "disorder"), ("CKD_STAGE", "G5"): ("433146000", "disorder"),
+    # ---- DR_SEVERITY (disorder). '없음' 은 질환이 아니라 부재라 KAI
+    ("DR_SEVERITY", "경증_NPDR"): ("312903003", "disorder"), ("DR_SEVERITY", "중등도_NPDR"): ("312904009", "disorder"),
+    ("DR_SEVERITY", "중증_NPDR"): ("312905005", "disorder"), ("DR_SEVERITY", "PDR"): ("59276001", "disorder"),
+    # ---- DM_TYPE (disorder). 기타 특정형·미분류 → KAI
+    ("DM_TYPE", "1형"): ("46635009", "disorder"), ("DM_TYPE", "2형"): ("44054006", "disorder"), ("DM_TYPE", "임신성"): ("11687002", "disorder"),
+    # ---- SMOKING_STATUS (finding)
+    ("SMOKING_STATUS", "현재"): ("77176002", "finding"), ("SMOKING_STATUS", "과거"): ("8517006", "finding"), ("SMOKING_STATUS", "비흡연"): ("266919005", "finding"),
+    # ---- FAMILY_RELATION (person). '3촌 이상' 은 SNOMED 의 3촌(1269487002)보다 넓어 KAI
+    ("FAMILY_RELATION", "부"): ("66839005", "person"), ("FAMILY_RELATION", "모"): ("72705000", "person"),
+    ("FAMILY_RELATION", "형제"): ("70924004", "person"), ("FAMILY_RELATION", "자매"): ("27733009", "person"),
+    ("FAMILY_RELATION", "자녀"): ("67822003", "person"), ("FAMILY_RELATION", "조부모"): ("38312007", "person"),
+    ("FAMILY_RELATION", "기타_2촌_이내"): ("699110007", "person"),         # Second degree blood relative
+    # ---- YN (qualifier value)
+    ("YN", "1"): ("373066001", "qualifier value"), ("YN", "0"): ("373067005", "qualifier value"), ("YN", "9"): ("261665006", "qualifier value"),
+    # ---- LYMPHOMA_SUBTYPE (disorder). CLL_SLL 은 disorder 층에 합친 개념이 없고(CLL 92814006·SLL 302841002 따로), 조직형 층에만
+    #   합친 개념(51092000)이 있어 층을 섞지 않으려고 KAI. OTHER → KAI
+    ("LYMPHOMA_SUBTYPE", "DLBCL"): ("109969005", "disorder"), ("LYMPHOMA_SUBTYPE", "FL"): ("308121000", "disorder"),
+    ("LYMPHOMA_SUBTYPE", "MCL"): ("443487006", "disorder"), ("LYMPHOMA_SUBTYPE", "MZL"): ("447100004", "disorder"),
+    ("LYMPHOMA_SUBTYPE", "BL"): ("118617000", "disorder"), ("LYMPHOMA_SUBTYPE", "CHL"): ("762690000", "disorder"),
+    ("LYMPHOMA_SUBTYPE", "PTCL_NOS"): ("109977009", "disorder"), ("LYMPHOMA_SUBTYPE", "HGBL"): ("277617004", "disorder"),
+    # ---- BIOMARKER_METHOD: 'technique (qualifier value)' 층으로 맞춘다.
+    #   RT_PCR 은 실시간 RT-PCR 기법(1304249001)만 있고 일반 RT-PCR 은 procedure(444077007)뿐이라 KAI.
+    #   SANGER·ARRAY·OTHER: 기법 층에 개념이 없다 → KAI
+    ("BIOMARKER_METHOD", "NGS"): ("1366450005", "qualifier value"),
+    ("BIOMARKER_METHOD", "PCR"): ("258066000", "qualifier value"),         # Polymerase chain reaction technique
+    ("BIOMARKER_METHOD", "FISH"): ("1303773004", "qualifier value"),       # Fluorescence in situ hybridization technique
+    ("BIOMARKER_METHOD", "IHC"): ("708097004", "qualifier value"),         # Immunohistochemistry technique
+    ("BIOMARKER_METHOD", "FLOW"): ("708058007", "qualifier value"),        # Flow cytometry technique
+    ("BIOMARKER_METHOD", "KARYOTYPE"): ("1306297003", "qualifier value"),  # Conventional metaphase karyotyping technique
+    # ---- STAGE_CONTEXT r
+    ("STAGE_CONTEXT", "r"): ("1370923003", "qualifier value"),           # r (AJCC)
+    # ---- AJCC R 분류 (qualifier value). 2.1 에서는 절제연 개념이 R1/R2 를 못 가른다고 KAI 로 뒀으나, AJCC 한정자 가족에 R0~RX 가 있다.
+    ("CL_RESIDUAL_TUMOR_R_CLASS", "R0"): ("1222638005", "qualifier value"), ("CL_RESIDUAL_TUMOR_R_CLASS", "R1"): ("1222639002", "qualifier value"),
+    ("CL_RESIDUAL_TUMOR_R_CLASS", "R2"): ("1222640000", "qualifier value"), ("CL_RESIDUAL_TUMOR_R_CLASS", "RX"): ("1222641001", "qualifier value"),
+    ("CL_RESECTION_MARGIN_STATUS", "R0"): ("1222638005", "qualifier value"), ("CL_RESECTION_MARGIN_STATUS", "R1"): ("1222639002", "qualifier value"),
+    ("CL_RESECTION_MARGIN_STATUS", "R2"): ("1222640000", "qualifier value"), ("CL_RESECTION_MARGIN_STATUS", "RX"): ("1222641001", "qualifier value"),
+    # ---- 시술 의도 (qualifier value, <<363675004 |Intents|)
+    ("SURG_PURPOSE", "근치"): ("373808002", "qualifier value"),           # Curative - procedure intent
+    ("SURG_PURPOSE", "고식"): ("363676003", "qualifier value"),           # Palliative intent
+    ("SURG_PURPOSE", "진단"): ("261004008", "qualifier value"),           # Diagnostic intent
+    ("SURG_PURPOSE", "예방"): ("360271000", "qualifier value"),           # Prophylaxis - intent
+    # SURG_PURPOSE 재건·이식: 의도 개념이 없다(시술 종류이지 의도가 아니다) → KAI
+    ("RT_PURPOSE", "근치"): ("373808002", "qualifier value"), ("RT_PURPOSE", "보조"): ("373846009", "qualifier value"),   # Adjuvant - intent
+    ("RT_PURPOSE", "선행"): ("373847000", "qualifier value"), ("RT_PURPOSE", "고식"): ("363676003", "qualifier value"),   # Neoadjuvant intent
+    ("RT_PURPOSE", "예방적"): ("360271000", "qualifier value"),
+    ("ANTP_THERAPY.treatment_intent_type", "1"): ("373847000", "qualifier value"),   # Neoadjuvant
+    ("ANTP_THERAPY.treatment_intent_type", "2"): ("373846009", "qualifier value"),   # Adjuvant
+    ("ANTP_THERAPY.treatment_intent_type", "3"): ("363676003", "qualifier value"),   # Palliative
+    ("ANTP_THERAPY.treatment_intent_type", "5"): ("373808002", "qualifier value"),   # Definitive → Curative intent
+    # 4 Maintenance·6 Salvage: 의도 개념이 없다 → KAI
+    # ---- 수술 접근: SNOMED 의 접근 한정자(309795001 Surgical access values)는 개복·폐쇄·경피 셋뿐. 복강경·흉강경·내시경·로봇은 확인 중
+    ("SURG_APPROACH", "개복"): ("129236007", "qualifier value"),          # Open approach - access
+    # ---- SCT_TYPE (procedure). 동종 형제·비혈연·반일치는 SNOMED 에 174241000112100(동종 조혈모세포 이식) 하나뿐이라 셋이 뭉친다 → KAI
+    ("SCT_TYPE", "자가"): ("709115004", "procedure"),                     # Transplantation of autologous hematopoietic stem cell
+    ("SCT_TYPE", "제대혈"): ("425563003", "procedure"),                   # Cord blood transplant to bone marrow
+    # ---- STAGE_SYSTEM (tumor staging). FIGO 는 부위별 체계만 있고, Lugano 체계 개념은 없다. AJCC 는 척도 개념(897275008)이
+    #   STAGE_GROUP_AJCC8 코드표에 이미 붙어 있어 값에는 따로 붙이지 않는다 → 셋 다 KAI
+    ("STAGE_SYSTEM", "Ann_Arbor"): ("254372002", "tumor staging"),      # Ann Arbor lymphoma staging system
+    # ---- STAGE_EDITION (tumor staging). 9판은 아직 개념이 없다. 8판 코드는 STAGE_GROUP_AJCC8 의 척도 개념과 같은 코드다(값과 척도, 두 자리).
+    ("STAGE_EDITION", "7"): ("443830009", "tumor staging"),             # AJCC Cancer Staging Manual, 7th edition neoplasm staging system
+    ("STAGE_EDITION", "8"): ("897275008", "tumor staging"),             # AJCC Cancer Staging Manual, 8th edition neoplasm staging system
+})
+
 SNOMED_SCALES = {
     "CL_IMAGING_DIAGNOSTIC_CLASSIFICATION": ("1348266008", "Breast Imaging and Reporting and Data System"),
     "BIRADS_DENSITY": ("1348266008", "Breast Imaging and Reporting and Data System"),  # 유방 밀도 범주도 BI-RADS 체계다
@@ -515,6 +619,57 @@ LOINC_FIELD_CODES = {
     "uacr_mg_g": ("14959-1", "Microalbumin/Creatinine [Mass Ratio] in Urine"),
     "ki67_percent": ("29593-1", "Cells.Ki-67 nuclear Ag/Cells in Tissue by Immune stain"),
     "pdl1_result": ("105304-0", "Tumor cells.PD-L1/Viable tumor cells in Tissue by Immune stain"),
+    # ---- 2.3 (2026-09-22) · 서식 필드 → LOINC. 로컬 LOINC 2.80 LoincTableCore 에서 LONG_COMMON_NAME 을 확인한 것만.
+    # 값의 뜻이 하나로 맞는 것만 넣었다. 우리 필드가 더 넓거나(ALK 발현 '또는' 재배열, TP53 변이 '또는' 17p 결실 '또는' p53 IHC,
+    # IG/TCR 클론성, MRD 방법 불문, 종양출아 등급) 좁은 것(Child-Pugh 등급 vs 총점)은 넣지 않았다.
+    "lymph_nodes_examined": ("21894-1", "Regional lymph nodes examined [#] Specimen"),
+    "lymph_nodes_positive": ("21893-3", "Regional lymph nodes positive [#] Specimen"),
+    "sentinel_nodes_examined": ("85347-3", "Sentinel lymph nodes examined [#] in Cancer specimen by Light microscopy"),
+    "sentinel_nodes_positive": ("92832-5", "Sentinel lymph nodes with metastasis [#] in Cancer specimen"),
+    "menarche_age": ("42798-9", "Age at menarche"),
+    "menopause_age": ("42802-9", "Age at menopause"),
+    "number_of_children": ("11636-8", "[#] Births.live"),
+    "fib4_index": ("98488-0", "Liver fibrosis score in Serum Calculated by FIB4"),
+    "elf_score": ("88055-9", "Liver fibrosis score in Serum or Plasma by Calculated by ELF"),
+    "ebl_ml": ("8717-1", "Surgical operation note estimated blood loss [Volume]"),
+    "family_diabetes_yn": ("97063-2", "Family history of Diabetes"),
+    "pam50_ror_score": ("76544-6", "Breast cancer 10-year risk of distant recurrence score Calculated by Prosigna"),
+    "cd3_result": ("10439-8", "CD3 Ag [Presence] in Tissue by Immune stain"),
+    "cd5_result": ("29603-8", "CD5 Ag [Presence] in Tissue by Immune stain"),
+    "cd10_result": ("40551-4", "CD10 Ag [Presence] in Tissue by Immune stain"),
+    "cd15_result": ("10436-4", "CD15 Ag [Presence] in Tissue by Immune stain"),
+    "cd19_result": ("40553-0", "CD19 Ag [Presence] in Tissue by Immune stain"),
+    "cd20_result": ("10438-0", "CD20 Ag [Presence] in Tissue by Immune stain"),
+    "cd22_result": ("49467-4", "CD22 Ag [Presence] in Tissue by Immune stain"),
+    "cd23_result": ("29617-8", "CD23 Ag [Presence] in Tissue by Immune stain"),
+    "cd30_result": ("10432-3", "CD30 Ag [Presence] in Tissue by Immune stain"),
+    "cd79a_result": ("47018-7", "CD79a Ag [Presence] in Tissue by Immune stain"),
+    "pax5_result": ("48680-3", "PAX5 Ag [Presence] in Tissue by Immune stain"),
+    "bcl2_protein_result": ("33054-8", "BCL2 Ag [Presence] in Tissue by Immune stain"),
+    "bcl6_protein_result": ("47009-6", "BCL6 Ag [Presence] in Tissue by Immune stain"),
+    "myc_protein_result": ("107218-0", "c-MYC Oncoprotein Ag [Presence] in Tissue by Immune stain"),
+    "cyclin_d1_result": ("32749-4", "Cyclin D1 cells/cells in Specimen"),
+    "sox11_result": ("107157-0", "SOX11 [Presence] in Tissue by Immune stain"),
+    "ebv_eber_result": ("68466-2", "Epstein-Barr virus-encoded RNA 1 [Presence] in Tissue by Probe"),
+    "myc_rearrangement_result": ("21750-5", "MYC gene rearrangements [Presence] in Blood or Tissue by Molecular genetics method"),
+    "bcl2_rearrangement_result": ("21095-5", "BCL2 gene rearrangements [Presence] in Blood or Tissue by Molecular genetics method"),
+    "bcl6_rearrangement_result": ("21746-3", "BCL6 gene rearrangements [Presence] in Blood or Tissue by Molecular genetics method"),
+    "t14_18_result": ("21808-1", "t(14;18)(q32;q21.3)(IGH,BCL2) fusion transcript [Presence] in Blood or Tissue by Molecular genetics method"),
+    "t11_14_result": ("21801-6", "t(11;14)(q13;q32)(CCND1,IGH) fusion transcript [Presence] in Blood or Tissue by Molecular genetics method"),
+    "dlbcl_cell_of_origin": ("93783-9", "Diffuse large B-cell lymphoma cell of origin [Type] in Tissue"),
+    "ctdna_result": ("100029-8", "Cancer related multigene analysis in Plasma cell-free DNA by Molecular genetics method"),
+    "perineural_invasion_yn": ("92837-4", "Perineural invasion [Presence] in Cancer specimen"),
+    "lymphovascular_invasion_yn": ("59544-7", "Lymph-vascular invasion Cancer specimen"),
+    "lymphatic_invasion_yn": ("33739-4", "Lymphatic.small vessel.invasion [Identifier] in Specimen by CAP cancer protocols"),
+    "vascular_invasion_yn": ("33740-2", "Venous.large vessel.invasion [Identifier] in Specimen by CAP cancer protocols"),
+    "residual_tumor_r_class": ("84892-9", "Residual tumor classification [Type] in Cancer specimen"),
+    "surgical_histologic_grade": ("33732-9", "Histology grade [Identifier] in Cancer specimen"),
+    "primary_site": ("21855-2", "Primary site Cancer"),
+    "distant_metastasis_site": ("21920-4", "Site of distant metastasis Cancer"),
+    "recurrence_date": ("21981-6", "Recurrence date first episode Cancer"),
+    "recurrence_site": ("21982-4", "Recurrence distant site(s) first episode Cancer"),
+    "initial_clinical_stage": ("21908-9", "Stage group.clinical Cancer"),
+    "rt_total_dose_gy": ("21958-4", "Regional radiation treatment Dose"),
 }
 # PFT_ITEM: 검사 항목 자체가 LOINC 코드를 가리키는 목록(값이 아니라 항목 concept 참조)
 PFT_ITEMS = [
@@ -552,3 +707,11 @@ DRUG_CLASS_ITEMS = [
     ("ANTHRACYCLINE", "안트라사이클린", "Anthracycline", "L01DB"), ("BTK_INHIBITOR", "BTK 억제제", "BTK inhibitor", "L01EL"),
     ("CHECKPOINT_INHIBITOR", "면역관문억제제", "Immune checkpoint inhibitor", "L01FF"),
 ]
+
+# ================================================================ 서식 필드(속성 개념) → SNOMED observable entity
+# 값이 아니라 필드 자체를 가리키는 개념. snowstorm(MAIN, 2026-09)에서 FSN 을 확인한 것만 넣는다.
+# 모양: 필드명 → (SNOMED ID, FSN)
+SNOMED_FIELD_CODES = {
+    "ecog_performance_status": ("423740007", "Eastern Cooperative Oncology Group performance status (observable entity)"),
+    "deauville_score": ("708896007", "Deauville five point scale score (observable entity)"),
+}

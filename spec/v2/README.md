@@ -103,6 +103,43 @@ python3 -m venv .venv && .venv/bin/pip install -r spec/requirements.txt
 - **finding 중 질환·증상은 `Condition`**: 불규칙 월경(80182007)·무월경(14302001)·촉지되는 종괴(443607001) 셋입니다. 검체 적정성·혼인 상태처럼 질환이 아닌 상태를 가리키는 finding 은 `Observation` 으로 두었습니다.
 - **폐경 상태**는 `Observation` 으로 두었습니다. 생리적 상태이지 질환이 아니라고 보았으나, `Condition` 으로 보는 견해도 있습니다.
 
+## 2.3 · 표준 용어 확대 (2026-09-22)
+
+CONCEPT 1,107개 중 `vocabulary_id = KAI` 가 892개였습니다. 값 하나하나를 snowstorm(MAIN 2026-09)과 로컬 LOINC 2.80 에서 대조해 **149개를 표준으로 올렸습니다** — SNOMED 176 → 277, LOINC 11 → 59, KAI 892 → 743.
+
+배치표에서 온 코드표(병기군·ECOG·CKD 병기·예/아니오 …)는 2.1 의 `SNOMED_CODES` 가 닿지 않아 전부 KAI 로 남아 있던 것이 컸습니다. 이제 생성기가 모든 코드표에 `SNOMED_CODES` 를 적용하고, 서식 필드 개념에도 `SNOMED_FIELD_CODES`(observable entity)를 붙입니다.
+
+**올린 것**
+
+| 코드표 | SNOMED | 비고 |
+|---|---|---|
+| STAGE_GROUP_AJCC8 (15) | AJCC 병기군 한정자 (`1222724007` IA …) | clinical·pathological·yp 부모를 함께 가져 c/p 를 가리지 않는다 → 1:1 |
+| STAGE_CONTEXT c/p/yc/yp/r | AJCC 접두 한정자 | |
+| STAGE_EDITION 7·8, STAGE_SYSTEM Ann Arbor | tumor staging 체계 개념 | Lugano·FIGO 체계 개념은 없음 |
+| ECOG 0~5 | finding | 필드에는 observable 423740007 |
+| CHILD_PUGH A/B/C, RESPONSE CR/PR/SD | finding | PD·NE 는 대응 없음 |
+| CKD_STAGE G1~G5, DR_SEVERITY, DM_TYPE, LYMPHOMA_SUBTYPE 8종 | disorder | CLL/SLL 은 disorder 층에 합친 개념이 없어 KAI |
+| SMOKING_STATUS, FAMILY_RELATION 7종, YN 예/아니오/모름 | finding · person · qualifier | |
+| BIOMARKER_METHOD NGS·PCR·FISH·IHC·FLOW·KARYOTYPE | technique (qualifier value) | RT-PCR·Sanger·array 는 기법 층에 개념 없음 |
+| 수술·방사선·항암 의도 (근치·고식·진단·예방·보조·선행) | intent (qualifier value) | 재건·이식·유지·구제는 의도 개념이 아님 |
+| AJCC R 분류 R0/R1/R2/RX (절제연 두 코드표) | qualifier value | 2.1 에서 KAI 로 뒀던 것을 AJCC 한정자 가족에서 찾음 |
+| SCT_TYPE 자가·제대혈, SURG_APPROACH 개복 | procedure · access | 동종 3종은 한 개념으로 뭉치고, 복강경·로봇 등은 접근 한정자가 없음 |
+
+서식 필드 48개에 LOINC 를 붙였습니다 — 림프절 개수 4종, 초경·폐경 나이, 출산 수, FIB-4, ELF, 실혈량, 림프종 IHC 마커 12종(CD3~PAX5, BCL2·BCL6·MYC·cyclin D1·SOX11·EBER), 재배열·전좌 5종, 세포기원, ctDNA, 침윤 4종(림프관·혈관·림프혈관·신경주위), 잔존종양 분류, 조직 등급, 원발·전이·재발 부위, 재발일, 임상 병기군, 방사선 총선량, PAM50 ROR, 당뇨 가족력. 우리 필드가 LOINC 보다 넓거나(ALK 발현 '또는' 재배열, TP53 변이 '또는' 17p 결실, IG/TCR 클론성, MRD 방법 불문) 좁은 것(Child-Pugh 등급 vs 총점)은 붙이지 않았습니다.
+
+**남은 KAI 743개의 얼굴**
+
+| 종류 | 수 | 왜 KAI 인가 |
+|---|---|---|
+| 값 집합 자체·씨앗(Type·Episode·Field·Cohort·Visit·Relationship) | 127 | 우리 모델의 구조 개념. 표준으로 바꿀 대상이 아닙니다 |
+| 서식 필드 개념(Attribute) | 309 | "이 필드가 무엇인가"를 가리키는 개념. LOINC·observable 이 있는 것만 올렸고, 나머지(병기 수식자·장루 이유·MRI 소견 …)는 표준에 대응 개념이 없습니다 |
+| 값(Value) | 307 | 아래 셋 |
+| ↳ 설계상 KAI | 30 | TNM T/N/M. SNOMED 는 cT1·pT1 처럼 접두를 값에 붙이는데 우리는 STAGE_CONTEXT 로 따로 받습니다 |
+| ↳ 출판 척도인데 SNOMED 에 값 개념이 없음 | ~150 | RECIST 기준·BI-RADS·Deauville·CTCAE·METAVIR·Wagner·NAS·Borrmann·ITBCC·mrTRG·VPI·ICH E2B(조치·결과·인과성·중대성)·IPI 위험군·Lugano 병기·수식자 |
+| ↳ 대응 개념이 없거나 뜻이 어긋남 | ~120 | 2.1 에서 사유를 적은 132건 + 이번에 확인한 것(RT-PCR·Sanger·복강경·동종 3종·CLL/SLL·PD/NE·FIGO·Lugano 체계 …) |
+
+즉 남은 것은 대부분 **표준에 자리가 없는 것**이지 매핑을 안 한 것이 아닙니다. 사유는 `spec/v2_codelists_v21.py` 의 해당 줄 주석에 있습니다.
+
 ### 척도(assessment scale) 메타
 
 BI-RADS 처럼 **범주 하나하나를 가리키는 SNOMED 개념은 없는데 "그 필드가 무슨 척도인가"를 가리키는 개념은 있는** 경우가 있습니다. 이런 개념은 값이 아니므로 값 집합의 항목이 아니라 **코드표 자신**에 붙였습니다. 코드표의 상위 concept 이 `concept_class_id=Scale` 로 그 코드를 달고, CRF 서식의 해당 필드에는 `scale:` 항목으로 드러납니다. 범주 값들은 그대로 KAI 코드입니다.

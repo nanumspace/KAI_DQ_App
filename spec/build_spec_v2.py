@@ -606,7 +606,7 @@ def sheet(ws, header, rows, widths):
     for i, w in enumerate(widths, 1): ws.column_dimensions[get_column_letter(i)].width = w
     ws.freeze_panes = "A2"
 # 첫 시트: 사전을 읽는 법. 열 이름만 보고는 뜻이 안 보이는 것(standard, key)을 여기서 푼다.
-_guide = xw.active; _guide.title = "읽는 법"
+_guide = xw.create_sheet("읽는 법", 0)
 for _i, _t in enumerate([
     "K-AI 코호트 데이터 사전 v2 — 읽는 법",
     "",
@@ -642,7 +642,7 @@ def target_text(t):
     if t["kind"] == "attr": return f"{t['table']} 속성 ({t['value_column']}, {t['event_ref']}→{t['event_field']})"
     if t["kind"] == "episode": return f"EPISODE({t['concept']})"
     return "키/기준"
-ws = xw.active; ws.title = "저장테이블"
+ws = xw["Sheet"]; ws.title = "저장테이블"   # 기본 시트를 쓴다 (active 는 이제 '읽는 법')
 sheet(ws, ["테이블", "층", "한글", "행 단위", "고유키", "필드 수", "설명"], [[n, T["layer"], T["kor"], T["grain"], T["pk"], len(T["fields"]), T["desc"]] for n, T in tables.items()], [26, 10, 18, 24, 26, 7, 70])
 sheet(xw.create_sheet("저장컬럼"), ["테이블", "컬럼", "타입", "필수", "한글", "값 집합", "참조", "설명"], [[n, f["name"], f["type"], "Y" if f.get("required") else "", f.get("kor") or "", f.get("concept_set") or "", f.get("ref") or "", f.get("desc") or ""] for n, T in tables.items() for f in T["fields"]], [26, 34, 9, 6, 28, 22, 34, 50])
 sheet(xw.create_sheet("서식"), ["서식", "종류", "필드", "한글", "타입", "값 종류", "등급", "코드표(값 집합)", "단위", "저장 위치", "적용 코호트", "같은 뜻 항목"],

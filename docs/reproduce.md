@@ -1,6 +1,6 @@
 # 재현과 빌드
 
-> **명령의 기본은 v1 입니다. v2 는 `--spec v2` 를 붙입니다**: `python rules/generate_structural_rules.py --spec v2`, `python dq/run_all.py --spec v2`, `npm run engine -- --spec v2 …`. 파이썬 의존은 `uv run --with pyyaml --with pandas --with numpy --with duckdb python …` 로 넣습니다.
+> **기본 판은 v3 입니다.** 아래 "전체 파이프라인 재현"의 v3 명령을 먼저 보세요. 이 문서의 개별 실행 예시는 v1 형태이고, 명령줄 도구의 `--spec` 기본값은 아직 v1 이므로 v3 는 `--spec v3` 를 꼭 붙입니다(앱의 기본 판과는 별개). v2 는 `--spec v2`: `python dq/run_all.py --spec v2`, `npm run engine -- --spec v2 …`. 파이썬 의존은 `uv run --with pyyaml --with pandas --with numpy --with duckdb python …` 로 넣습니다.
 
 ## 환경
 
@@ -19,9 +19,19 @@ Windows에서는 `PYTHONIOENCODING=utf-8`을 권장합니다.
 ## 전체 파이프라인 재현
 
 ```bash
-python rules/generate_structural_rules.py    # 명세 → 구조 규칙
-python dq/run_all.py                         # 6개 코호트: 생성 → 검증(clean) → 오류 주입 → 검증(dirty) → 성능 평가
+# v3 (기본)
+python spec/build_spec_v3.py                          # 수정안 엑셀(spec/client_v1/) → 명세·코드표·코호트 구성 (spec/v3/)
+python rules/generate_structural_rules.py --spec v3   # 명세 → 구조 규칙 367개 (rules/rules_structural_v3.yaml)
+python synth/generate.py --spec v3 --all              # 가상데이터 clean (synth/output/clean_v3/)
+python synth/inject_faults_v3.py --all               # 오류 주입 → synth/output/dirty_v3/ + fault_manifest.csv
+python dq/run_all.py --spec v3                        # 6개 코호트: 생성 → 검증(clean) → 오류 주입 → 검증(dirty) → 성능 평가
+
+# 이전 판 (--spec 생략 = v1)
+python rules/generate_structural_rules.py             # v1 (--spec v2 로 v2)
+python dq/run_all.py                                  # v1 (--spec v2 로 v2)
 ```
+
+`dq/run_all.py --spec v3` 는 생성·주입을 포함하므로 앞의 `synth/` 두 줄은 개별 단계를 따로 돌릴 때만 필요합니다. 교차 규칙 `rules/rules_semantic_v3.yaml` 은 손으로 고칩니다. v3 의 출처와 한계는 [`spec/v3/README.md`](../spec/v3/README.md).
 
 `run_all.py`는 코호트마다 시드를 고정하므로(20260907 + 코호트 순번) 결과가 재현됩니다. 실행 후 `synth/output/`과 `dq/reports/`가 저장소에 든 것과 같은 내용으로 다시 만들어집니다.
 
@@ -37,9 +47,16 @@ python dq/engine.py --cohort LUNG_CANCER --data synth/output/dirty/LUNG_CANCER -
 python dq/verify.py --cohort LUNG_CANCER
 ```
 
-## 사전 v2 (재설계 초안)
+v3 로 같은 일을 하려면 `--spec v3` 를 붙이고 `clean_v3`·`dirty_v3` 폴더를 씁니다:
 
-`spec/v2/` 는 전문가 자문을 반영해 재설계한 데이터 모델 초안입니다. 저장 테이블은 OMOP CDM 5.4 + Oncology(EPISODE) 구조를 그대로 쓰고, concept_id 는 K-AI 자체 어휘(`spec/v2/vocab/`, 10,000,000,000 부터)이며, 병원은 CRF 서식을 채우고 앱이 서식→레코드 규칙으로 저장 테이블을 만듭니다. 원천은 비공개 배치표와 `spec/v2_field_names.py`, `spec/v2_omop_map.py` 이며, `spec/build_spec_v2.py` 가 명세·서식·어휘·예시·팀 배포용 사전·보고서를 재생성합니다. 자세한 구조는 `spec/v2/README.md`, 레코드 예시는 `spec/v2/crf_to_omop_examples.md` 에 있습니다. 규칙·가상데이터·앱은 아직 v1 명세를 읽습니다.
+```bash
+python dq/engine.py --spec v3 --cohort LUNG_CANCER --data synth/output/clean_v3/LUNG_CANCER --out dq/reports/clean_v3_LUNG_CANCER
+cd dq-ts && npm run engine -- --spec v3 --cohort LUNG_CANCER --data ../synth/output/clean_v3/LUNG_CANCER --out output/reports/clean_v3_LUNG_CANCER
+```
+
+## 사전 v2 (이전 판)
+
+`spec/v2/` 는 전문가 자문을 반영해 재설계한 데이터 모델 초안입니다. 저장 테이블은 OMOP CDM 5.4 + Oncology(EPISODE) 구조를 그대로 쓰고, concept_id 는 K-AI 자체 어휘(`spec/v2/vocab/`, 10,000,000,000 부터)이며, 병원은 CRF 서식을 채우고 앱이 서식→레코드 규칙으로 저장 테이블을 만듭니다. 원천은 비공개 배치표와 `spec/v2_field_names.py`, `spec/v2_omop_map.py` 이며, `spec/build_spec_v2.py` 가 명세·서식·어휘·예시·팀 배포용 사전·보고서를 재생성합니다. 자세한 구조는 `spec/v2/README.md`, 레코드 예시는 `spec/v2/crf_to_omop_examples.md` 에 있습니다. 규칙(`--spec v2`)·가상데이터·앱도 v2 를 읽습니다. 현재 앱의 기본 판은 v3 입니다.
 
 ## TypeScript 엔진
 
@@ -66,7 +83,7 @@ npm run dist:win                 # Windows 설치 파일 (Windows 에서)
 ```
 
 - 개발 모드에서는 명세 위치가 저장소 루트이고, 실행 이력은 OS의 앱 데이터 폴더(`~/Library/Application Support/kai-quality-validator` 또는 `%APPDATA%`)에 저장됩니다.
-- 설치본은 `spec/`, `rules/` YAML과 `synth/output/clean` 견본 데이터를 `resources/kai/`에 내장합니다.
+- 설치본은 `spec/`(v1·v2·v3), `rules/` YAML과 견본 데이터(`synth/output/clean`·`clean_v2`·`clean_v3`)를 `resources/kai/`에 내장합니다.
 - DuckDB는 네이티브 모듈이라 `asarUnpack`으로 풀어 둡니다.
 - 앱 아이콘은 `app/build/icon.svg`(원본)와 `app/build/icon.png`(1024×1024)입니다. electron-builder가 PNG를 macOS icns와 Windows ico로 변환합니다. SVG를 고치면 `qlmanage -t -s 1024 -o app/build app/build/icon.svg && mv app/build/icon.svg.png app/build/icon.png`으로 다시 만듭니다.
 
@@ -89,7 +106,7 @@ npm run dist:win                 # Windows 설치 파일 (Windows 에서)
 | 빌드 준비 | 타입 검사, `electron-vite build`. 빌드 대상 플랫폼의 DuckDB 바이너리만 `node_modules/@duckdb/` 에 남기고 나머지는 잠시 치움 (Windows 바이너리는 npm 레지스트리에서 받아 `~/Library/Caches/kai-release/` 에 보관) |
 | macOS | `electron-builder --mac --arm64`. hardened runtime 으로 Developer ID 서명, 앱 공증과 staple 은 electron-builder 가 `APPLE_KEYCHAIN_PROFILE` 로 수행. 이어서 DMG 자체를 `notarytool` 로 공증하고 staple (오프라인 PC 에서도 경고 없이 열리도록) |
 | Windows | x64, arm64 각각 `electron-builder --win`. exe 마다 `app/build/sign-win.cjs` 훅이 `osslsigncode` 로 토큰 서명 (PKCS#11 은 OpenSC 모듈, 중간 인증서 `app/build/globalsign-ev-codesigning-ca-2020.pem` 첨부, RFC 3161 타임스탬프) |
-| 견본 데이터 | `app/build/pack-samples.cjs` 가 `synth/output/` 의 clean/dirty 를 코호트별 zip 12개와 전체 묶음 1개로 만듦. 각 zip 에 CSV, 시트당 테이블 엑셀, (dirty) `fault_manifest.csv`, 기대 결과를 적은 README.txt |
+| 견본 데이터 | `app/build/pack-samples.cjs` 가 `synth/output/{clean,dirty}_v3` (인자로 v1·v2 도 선택, 기본 v3) 를 코호트별 zip 12개와 전체 묶음 1개로 만듦. 릴리스 0.3.0 부터 견본 zip 은 v3. 각 zip 에 CSV, 시트당 테이블 엑셀, (dirty) `fault_manifest.csv`, 기대 결과를 적은 README.txt |
 | 검증 | `osslsigncode verify`, `spctl -a -t open`, `xcrun stapler validate`, `SHA256SUMS.txt` (설치 파일과 견본 zip) |
 | 게시 | 태그 `v<버전>` 생성과 push, `gh release create` 로 DMG·exe·SHA256SUMS 첨부. `--replace` 를 주면 같은 버전의 기존 Release 와 태그를 지우고 다시 게시 |
 

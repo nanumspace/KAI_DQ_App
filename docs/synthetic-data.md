@@ -1,6 +1,8 @@
 # 가상데이터
 
-> **이 문서는 v1 생성기를 설명합니다.** v2 는 `synth/framework_v2.py` 와 `synth/scenarios/*_v2.py`(6개 코호트), `synth/inject_faults_v2.py`(규칙에서 오류 유형을 뽑는 주입기)로 같은 여정을 v2 저장 구조에 적습니다. `python synth/generate.py --spec v2 --all`. 명세에 없는 컬럼이나 값 집합에 없는 코드를 쓰면 그 자리에서 멈추고, 사망을 여정 뒤에 정하면 걸쇠에 걸립니다.
+> **기본 판 v3 의 생성기** 는 `synth/framework_v3.py` 와 `synth/scenarios/` 의 v3 시나리오이고, `python synth/generate.py --spec v3 --all` 로 `synth/output/clean_v3/<COHORT>/` 를 만듭니다. 오류는 `synth/inject_faults_v3.py` 가 규칙에서 오류 유형을 뽑아 `synth/output/dirty_v3/<COHORT>/`(와 `fault_manifest.csv`)에 주입합니다(코호트당 212~275건). 릴리스의 견본 데이터 zip 도 이 v3 폴더입니다. clean 은 6개 코호트 모두 위반 0, dirty 는 전부 검출됩니다.
+>
+> **아래 본문은 v1 생성기를 설명합니다.** v2 는 `synth/framework_v2.py` 와 `synth/scenarios/*_v2.py`(6개 코호트), `synth/inject_faults_v2.py`(규칙에서 오류 유형을 뽑는 주입기)로 같은 여정을 v2 저장 구조에 적습니다. `python synth/generate.py --spec v2 --all`. 명세에 없는 컬럼이나 값 집합에 없는 코드를 쓰면 그 자리에서 멈추고, 사망을 여정 뒤에 정하면 걸쇠에 걸립니다.
 
 검증 프로그램의 개발과 시험에 쓰는 데이터는 모두 가상데이터입니다. 저장소의 `synth/output/`에 들어 있는 CSV는 실제 환자와 무관하며, 같은 시드로 다시 생성하면 같은 내용이 나옵니다.
 
@@ -47,4 +49,4 @@ clean 데이터에 오류 유형 30여 종을 각 2~3건씩 주입하고, 오류
 
 ## 저장소에 포함된 데이터
 
-`synth/output/clean/`과 `synth/output/dirty/`를 모두 저장소에 포함합니다. clean은 앱 설치본의 견본 데이터로 빌드에 필요하고, dirty와 manifest는 TypeScript 엔진의 회귀 시험(`dq-ts`의 `npm test`)이 읽습니다. 다시 만들려면 [reproduce.md](reproduce.md)를 보세요.
+`synth/output/clean*/`과 `synth/output/dirty*/`(v1·v2·v3 각각, v3 는 `clean_v3`·`dirty_v3`)를 모두 저장소에 포함합니다. clean은 앱 설치본의 견본 데이터로 빌드에 필요하고, dirty와 manifest는 TypeScript 엔진의 회귀 시험(`dq-ts`의 `npm test`)이 읽습니다. 다시 만들려면 [reproduce.md](reproduce.md)를 보세요.

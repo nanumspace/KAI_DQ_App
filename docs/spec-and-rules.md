@@ -1,6 +1,33 @@
 # 명세와 규칙 카탈로그
 
-> **이 문서는 v1 명세와 규칙(16 테이블 · 1,105 필드 · 규칙 1,196개)을 설명합니다.** 현재 앱의 기본은 **v2** 입니다: `spec/v2/kai_cdm_spec_v2.yaml`(표 30개 · 필드 547개), `rules/rules_structural_v2.yaml`(1,038개, `python rules/generate_structural_rules.py --spec v2`), `rules/rules_semantic_v2.yaml`(40개). v2 에서 더해진 검사는 값 집합(`concept_set`·`concept_code`), 조건부 필수(`not_null_when`·`not_null_either`), 복합 PK 입니다. 자세한 것은 [`spec/v2/README.md`](../spec/v2/README.md).
+> **앱의 기본은 v3 입니다.** 이 문서의 본문(속성 표, 이벤트 그룹, 규칙 카탈로그)은 v1 명세(16 테이블 · 1,105 필드 · 규칙 1,196개)를 풀어 쓴 것이고, v3 는 v1 과 같은 모양이라 속성과 검사 유형의 설명이 그대로 통합니다. 판별 요약은 아래 표에 있습니다.
+>
+> | 판 | 규모 | 설명 |
+> |---|---|---|
+> | **v3 (기본)** | 표 17개 · 필드 169개 · 규칙 389개 (구조 367 + 교차 22) | 2026-09-30 의뢰사 매뉴얼 + 10/1 검토 결정(제안 21건 중 14건 채택). [`spec/v3/README.md`](../spec/v3/README.md) |
+> | v2 (이전 판) | 표 30개 · 필드 547개 · 규칙 1,078개 (구조 1,038 + 교차 40) | OMOP CDM 5.4 + K-AI 확장. 병원은 서식을 채우고 앱이 변환. [`spec/v2/README.md`](../spec/v2/README.md) |
+> | v1 (이전 판) | 표 16개 · 필드 1,105개 · 규칙 1,196개 (구조 1,121 + 교차 75) | 이 문서 본문. 질환별 단일 표 |
+>
+> v2·v1 은 앱의 **설정 → 명세 판**에서 고를 수 있습니다. v2 에서 더해진 검사는 값 집합(`concept_set`·`concept_code`), 조건부 필수(`not_null_when`·`not_null_either`), 복합 PK 입니다.
+
+## 기본 판 v3
+
+의뢰사의 2026-09-30 매뉴얼에 2026-10-01 검토 결정을 반영한 명세입니다. 코호트마다 질환 본표 하나와 OMOP 형식 공통 표를 두고, **병원이 표를 직접 채웁니다**(서식·CRF 변환 없음). 코드는 v1 처럼 문자열 코드표로 받습니다.
+
+| 항목 | 내용 |
+|---|---|
+| 명세 | `spec/v3/kai_cdm_spec_v3.yaml` (표 17개: core 8 · 질환 6 · 확장 2(SACT, ADVERSE_EVENT) · 참조 1(DRUG_INGREDIENT_STRUCTURE) · 필드 169개), `codelists_v3.yaml`, `cohort_profiles_v3.yaml` |
+| 구조 규칙 | `rules/rules_structural_v3.yaml` 367개 (명세에서 자동 생성) |
+| 교차 규칙 | `rules/rules_semantic_v3.yaml` 22개 (손으로 작성, DuckDB SQL, id `SEM3-*`: 공통 10 · SACT 6 · 폐암 4 · 림프종 2) |
+| 코호트별 적용 규칙 | 폐암 287 · 유방암 287 · 대장암 270 · MASLD 251 · 당뇨병 247 · 림프종 281 |
+| 코호트별 표 | PERSON, VISIT_OCCURRENCE, PROCEDURE_OCCURRENCE, DRUG_EXPOSURE, CONDITION_OCCURRENCE, MEASUREMENT, OBSERVATION, NOTE, 질환 본표, ADVERSE_EVENT, SACT(MASLD·당뇨병 제외), DRUG_INGREDIENT_STRUCTURE |
+| 실행 전 필수 표 | PERSON 과 질환 본표 (없으면 실행이 막힘) |
+
+9/30 매뉴얼 대비 달라진 점: 치료 표 `SACT`(키 `sact_id`, ATC L01 항종양제 투여일 때만 필수), `DRUG_EXPOSURE.note_id` 삭제, SMILES 는 성분별 `DRUG_INGREDIENT_STRUCTURE` 로 이동, 폐암 ICD-O-3 조직형·부위 열과 AJCC 판수 열, 림프종 ICD-O-3 조직형 열, `OBSERVATION.value_as_concept_id`, `*_source_value` 열, `cell_of_origin` 은 DLBCL 일 때만 필수, 소세포폐암 제한기/확장기 병기 허용, `diag_rgst_ymd` 는 진단일, 비어 있던 필수 여부 채움.
+
+알려진 한계: Athena 어휘가 없어 concept 의 존재·표준 여부는 검증하지 못하고 OMOP 코드표는 경고 수준이며, 항암제 판정은 앱 내장 항암제 목록을 씁니다. 자세한 것은 [`spec/v3/README.md`](../spec/v3/README.md). 아래 속성·이벤트 그룹·규칙 카탈로그 설명은 v1 기준이며, v3 의 실제 규칙 목록은 앱의 **검증 규칙 관리** 화면이나 `rules/*_v3.yaml` 에서 봅니다.
+
+## v1 명세 (이전 판)
 
 ## 기계 판독 명세 (`spec/`)
 

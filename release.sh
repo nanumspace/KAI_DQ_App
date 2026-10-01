@@ -224,6 +224,8 @@ NOTES="$(mktemp)"
 {
   echo "## Quality Validator $TAG"
   echo
+  # 버전별 변경 사항이 있으면 맨 앞에 싣는다 (docs/release-notes/<태그>.md)
+  if [ -f "$ROOT/docs/release-notes/$TAG.md" ]; then cat "$ROOT/docs/release-notes/$TAG.md"; echo; fi
   echo "| 파일 | 대상 | 서명 |"
   echo "|---|---|---|"
   for f in "$OUT"/*.dmg; do [ -f "$f" ] && echo "| \`$(basename "$f")\` | macOS (Apple Silicon) | Developer ID 서명, Apple 공증 |"; done

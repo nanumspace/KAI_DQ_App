@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quality Validator · K-AI 코호트 데이터 품질검증</title>
-  <meta name="description" content="K-AI 6개 질환 코호트 데이터를 병원 안에서 스스로 점검하는 데스크톱 프로그램. 규칙 1,078개, 네트워크 통신 없음, 환자 단위 정보는 밖으로 나가지 않습니다.">
+  <meta name="description" content="K-AI 6개 질환 코호트 데이터를 병원 안에서 스스로 점검하는 데스크톱 프로그램. 규칙 389개, 네트워크 통신 없음, 환자 단위 정보는 밖으로 나가지 않습니다.">
   <meta property="og:title" content="Quality Validator · K-AI 코호트 데이터 품질검증">
-  <meta property="og:description" content="EHR 추출본과 서식을 넣고 실행하면 적합성·완전성·타당성 규칙 1,078개를 검사해 보고서와 중앙 제출용 집계를 만듭니다. Windows · macOS, 오프라인.">
+  <meta property="og:description" content="코호트 테이블 파일을 넣고 실행하면 적합성·완전성·타당성 규칙 389개를 검사해 보고서와 중앙 제출용 집계를 만듭니다. Windows · macOS, 오프라인.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23003B73'/%3E%3Cstop offset='.62' stop-color='%23275BAB'/%3E%3Cstop offset='1' stop-color='%2300C2D1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Crect x='14' y='15' width='36' height='32' rx='4' fill='%23fff'/%3E%3Crect x='14' y='15' width='36' height='8' rx='4' fill='%23003B73'/%3E%3Crect x='14' y='19' width='36' height='4' fill='%23003B73'/%3E%3Cpath d='M14 31h36M14 39h36M26 23v24M38 23v24' stroke='%23D9E2EC' stroke-width='1.5'/%3E%3Ccircle cx='47' cy='46' r='11' fill='%2300C2D1' stroke='%23fff' stroke-width='2.5'/%3E%3Cpath d='M41.5 46.5l4 4 7.5-8.5' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <style>
@@ -296,10 +296,10 @@
         <div>
           <p class="eyebrow"><span class="pulse"></span> <span data-i18n="hero.eyebrow">Windows · macOS · 오프라인 · Apache-2.0</span></p>
           <h1 data-i18n="hero.title">코호트 데이터,<br>병원 안에서 <span class="grad">먼저 검증</span>합니다.</h1>
-          <p class="lede" data-i18n="hero.lede">폐암·유방암·대장암·대사이상지방간·당뇨병·림프종 6개 K-AI 코호트의 EHR 추출본과 서식을 넣고 실행하면, 명세 적합성·완전성·타당성 규칙 1,078개를 검사해 보고서와 중앙 제출용 집계를 만듭니다. 병원 DB 에 접속하지 않고 네트워크 통신도 없습니다.</p>
+          <p class="lede" data-i18n="hero.lede">폐암·유방암·대장암·대사이상지방간·당뇨병·림프종 6개 K-AI 코호트의 테이블 파일(질환 본표와 OMOP 형식 공통 표)을 넣고 실행하면, 명세 적합성·완전성·타당성 규칙 389개를 검사해 보고서와 중앙 제출용 집계를 만듭니다. 병원 DB 에 접속하지 않고 네트워크 통신도 없습니다.</p>
           <div class="hero-actions">
             <a class="btn btn-accent" href="#download" data-i18n="hero.dl">설치 파일 받기</a>
-            <a class="btn btn-ghost" href="manual/README.md" data-i18n="hero.manual">사용자 설명서</a>
+            <a class="btn btn-ghost" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/manual/README.md" data-i18n="hero.manual">사용자 설명서</a>
           </div>
           <div class="chips">
             <span><b class="tick">✓</b> <span data-i18n="hero.chip1">CSV(UTF-8·EUC-KR) · 엑셀 · 폴더</span></span>
@@ -318,7 +318,7 @@
             <div class="m" data-i18n="mock.m4">⌂ 대시보드</div>
             <div class="m" data-i18n="mock.m5">▥ 통계 모니터링</div>
             <div class="m" data-i18n="mock.m6">☰ 검증 규칙 관리</div>
-            <div class="ft" data-i18n="mock.ft">v2 · 규칙 1,078개 · 코호트 6개<br>v0.2.0</div>
+            <div class="ft" data-i18n="mock.ft">v3 · 규칙 389개 · 코호트 6개<br>v0.3.0</div>
           </div>
           <div class="main">
             <div class="hd" data-i18n="mock.hd">검증 실행 · 폐암 (LUNG_CANCER)</div>
@@ -333,14 +333,14 @@
               <thead><tr><th data-i18n="mock.th1">테이블</th><th data-i18n="mock.th2">파일 / 시트</th><th class="n" data-i18n="mock.th3">행</th><th data-i18n="mock.th4">점검</th></tr></thead>
               <tbody>
                 <tr><td>PERSON</td><td>cohort.xlsx / PERSON</td><td class="n">100</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
-                <tr><td>VISIT_OCCURRENCE</td><td>visit_2026.csv</td><td class="n">1,867</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
-                <tr><td>MEASUREMENT</td><td>검사결과.csv (EUC-KR)</td><td class="n">7,363</td><td><span class="pill-s p-warn" data-i18n="mock.warn">날짜 형식 표본</span></td></tr>
-                <tr><td>DRUG_EXPOSURE</td><td>drug.csv</td><td class="n">1,361</td><td><span class="pill-s p-warn" data-i18n="mock.alias">별칭 antp_id</span></td></tr>
-                <tr><td>LUNG_CANCER</td><td>cohort.xlsx / LUNG_CANCER</td><td class="n">2,082</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
-                <tr><td>ADVERSE_EVENT</td><td>ae.csv</td><td class="n">255</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
+                <tr><td>VISIT_OCCURRENCE</td><td>visit_2026.csv</td><td class="n">1,870</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
+                <tr><td>MEASUREMENT</td><td>검사결과.csv (EUC-KR)</td><td class="n">7,430</td><td><span class="pill-s p-warn" data-i18n="mock.warn">날짜 형식 표본</span></td></tr>
+                <tr><td>SACT</td><td>sact.csv</td><td class="n">126</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
+                <tr><td>LUNG_CANCER</td><td>cohort.xlsx / LUNG_CANCER</td><td class="n">100</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
+                <tr><td>ADVERSE_EVENT</td><td>ae.csv</td><td class="n">236</td><td><span class="pill-s p-ok" data-i18n="mock.ok">이상 없음</span></td></tr>
               </tbody>
             </table>
-            <div class="runbar"><span class="b" data-i18n="mock.run">검증 실행</span><span class="bar"><i></i></span><span data-i18n="mock.prog">규칙 427개 중 308개 · 교차 검증 중</span></div>
+            <div class="runbar"><span class="b" data-i18n="mock.run">검증 실행</span><span class="bar"><i></i></span><span data-i18n="mock.prog">규칙 287개 중 198개 · 교차 검증 중</span></div>
           </div>
         </div>
       </div>
@@ -348,8 +348,8 @@
 
     <section class="stats">
       <div class="wrap">
-        <div class="stat reveal"><div class="big">1,078<em data-i18n="stat1.u">규칙</em></div><div class="cap" data-i18n="stat1.cap">구조 규칙 1,038개는 명세에서 자동 생성, 교차 테이블 SQL 규칙 40개는 임상 논리로 작성. 코호트마다 341~531개가 적용됩니다.</div></div>
-        <div class="stat reveal"><div class="big">6<em data-i18n="stat2.u">코호트</em></div><div class="cap" data-i18n="stat2.cap">OMOP CDM 5.4 표 14개 + K-AI 확장 표 16개, 547개 필드 명세. 서식 24종을 저장 테이블로 바꿔 줍니다.</div></div>
+        <div class="stat reveal"><div class="big">389<em data-i18n="stat1.u">규칙</em></div><div class="cap" data-i18n="stat1.cap">구조 규칙 367개는 명세에서 자동 생성, 교차 테이블 SQL 규칙 22개는 임상 논리로 작성. 코호트마다 247~287개가 적용됩니다.</div></div>
+        <div class="stat reveal"><div class="big">6<em data-i18n="stat2.u">코호트</em></div><div class="cap" data-i18n="stat2.cap">질환 본표 하나와 OMOP 형식 공통 표로 표 17개, 169개 필드 명세(v3). 서식 변환 없이 병원이 표를 직접 채웁니다.</div></div>
         <div class="stat reveal"><div class="big">0<em data-i18n="stat3.u">네트워크</em></div><div class="cap" data-i18n="stat3.cap">DB 접속 없음, 통신 없음. 중앙에 보내는 것은 환자 정보가 없는 집계 파일 하나.</div></div>
       </div>
     </section>
@@ -372,7 +372,7 @@
             <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h7M4 12h7M4 17h7M15 7h5M15 12h5M15 17h5"/><path d="M11 12h4"/></svg></div>
             <h3 data-i18n="f2.h">테이블 자동 대응</h3>
             <p data-i18n="f2.p">파일·시트 이름이 테이블 이름과 달라도 이름 포함 여부와 헤더 유사도(명세 컬럼 60% 이상)로 대응하고, 틀리면 대응표에서 직접 고릅니다.</p>
-            <div class="tags"><b data-i18n="f2.t1">헤더 유사도</b><b data-i18n="f2.t2">별칭 antp_therapy_id</b></div>
+            <div class="tags"><b data-i18n="f2.t1">헤더 유사도</b><b data-i18n="f2.t2">대소문자 무시</b></div>
           </article>
           <article class="card reveal">
             <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 8-7 10-4-2-7-5.6-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
@@ -382,14 +382,14 @@
           </article>
           <article class="card reveal">
             <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div>
-            <h3 data-i18n="f4.h">Kahn 세 축 규칙 1,078개</h3>
-            <p data-i18n="f4.p">적합성(형식·코드·관계), 완전성(필수값·기준일), 타당성(범위·논리)으로 분류합니다. 구조 규칙은 명세에서 자동 생성되고, 교차 테이블 규칙은 DuckDB SQL 로 실행됩니다.</p>
+            <h3 data-i18n="f4.h">Kahn 세 축 규칙 389개</h3>
+            <p data-i18n="f4.p">적합성(형식·코드·관계), 완전성(필수값·기준일), 타당성(범위·논리)으로 분류합니다. 구조 규칙은 명세에서 자동 생성되고, 교차 테이블 규칙은 DuckDB SQL 로 실행됩니다. 이전 판 v2·v1 은 설정에서 고를 수 있습니다.</p>
             <div class="tags"><b data-i18n="f4.t1">적합성</b><b data-i18n="f4.t2">완전성</b><b data-i18n="f4.t3">타당성</b></div>
           </article>
           <article class="card reveal">
             <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6"/></svg></div>
             <h3 data-i18n="f5.h">임상 논리 교차 검증</h3>
-            <p data-i18n="f5.p">사망 이후 이벤트, 이벤트일이 방문 기간 밖, 약물 종료일 계산, TNM 조합, 방사선 총선량, FIB-4 재계산, Deauville 와 대사 반응처럼 테이블을 넘나드는 75개 규칙을 질환별로 실행합니다.</p>
+            <p data-i18n="f5.p">사망 이후 이벤트, 이벤트-방문 환자 일치, 약물 종료일 계산, 항종양제 투여의 sact_id 필수, 항암요법 기간과 line 번호, AJCC 판수와 병기, ICD-O-3 코드와 조직형, DLBCL 의 cell_of_origin 처럼 테이블을 넘나드는 22개 규칙을 실행합니다.</p>
             <div class="tags"><b data-i18n="f5.t1">공통 30</b><b data-i18n="f5.t2">암 공통 8</b><b data-i18n="f5.t3">질환별 37</b></div>
           </article>
           <article class="card reveal">
@@ -413,7 +413,7 @@
           <article class="card reveal">
             <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 3h4v4l-3 1v2l3 1v4h-4l-1 3H9l-1-3H4v-4l3-1v-2L4 10V6h4z"/></svg></div>
             <h3 data-i18n="f9.h">Python 과 동등한 엔진</h3>
-            <p data-i18n="f9.p">앱의 TypeScript 엔진은 Python 참조 구현과 6개 코호트 clean·dirty 12회 실행에서 위반 행과 보고서가 바이트 단위로 일치하며, 회귀 시험이 이를 고정합니다. 가상데이터에서 오탐 0, 주입 오류 601건 전부 검출. 2,000명 규모에서도 위반 0.</p>
+            <p data-i18n="f9.p">앱의 TypeScript 엔진은 Python 참조 구현과 6개 코호트 clean·dirty 12회 실행에서 위반 행과 보고서가 바이트 단위로 일치하며(v1·v2·v3), 회귀 시험이 이를 고정합니다. v3 가상데이터에서 6개 코호트 모두 clean 위반 0, 주입 오류 1,497건 전부 검출.</p>
             <div class="tags"><b data-i18n="f9.t1">재현율 1.00</b><b data-i18n="f9.t2">오탐 0</b></div>
           </article>
         </div>
@@ -427,7 +427,7 @@
             <p class="sec-eyebrow" data-i18n="flow.eyebrow">사용 흐름</p>
             <h2 class="sec-title" data-i18n="flow.title">네 단계면<br>제출 준비가 끝납니다.</h2>
             <ol style="margin-top:24px">
-              <li><b class="n">1</b><div><h3 data-i18n="flow.s1h">코호트와 파일</h3><p data-i18n="flow.s1p">코호트를 고르고 파일이나 폴더를 넣습니다. 입력 양식과 견본 데이터는 앱에서 내려받습니다.</p></div></li>
+              <li><b class="n">1</b><div><h3 data-i18n="flow.s1h">코호트와 파일</h3><p data-i18n="flow.s1p">코호트를 고르고 채운 테이블 파일(CSV·엑셀·폴더)을 넣습니다. 입력 양식과 견본 데이터는 앱에서 내려받습니다.</p></div></li>
               <li><b class="n">2</b><div><h3 data-i18n="flow.s2h">테이블 대응과 사전 점검</h3><p data-i18n="flow.s2p">자동 대응표를 확인하고, 오류가 있으면 먼저 해결합니다. 미리보기로 앞부분 몇 줄을 봅니다.</p></div></li>
               <li><b class="n">3</b><div><h3 data-i18n="flow.s3h">검증 실행</h3><p data-i18n="flow.s3p">진행률이 표시되고 화면은 계속 쓸 수 있습니다. 질환당 100명 규모는 수 초, 큰 데이터는 수 분.</p></div></li>
               <li><b class="n">4</b><div><h3 data-i18n="flow.s4h">결과와 출력물</h3><p data-i18n="flow.s4p">요약을 보고 다섯 파일을 열거나 결과 폴더로 내보냅니다. 중앙에는 submission.json 만 보냅니다.</p></div></li>
@@ -436,15 +436,15 @@
           <div class="result-card reveal" aria-hidden="true">
             <div class="rh"><b data-i18n="res.title">검증 결과 · 폐암 dirty 견본</b><span>2026-09-07</span></div>
             <div class="tiles">
-              <div class="tile"><div class="v">44,917</div><div class="k" data-i18n="res.k1">검사 행 수</div></div>
-              <div class="tile err"><div class="v">172</div><div class="k" data-i18n="res.k2">위반 건수</div></div>
-              <div class="tile"><div class="v">0.38%</div><div class="k" data-i18n="res.k3">오류율</div></div>
-              <div class="tile ok"><div class="v">427</div><div class="k" data-i18n="res.k4">실행 규칙</div></div>
+              <div class="tile"><div class="v">13,360</div><div class="k" data-i18n="res.k1">검사 행 수</div></div>
+              <div class="tile err"><div class="v">936</div><div class="k" data-i18n="res.k2">위반 건수</div></div>
+              <div class="tile"><div class="v">7.0%</div><div class="k" data-i18n="res.k3">오류율</div></div>
+              <div class="tile ok"><div class="v">287</div><div class="k" data-i18n="res.k4">실행 규칙</div></div>
             </div>
             <div class="kahn">
-              <div class="row"><span data-i18n="res.c1">적합성</span><span class="bar"><i style="width:58%;background:#275bab"></i></span><span class="n">98</span></div>
-              <div class="row"><span data-i18n="res.c2">완전성</span><span class="bar"><i style="width:22%;background:#00c2d1"></i></span><span class="n">37</span></div>
-              <div class="row"><span data-i18n="res.c3">타당성</span><span class="bar"><i style="width:23%;background:#003b73"></i></span><span class="n">37</span></div>
+              <div class="row"><span data-i18n="res.c1">적합성</span><span class="bar"><i style="width:65%;background:#275bab"></i></span><span class="n">612</span></div>
+              <div class="row"><span data-i18n="res.c2">완전성</span><span class="bar"><i style="width:7%;background:#00c2d1"></i></span><span class="n">65</span></div>
+              <div class="row"><span data-i18n="res.c3">타당성</span><span class="bar"><i style="width:28%;background:#003b73"></i></span><span class="n">259</span></div>
             </div>
             <div class="outs"><code>report.md</code><code>rule_results.csv</code><code>summary.json</code><code>submission.json ✓</code><code class="no">findings.csv</code></div>
           </div>
@@ -512,7 +512,7 @@
           <div class="dl wide reveal">
             <div>
               <div class="arch"><span class="archname" data-i18n="dl.samples">견본 데이터</span><span class="pill" data-i18n="dl.samplespill">가상데이터 · 실제 환자 무관</span></div>
-              <p class="for" data-i18n="dl.samplesfor">앱 동작을 확인할 때 쓰는 100명 가상 코호트입니다. 6개 코호트 × clean(오류 없음) / dirty(오류 주입 + 정답표) 12개 폴더가 들어 있고, 폴더마다 CSV 와 엑셀 두 형태와 기대 결과(규칙 수, 위반 건수)를 적은 README 가 있습니다. 폴더째 검증 실행 화면에 끌어다 놓으면 됩니다. 먼저 dirty 폴더로 실행해 오류가 잡히는 모습을 보세요.</p>
+              <p class="for" data-i18n="dl.samplesfor">앱 동작을 확인할 때 쓰는 100명 가상 코호트입니다. v3 명세의 6개 코호트 × clean(오류 없음) / dirty(오류 주입 + 정답표) 12개 폴더가 들어 있고, 폴더마다 CSV 와 엑셀 두 형태와 기대 결과(규칙 수, 위반 건수)를 적은 README 가 있습니다. 폴더째 검증 실행 화면에 끌어다 놓으면 됩니다. 먼저 dirty 폴더로 실행해 오류가 잡히는 모습을 보세요.</p>
             </div>
             <div>
               <div class="row"><a class="btn btn-accent" id="dl-samples-all" href="https://github.com/nanumspace/KAI_DQ_App/releases/download/v0.1.0/SampleData-0.1.0-all.zip" data-i18n="dl.samplesall">전체 묶음 (zip)</a><a class="btn btn-ghost" href="https://github.com/nanumspace/KAI_DQ_App/releases/latest" data-i18n="dl.samplesby">코호트별 zip</a></div>
@@ -536,9 +536,11 @@
         <div class="docs">
           <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/manual/README.md"><b data-i18n="docs.d1b">사용자 설명서</b><span data-i18n="docs.d1">설치, 입력 파일 준비, 검증 실행, 출력물 읽기와 제출, 자주 묻는 질문.</span></a>
           <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/docs/overview.md"><b data-i18n="docs.d2b">개요와 설계 원칙</b><span data-i18n="docs.d2">배경, 코호트 DB 구조, 규칙은 사전에서 나온다는 원칙, 5단계 계획.</span></a>
-          <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/docs/spec-and-rules.md"><b data-i18n="docs.d3b">명세와 규칙 카탈로그</b><span data-i18n="docs.d3">명세 속성, 이벤트 그룹 행 단위, 규칙의 구성 (v2 는 spec/v2/README.md).</span></a>
+          <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/docs/spec-and-rules.md"><b data-i18n="docs.d3b">명세와 규칙 카탈로그</b><span data-i18n="docs.d3">명세 속성, 이벤트 그룹 행 단위, 규칙의 구성. v3 가 기본이고 v2·v1 은 이전 판으로 설명합니다.</span></a>
           <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/docs/synthetic-data.md"><b data-i18n="docs.d4b">가상데이터</b><span data-i18n="docs.d4">질환별 환자 여정 시나리오, 오류 주입과 정답 manifest.</span></a>
           <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/docs/engine.md"><b data-i18n="docs.d5b">엔진과 검출 성능</b><span data-i18n="docs.d5">Python 참조 구현, TypeScript 엔진, 앱 구조, 재현율과 해석의 한계.</span></a>
+          <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/spec/v3/README.md"><b data-i18n="docs.d7b">v3 명세 (기본 판)</b><span data-i18n="docs.d7">9/30 매뉴얼과 10/1 검토 결정(14건 채택): 표 17개, 필드 169개, 규칙 389개, 알려진 한계.</span></a>
+          <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/review/README.md"><b data-i18n="docs.d8b">검토 웹서비스</b><span data-i18n="docs.d8">매뉴얼 수정 제안과 의뢰사 확인 질문을 결정하는 로컬 서비스. 결과가 v3 에 반영됩니다.</span></a>
           <a class="doc reveal" href="https://github.com/nanumspace/KAI_DQ_App/blob/main/docs/reproduce.md"><b data-i18n="docs.d6b">재현과 빌드</b><span data-i18n="docs.d6">파이프라인 재현, 앱 개발·빌드, 서명 릴리스 절차.</span></a>
         </div>
       </div>
@@ -572,29 +574,29 @@
         'nav.features': { ko: '기능', en: 'Features' }, 'nav.flow': { ko: '사용 흐름', en: 'How it works' }, 'nav.download': { ko: '다운로드', en: 'Download' }, 'nav.docs': { ko: '문서', en: 'Docs' }, 'nav.dlbtn': { ko: '다운로드', en: 'Download' },
         'hero.eyebrow': { ko: 'Windows · macOS · 오프라인 · Apache-2.0', en: 'Windows · macOS · Offline · Apache-2.0' },
         'hero.title': { ko: '코호트 데이터,<br>병원 안에서 <span class="grad">먼저 검증</span>합니다.', en: 'Validate cohort data<br><span class="grad">inside the hospital</span>, first.' },
-        'hero.lede': { ko: '폐암·유방암·대장암·대사이상지방간·당뇨병·림프종 6개 K-AI 코호트의 EHR 추출본과 서식을 넣고 실행하면, 명세 적합성·완전성·타당성 규칙 1,078개를 검사해 보고서와 중앙 제출용 집계를 만듭니다. 병원 DB 에 접속하지 않고 네트워크 통신도 없습니다.', en: 'Drop the EHR extracts and case-report forms of the six K-AI cohorts (lung, breast, colorectal cancer, MASLD, diabetes, lymphoma) and run. 1,078 conformance, completeness and plausibility rules produce a report and an aggregate for central submission. No database connection, no network traffic.' },
+        'hero.lede': { ko: '폐암·유방암·대장암·대사이상지방간·당뇨병·림프종 6개 K-AI 코호트의 테이블 파일(질환 본표와 OMOP 형식 공통 표)을 넣고 실행하면, 명세 적합성·완전성·타당성 규칙 389개를 검사해 보고서와 중앙 제출용 집계를 만듭니다. 병원 DB 에 접속하지 않고 네트워크 통신도 없습니다.', en: 'Drop the table files of the six K-AI cohorts (lung, breast, colorectal cancer, MASLD, diabetes, lymphoma): one disease table plus the common OMOP-style tables. Run, and 389 conformance, completeness and plausibility rules produce a report and an aggregate for central submission. No database connection, no network traffic.' },
         'hero.dl': { ko: '설치 파일 받기', en: 'Download' }, 'hero.manual': { ko: '사용자 설명서', en: 'User manual' },
         'hero.chip1': { ko: 'CSV(UTF-8·EUC-KR) · 엑셀 · 폴더', en: 'CSV (UTF-8 · EUC-KR) · Excel · folder' }, 'hero.chip2': { ko: '환자 단위 정보는 밖으로 나가지 않음', en: 'Patient-level data never leaves' }, 'hero.chip3': { ko: '코드 서명 · 공증', en: 'Code-signed · notarized' },
         'mock.sub': { ko: 'K-AI 코호트 데이터 품질검증', en: 'K-AI cohort data quality' }, 'mock.m1': { ko: '▶ 검증 실행', en: '▶ Run validation' }, 'mock.m2': { ko: '▤ 결과 보고서', en: '▤ Report' }, 'mock.m3': { ko: '⌕ 오류 현황 조회', en: '⌕ Findings' }, 'mock.m4': { ko: '⌂ 대시보드', en: '⌂ Dashboard' }, 'mock.m5': { ko: '▥ 통계 모니터링', en: '▥ Monitoring' }, 'mock.m6': { ko: '☰ 검증 규칙 관리', en: '☰ Rules' },
-        'mock.ft': { ko: 'v2 · 규칙 1,078개 · 코호트 6개<br>v0.2.0', en: 'v2 · 1,078 rules · 6 cohorts<br>v0.2.0' }, 'mock.hd': { ko: '검증 실행 · 폐암 (LUNG_CANCER)', en: 'Run · Lung cancer (LUNG_CANCER)' },
+        'mock.ft': { ko: 'v3 · 규칙 389개 · 코호트 6개<br>v0.3.0', en: 'v3 · 389 rules · 6 cohorts<br>v0.3.0' }, 'mock.hd': { ko: '검증 실행 · 폐암 (LUNG_CANCER)', en: 'Run · Lung cancer (LUNG_CANCER)' },
         'mock.s1': { ko: '코호트와 파일', en: 'Cohort & files' }, 'mock.s2': { ko: '대응 · 사전 점검', en: 'Mapping · pre-check' }, 'mock.s3': { ko: '검증 실행', en: 'Run' }, 'mock.s4': { ko: '결과와 출력물', en: 'Results' },
-        'mock.th1': { ko: '테이블', en: 'Table' }, 'mock.th2': { ko: '파일 / 시트', en: 'File / sheet' }, 'mock.th3': { ko: '행', en: 'Rows' }, 'mock.th4': { ko: '점검', en: 'Check' }, 'mock.ok': { ko: '이상 없음', en: 'OK' }, 'mock.warn': { ko: '날짜 형식 표본', en: 'Date format sample' }, 'mock.alias': { ko: '별칭 antp_id', en: 'Alias antp_id' },
-        'mock.run': { ko: '검증 실행', en: 'Run' }, 'mock.prog': { ko: '규칙 427개 중 308개 · 교차 검증 중', en: '308 of 427 rules · cross-table checks' },
-        'stat1.u': { ko: '규칙', en: 'rules' }, 'stat1.cap': { ko: '구조 규칙 1,038개는 명세에서 자동 생성, 교차 테이블 SQL 규칙 40개는 임상 논리로 작성. 코호트마다 341~531개가 적용됩니다.', en: '1,038 structural rules generated from the spec, 40 cross-table SQL rules written from clinical logic; 341–531 apply per cohort.' },
-        'stat2.u': { ko: '코호트', en: 'cohorts' }, 'stat2.cap': { ko: 'OMOP CDM 5.4 표 14개 + K-AI 확장 표 16개, 547개 필드 명세. 서식 24종을 저장 테이블로 바꿔 줍니다.', en: '14 OMOP CDM 5.4 tables + 16 K-AI extension tables, a 547-field specification. 24 case-report forms are converted into storage records.' },
+        'mock.th1': { ko: '테이블', en: 'Table' }, 'mock.th2': { ko: '파일 / 시트', en: 'File / sheet' }, 'mock.th3': { ko: '행', en: 'Rows' }, 'mock.th4': { ko: '점검', en: 'Check' }, 'mock.ok': { ko: '이상 없음', en: 'OK' }, 'mock.warn': { ko: '날짜 형식 표본', en: 'Date format sample' },
+        'mock.run': { ko: '검증 실행', en: 'Run' }, 'mock.prog': { ko: '규칙 287개 중 198개 · 교차 검증 중', en: '198 of 287 rules · cross-table checks' },
+        'stat1.u': { ko: '규칙', en: 'rules' }, 'stat1.cap': { ko: '구조 규칙 367개는 명세에서 자동 생성, 교차 테이블 SQL 규칙 22개는 임상 논리로 작성. 코호트마다 247~287개가 적용됩니다.', en: '367 structural rules generated from the spec, 22 cross-table SQL rules written from clinical logic; 247–287 apply per cohort.' },
+        'stat2.u': { ko: '코호트', en: 'cohorts' }, 'stat2.cap': { ko: '질환 본표 하나와 OMOP 형식 공통 표로 표 17개, 169개 필드 명세(v3). 서식 변환 없이 병원이 표를 직접 채웁니다.', en: '17 tables and 169 fields (v3): one disease table per cohort plus the common OMOP-style tables. Hospitals fill the tables directly; no form conversion.' },
         'stat3.u': { ko: '네트워크', en: 'network' }, 'stat3.cap': { ko: 'DB 접속 없음, 통신 없음. 중앙에 보내는 것은 환자 정보가 없는 집계 파일 하나.', en: 'No database connection, no traffic. Only one aggregate file without patient data goes to the center.' },
         'feat.eyebrow': { ko: '기능', en: 'Features' }, 'feat.title': { ko: '파일을 넣고, 실행하고,<br>고칠 곳을 바로 찾습니다.', en: 'Drop files, run,<br>and find what to fix.' }, 'feat.lede': { ko: '병원 담당자가 DB 권한 없이 내보낸 파일만으로 제출 전 자가 점검을 마칠 수 있도록 만들었습니다.', en: 'Built so a hospital data manager can self-check before submission using exported files alone, without database privileges.' },
         'f1.h': { ko: 'CSV · 엑셀 · 폴더 입력', en: 'CSV · Excel · folder input' }, 'f1.p': { ko: 'CSV 여러 개, 시트당 테이블 하나인 엑셀 한 파일, 또는 파일이 든 폴더를 끌어다 놓습니다. EUC-KR 은 자동 변환하고 엑셀 날짜 셀은 YYYY-MM-DD 로 바꿉니다.', en: 'Drop several CSVs, one Excel file with a sheet per table, or a folder. EUC-KR is converted automatically and Excel date cells become YYYY-MM-DD.' }, 'f1.t3': { ko: '드래그 앤 드롭', en: 'Drag & drop' },
-        'f2.h': { ko: '테이블 자동 대응', en: 'Automatic table mapping' }, 'f2.p': { ko: '파일·시트 이름이 테이블 이름과 달라도 이름 포함 여부와 헤더 유사도(명세 컬럼 60% 이상)로 대응하고, 틀리면 대응표에서 직접 고릅니다.', en: 'Even when file or sheet names differ from table names, mapping uses name matching and header similarity (60%+ of spec columns); fix it in the mapping table if wrong.' }, 'f2.t1': { ko: '헤더 유사도', en: 'Header similarity' }, 'f2.t2': { ko: '별칭 antp_therapy_id', en: 'Alias antp_therapy_id' },
+        'f2.h': { ko: '테이블 자동 대응', en: 'Automatic table mapping' }, 'f2.p': { ko: '파일·시트 이름이 테이블 이름과 달라도 이름 포함 여부와 헤더 유사도(명세 컬럼 60% 이상)로 대응하고, 틀리면 대응표에서 직접 고릅니다.', en: 'Even when file or sheet names differ from table names, mapping uses name matching and header similarity (60%+ of spec columns); fix it in the mapping table if wrong.' }, 'f2.t1': { ko: '헤더 유사도', en: 'Header similarity' }, 'f2.t2': { ko: '대소문자 무시', en: 'Case-insensitive headers' },
         'f3.h': { ko: '실행 전 사전 점검', en: 'Pre-run checks' }, 'f3.p': { ko: '기본키·person_id 누락은 오류로 실행을 막고, 명세와 다른 컬럼과 날짜 형식 표본은 주의로 알려 줍니다. 실행 후에 헤매지 않도록 먼저 잡습니다.', en: 'Missing primary keys or person_id block the run as errors; column mismatches and date-format samples are flagged as warnings, before you run.' }, 'f3.t1': { ko: '오류 → 실행 차단', en: 'Error → blocked' }, 'f3.t2': { ko: '주의 → 안내', en: 'Warning → notice' },
-        'f4.h': { ko: 'Kahn 세 축 규칙 1,078개', en: '1,078 rules on Kahn’s three axes' }, 'f4.p': { ko: '적합성(형식·코드·관계), 완전성(필수값·기준일), 타당성(범위·논리)으로 분류합니다. 구조 규칙은 명세에서 자동 생성되고, 교차 테이블 규칙은 DuckDB SQL 로 실행됩니다.', en: 'Conformance (format, code, relation), completeness (required values, anchor dates) and plausibility (range, logic). Structural rules are generated from the spec; cross-table rules run as DuckDB SQL.' }, 'f4.t1': { ko: '적합성', en: 'Conformance' }, 'f4.t2': { ko: '완전성', en: 'Completeness' }, 'f4.t3': { ko: '타당성', en: 'Plausibility' },
-        'f5.h': { ko: '임상 논리 교차 검증', en: 'Clinical cross-table logic' }, 'f5.p': { ko: '사망 이후 이벤트, 이벤트일이 방문 기간 밖, 약물 종료일 계산, TNM 조합, 방사선 총선량, FIB-4 재계산, Deauville 와 대사 반응처럼 테이블을 넘나드는 75개 규칙을 질환별로 실행합니다.', en: 'Events after death, event dates outside visits, drug end-date arithmetic, TNM combinations, total radiation dose, FIB-4 recomputation, Deauville vs metabolic response: 75 rules across tables, per disease.' }, 'f5.t1': { ko: '공통 30', en: 'Common 30' }, 'f5.t2': { ko: '암 공통 8', en: 'Cancer 8' }, 'f5.t3': { ko: '질환별 37', en: 'Per disease 37' },
+        'f4.h': { ko: 'Kahn 세 축 규칙 389개', en: '389 rules on Kahn’s three axes' }, 'f4.p': { ko: '적합성(형식·코드·관계), 완전성(필수값·기준일), 타당성(범위·논리)으로 분류합니다. 구조 규칙은 명세에서 자동 생성되고, 교차 테이블 규칙은 DuckDB SQL 로 실행됩니다. 이전 판 v2·v1 은 설정에서 고를 수 있습니다.', en: 'Conformance (format, code, relation), completeness (required values, anchor dates) and plausibility (range, logic). Structural rules are generated from the spec; cross-table rules run as DuckDB SQL. Older editions v2 and v1 stay selectable in Settings.' }, 'f4.t1': { ko: '적합성', en: 'Conformance' }, 'f4.t2': { ko: '완전성', en: 'Completeness' }, 'f4.t3': { ko: '타당성', en: 'Plausibility' },
+        'f5.h': { ko: '임상 논리 교차 검증', en: 'Clinical cross-table logic' }, 'f5.p': { ko: '사망 이후 이벤트, 이벤트-방문 환자 일치, 약물 종료일 계산, 항종양제 투여의 sact_id 필수, 항암요법 기간과 line 번호, AJCC 판수와 병기, ICD-O-3 코드와 조직형, DLBCL 의 cell_of_origin 처럼 테이블을 넘나드는 22개 규칙을 실행합니다.', en: 'Events after death, event–visit patient match, drug end-date arithmetic, sact_id required for antineoplastic administration, therapy period and line numbers, AJCC edition vs stage, ICD-O-3 code vs histology, cell_of_origin for DLBCL: 22 rules across tables.' }, 'f5.t1': { ko: '공통 10', en: 'Common 10' }, 'f5.t2': { ko: '항암요법 SACT 6', en: 'SACT 6' }, 'f5.t3': { ko: '질환별 6', en: 'Per disease 6' },
         'f6.h': { ko: '출력물 5종, 제출은 1종', en: 'Five outputs, one to submit' }, 'f6.p': { ko: '보고서, 위반 행 목록, 규칙별 결과, 실행 요약, 그리고 중앙 제출용 집계. 환자 단위 정보가 든 위반 행 목록은 병원 안에서만 쓰고, 중앙에는 집계 파일 하나만 보냅니다.', en: 'Report, finding rows, per-rule results, run summary, and the central submission aggregate. The finding rows carry patient-level data and stay inside; only the aggregate is sent.' }, 'f6.t3': { ko: 'findings.csv 제출 금지', en: 'findings.csv stays local' },
         'f7.h': { ko: '오류 현황 조회', en: 'Findings browser' }, 'f7.p': { ko: '위반 행을 규칙·테이블·심각도·검색어로 걸러 보고 CSV 로 내보냅니다. 행 키와 환자 ID, 상세 설명이 있어 원천 데이터에서 바로 찾아 고칩니다.', en: 'Filter finding rows by rule, table, severity and text, and export to CSV. Row keys, patient IDs and details point straight to the source data.' }, 'f7.t1': { ko: '규칙별 조치 안내', en: 'Guidance per rule' }, 'f7.t2': { ko: '심각도 3단계', en: '3 severity levels' },
         'f8.h': { ko: '대시보드 · 실행 이력', en: 'Dashboard · run history' }, 'f8.p': { ko: '오류 유형별 통계, 질환별 최신 결과와 오류율 신호등, 실행 이력 추이를 봅니다. 데이터를 고치고 다시 실행하면 위반 건수 변화가 추이로 남습니다.', en: 'Error-type statistics, latest result per cohort with an error-rate traffic light, and run history. Fix data, run again, and the trend records the change.' }, 'f8.t1': { ko: '오류율 신호등', en: 'Error-rate light' }, 'f8.t2': { ko: '추이', en: 'Trend' },
-        'f9.h': { ko: 'Python 과 동등한 엔진', en: 'Engine equivalent to Python' }, 'f9.p': { ko: '앱의 TypeScript 엔진은 Python 참조 구현과 6개 코호트 clean·dirty 12회 실행에서 위반 행과 보고서가 바이트 단위로 일치하며, 회귀 시험이 이를 고정합니다. 가상데이터에서 오탐 0, 주입 오류 601건 전부 검출. 2,000명 규모에서도 위반 0.', en: 'The app’s TypeScript engine matches the Python reference byte-for-byte across 12 runs (findings and report), locked by regression tests. On synthetic data: 0 false positives, all 601 injected faults detected; 0 violations at 2,000 patients as well.' }, 'f9.t1': { ko: '재현율 1.00', en: 'Recall 1.00' }, 'f9.t2': { ko: '오탐 0', en: '0 false positives' },
+        'f9.h': { ko: 'Python 과 동등한 엔진', en: 'Engine equivalent to Python' }, 'f9.p': { ko: '앱의 TypeScript 엔진은 Python 참조 구현과 6개 코호트 clean·dirty 12회 실행에서 위반 행과 보고서가 바이트 단위로 일치하며(v1·v2·v3), 회귀 시험이 이를 고정합니다. v3 가상데이터에서 6개 코호트 모두 clean 위반 0, 주입 오류 1,497건 전부 검출.', en: 'The app’s TypeScript engine matches the Python reference byte-for-byte across 12 runs (findings and report) on v1, v2 and v3, locked by regression tests. On v3 synthetic data: 0 violations on every clean cohort, all 1,497 injected faults detected.' }, 'f9.t1': { ko: '재현율 1.00', en: 'Recall 1.00' }, 'f9.t2': { ko: '오탐 0', en: '0 false positives' },
         'flow.eyebrow': { ko: '사용 흐름', en: 'How it works' }, 'flow.title': { ko: '네 단계면<br>제출 준비가 끝납니다.', en: 'Four steps<br>to submission-ready.' },
-        'flow.s1h': { ko: '코호트와 파일', en: 'Cohort and files' }, 'flow.s1p': { ko: '코호트를 고르고 파일이나 폴더를 넣습니다. 입력 양식과 견본 데이터는 앱에서 내려받습니다.', en: 'Pick the cohort and drop files or a folder. Templates and sample data download from the app.' },
+        'flow.s1h': { ko: '코호트와 파일', en: 'Cohort and files' }, 'flow.s1p': { ko: '코호트를 고르고 채운 테이블 파일(CSV·엑셀·폴더)을 넣습니다. 입력 양식과 견본 데이터는 앱에서 내려받습니다.', en: 'Pick the cohort and drop the filled table files (CSV, Excel or a folder). Templates and sample data download from the app.' },
         'flow.s2h': { ko: '테이블 대응과 사전 점검', en: 'Mapping and pre-check' }, 'flow.s2p': { ko: '자동 대응표를 확인하고, 오류가 있으면 먼저 해결합니다. 미리보기로 앞부분 몇 줄을 봅니다.', en: 'Confirm the mapping table and resolve errors first. Preview the first rows.' },
         'flow.s3h': { ko: '검증 실행', en: 'Run' }, 'flow.s3p': { ko: '진행률이 표시되고 화면은 계속 쓸 수 있습니다. 질환당 100명 규모는 수 초, 큰 데이터는 수 분.', en: 'Progress is shown and the window stays responsive. Seconds for 100 patients, minutes for large data.' },
         'flow.s4h': { ko: '결과와 출력물', en: 'Results and outputs' }, 'flow.s4p': { ko: '요약을 보고 다섯 파일을 열거나 결과 폴더로 내보냅니다. 중앙에는 submission.json 만 보냅니다.', en: 'Read the summary, open the five files or export a results folder. Send only submission.json to the center.' },
@@ -611,15 +613,17 @@
         'dl.macfor': { ko: 'M1 이후 Mac. Developer ID 서명과 Apple 공증을 거쳐 경고 없이 열립니다.', en: 'M1 and later Macs. Developer ID signed and Apple notarized; opens without warnings.' },
         'dl.exe': { ko: '설치 파일 (.exe)', en: 'Installer (.exe)' },
         'dl.samples': { ko: '견본 데이터', en: 'Sample data' }, 'dl.samplespill': { ko: '가상데이터 · 실제 환자 무관', en: 'Synthetic · no real patients' },
-        'dl.samplesfor': { ko: '앱 동작을 확인할 때 쓰는 100명 가상 코호트입니다. 6개 코호트 × clean(오류 없음) / dirty(오류 주입 + 정답표) 12개 폴더가 들어 있고, 폴더마다 CSV 와 엑셀 두 형태와 기대 결과(규칙 수, 위반 건수)를 적은 README 가 있습니다. 폴더째 검증 실행 화면에 끌어다 놓으면 됩니다. 먼저 dirty 폴더로 실행해 오류가 잡히는 모습을 보세요.', en: '100-patient synthetic cohorts for trying the app: 12 folders, six cohorts × clean (no faults) / dirty (injected faults + answer key). Each folder has CSV and Excel forms and a README with the expected result (rules, violations). Drop a folder onto the Run screen. Start with a dirty folder to watch faults being caught.' },
+        'dl.samplesfor': { ko: '앱 동작을 확인할 때 쓰는 100명 가상 코호트입니다. v3 명세의 6개 코호트 × clean(오류 없음) / dirty(오류 주입 + 정답표) 12개 폴더가 들어 있고, 폴더마다 CSV 와 엑셀 두 형태와 기대 결과(규칙 수, 위반 건수)를 적은 README 가 있습니다. 폴더째 검증 실행 화면에 끌어다 놓으면 됩니다. 먼저 dirty 폴더로 실행해 오류가 잡히는 모습을 보세요.', en: '100-patient synthetic cohorts (v3 tables) for trying the app: 12 folders, six cohorts × clean (no faults) / dirty (injected faults + answer key). Each folder has CSV and Excel forms and a README with the expected result (rules, violations). Drop a folder onto the Run screen. Start with a dirty folder to watch faults being caught.' },
         'dl.samplesall': { ko: '전체 묶음 (zip)', en: 'All-in-one (zip)' }, 'dl.samplesby': { ko: '코호트별 zip', en: 'Per-cohort zips' }, 'dl.dmg': { ko: '디스크 이미지 (.dmg)', en: 'Disk image (.dmg)' },
         'dl.note': { ko: 'Windows 설치 파일은 GlobalSign EV 인증서로, macOS 는 Apple Developer ID 로 서명하고 공증했습니다. 32비트 Windows 와 Intel Mac 은 제공하지 않습니다.<br><code>SHA256SUMS.txt</code> 로 파일을 대조할 수 있습니다. · <a href="https://github.com/nanumspace/KAI_DQ_App/releases">모든 릴리스 보기</a>', en: 'Windows installers are signed with a GlobalSign EV certificate; macOS with Apple Developer ID and notarized. No 32-bit Windows or Intel Mac builds.<br>Verify files against <code>SHA256SUMS.txt</code>. · <a href="https://github.com/nanumspace/KAI_DQ_App/releases">All releases</a>' },
         'docs.eyebrow': { ko: '문서', en: 'Docs' }, 'docs.title': { ko: '설명서와 설계 문서', en: 'Manual and design documents' },
         'docs.d1b': { ko: '사용자 설명서', en: 'User manual' }, 'docs.d1': { ko: '설치, 입력 파일 준비, 검증 실행, 출력물 읽기와 제출, 자주 묻는 질문.', en: 'Install, prepare input files, run, read outputs and submit, FAQ.' },
         'docs.d2b': { ko: '개요와 설계 원칙', en: 'Overview and principles' }, 'docs.d2': { ko: '배경, 코호트 DB 구조, 규칙은 사전에서 나온다는 원칙, 5단계 계획.', en: 'Background, cohort DB structure, rules-from-the-dictionary principle, five-stage plan.' },
-        'docs.d3b': { ko: '명세와 규칙 카탈로그', en: 'Spec and rule catalog' }, 'docs.d3': { ko: '명세 속성, 이벤트 그룹 행 단위, 규칙의 구성 (v2 는 spec/v2/README.md).', en: 'Spec attributes, event-group row grain, composition of the rules (v2: spec/v2/README.md).' },
+        'docs.d3b': { ko: '명세와 규칙 카탈로그', en: 'Spec and rule catalog' }, 'docs.d3': { ko: '명세 속성, 이벤트 그룹 행 단위, 규칙의 구성. v3 가 기본이고 v2·v1 은 이전 판으로 설명합니다.', en: 'Spec attributes, event-group row grain, composition of the rules. v3 is the default; v2 and v1 are described as earlier editions.' },
         'docs.d4b': { ko: '가상데이터', en: 'Synthetic data' }, 'docs.d4': { ko: '질환별 환자 여정 시나리오, 오류 주입과 정답 manifest.', en: 'Per-disease patient journey scenarios, fault injection and answer manifest.' },
         'docs.d5b': { ko: '엔진과 검출 성능', en: 'Engine and detection' }, 'docs.d5': { ko: 'Python 참조 구현, TypeScript 엔진, 앱 구조, 재현율과 해석의 한계.', en: 'Python reference, TypeScript engine, app structure, recall and its limits.' },
+        'docs.d7b': { ko: 'v3 명세 (기본 판)', en: 'v3 spec (default edition)' }, 'docs.d7': { ko: '9/30 매뉴얼과 10/1 검토 결정(14건 채택): 표 17개, 필드 169개, 규칙 389개, 알려진 한계.', en: 'The 9/30 manual plus the 10/1 review decisions (14 adopted): 17 tables, 169 fields, 389 rules, known limits.' },
+        'docs.d8b': { ko: '검토 웹서비스', en: 'Review web service' }, 'docs.d8': { ko: '매뉴얼 수정 제안과 의뢰사 확인 질문을 결정하는 로컬 서비스. 결과가 v3 에 반영됩니다.', en: 'A local service that decides manual change proposals and client questions; its output feeds v3.' },
         'docs.d6b': { ko: '재현과 빌드', en: 'Reproduce and build' }, 'docs.d6': { ko: '파이프라인 재현, 앱 개발·빌드, 서명 릴리스 절차.', en: 'Pipeline reproduction, app development and build, signed release procedure.' }
       };
       var langBtn = document.getElementById('lang');

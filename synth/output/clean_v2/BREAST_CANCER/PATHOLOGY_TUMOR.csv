@@ -1,0 +1,1 @@
+pathology_tumor_id,person_id,pathology_report_id,tumor_count,tumor_size_width_cm,tumor_size_length_cm,tumor_size_height_cm,pathologic_tumor_max_diameter_cm

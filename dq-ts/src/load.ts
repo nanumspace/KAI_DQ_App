@@ -37,8 +37,18 @@ export function loadYaml<T = any>(rel: string): T {
   return parse(readText(rel)) as T;
 }
 
-export function loadSpec(): Spec {
-  return loadYaml<Spec>("spec/kai_cdm_spec.yaml");
+/** 질환별 표 구조(v1·v3)의 파일 위치. v3 = 의뢰사 9/30 매뉴얼 + 2026-10-01 검토 결정. v2 는 아래 *V2 로더를 쓴다. */
+export type TableEdition = "v1" | "v3";
+export type Edition = "v1" | "v2" | "v3";
+const PATHS: Record<TableEdition, { spec: string; codelists: string; profiles: string; structural: string; semantic: string }> = {
+  v1: { spec: "spec/kai_cdm_spec.yaml", codelists: "spec/codelists.yaml", profiles: "spec/cohort_profiles.yaml",
+        structural: "rules/rules_structural.yaml", semantic: "rules/rules_semantic.yaml" },
+  v3: { spec: "spec/v3/kai_cdm_spec_v3.yaml", codelists: "spec/v3/codelists_v3.yaml", profiles: "spec/v3/cohort_profiles_v3.yaml",
+        structural: "rules/rules_structural_v3.yaml", semantic: "rules/rules_semantic_v3.yaml" },
+};
+
+export function loadSpec(edition: TableEdition = "v1"): Spec {
+  return loadYaml<Spec>(PATHS[edition].spec);
 }
 
 // ---------------------------------------------------------------- v2 (저장 구조 재설계)
@@ -100,8 +110,8 @@ export function loadConceptSetsV2(): ConceptSets {
 }
 
 /** codelists.yaml 의 모든 절(embedded/common/omop)을 합쳐 코드표명 → 허용 코드 문자열 집합 */
-export function loadCodelists(): Map<string, Set<string>> {
-  const cl = loadYaml<Record<string, Record<string, Record<string, unknown>>>>("spec/codelists.yaml");
+export function loadCodelists(edition: TableEdition = "v1"): Map<string, Set<string>> {
+  const cl = loadYaml<Record<string, Record<string, Record<string, unknown>>>>(PATHS[edition].codelists);
   const out = new Map<string, Set<string>>();
   for (const sect of Object.values(cl)) {
     for (const [name, codes] of Object.entries(sect)) {
@@ -147,16 +157,16 @@ export function loadCohortDefinitionText(): Record<string, CohortDefinitionText>
   return out;
 }
 
-export function loadProfiles(): Record<string, { kor: string; tables: string[] }> {
-  return loadYaml<{ cohorts: Record<string, { kor: string; tables: string[] }> }>("spec/cohort_profiles.yaml").cohorts;
+export function loadProfiles(edition: TableEdition = "v1"): Record<string, { kor: string; tables: string[] }> {
+  return loadYaml<{ cohorts: Record<string, { kor: string; tables: string[] }> }>(PATHS[edition].profiles).cohorts;
 }
 
 /**
  * 구조 규칙. range 규칙의 min/max 는 YAML 원문 표기(예: 10.0)를 함께 보관해
  * Python 참조 구현의 detail 문자열("범위 [10.0,70.0] 밖")과 같은 출력을 만든다.
  */
-export function loadStructuralRules(): StructuralRule[] {
-  const src = readText("rules/rules_structural.yaml");
+export function loadStructuralRules(edition: TableEdition = "v1"): StructuralRule[] {
+  const src = readText(PATHS[edition].structural);
   const doc = parseDocument(src, { keepSourceTokens: true });
   const rules = (doc.toJS() as { rules: StructuralRule[] }).rules;
   const rulesNode = doc.get("rules");
@@ -184,8 +194,8 @@ export function loadStructuralRules(): StructuralRule[] {
   return rules;
 }
 
-export function loadSemanticRules(): SemanticRule[] {
-  const rules = loadYaml<{ rules: SemanticRule[] }>("rules/rules_semantic.yaml").rules;
+export function loadSemanticRules(edition: TableEdition = "v1"): SemanticRule[] {
+  const rules = loadYaml<{ rules: SemanticRule[] }>(PATHS[edition].semantic).rules;
   for (const r of rules) {
     r.requires = r.requires ?? [];
     r.scope = r.scope ?? "all";

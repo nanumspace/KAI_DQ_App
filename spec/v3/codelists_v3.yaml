@@ -1,0 +1,170 @@
+embedded:
+  LUNG_CANCER.histologic_diagnosis:
+    '1': Adenocarcinoma
+    '2': Squamous cell carcinoma
+    '3': Large cell carcinoma
+    '4': Small cell carcinoma
+    '5': Carcinoma tumor 계열
+    '6': NSCLC NOS
+    '7': 기타
+  BREAST_CANCER.menopause_status:
+    '1': Premenopausal
+    '2': Postmenopausal
+    '3': Unknown
+    '4': Not Applicable (남성인 경우)
+  BREAST_CANCER.pregnant_at_diagnosis:
+    '1': 'Yes'
+    '2': 'No'
+    '3': Unknown
+    '4': Not Applicable (남성인 경우)
+  BREAST_CANCER.history_of_live_birth:
+    '1': 'Yes'
+    '2': 'No'
+    '3': Unknown
+    '4': Not Applicable (남성인 경우)
+  BREAST_CANCER.postpartum_at_diagnosis:
+    '1': 'Yes'
+    '2': 'No'
+    '3': Unknown
+    '4': Not Applicable (남성인 경우)
+  BREAST_CANCER.fertility_history:
+    '1': 'Yes'
+    '2': 'No'
+    '3': Unknown
+    '4': Not Applicable (남성인 경우)
+  BREAST_CANCER.fertility_treatment_type:
+    '1': GnRHa
+    '2': 난자 동결
+    '3': 배아 동결
+    '4': 기타
+    '5': GnRHa+동결
+  SACT.therapy_intent:
+    '1': Neoadjuvant
+    '2': Adjuvant
+    '3': Palliative
+    '4': Maintenance
+    '5': Definitive
+    '6': Salvage
+  LUNG_CANCER.clinical_stage_ajcc_edition:
+    '6': AJCC 6판
+    '7': AJCC 7판
+    '8': AJCC 8판
+omop:
+  OMOP.gender_concept_id:
+    '8507': MALE
+    '8532': FEMALE
+  OMOP.visit_concept_id:
+    '9201': Inpatient Visit
+    '9202': Outpatient Visit
+    '9203': Emergency Room Visit
+    '262': Emergency Room and Inpatient Visit
+  OMOP.visit_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+    '32810': Claim
+  OMOP.procedure_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+    '32810': Claim
+  OMOP.amount_unit_concept_id:
+    '8576': mg
+    '8587': mL
+    '9655': ug
+    '8510': unit
+    '8718': IU
+    '9551': mg/m2
+    '8504': mg/kg
+    '8573': mmol
+  OMOP.numerator_unit_concept_id:
+    '8576': mg
+    '9655': ug
+    '8718': IU
+    '8510': unit
+  OMOP.denominator_unit_concept_id:
+    '8587': mL
+    '8576': mg
+    '8582': cm
+    '9529': kg
+  OMOP.condition_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+    '32810': Claim
+    '32840': EHR problem list
+  OMOP.measurement_type_concept_id:
+    '32817': EHR
+    '32856': Lab
+    '32879': Registry
+  OMOP.unit_concept_id:
+    '8576': mg
+    '8587': mL
+    '8840': mg/dL
+    '8753': mmol/L
+    '8554': '%'
+    '8645': U/L
+    '8848': 10^3/uL
+    '8961': 10^3/mm3
+    '8582': cm
+    '9529': kg
+    '9531': kg/m2
+    '8876': mmHg
+    '8713': g/dL
+    '8555': ng/mL
+    '8847': 10^6/uL
+    '8629': ug/L
+    '8749': umol/L
+    '9550': mL/min/1.73m2
+    '8636': ng/mL
+    '8859': mg/L
+    '9435': ug/dL
+    '8641': mIU/mL
+  OMOP.observation_type_concept_id:
+    '32817': EHR
+    '32879': Registry
+  OMOP.note_type_concept_id:
+    '32817': EHR
+    '44814637': Radiology report
+    '44814640': Pathology report
+    '44814641': Discharge summary
+    '44814645': Outpatient note
+    '32831': EHR note
+  OMOP.note_class_concept_id:
+    '36716164': Radiology note
+    '36716165': Pathology note
+    '36716213': Discharge summary
+    '36716177': Progress note
+    '44814641': Discharge summary
+    '3040218': Oncology note
+  OMOP.severity_concept_id:
+    '1': CTCAE Grade 1
+    '2': CTCAE Grade 2
+    '3': CTCAE Grade 3
+    '4': CTCAE Grade 4
+    '5': CTCAE Grade 5
+  OMOP.causality_concept_id:
+    '1': Certain
+    '2': Probable
+    '3': Possible
+    '4': Unlikely
+    '5': Unrelated
+    '6': Unassessable
+  OMOP.seriousness_concept_id:
+    '1': Death
+    '2': Life-threatening
+    '3': Hospitalization
+    '4': Disability
+    '5': Congenital anomaly
+    '6': Other medically important
+  OMOP.outcome_concept_id:
+    '1': Recovered
+    '2': Recovering
+    '3': Not recovered
+    '4': Recovered with sequelae
+    '5': Fatal
+    '6': Unknown
+  OMOP.action_taken_concept_id:
+    '1': None
+    '2': Dose reduced
+    '3': Interrupted
+    '4': Withdrawn
+    '5': Not applicable
+    '6': Unknown

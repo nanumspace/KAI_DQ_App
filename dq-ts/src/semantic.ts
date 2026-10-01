@@ -2,6 +2,7 @@
 // 타입 변환은 참조 구현(pandas to_numeric / to_datetime, errors="coerce")과 같이 실패 시 NULL 이다.
 import { DuckDBInstance, DuckDBConnection } from "@duckdb/node-api";
 import type { RawTable, SemanticRule, Spec, Concepts, RuleStat } from "./types.js";
+import type { Edition } from "./load.js";
 import { pyList, pySorted } from "./pyrepr.js";
 
 const KCD_FIELD: Record<string, string> = {
@@ -43,7 +44,7 @@ export interface SemanticContext {
   cdText?: { female_min: string; female_max: string; age_min: string; age_max: string };
   onRule?: (i: number, n: number, ruleId: string) => void;
   /** v2 는 질환 테이블도 코호트 정의도 없다. 대신 값 집합·씨앗 concept 을 보조 테이블로 올린다. */
-  specVersion?: "v1" | "v2";
+  specVersion?: Edition;
   conceptSets?: { codeOfConcept: Map<string, string>; episodeField: Map<string, string> };
 }
 
@@ -86,8 +87,8 @@ export async function runSemantic(ctx: SemanticContext, rules: SemanticRule[], s
     await con.run(`CREATE TABLE _MEASUREMENT_CONCEPTS (concept_id BIGINT, name VARCHAR, lo DOUBLE, hi DOUBLE)`);
     if (mc.length) await con.run(`INSERT INTO _MEASUREMENT_CONCEPTS VALUES ${mc.join(", ")}`);
     const ac = Object.entries(ctx.concepts.drugs).filter(([, v]) => v.category !== null && v.category !== undefined)
-      .map(([k, v]) => `(${Number(k)}, ${sqlStr(v.name)})`);
-    await con.run(`CREATE TABLE _ANTICANCER_DRUGS (concept_id BIGINT, name VARCHAR)`);
+      .map(([k, v]) => `(${Number(k)}, ${sqlStr(v.name)}, ${Number(v.category)})`);
+    await con.run(`CREATE TABLE _ANTICANCER_DRUGS (concept_id BIGINT, name VARCHAR, category BIGINT)`);
     if (ac.length) await con.run(`INSERT INTO _ANTICANCER_DRUGS VALUES ${ac.join(", ")}`);
 
     if (ctx.specVersion === "v2") {

@@ -1,0 +1,1027 @@
+meta:
+  name: K-AI 질환별 코호트 명세 v3 (의뢰사 9/30 매뉴얼 + 2026-10-01 검토 결정)
+  version: 3.0.0
+  source: spec/client_v1/매뉴얼_질환별 데이터 테이블_20260930_수정안.xlsx
+  generated_by: spec/build_spec_v3.py
+  decisions: spec/client_v1/매뉴얼_수정_제안서_20261001.md
+  dropped_fields:
+  - DRUG_EXPOSURE.note_id
+tables:
+  PERSON:
+    name: PERSON
+    kor: 환자
+    section: 3.1 환자(PERSON)
+    category: core
+    pk: person_id
+    fields:
+    - name: person_id
+      type: integer
+      required: true
+      desc: 개인에 대한 고유 식별자이다.
+      key: PK
+    - name: gender_concept_id
+      type: integer
+      required: true
+      desc: 성별 정보를 나타내는 표준 Concept 식별자이다. CONCEPT 테이블을 참조하며, 성별 정보를 표준화된 형태로 관리하기 위해 사용된다.
+      codelist: OMOP.gender_concept_id
+    - name: year_of_birth
+      type: integer
+      required: true
+      desc: 출생 연도이다.
+      range:
+      - 1900
+      - 2026
+    - name: month_of_birth
+      type: integer
+      required: false
+      desc: 출생 월이다.
+      range:
+      - 1
+      - 12
+    - name: day_of_birth
+      type: integer
+      required: false
+      desc: 출생 일이다.
+      range:
+      - 1
+      - 31
+    - name: age_at_index
+      type: integer
+      required: true
+      desc: 인덱스 날짜(index date) 기준 대상자의 만 나이이다.
+      range:
+      - 0
+      - 110
+    - name: care_site_id
+      type: integer
+      required: true
+      desc: CARE_SITE 테이블에서 참조된 PERSON의 주요 진료소를 나타내는 외래키이다.
+      key: FK_EXTERNAL
+      ref: CARE_SITE
+    - name: observation_period_start_date
+      type: date
+      required: false
+      desc: 해당 대상자에 대해 데이터 수집이 가능하다고 판단되는 관찰기간의 시작일이다.
+    - name: death_date
+      type: date
+      required: false
+      desc: 사망한 날짜이다.
+  VISIT_OCCURRENCE:
+    name: VISIT_OCCURRENCE
+    kor: 방문
+    section: 3.2 방문(VISIT_OCCURRENCE)
+    category: core
+    pk: visit_occurrence_id
+    fields:
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: 개인의 의료기관 방문 또는 진료 에피소드를 고유하게 식별하기 위한 식별자이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: 방문이 기록된 사람에 대한 외래키 식별자이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: visit_concept_id
+      type: integer
+      required: true
+      desc: '방문 유형을 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Visit Domain Concept을 참조하는 외래키(Foreign Key)이다.
+
+        예) 외래 = 9202 (Outpatient Visit), 입원 = 9201 (Inpatient Visit), 응급 = 9203 (Emergency Room Visit) ※ 고정한 Athena 판본에서 최종 확인'
+      codelist: OMOP.visit_concept_id
+    - name: visit_start_date
+      type: date
+      required: true
+      desc: 방문 시작 날짜이다.
+    - name: visit_end_date
+      type: date
+      required: true
+      desc: "방문 종료 날짜이다. 다만 아래의 경우 visit_start_date와 visit_ end_date를 동일하게 입력한다.\n1. 방문이 동일한 날짜에 이루어진 경우 \n2. 퇴원일을 확인하기 어려운 경우"
+    - name: visit_type_concept_id
+      type: integer
+      required: true
+      desc: 방문 기록이 생성된 원천 데이터의 유형을 나타내는 표준 Concept 식별자이다.
+      codelist: OMOP.visit_type_concept_id
+  PROCEDURE_OCCURRENCE:
+    name: PROCEDURE_OCCURRENCE
+    kor: 시술 및 처치
+    section: 3.3 시술 및 처치(PROCEDURE_OCCURRENCE)
+    category: core
+    pk: procedure_occurrence_id
+    fields:
+    - name: procedure_occurrence_id
+      type: integer
+      required: true
+      desc: 각 처치 발생에 대한 고유 식별자이다.
+      key: PK
+    - name: visit_occurrence_id
+      type: integer
+      required: false
+      desc: 처치가 수행된 방문 기록을 참조하는 식별자로, VISIT_OCCURRENCE 테이블을 참조하는 외래키(Foreign Key)이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: person_id
+      type: integer
+      required: true
+      desc: 처치를 받은 사람에 대한 외래키 식별자이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: procedure_concept_id
+      type: integer
+      required: true
+      desc: 처치를 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Procedure Domain Concept을 참조하는 외래키이다.
+    - name: procedure_source_value
+      type: varchar
+      required: false
+      desc: 원천 처치·수가 코드이다.
+    - name: procedure_date
+      type: date
+      required: true
+      desc: 처치가 수행된 날짜이다.
+    - name: procedure_type_concept_id
+      type: integer
+      required: true
+      desc: 처치 기록이 생성된 원천 데이터의 유형을 나타내는 표준 Concept 식별자이다. 표준 용어체계의 Concept을 참조하며, 해당 정보의 출처와 생성 방식을 구분하기 위해 사용된다.
+      codelist: OMOP.procedure_type_concept_id
+  DRUG_EXPOSURE:
+    name: DRUG_EXPOSURE
+    kor: 약물 노출
+    section: 3.4 약물 노출(DRUG_EXPOSURE)
+    category: core
+    pk: drug_exposure_id
+    fields:
+    - name: drug_exposure_id
+      type: integer
+      required: true
+      desc: 약물 사용 이벤트에 대한 고유 식별자이다.
+      key: PK
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: 약물 투여가 시작된 방문 기록을 참조하는 식별자로, VISIT_OCCURRENCE 테이블을 참조하는 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: person_id
+      type: integer
+      required: true
+      desc: 약물을 섭취한 사람에 대한 외래키 식별자이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: sact_id
+      type: integer
+      required: false
+      desc: 'SACT 테이블과 연결되는 외래키 식별자이다. 항종양제(ATC L01)는 항암요법으로 투여되므로 필수이다. 내분비 치료제(ATC L02, 예: GnRHa·타목시펜)는 항암요법으로 투여한 경우에만 입력한다. 그 외 약물은 비워 둔다.'
+      key: FK
+      ref: SACT.sact_id
+    - name: drug_concept_id
+      type: integer
+      required: true
+      desc: 약물 정보를 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Drug Domain Concept을 참조하는 외래키(Foreign Key)이다.
+    - name: drug_source_value
+      type: varchar
+      required: false
+      desc: '원천 약품 코드이다. 예: EDI 코드, 원내 약품 코드'
+    - name: drug_exposure_start_date
+      type: date
+      required: true
+      desc: 약물 사용 시작 날짜이다.
+    - name: drug_exposure_end_date
+      type: date
+      required: true
+      desc: 약물 사용 종료 날짜이다.
+    - name: days_supply
+      type: integer
+      required: false
+      desc: 약물의 총 처방 일수이다.
+      range:
+      - 0
+      - 400
+    - name: amount_unit_concept_id
+      type: integer
+      required: false
+      desc: 약물의 용량 단위를 나타내는 concept ID 이다.
+      codelist: OMOP.amount_unit_concept_id
+    - name: amount_value
+      type: float
+      required: false
+      desc: 약물의 단일 용량 값이다.
+      range:
+      - 0
+      - 100000
+    - name: quantity
+      type: float
+      required: false
+      desc: '원처방·조제·투여 기록에 기재된 약물의 양(정제 등: 개수, 액제: 투여·조제 총량, 주사 등: 투여된 성분량)이다.'
+      range:
+      - 0
+      - 100000
+    - name: numerator_value
+      type: float
+      required: false
+      desc: 분자 함량 값이다.
+    - name: numerator_unit_concept_id
+      type: integer
+      required: false
+      desc: 분자 함량 측정 단위를 나타내는 concept_id 이다.
+      codelist: OMOP.numerator_unit_concept_id
+    - name: denominator_value
+      type: float
+      required: false
+      desc: 분모 함량 값이다.
+    - name: denominator_unit_concept_id
+      type: integer
+      required: false
+      desc: 분모 함량 측정 단위를 나타내는 concept_id 이다.
+      codelist: OMOP.denominator_unit_concept_id
+    - name: frequency_per_day
+      type: integer
+      required: false
+      desc: 1일 투여 횟수를 나타낸다. 매일 투여하는 경우 days_supply 값이 반드시 입력되어야 한다.
+      range:
+      - 1
+      - 24
+    - name: dosing_interval_day
+      type: integer
+      required: false
+      desc: 투여 간격(일)을 나타낸다. 투여 간격이 1일을 초과하는 경우 dosing_number 값이 반드시 입력되어야 한다.
+      range:
+      - 1
+      - 180
+    - name: dosing_number
+      type: integer
+      required: false
+      desc: 총 투여 횟수이다.
+      range:
+      - 1
+      - 500
+  CONDITION_OCCURRENCE:
+    name: CONDITION_OCCURRENCE
+    kor: 질환 발생
+    section: 3.5 질환 발생(CONDITION_OCCURRENCE)
+    category: core
+    pk: condition_occurrence_id
+    fields:
+    - name: condition_occurrence_id
+      type: integer
+      required: true
+      desc: 질환 발생 이벤트에 대한고유 식별자이다.
+      key: PK
+    - name: visit_occurrence_id
+      type: integer
+      required: false
+      desc: 해당 질환이 확인된 방문 기록을 참조하는 식별자로, VISIT_OCCURRENCE 테이블을 참조하는 외래키(Foreign Key)이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: person_id
+      type: integer
+      required: true
+      desc: 질환에 대한 조건이 기록된 사람에 대한 외래키 식별자이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: condition_concept_id
+      type: integer
+      required: true
+      desc: 질환 상태를 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Condition Domain Concept을 참조하는 외래키이다.
+    - name: condition_source_value
+      type: varchar
+      required: false
+      desc: '원천 진단 코드이다. 예: KCD 코드, ICD-O-3 코드'
+    - name: condition_start_date
+      type: date
+      required: true
+      desc: 질환 발생의 시작 날짜이다.
+    - name: condition_type_concept_id
+      type: integer
+      required: true
+      desc: 질환 정보가 기록된 원천 데이터의 유형, 표준화 수준 및 발생 유형을 나타내는 표준 Concept 식별자이다. 질환 기록의 출처와 생성 방식을 구분하기 위해 사용된다.
+      codelist: OMOP.condition_type_concept_id
+  MEASUREMENT:
+    name: MEASUREMENT
+    kor: 검사
+    section: 3.6 검사(MEASUREMENT)
+    category: core
+    pk: measurement_id
+    fields:
+    - name: measurement_id
+      type: integer
+      required: true
+      desc: 측정(검사) 기록에 대한 고유 식별자이다.
+      key: PK
+    - name: visit_occurrence_id
+      type: integer
+      required: false
+      desc: 측정(Measurement)이 수행되거나 기록된 방문 정보를 참조하는 식별자로, VISIT_OCCURRENCE 테이블을 참조하는 외래키(Foreign Key)이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: person_id
+      type: integer
+      required: true
+      desc: 측정이 수행된 사람에 대한 외래키 식별자이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: measurement_concept_id
+      type: integer
+      required: true
+      desc: 측정 항목을 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Measurement Domain Concept을 참조하는 외래키이다.
+    - name: measurement_source_value
+      type: varchar
+      required: false
+      desc: 원천 데이터의 검사 항목 코드·명칭이다.
+    - name: measurement_date
+      type: date
+      required: true
+      desc: 측정이 수행된 날짜이다.
+    - name: measurement_type_concept_id
+      type: integer
+      required: true
+      desc: 측정 정보가 생성된 원천 데이터의 유형 또는 출처(Provenance)를 나타내는 표준 Concept 식별자이다.
+      codelist: OMOP.measurement_type_concept_id
+    - name: value_as_number
+      type: float
+      required: false
+      desc: 측정값이 정량적일 때 기록되는 값이다.
+      range:
+      - -1000000
+      - 1000000
+    - name: value_as_concept_id
+      type: integer
+      required: false
+      desc: 측정 결과가 범주형 값인 경우 해당 결과를 나타내는 표준 Concept 식별자이다.
+    - name: unit_concept_id
+      type: integer
+      required: false
+      desc: 측정 결과의 단위를 나타내는 표준 Concept 식별자이다.
+      codelist: OMOP.unit_concept_id
+    - name: range_low
+      type: float
+      required: false
+      desc: 측정값이 정상 범위 내 최저값을 나타낸다.
+      range:
+      - -1000000
+      - 1000000
+    - name: range_high
+      type: float
+      required: false
+      desc: 측정값의 정상 범위 내 최고값을 나타낸다.
+      range:
+      - -1000000
+      - 1000000
+    - name: unit_source_value
+      type: varchar
+      required: false
+      desc: 원천 데이터에 존재하는 단위기준 값이다.
+    - name: value_source_value
+      type: varchar
+      required: false
+      desc: 원천 데이터에 기록된 측정 결과의 원본 값으로 value_as_number 또는 value_as_concept_id로 변환되기 전의 원본 결과 정보를 나타낸다.
+  OBSERVATION:
+    name: OBSERVATION
+    kor: 관찰
+    section: 3.7 관찰(OBSERVATION)
+    category: core
+    pk: observation_id
+    fields:
+    - name: observation_id
+      type: integer
+      required: true
+      desc: 관찰에 대한 고유 식별자이다.
+      key: PK
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: 개인의 의료기관 방문 또는 진료 에피소드를 고유하게 식별하기 위한 식별자이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: person_id
+      type: integer
+      required: true
+      desc: 관찰이 기록된 사람에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: observation_concept_id
+      type: integer
+      required: true
+      desc: 관찰된 임상적 사실을 나타내는 표준 Concept 식별자로, 표준 용어체계(Standardized Vocabularies)의 Observation Concept을 참조하는 외래키(Foreign Key)이다.
+    - name: observation_source_value
+      type: varchar
+      required: false
+      desc: 원천 데이터의 관찰 항목 코드·명칭이다.
+    - name: observation_date
+      type: date
+      required: true
+      desc: 관찰이 이루어진 날짜이다.
+    - name: observation_type_concept_id
+      type: integer
+      required: true
+      desc: 관찰 정보의 기록 유형 또는 원천 데이터의 출처를 나타내는 표준 Concept 식별자이다.
+      codelist: OMOP.observation_type_concept_id
+    - name: value_as_number
+      type: float
+      required: false
+      desc: 관찰 결과가 수치형(Numeric)인 경우 해당 값을 저장한다.
+      range:
+      - -1000000
+      - 1000000
+    - name: value_as_string
+      type: varchar
+      required: false
+      desc: 관찰 결과가 자유 형식의 텍스트(Verbatim Text)인 경우 해당 문자열 값을 저장한다.
+    - name: value_as_concept_id
+      type: integer
+      required: false
+      desc: '관찰 결과가 범주형인 경우 해당 결과를 나타내는 표준 Concept 식별자이다. 원천 코드(예: 1=Yes)를 그대로 넣지 않는다.'
+    - name: unit_concept_id
+      type: integer
+      required: false
+      desc: 수치형 관찰 결과의 측정 단위를 나타내는 표준 Concept 식별자이다. 표준 용어체계에 정의된 단위를 참조한다.
+      codelist: OMOP.unit_concept_id
+    - name: value_source_value
+      type: varchar
+      required: false
+      desc: 원천 데이터에 기록된 관찰 결과의 원본 값으로, value_as_number·value_as_string·value_as_concept_id로 변환되기 전의 값이다.
+  NOTE:
+    name: NOTE
+    kor: 노트
+    section: 3.8 노트(NOTE)
+    category: core
+    pk: note_id
+    fields:
+    - name: note_id
+      type: integer
+      required: true
+      desc: 노트(Note)에 대한 고유 식별자이다.
+      key: PK
+    - name: visit_occurrence_id
+      type: integer
+      required: false
+      desc: 노트가 작성된 방문 정보를 참조하는 값으로, VISIT_OCCURRENCE 테이블을 참조하는 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: person_id
+      type: integer
+      required: true
+      desc: 노트와 관련된 사람에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: note_date
+      type: date
+      required: true
+      desc: 노트가 작성된 날짜를 나타낸다.
+    - name: note_text
+      type: text
+      required: false
+      desc: 노트의 원문 내용을 저장한다.
+    - name: note_type_concept_id
+      type: integer
+      required: true
+      desc: 노트의 유형을 나타내는 표준 Concept 식별자이다.
+      codelist: OMOP.note_type_concept_id
+    - name: note_class_concept_id
+      type: integer
+      required: true
+      desc: 노트의 분류(Class)를 나타내는 표준 Concept 식별자이다.
+      codelist: OMOP.note_class_concept_id
+    - name: file_id
+      type: integer
+      required: false
+      desc: 이미지 및 영상 파일에 대한 외래키이다.
+  DRUG_INGREDIENT_STRUCTURE:
+    name: DRUG_INGREDIENT_STRUCTURE
+    kor: 구조식
+    section: 3.9 약물 성분 구조식(DRUG_INGREDIENT_STRUCTURE)
+    category: reference
+    pk: ingredient_concept_id
+    fields:
+    - name: ingredient_concept_id
+      type: integer
+      required: true
+      desc: 약물 성분(RxNorm Ingredient 등)을 나타내는 표준 Concept 식별자이다. DRUG_EXPOSURE.drug_concept_id와는 표준 어휘의 성분 관계(CONCEPT_ANCESTOR)로 연결한다.
+      key: PK
+    - name: smiles
+      type: varchar
+      required: true
+      desc: 해당 성분의 화학 구조식(SMILES)이다. AI 학습용. 복합제는 각 성분 행으로 표현한다.
+  LUNG_CANCER:
+    name: LUNG_CANCER
+    kor: 폐암
+    section: 4.1 폐암(LUNG_CANCER)
+    category: disease
+    pk: lung_cancer_id
+    fields:
+    - name: lung_cancer_id
+      type: integer
+      required: true
+      desc: 폐암 특화 테이블에 대한 고유 식별자이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: PERSON 테이블에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: VISIT_OCCURRENCE 테이블에 대한 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: diag_rgst_ymd
+      type: date
+      required: true
+      desc: 해당 암을 최초로 진단(조직학적 확진)한 날짜이다. 진단정보 등록일과 동일하다.
+    - name: histologic_diagnosis
+      type: integer
+      required: true
+      desc: '원발 진단(조직형) 원천 코드이다.
+
+        1=Adenocarcinoma, 2=Squamous cell carcinoma, 3=Large cell carcinoma, 4=Small cell carcinoma, 5=Carcinoma tumor 계열, 6=NSCLC NOS, 7=기타'
+      codelist: LUNG_CANCER.histologic_diagnosis
+    - name: histology_icdo3_code
+      type: varchar
+      required: true
+      desc: '원발 진단(조직형)의 ICD-O-3 형태 코드이다. 예: 8140/3'
+      pattern: ^\d{4}/[0-9]$
+    - name: primary_site_icdo3_code
+      type: varchar
+      required: true
+      desc: '원발 부위의 ICD-O-3 부위 코드이다. 예: C34.1'
+      pattern: ^C\d{2}\.\d$
+    - name: histologic_diagnosis_source_value
+      type: varchar
+      required: true
+      desc: 원발 진단(조직형)의 명칭으로, 원천에서 자유 기입된 값이다.
+    - name: clinical_stage
+      type: varchar
+      required: true
+      desc: '초진 시 AJCC 임상 병기이다. clinical_stage_ajcc_edition 판수의 병기군으로 기입한다.
+
+        8판: 0, IA1, IA2, IA3, IB, IIA, IIB, IIIA, IIIB, IIIC, IVA, IVB / 7판: 0, IA, IB, IIA, IIB, IIIA, IIIB, IV
+
+        소세포폐암(histologic_diagnosis = 4)에서 VALSG 병기를 쓰는 경우 LD(제한기) 또는 ED(확장기)로 기입한다.'
+    - name: clinical_stage_ajcc_edition
+      type: integer
+      required: false
+      desc: clinical_stage 판정에 사용한 AJCC 판수이다. 6, 7, 8 중 하나로 기입한다. AJCC 병기를 기입한 경우 필수이며, 소세포폐암을 제한기/확장기(LD/ED)로 기록한 경우 비워 둔다.
+      codelist: LUNG_CANCER.clinical_stage_ajcc_edition
+    - name: stage_iv_diagnosis_date
+      type: date
+      required: false
+      desc: Stage IV로 진단된 날짜이다. 조기 폐암(early lung cancer)으로 수술한 경우에는 재발한 날짜(≈ days_to_recurrence)를 기입하며, Stage IV 환자는 최초 진단 날짜와 동일하게 기입한다(≈ days_to_diagnosis).
+  BREAST_CANCER:
+    name: BREAST_CANCER
+    kor: 유방암
+    section: 4.2 유방암(BREAST_CANCER)
+    category: disease
+    pk: breast_cancer_id
+    fields:
+    - name: breast_cancer_id
+      type: integer
+      required: true
+      desc: 유방암 특화 테이블에 대한 고유 식별자이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: PERSON 테이블에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: VISIT_OCCURRENCE 테이블에 대한 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: diag_rgst_ymd
+      type: date
+      required: true
+      desc: 해당 암을 최초로 진단(조직학적 확진)한 날짜이다. 진단정보 등록일과 동일하다.
+    - name: menopause_status
+      type: integer
+      required: true
+      desc: '진단 시점 폐경 상태를 나타내는 코드값이다.
+
+        1=Premenopausal, 2=Postmenopausal, 3=Unknown, 4=Not Applicable (남성인 경우)'
+      codelist: BREAST_CANCER.menopause_status
+    - name: pregnant_at_diagnosis
+      type: integer
+      required: true
+      desc: '유방암 진단 시 임신 여부를 나타내는 코드값이다.
+
+        1=Yes, 2=No, 3=Unknown, 4=Not Applicable (남성인 경우)'
+      codelist: BREAST_CANCER.pregnant_at_diagnosis
+    - name: history_of_live_birth
+      type: integer
+      required: true
+      desc: '분만력(출산 경험) 유무를 나타내는 코드값이다.
+
+        1=Yes, 2=No, 3=Unknown, 4=Not Applicable (남성인 경우)'
+      codelist: BREAST_CANCER.history_of_live_birth
+    - name: postpartum_at_diagnosis
+      type: integer
+      required: true
+      desc: '출산 후(postpartum) 1년 이내 유방암 진단 여부를 나타내는 코드값이다.
+
+        1=Yes, 2=No, 3=Unknown, 4=Not Applicable (남성인 경우)'
+      codelist: BREAST_CANCER.postpartum_at_diagnosis
+    - name: fertility_history
+      type: integer
+      required: true
+      desc: '가임력 보존 치료 여부를 나타내는 코드값이다.
+
+        1=Yes, 2=No, 3=Unknown, 4=Not Applicable (남성인 경우)'
+      codelist: BREAST_CANCER.fertility_history
+    - name: fertility_treatment_type
+      type: integer
+      required: false
+      desc: '가임력 보존 치료 종류를 나타내는 코드값이다.
+
+        1=GnRHa, 2=난자 동결, 3=배아 동결, 4=기타, 5=GnRHa+동결'
+      codelist: BREAST_CANCER.fertility_treatment_type
+  COLORECTAL_CANCER:
+    name: COLORECTAL_CANCER
+    kor: 대장암
+    section: 4.3 대장암(COLORECTAL_CANCER)
+    category: disease
+    pk: colorectal_cancer_id
+    fields:
+    - name: colorectal_cancer_id
+      type: integer
+      required: true
+      desc: 대장암 특화 테이블에 대한 고유 식별자이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: PERSON 테이블에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: VISIT_OCCURRENCE 테이블에 대한 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: diag_rgst_ymd
+      type: date
+      required: true
+      desc: 해당 암을 최초로 진단(조직학적 확진)한 날짜이다. 진단정보 등록일과 동일하다.
+    - name: ostm_frsn_clsf_etc_cont
+      type: varchar
+      required: false
+      desc: 수술 시 장루형성 이유가 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    - name: inap_dsnt_mtst_site_etc_cont
+      type: varchar
+      required: false
+      desc: 복강내 원격전이 부위가 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    - name: anes_mthd_etc_cont
+      type: varchar
+      required: false
+      desc: 문합 방법이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    - name: afop_asmt_item_etc_cont
+      type: varchar
+      required: false
+      desc: 수술치료평가 또는 mRECIST 항목이 2개 이상이거나 기타에 해당하는 경우의 내용이다.
+    - name: inva_dgre_nm
+      type: varchar
+      required: false
+      desc: 침윤의 정도 명칭이다.
+    - name: radi_rsmg_invl_yn_spnm
+      type: varchar
+      required: false
+      desc: 수술후 외과병리 검사에서 확인된 radial 또는 circumferential margin 의 상태 명칭이다.
+    - name: tme_qlt_dgre_spnm
+      type: varchar
+      required: false
+      desc: TME (Total mesorectal excision, 전직장간막절제술) 육안적 완전도 명칭이다.
+  MASLD:
+    name: MASLD
+    kor: 대사이상지방간
+    section: 4.4 대사이상지방간(MASLD)
+    category: disease
+    pk: masld_id
+    fields:
+    - name: masld_id
+      type: integer
+      required: true
+      desc: 대사이상지방간 특화 테이블에 대한 고유 식별자이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: PERSON 테이블에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: VISIT_OCCURRENCE 테이블에 대한 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: fib4_score
+      type: float
+      required: false
+      desc: 'FIB-4 산출 결과값이다.
+
+        Formula = age (years) × AST [U/L] / (platelet count[109/L]) × (ALT [U/L]1/2)'
+      range:
+      - 0
+      - 50
+    - name: apri_score
+      type: float
+      required: false
+      desc: 'APRI 산출 결과값이다.
+
+        Formula = [(AST/upper limit of normal of AST)×100] / platelet count(109/L)×100'
+      range:
+      - 0
+      - 30
+    - name: bard_score
+      type: float
+      required: false
+      desc: 'BARD 산출 결과값이다.
+
+        이하 항목별 점수 부여 후 합산 (0~4, 총점 기반 위험 분류)
+
+        1. AST/ALT ratio >= 0.8 : 2점
+
+        2. BMI >= 28kg/m² : 1점
+
+        3. 당뇨병: 1점'
+      range:
+      - 0
+      - 4
+    - name: safe_score
+      type: float
+      required: false
+      desc: "SAFE 스코어 산출 결과값이다.\nFormula = (2.97 × age) + (5.99 × BMI [BMI > 40은 40으로 설정]) \n+ (62.85 × diabetes [없으면 0, 있으면 1] + (154.85 × Ln(AST)) \n- (58.23 ×\
+        \ Ln(ALT)) + (195.48 × Ln(globulin))\n- (141.61 × Ln(platelets) - 75)"
+      range:
+      - -50
+      - 300
+    - name: liverrisk_score
+      type: float
+      required: false
+      desc: 'LiverRisk score 산출 결과값이다.
+
+        Calculator https://www.liverriskscore.com/multicalc'
+  DIABETES:
+    name: DIABETES
+    kor: 당뇨병
+    section: 4.5 당뇨병(DIABETES)
+    category: disease
+    pk: dm_id
+    fields:
+    - name: dm_id
+      type: integer
+      required: true
+      desc: 당뇨병 특화 테이블에 대한 고유 식별자이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: PERSON 테이블에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: VISIT_OCCURRENCE 테이블에 대한 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: condition_start_date
+      type: date
+      required: true
+      desc: 진단 시작 날짜이다.
+    - name: condition_end_date
+      type: date
+      required: false
+      desc: 진단 종료 날짜이다.
+  LYMPHOMA:
+    name: LYMPHOMA
+    kor: 림프종
+    section: 4.6 림프종(LYMPHOMA)
+    category: disease
+    pk: lymphoma_id
+    fields:
+    - name: lymphoma_id
+      type: integer
+      required: true
+      desc: 림프종 특화 테이블에 대한 고유 식별자이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: PERSON 테이블에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: 해당 평가 또는 치료가 이루어진 방문의 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: diagnosis_date
+      type: date
+      required: true
+      desc: 림프종을 최초로 확진한 날짜이다.
+    - name: histology_icdo3_code
+      type: varchar
+      required: true
+      desc: '림프종의 ICD-O-3 형태 코드이다. 예: DLBCL 9680/3, 외투세포 9673/3, 고전적 호지킨 9650/3, 말초 T세포 NOS 9702/3'
+      pattern: ^\d{4}/[0-9]$
+    - name: cell_of_origin
+      type: varchar
+      required: false
+      desc: 'DLBCL 세포기원 분류이다. DLBCL 환자(histology_icdo3_code = 9680/3 계열)인 경우에만 입력한다. 예: GCB, ABC/non-GCB, unclassifiable.'
+    - name: double_expressor_yn
+      type: integer
+      required: false
+      desc: MYC/BCL2 이중 단백 발현 여부이다.
+    - name: double_hit_triple_hit_status
+      type: varchar
+      required: false
+      desc: MYC 및 BCL2/BCL6 재배열 조합에 따른 double-hit 또는 triple-hit 상태이다.
+    - name: t_14_18_result
+      type: varchar
+      required: false
+      desc: t(14;18) 전좌 검사 결과이다.
+    - name: t_11_14_result
+      type: varchar
+      required: false
+      desc: t(11;14)(q13;q32) 전좌 검사 결과이다.
+    - name: mipi_score
+      type: integer
+      required: false
+      desc: Mantle Cell Lymphoma International Prognostic Index(MIPI) 점수이다.
+      range:
+      - 0
+      - 15
+    - name: mipi_c_risk_group
+      type: varchar
+      required: false
+      desc: Ki-67을 반영한 MIPI-c 위험군이다.
+    - name: hodgkin_ips_score
+      type: integer
+      required: false
+      desc: 진행성 Hodgkin lymphoma의 International Prognostic Score(IPS)이다.
+      range:
+      - 0
+      - 7
+    - name: pit_score
+      type: integer
+      required: false
+      desc: 말초 T세포 림프종의 Prognostic Index for T-cell lymphoma(PIT) 점수이다.
+      range:
+      - 0
+      - 4
+    - name: minimal_residual_disease_result
+      type: varchar
+      required: false
+      desc: 유세포, PCR 또는 NGS 기반 미세잔존질환(MRD) 결과이다.
+    - name: ctdna_result
+      type: varchar
+      required: false
+      desc: 순환종양DNA(ctDNA) 검출 또는 정량 결과이다.
+  SACT:
+    name: SACT
+    kor: 항암
+    section: 5.1 항암(SACT)
+    category: extension
+    pk: sact_id
+    fields:
+    - name: sact_id
+      type: integer
+      required: true
+      desc: 항암요법(에피소드) ID 이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: 환자ID 이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: regimen_concept_id
+      type: integer
+      required: true
+      desc: 항암 레지멘 concept ID 이다.
+    - name: regimen_source_value
+      type: varchar
+      required: true
+      desc: '항암 레지멘·약제명 원천 값이다.
+
+        비일반적 레지멘 표기를 위해 추가'
+    - name: regimen_start_date
+      type: date
+      required: true
+      desc: '항암요법 시작 날짜이다.
+
+        drug 연결 시 MIN(drug_exposure_start_date)로 산출 가능'
+    - name: regimen_end_date
+      type: date
+      required: true
+      desc: '항암요법 종료 날짜이다.
+
+        drug 연결 시 MAX(drug_exposure_start_date + days_supply - 1)로 산출 가능'
+    - name: line_of_therapy
+      type: integer
+      required: false
+      desc: 치료 line 번호이다.
+      range:
+      - 1
+      - 20
+    - name: number_of_cycles
+      type: integer
+      required: false
+      desc: 총 투여 사이클 수이다.
+      range:
+      - 1
+      - 100
+    - name: therapy_intent
+      type: integer
+      required: false
+      desc: '치료 목적 코드이다.
+
+        1=Neoadjuvant, 2=Adjuvant, 3=Palliative, 4=Maintenance, 5=Definitive, 6=Salvage'
+      codelist: SACT.therapy_intent
+    - name: ecog_performance_status
+      type: integer
+      required: false
+      desc: "ECOG PS \n(0–5). 미상=NULL"
+      range:
+      - 0
+      - 5
+    - name: best_overall_response
+      type: varchar
+      required: false
+      desc: '치료 반응 평가 원천 값이다. 예: CR, PR, SD, PD'
+    - name: date_of_progression
+      type: date
+      required: false
+      desc: Progressive Disease 질병 진행(악화) 발생 날짜이다.
+    - name: recurrence_anatomic_site
+      type: varchar
+      required: false
+      desc: PD 부위 및 상세 원천 값이다.
+  ADVERSE_EVENT:
+    name: ADVERSE_EVENT
+    kor: 이상사례
+    section: 5.2 이상사례(ADVERSE_EVENT)
+    category: extension
+    pk: adverse_event_id
+    fields:
+    - name: adverse_event_id
+      type: integer
+      required: true
+      desc: 이상사례 특화 테이블에 대한 고유 식별자이다.
+      key: PK
+    - name: person_id
+      type: integer
+      required: true
+      desc: PERSON 테이블에 대한 외래키이다.
+      key: FK
+      ref: PERSON.person_id
+    - name: visit_occurrence_id
+      type: integer
+      required: true
+      desc: VISIT_OCCURRENCE 테이블에 대한 외래키이다.
+      key: FK
+      ref: VISIT_OCCURRENCE.visit_occurrence_id
+    - name: adverse_event_concept_id
+      type: integer
+      required: true
+      desc: 이상사례를 나타내는 표준 코드값이다.
+    - name: adverse_event_start_date
+      type: date
+      required: true
+      desc: 이상사례가 발생한(또는 인지된) 날짜이다.
+    - name: severity_concept_id
+      type: integer
+      required: false
+      desc: 이상사례의 중증도를 나타내는 코드값이다.
+      codelist: OMOP.severity_concept_id
+    - name: causality_concept_id
+      type: integer
+      required: false
+      desc: 약물과의 인과관계를 나타내는 값이다.
+      codelist: OMOP.causality_concept_id
+    - name: is_serious_yn
+      type: integer
+      required: false
+      desc: 중대한 이상사례(SAE) 해당 여부를 나타내는 값이다.
+    - name: seriousness_concept_id
+      type: integer
+      required: false
+      desc: 중대한 이상사례(SAE) 판단 기준에 해당하는 항목을 나타내는 코드값이다.
+      codelist: OMOP.seriousness_concept_id
+    - name: outcome_concept_id
+      type: integer
+      required: false
+      desc: 이상사례의 결과를 나타내는 코드값이다.
+      codelist: OMOP.outcome_concept_id
+    - name: action_taken_concept_id
+      type: integer
+      required: false
+      desc: 이상사례에 대해 취해진 조치(약물 관련)를 나타내는 코드값이다.
+      codelist: OMOP.action_taken_concept_id

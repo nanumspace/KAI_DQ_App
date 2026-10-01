@@ -5,6 +5,7 @@
 사용법:
     python dq/engine.py --cohort LUNG_CANCER --data synth/output/clean/LUNG_CANCER --out dq/reports/clean_LUNG_CANCER
     python dq/engine.py --spec v2 --cohort LUNG_CANCER --data synth/output/clean_v2/LUNG_CANCER --out dq/reports/v2_LUNG_CANCER
+    python dq/engine.py --spec v3 --cohort LUNG_CANCER --data synth/output/clean_v3/LUNG_CANCER --out dq/reports/clean_v3_LUNG_CANCER
 
 입력  : 코호트 디렉터리의 <TABLE>.csv (UTF-8, 헤더 포함, NULL 은 빈 문자열)
 규칙  : rules/rules_structural.yaml (명세에서 자동 생성) + rules/rules_semantic.yaml (수동 작성, DuckDB SQL)
@@ -48,6 +49,12 @@ def mask_values(detail):
     return _MASK_NUM.sub("…", s)
 
 
+V1_PATHS = dict(spec="spec/kai_cdm_spec.yaml", codelists="spec/codelists.yaml", profiles="spec/cohort_profiles.yaml",
+                structural="rules/rules_structural.yaml", semantic="rules/rules_semantic.yaml")
+V3_PATHS = dict(spec="spec/v3/kai_cdm_spec_v3.yaml", codelists="spec/v3/codelists_v3.yaml",
+                profiles="spec/v3/cohort_profiles_v3.yaml", structural="rules/rules_structural_v3.yaml",
+                semantic="rules/rules_semantic_v3.yaml")
+
 class Engine:
     def __init__(self, cohort, today=None, max_examples=50, spec="v1"):
         self.cohort = cohort
@@ -72,18 +79,20 @@ class Engine:
                 self.set_ids.setdefault(r["concept_set_id"], set()).add(str(r["concept_id"]))
                 self.code_of_concept[str(r["concept_id"])] = str(r["code"])
         else:
-            self.spec = load_yaml("spec/kai_cdm_spec.yaml")["tables"]
-            cl = load_yaml("spec/codelists.yaml")
+            # v1 과 v3(의뢰사 9/30 매뉴얼 수정안)는 같은 '질환별 표' 구조라 경로만 다르다.
+            paths = V3_PATHS if spec == "v3" else V1_PATHS
+            self.spec = load_yaml(paths["spec"])["tables"]
+            cl = load_yaml(paths["codelists"])
             self.codelists = {}
             for sect in cl.values():
                 for k, v in sect.items():
                     self.codelists[k] = {str(c) for c in v.keys()}
             self.concepts = load_yaml("spec/concepts.yaml")
-            self.profile = load_yaml("spec/cohort_profiles.yaml")["cohorts"][cohort]
+            self.profile = load_yaml(paths["profiles"])["cohorts"][cohort]
             self.tables_in_cohort = self.profile["tables"]
             self.disease_table = [t for t in self.tables_in_cohort if self.spec[t]["category"] == "disease"][0]
-            self.rules_struct = load_yaml("rules/rules_structural.yaml")["rules"]
-            self.rules_sem = load_yaml("rules/rules_semantic.yaml")["rules"]
+            self.rules_struct = load_yaml(paths["structural"])["rules"]
+            self.rules_sem = load_yaml(paths["semantic"])["rules"]
         self.findings = []
         self.rule_stats = OrderedDict()
         self.aliases_applied = []
@@ -356,7 +365,7 @@ class Engine:
         mc = self.concepts["measurements"]
         con.register("_mc", pd.DataFrame([dict(concept_id=int(k), name=v["name"], lo=float(v["plausible"][0]), hi=float(v["plausible"][1])) for k, v in mc.items()]))
         con.execute("CREATE TABLE _MEASUREMENT_CONCEPTS AS SELECT * FROM _mc")
-        ac = [dict(concept_id=int(k), name=v["name"]) for k, v in self.concepts["drugs"].items() if v.get("category") is not None]
+        ac = [dict(concept_id=int(k), name=v["name"], category=int(v["category"])) for k, v in self.concepts["drugs"].items() if v.get("category") is not None]
         con.register("_ac", pd.DataFrame(ac))
         con.execute("CREATE TABLE _ANTICANCER_DRUGS AS SELECT * FROM _ac")
 
@@ -490,7 +499,7 @@ def main():
     ap.add_argument("--data", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--today", default=None)
-    ap.add_argument("--spec", default="v1", choices=["v1", "v2"])
+    ap.add_argument("--spec", default="v1", choices=["v1", "v2", "v3"])
     a = ap.parse_args()
     today = dt.date.fromisoformat(a.today) if a.today else None
     e = Engine(a.cohort, today=today, spec=a.spec).load(a.data)

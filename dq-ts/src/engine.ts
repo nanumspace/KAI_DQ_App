@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { loadSpec, loadCodelists, loadConcepts, loadCohortDefinitionText, loadProfiles, loadStructuralRules, loadSemanticRules,
-         loadSpecV2, loadProfilesV2, loadStructuralRulesV2, loadSemanticRulesV2, loadConceptSetsV2, type ConceptSets } from "./load.js";
+         loadSpecV2, loadProfilesV2, loadStructuralRulesV2, loadSemanticRulesV2, loadConceptSetsV2, type ConceptSets, type Edition } from "./load.js";
 import { readCsv, writeCsv } from "./csv.js";
 import { runStructural } from "./structural.js";
 import { runSemantic } from "./semantic.js";
@@ -31,8 +31,8 @@ export interface EngineOptions {
   cohort: string;
   today?: string; // YYYY-MM-DD
   onProgress?: ProgressFn;
-  /** 어느 명세로 검사할지. v1 과 v2 는 당분간 나란히 돈다. */
-  spec?: "v1" | "v2";
+  /** 어느 명세로 검사할지. v1·v2·v3 는 나란히 돈다 (v3 = 의뢰사 9/30 매뉴얼 수정안, v1 과 같은 질환별 표 구조). */
+  spec?: Edition;
 }
 
 export class Engine {
@@ -45,7 +45,7 @@ export class Engine {
   readonly profile: { kor: string; tables: string[] };
   readonly tablesInCohort: string[];
   readonly diseaseTable: string;
-  readonly specVersion: "v1" | "v2";
+  readonly specVersion: Edition;
   readonly conceptSets?: ConceptSets;
   readonly rulesStruct: StructuralRule[];
   readonly rulesSem: SemanticRule[];
@@ -75,16 +75,17 @@ export class Engine {
       this.rulesSem = loadSemanticRulesV2();
       this.conceptSets = loadConceptSetsV2();
     } else {
-      this.spec = loadSpec();
-      this.codelists = loadCodelists();
+      const ed = this.specVersion;
+      this.spec = loadSpec(ed);
+      this.codelists = loadCodelists(ed);
       this.cdText = loadCohortDefinitionText();
-      const profiles = loadProfiles();
+      const profiles = loadProfiles(ed);
       if (!profiles[opt.cohort]) throw new Error(`알 수 없는 코호트: ${opt.cohort}`);
       this.profile = profiles[opt.cohort];
       this.tablesInCohort = this.profile.tables;
       this.diseaseTable = this.tablesInCohort.find((t) => this.spec.tables[t].category === "disease")!;
-      this.rulesStruct = loadStructuralRules();
-      this.rulesSem = loadSemanticRules();
+      this.rulesStruct = loadStructuralRules(ed);
+      this.rulesSem = loadSemanticRules(ed);
     }
   }
 

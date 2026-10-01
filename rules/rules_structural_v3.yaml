@@ -1,0 +1,5216 @@
+rules:
+- id: ST-0001
+  name: PERSON 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: PERSON
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 PERSON 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0002
+  name: PERSON 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: PERSON
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - person_id
+    - gender_concept_id
+    - year_of_birth
+    - month_of_birth
+    - day_of_birth
+    - age_at_index
+    - care_site_id
+    - observation_period_start_date
+    - death_date
+    aliases: &id001 {}
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0003
+  name: PERSON.person_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: PERSON
+  fields:
+  - person_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0004
+  name: PERSON.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0005
+  name: PERSON.gender_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: PERSON
+  fields:
+  - gender_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 gender_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0006
+  name: PERSON.gender_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - gender_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: gender_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0007
+  name: PERSON.gender_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - gender_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.gender_concept_id
+  desc: gender_concept_id 값은 코드표 OMOP.gender_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0008
+  name: PERSON.year_of_birth 필수
+  category: Completeness
+  subcategory: value
+  table: PERSON
+  fields:
+  - year_of_birth
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 year_of_birth 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0009
+  name: PERSON.year_of_birth 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - year_of_birth
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: year_of_birth 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0010
+  name: PERSON.year_of_birth 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: PERSON
+  fields:
+  - year_of_birth
+  severity: warning
+  check: range
+  params:
+    min: 1900
+    max: 2026
+  desc: year_of_birth 은 [1900, 2026] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0011
+  name: PERSON.month_of_birth 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - month_of_birth
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: month_of_birth 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0012
+  name: PERSON.month_of_birth 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: PERSON
+  fields:
+  - month_of_birth
+  severity: warning
+  check: range
+  params:
+    min: 1
+    max: 12
+  desc: month_of_birth 은 [1, 12] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0013
+  name: PERSON.day_of_birth 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - day_of_birth
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: day_of_birth 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0014
+  name: PERSON.day_of_birth 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: PERSON
+  fields:
+  - day_of_birth
+  severity: warning
+  check: range
+  params:
+    min: 1
+    max: 31
+  desc: day_of_birth 은 [1, 31] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0015
+  name: PERSON.age_at_index 필수
+  category: Completeness
+  subcategory: value
+  table: PERSON
+  fields:
+  - age_at_index
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 age_at_index 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0016
+  name: PERSON.age_at_index 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - age_at_index
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: age_at_index 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0017
+  name: PERSON.age_at_index 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: PERSON
+  fields:
+  - age_at_index
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 110
+  desc: age_at_index 은 [0, 110] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0018
+  name: PERSON.care_site_id 필수
+  category: Completeness
+  subcategory: value
+  table: PERSON
+  fields:
+  - care_site_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 care_site_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0019
+  name: PERSON.care_site_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - care_site_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: care_site_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0020
+  name: PERSON.observation_period_start_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - observation_period_start_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: observation_period_start_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0021
+  name: PERSON.observation_period_start_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: PERSON
+  fields:
+  - observation_period_start_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: observation_period_start_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0022
+  name: PERSON.death_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: PERSON
+  fields:
+  - death_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: death_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0023
+  name: PERSON.death_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: PERSON
+  fields:
+  - death_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: death_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0024
+  name: VISIT_OCCURRENCE 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: VISIT_OCCURRENCE
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 VISIT_OCCURRENCE 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0025
+  name: VISIT_OCCURRENCE 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: VISIT_OCCURRENCE
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - visit_occurrence_id
+    - person_id
+    - visit_concept_id
+    - visit_start_date
+    - visit_end_date
+    - visit_type_concept_id
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0026
+  name: VISIT_OCCURRENCE.visit_occurrence_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0027
+  name: VISIT_OCCURRENCE.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0028
+  name: VISIT_OCCURRENCE.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0029
+  name: VISIT_OCCURRENCE.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0030
+  name: VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: VISIT_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0031
+  name: VISIT_OCCURRENCE.visit_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0032
+  name: VISIT_OCCURRENCE.visit_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0033
+  name: VISIT_OCCURRENCE.visit_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.visit_concept_id
+  desc: visit_concept_id 값은 코드표 OMOP.visit_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0034
+  name: VISIT_OCCURRENCE.visit_start_date 필수
+  category: Completeness
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_start_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_start_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0035
+  name: VISIT_OCCURRENCE.visit_start_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_start_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: visit_start_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0036
+  name: VISIT_OCCURRENCE.visit_start_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_start_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: visit_start_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0037
+  name: VISIT_OCCURRENCE.visit_end_date 필수
+  category: Completeness
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_end_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_end_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0038
+  name: VISIT_OCCURRENCE.visit_end_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_end_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: visit_end_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0039
+  name: VISIT_OCCURRENCE.visit_end_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_end_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: visit_end_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0040
+  name: VISIT_OCCURRENCE.visit_type_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_type_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_type_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0041
+  name: VISIT_OCCURRENCE.visit_type_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_type_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_type_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0042
+  name: VISIT_OCCURRENCE.visit_type_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: VISIT_OCCURRENCE
+  fields:
+  - visit_type_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.visit_type_concept_id
+  desc: visit_type_concept_id 값은 코드표 OMOP.visit_type_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0043
+  name: PROCEDURE_OCCURRENCE 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: PROCEDURE_OCCURRENCE
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 PROCEDURE_OCCURRENCE 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0044
+  name: PROCEDURE_OCCURRENCE 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: PROCEDURE_OCCURRENCE
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - procedure_occurrence_id
+    - visit_occurrence_id
+    - person_id
+    - procedure_concept_id
+    - procedure_source_value
+    - procedure_date
+    - procedure_type_concept_id
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0045
+  name: PROCEDURE_OCCURRENCE.procedure_occurrence_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_occurrence_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0046
+  name: PROCEDURE_OCCURRENCE.procedure_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: procedure_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0047
+  name: PROCEDURE_OCCURRENCE.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0048
+  name: PROCEDURE_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0049
+  name: PROCEDURE_OCCURRENCE.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0050
+  name: PROCEDURE_OCCURRENCE.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0051
+  name: PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0052
+  name: PROCEDURE_OCCURRENCE.procedure_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 procedure_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0053
+  name: PROCEDURE_OCCURRENCE.procedure_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: procedure_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0054
+  name: PROCEDURE_OCCURRENCE.procedure_date 필수
+  category: Completeness
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 procedure_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0055
+  name: PROCEDURE_OCCURRENCE.procedure_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: procedure_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0056
+  name: PROCEDURE_OCCURRENCE.procedure_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: procedure_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0057
+  name: PROCEDURE_OCCURRENCE.procedure_type_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_type_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 procedure_type_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0058
+  name: PROCEDURE_OCCURRENCE.procedure_type_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_type_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: procedure_type_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0059
+  name: PROCEDURE_OCCURRENCE.procedure_type_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: PROCEDURE_OCCURRENCE
+  fields:
+  - procedure_type_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.procedure_type_concept_id
+  desc: procedure_type_concept_id 값은 코드표 OMOP.procedure_type_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0060
+  name: DRUG_EXPOSURE 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: DRUG_EXPOSURE
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 DRUG_EXPOSURE 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0061
+  name: DRUG_EXPOSURE 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: DRUG_EXPOSURE
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - drug_exposure_id
+    - visit_occurrence_id
+    - person_id
+    - sact_id
+    - drug_concept_id
+    - drug_source_value
+    - drug_exposure_start_date
+    - drug_exposure_end_date
+    - days_supply
+    - amount_unit_concept_id
+    - amount_value
+    - quantity
+    - numerator_value
+    - numerator_unit_concept_id
+    - denominator_value
+    - denominator_unit_concept_id
+    - frequency_per_day
+    - dosing_interval_day
+    - dosing_number
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0062
+  name: DRUG_EXPOSURE.drug_exposure_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_exposure_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0063
+  name: DRUG_EXPOSURE.drug_exposure_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_exposure_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: drug_exposure_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0064
+  name: DRUG_EXPOSURE.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0065
+  name: DRUG_EXPOSURE.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0066
+  name: DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: DRUG_EXPOSURE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0067
+  name: DRUG_EXPOSURE.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0068
+  name: DRUG_EXPOSURE.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0069
+  name: DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: DRUG_EXPOSURE
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0070
+  name: DRUG_EXPOSURE.sact_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - sact_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: sact_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0071
+  name: DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: DRUG_EXPOSURE
+  fields:
+  - sact_id
+  severity: error
+  check: fk
+  params:
+    ref_table: SACT
+    ref_field: sact_id
+  desc: sact_id 의 값은 SACT.sact_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0072
+  name: DRUG_EXPOSURE.drug_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 drug_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0073
+  name: DRUG_EXPOSURE.drug_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: drug_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0074
+  name: DRUG_EXPOSURE.drug_exposure_start_date 필수
+  category: Completeness
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_exposure_start_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 drug_exposure_start_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0075
+  name: DRUG_EXPOSURE.drug_exposure_start_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_exposure_start_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: drug_exposure_start_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0076
+  name: DRUG_EXPOSURE.drug_exposure_start_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_exposure_start_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: drug_exposure_start_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0077
+  name: DRUG_EXPOSURE.drug_exposure_end_date 필수
+  category: Completeness
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_exposure_end_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 drug_exposure_end_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0078
+  name: DRUG_EXPOSURE.drug_exposure_end_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_exposure_end_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: drug_exposure_end_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0079
+  name: DRUG_EXPOSURE.drug_exposure_end_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: DRUG_EXPOSURE
+  fields:
+  - drug_exposure_end_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: drug_exposure_end_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0080
+  name: DRUG_EXPOSURE.days_supply 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - days_supply
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: days_supply 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0081
+  name: DRUG_EXPOSURE.days_supply 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: DRUG_EXPOSURE
+  fields:
+  - days_supply
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 400
+  desc: days_supply 은 [0, 400] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0082
+  name: DRUG_EXPOSURE.amount_unit_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - amount_unit_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: amount_unit_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0083
+  name: DRUG_EXPOSURE.amount_unit_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - amount_unit_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.amount_unit_concept_id
+  desc: amount_unit_concept_id 값은 코드표 OMOP.amount_unit_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0084
+  name: DRUG_EXPOSURE.amount_value 타입(float)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - amount_value
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: amount_value 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0085
+  name: DRUG_EXPOSURE.amount_value 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: DRUG_EXPOSURE
+  fields:
+  - amount_value
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 100000
+  desc: amount_value 은 [0, 100000] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0086
+  name: DRUG_EXPOSURE.quantity 타입(float)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - quantity
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: quantity 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0087
+  name: DRUG_EXPOSURE.quantity 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: DRUG_EXPOSURE
+  fields:
+  - quantity
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 100000
+  desc: quantity 은 [0, 100000] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0088
+  name: DRUG_EXPOSURE.numerator_value 타입(float)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - numerator_value
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: numerator_value 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0089
+  name: DRUG_EXPOSURE.numerator_unit_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - numerator_unit_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: numerator_unit_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0090
+  name: DRUG_EXPOSURE.numerator_unit_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - numerator_unit_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.numerator_unit_concept_id
+  desc: numerator_unit_concept_id 값은 코드표 OMOP.numerator_unit_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0091
+  name: DRUG_EXPOSURE.denominator_value 타입(float)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - denominator_value
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: denominator_value 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0092
+  name: DRUG_EXPOSURE.denominator_unit_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - denominator_unit_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: denominator_unit_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0093
+  name: DRUG_EXPOSURE.denominator_unit_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - denominator_unit_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.denominator_unit_concept_id
+  desc: denominator_unit_concept_id 값은 코드표 OMOP.denominator_unit_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0094
+  name: DRUG_EXPOSURE.frequency_per_day 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - frequency_per_day
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: frequency_per_day 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0095
+  name: DRUG_EXPOSURE.frequency_per_day 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: DRUG_EXPOSURE
+  fields:
+  - frequency_per_day
+  severity: warning
+  check: range
+  params:
+    min: 1
+    max: 24
+  desc: frequency_per_day 은 [1, 24] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0096
+  name: DRUG_EXPOSURE.dosing_interval_day 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - dosing_interval_day
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: dosing_interval_day 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0097
+  name: DRUG_EXPOSURE.dosing_interval_day 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: DRUG_EXPOSURE
+  fields:
+  - dosing_interval_day
+  severity: warning
+  check: range
+  params:
+    min: 1
+    max: 180
+  desc: dosing_interval_day 은 [1, 180] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0098
+  name: DRUG_EXPOSURE.dosing_number 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_EXPOSURE
+  fields:
+  - dosing_number
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: dosing_number 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0099
+  name: DRUG_EXPOSURE.dosing_number 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: DRUG_EXPOSURE
+  fields:
+  - dosing_number
+  severity: warning
+  check: range
+  params:
+    min: 1
+    max: 500
+  desc: dosing_number 은 [1, 500] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0100
+  name: DRUG_EXPOSURE.sact_id 비항암 코호트 NULL
+  category: Conformance
+  subcategory: relational
+  table: DRUG_EXPOSURE
+  fields:
+  - sact_id
+  severity: error
+  check: must_be_null
+  params: {}
+  desc: 항암 테이블이 없는 코호트에서는 sact_id 가 항상 NULL 이어야 한다.
+  scope:
+  - MASLD
+  - DIABETES
+  source: auto:spec
+- id: ST-0101
+  name: CONDITION_OCCURRENCE 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: CONDITION_OCCURRENCE
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 CONDITION_OCCURRENCE 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0102
+  name: CONDITION_OCCURRENCE 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: CONDITION_OCCURRENCE
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - condition_occurrence_id
+    - visit_occurrence_id
+    - person_id
+    - condition_concept_id
+    - condition_source_value
+    - condition_start_date
+    - condition_type_concept_id
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0103
+  name: CONDITION_OCCURRENCE.condition_occurrence_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_occurrence_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0104
+  name: CONDITION_OCCURRENCE.condition_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: condition_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0105
+  name: CONDITION_OCCURRENCE.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0106
+  name: CONDITION_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: CONDITION_OCCURRENCE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0107
+  name: CONDITION_OCCURRENCE.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0108
+  name: CONDITION_OCCURRENCE.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0109
+  name: CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: CONDITION_OCCURRENCE
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0110
+  name: CONDITION_OCCURRENCE.condition_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 condition_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0111
+  name: CONDITION_OCCURRENCE.condition_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: condition_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0112
+  name: CONDITION_OCCURRENCE.condition_start_date 필수
+  category: Completeness
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_start_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 condition_start_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0113
+  name: CONDITION_OCCURRENCE.condition_start_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_start_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: condition_start_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0114
+  name: CONDITION_OCCURRENCE.condition_start_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_start_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: condition_start_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0115
+  name: CONDITION_OCCURRENCE.condition_type_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_type_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 condition_type_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0116
+  name: CONDITION_OCCURRENCE.condition_type_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_type_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: condition_type_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0117
+  name: CONDITION_OCCURRENCE.condition_type_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: CONDITION_OCCURRENCE
+  fields:
+  - condition_type_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.condition_type_concept_id
+  desc: condition_type_concept_id 값은 코드표 OMOP.condition_type_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0118
+  name: MEASUREMENT 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: MEASUREMENT
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 MEASUREMENT 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0119
+  name: MEASUREMENT 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: MEASUREMENT
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - measurement_id
+    - visit_occurrence_id
+    - person_id
+    - measurement_concept_id
+    - measurement_source_value
+    - measurement_date
+    - measurement_type_concept_id
+    - value_as_number
+    - value_as_concept_id
+    - unit_concept_id
+    - range_low
+    - range_high
+    - unit_source_value
+    - value_source_value
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0120
+  name: MEASUREMENT.measurement_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: MEASUREMENT
+  fields:
+  - measurement_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0121
+  name: MEASUREMENT.measurement_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - measurement_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: measurement_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0122
+  name: MEASUREMENT.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0123
+  name: MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: MEASUREMENT
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0124
+  name: MEASUREMENT.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0125
+  name: MEASUREMENT.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0126
+  name: MEASUREMENT.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: MEASUREMENT
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0127
+  name: MEASUREMENT.measurement_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - measurement_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 measurement_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0128
+  name: MEASUREMENT.measurement_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - measurement_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: measurement_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0129
+  name: MEASUREMENT.measurement_date 필수
+  category: Completeness
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - measurement_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 measurement_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0130
+  name: MEASUREMENT.measurement_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - measurement_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: measurement_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0131
+  name: MEASUREMENT.measurement_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: MEASUREMENT
+  fields:
+  - measurement_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: measurement_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0132
+  name: MEASUREMENT.measurement_type_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - measurement_type_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 measurement_type_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0133
+  name: MEASUREMENT.measurement_type_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - measurement_type_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: measurement_type_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0134
+  name: MEASUREMENT.measurement_type_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - measurement_type_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.measurement_type_concept_id
+  desc: measurement_type_concept_id 값은 코드표 OMOP.measurement_type_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0135
+  name: MEASUREMENT.value_as_number 타입(float)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - value_as_number
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: value_as_number 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0136
+  name: MEASUREMENT.value_as_number 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: MEASUREMENT
+  fields:
+  - value_as_number
+  severity: warning
+  check: range
+  params:
+    min: -1000000
+    max: 1000000
+  desc: value_as_number 은 [-1000000, 1000000] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0137
+  name: MEASUREMENT.value_as_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - value_as_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: value_as_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0138
+  name: MEASUREMENT.unit_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - unit_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: unit_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0139
+  name: MEASUREMENT.unit_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - unit_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.unit_concept_id
+  desc: unit_concept_id 값은 코드표 OMOP.unit_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0140
+  name: MEASUREMENT.range_low 타입(float)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - range_low
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: range_low 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0141
+  name: MEASUREMENT.range_low 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: MEASUREMENT
+  fields:
+  - range_low
+  severity: warning
+  check: range
+  params:
+    min: -1000000
+    max: 1000000
+  desc: range_low 은 [-1000000, 1000000] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0142
+  name: MEASUREMENT.range_high 타입(float)
+  category: Conformance
+  subcategory: value
+  table: MEASUREMENT
+  fields:
+  - range_high
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: range_high 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0143
+  name: MEASUREMENT.range_high 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: MEASUREMENT
+  fields:
+  - range_high
+  severity: warning
+  check: range
+  params:
+    min: -1000000
+    max: 1000000
+  desc: range_high 은 [-1000000, 1000000] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0144
+  name: OBSERVATION 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: OBSERVATION
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 OBSERVATION 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0145
+  name: OBSERVATION 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: OBSERVATION
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - observation_id
+    - visit_occurrence_id
+    - person_id
+    - observation_concept_id
+    - observation_source_value
+    - observation_date
+    - observation_type_concept_id
+    - value_as_number
+    - value_as_string
+    - value_as_concept_id
+    - unit_concept_id
+    - value_source_value
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0146
+  name: OBSERVATION.observation_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: OBSERVATION
+  fields:
+  - observation_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0147
+  name: OBSERVATION.observation_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - observation_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: observation_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0148
+  name: OBSERVATION.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0149
+  name: OBSERVATION.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0150
+  name: OBSERVATION.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: OBSERVATION
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0151
+  name: OBSERVATION.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0152
+  name: OBSERVATION.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0153
+  name: OBSERVATION.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: OBSERVATION
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0154
+  name: OBSERVATION.observation_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - observation_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 observation_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0155
+  name: OBSERVATION.observation_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - observation_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: observation_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0156
+  name: OBSERVATION.observation_date 필수
+  category: Completeness
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - observation_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 observation_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0157
+  name: OBSERVATION.observation_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - observation_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: observation_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0158
+  name: OBSERVATION.observation_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: OBSERVATION
+  fields:
+  - observation_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: observation_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0159
+  name: OBSERVATION.observation_type_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - observation_type_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 observation_type_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0160
+  name: OBSERVATION.observation_type_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - observation_type_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: observation_type_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0161
+  name: OBSERVATION.observation_type_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - observation_type_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.observation_type_concept_id
+  desc: observation_type_concept_id 값은 코드표 OMOP.observation_type_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0162
+  name: OBSERVATION.value_as_number 타입(float)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - value_as_number
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: value_as_number 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0163
+  name: OBSERVATION.value_as_number 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: OBSERVATION
+  fields:
+  - value_as_number
+  severity: warning
+  check: range
+  params:
+    min: -1000000
+    max: 1000000
+  desc: value_as_number 은 [-1000000, 1000000] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0164
+  name: OBSERVATION.value_as_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - value_as_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: value_as_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0165
+  name: OBSERVATION.unit_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - unit_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: unit_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0166
+  name: OBSERVATION.unit_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: OBSERVATION
+  fields:
+  - unit_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.unit_concept_id
+  desc: unit_concept_id 값은 코드표 OMOP.unit_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0167
+  name: NOTE 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: NOTE
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 NOTE 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0168
+  name: NOTE 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: NOTE
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - note_id
+    - visit_occurrence_id
+    - person_id
+    - note_date
+    - note_text
+    - note_type_concept_id
+    - note_class_concept_id
+    - file_id
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0169
+  name: NOTE.note_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: NOTE
+  fields:
+  - note_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0170
+  name: NOTE.note_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: note_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0171
+  name: NOTE.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0172
+  name: NOTE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: NOTE
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0173
+  name: NOTE.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: NOTE
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0174
+  name: NOTE.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0175
+  name: NOTE.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: NOTE
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0176
+  name: NOTE.note_date 필수
+  category: Completeness
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 note_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0177
+  name: NOTE.note_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: note_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0178
+  name: NOTE.note_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: NOTE
+  fields:
+  - note_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: note_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0179
+  name: NOTE.note_type_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_type_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 note_type_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0180
+  name: NOTE.note_type_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_type_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: note_type_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0181
+  name: NOTE.note_type_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_type_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.note_type_concept_id
+  desc: note_type_concept_id 값은 코드표 OMOP.note_type_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0182
+  name: NOTE.note_class_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_class_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 note_class_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0183
+  name: NOTE.note_class_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_class_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: note_class_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0184
+  name: NOTE.note_class_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - note_class_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.note_class_concept_id
+  desc: note_class_concept_id 값은 코드표 OMOP.note_class_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0185
+  name: NOTE.file_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: NOTE
+  fields:
+  - file_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: file_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0186
+  name: DRUG_INGREDIENT_STRUCTURE 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: DRUG_INGREDIENT_STRUCTURE
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 DRUG_INGREDIENT_STRUCTURE 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0187
+  name: DRUG_INGREDIENT_STRUCTURE 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: DRUG_INGREDIENT_STRUCTURE
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - ingredient_concept_id
+    - smiles
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0188
+  name: DRUG_INGREDIENT_STRUCTURE.ingredient_concept_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: DRUG_INGREDIENT_STRUCTURE
+  fields:
+  - ingredient_concept_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0189
+  name: DRUG_INGREDIENT_STRUCTURE.ingredient_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DRUG_INGREDIENT_STRUCTURE
+  fields:
+  - ingredient_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: ingredient_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0190
+  name: DRUG_INGREDIENT_STRUCTURE.smiles 필수
+  category: Completeness
+  subcategory: value
+  table: DRUG_INGREDIENT_STRUCTURE
+  fields:
+  - smiles
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 smiles 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0191
+  name: LUNG_CANCER 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: LUNG_CANCER
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 LUNG_CANCER 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0192
+  name: LUNG_CANCER 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: LUNG_CANCER
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - lung_cancer_id
+    - person_id
+    - visit_occurrence_id
+    - diag_rgst_ymd
+    - histologic_diagnosis
+    - histology_icdo3_code
+    - primary_site_icdo3_code
+    - histologic_diagnosis_source_value
+    - clinical_stage
+    - clinical_stage_ajcc_edition
+    - stage_iv_diagnosis_date
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0193
+  name: LUNG_CANCER.lung_cancer_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: LUNG_CANCER
+  fields:
+  - lung_cancer_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0194
+  name: LUNG_CANCER.lung_cancer_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - lung_cancer_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: lung_cancer_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0195
+  name: LUNG_CANCER.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0196
+  name: LUNG_CANCER.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0197
+  name: LUNG_CANCER.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: LUNG_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0198
+  name: LUNG_CANCER.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0199
+  name: LUNG_CANCER.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0200
+  name: LUNG_CANCER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: LUNG_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0201
+  name: LUNG_CANCER.diag_rgst_ymd 필수
+  category: Completeness
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 diag_rgst_ymd 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0202
+  name: LUNG_CANCER.diag_rgst_ymd 타입(date)
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: diag_rgst_ymd 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0203
+  name: LUNG_CANCER.diag_rgst_ymd 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: LUNG_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: not_future
+  params: {}
+  desc: diag_rgst_ymd 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0204
+  name: LUNG_CANCER.histologic_diagnosis 필수
+  category: Completeness
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - histologic_diagnosis
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 histologic_diagnosis 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0205
+  name: LUNG_CANCER.histologic_diagnosis 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - histologic_diagnosis
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: histologic_diagnosis 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0206
+  name: LUNG_CANCER.histologic_diagnosis 코드표
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - histologic_diagnosis
+  severity: error
+  check: codelist
+  params:
+    codelist: LUNG_CANCER.histologic_diagnosis
+  desc: histologic_diagnosis 값은 코드표 LUNG_CANCER.histologic_diagnosis 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0207
+  name: LUNG_CANCER.histology_icdo3_code 필수
+  category: Completeness
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - histology_icdo3_code
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 histology_icdo3_code 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0208
+  name: LUNG_CANCER.histology_icdo3_code 패턴
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - histology_icdo3_code
+  severity: warning
+  check: pattern
+  params:
+    regex: ^\d{4}/[0-9]$
+  desc: histology_icdo3_code 은 정규식 ^\d{4}/[0-9]$ 에 맞아야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0209
+  name: LUNG_CANCER.primary_site_icdo3_code 필수
+  category: Completeness
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - primary_site_icdo3_code
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 primary_site_icdo3_code 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0210
+  name: LUNG_CANCER.primary_site_icdo3_code 패턴
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - primary_site_icdo3_code
+  severity: warning
+  check: pattern
+  params:
+    regex: ^C\d{2}\.\d$
+  desc: primary_site_icdo3_code 은 정규식 ^C\d{2}\.\d$ 에 맞아야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0211
+  name: LUNG_CANCER.histologic_diagnosis_source_value 필수
+  category: Completeness
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - histologic_diagnosis_source_value
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 histologic_diagnosis_source_value 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0212
+  name: LUNG_CANCER.clinical_stage 필수
+  category: Completeness
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - clinical_stage
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 clinical_stage 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0213
+  name: LUNG_CANCER.clinical_stage_ajcc_edition 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - clinical_stage_ajcc_edition
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: clinical_stage_ajcc_edition 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0214
+  name: LUNG_CANCER.clinical_stage_ajcc_edition 코드표
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - clinical_stage_ajcc_edition
+  severity: error
+  check: codelist
+  params:
+    codelist: LUNG_CANCER.clinical_stage_ajcc_edition
+  desc: clinical_stage_ajcc_edition 값은 코드표 LUNG_CANCER.clinical_stage_ajcc_edition 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0215
+  name: LUNG_CANCER.stage_iv_diagnosis_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: LUNG_CANCER
+  fields:
+  - stage_iv_diagnosis_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: stage_iv_diagnosis_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0216
+  name: LUNG_CANCER.stage_iv_diagnosis_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: LUNG_CANCER
+  fields:
+  - stage_iv_diagnosis_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: stage_iv_diagnosis_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0217
+  name: BREAST_CANCER 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: BREAST_CANCER
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 BREAST_CANCER 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0218
+  name: BREAST_CANCER 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: BREAST_CANCER
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - breast_cancer_id
+    - person_id
+    - visit_occurrence_id
+    - diag_rgst_ymd
+    - menopause_status
+    - pregnant_at_diagnosis
+    - history_of_live_birth
+    - postpartum_at_diagnosis
+    - fertility_history
+    - fertility_treatment_type
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0219
+  name: BREAST_CANCER.breast_cancer_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: BREAST_CANCER
+  fields:
+  - breast_cancer_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0220
+  name: BREAST_CANCER.breast_cancer_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - breast_cancer_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: breast_cancer_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0221
+  name: BREAST_CANCER.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0222
+  name: BREAST_CANCER.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0223
+  name: BREAST_CANCER.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: BREAST_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0224
+  name: BREAST_CANCER.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0225
+  name: BREAST_CANCER.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0226
+  name: BREAST_CANCER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: BREAST_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0227
+  name: BREAST_CANCER.diag_rgst_ymd 필수
+  category: Completeness
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 diag_rgst_ymd 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0228
+  name: BREAST_CANCER.diag_rgst_ymd 타입(date)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: diag_rgst_ymd 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0229
+  name: BREAST_CANCER.diag_rgst_ymd 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: BREAST_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: not_future
+  params: {}
+  desc: diag_rgst_ymd 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0230
+  name: BREAST_CANCER.menopause_status 필수
+  category: Completeness
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - menopause_status
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 menopause_status 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0231
+  name: BREAST_CANCER.menopause_status 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - menopause_status
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: menopause_status 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0232
+  name: BREAST_CANCER.menopause_status 코드표
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - menopause_status
+  severity: error
+  check: codelist
+  params:
+    codelist: BREAST_CANCER.menopause_status
+  desc: menopause_status 값은 코드표 BREAST_CANCER.menopause_status 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0233
+  name: BREAST_CANCER.pregnant_at_diagnosis 필수
+  category: Completeness
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - pregnant_at_diagnosis
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 pregnant_at_diagnosis 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0234
+  name: BREAST_CANCER.pregnant_at_diagnosis 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - pregnant_at_diagnosis
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: pregnant_at_diagnosis 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0235
+  name: BREAST_CANCER.pregnant_at_diagnosis 코드표
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - pregnant_at_diagnosis
+  severity: error
+  check: codelist
+  params:
+    codelist: BREAST_CANCER.pregnant_at_diagnosis
+  desc: pregnant_at_diagnosis 값은 코드표 BREAST_CANCER.pregnant_at_diagnosis 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0236
+  name: BREAST_CANCER.history_of_live_birth 필수
+  category: Completeness
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - history_of_live_birth
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 history_of_live_birth 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0237
+  name: BREAST_CANCER.history_of_live_birth 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - history_of_live_birth
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: history_of_live_birth 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0238
+  name: BREAST_CANCER.history_of_live_birth 코드표
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - history_of_live_birth
+  severity: error
+  check: codelist
+  params:
+    codelist: BREAST_CANCER.history_of_live_birth
+  desc: history_of_live_birth 값은 코드표 BREAST_CANCER.history_of_live_birth 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0239
+  name: BREAST_CANCER.postpartum_at_diagnosis 필수
+  category: Completeness
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - postpartum_at_diagnosis
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 postpartum_at_diagnosis 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0240
+  name: BREAST_CANCER.postpartum_at_diagnosis 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - postpartum_at_diagnosis
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: postpartum_at_diagnosis 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0241
+  name: BREAST_CANCER.postpartum_at_diagnosis 코드표
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - postpartum_at_diagnosis
+  severity: error
+  check: codelist
+  params:
+    codelist: BREAST_CANCER.postpartum_at_diagnosis
+  desc: postpartum_at_diagnosis 값은 코드표 BREAST_CANCER.postpartum_at_diagnosis 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0242
+  name: BREAST_CANCER.fertility_history 필수
+  category: Completeness
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - fertility_history
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 fertility_history 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0243
+  name: BREAST_CANCER.fertility_history 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - fertility_history
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: fertility_history 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0244
+  name: BREAST_CANCER.fertility_history 코드표
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - fertility_history
+  severity: error
+  check: codelist
+  params:
+    codelist: BREAST_CANCER.fertility_history
+  desc: fertility_history 값은 코드표 BREAST_CANCER.fertility_history 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0245
+  name: BREAST_CANCER.fertility_treatment_type 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - fertility_treatment_type
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: fertility_treatment_type 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0246
+  name: BREAST_CANCER.fertility_treatment_type 코드표
+  category: Conformance
+  subcategory: value
+  table: BREAST_CANCER
+  fields:
+  - fertility_treatment_type
+  severity: error
+  check: codelist
+  params:
+    codelist: BREAST_CANCER.fertility_treatment_type
+  desc: fertility_treatment_type 값은 코드표 BREAST_CANCER.fertility_treatment_type 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0247
+  name: COLORECTAL_CANCER 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: COLORECTAL_CANCER
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 COLORECTAL_CANCER 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0248
+  name: COLORECTAL_CANCER 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: COLORECTAL_CANCER
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - colorectal_cancer_id
+    - person_id
+    - visit_occurrence_id
+    - diag_rgst_ymd
+    - ostm_frsn_clsf_etc_cont
+    - inap_dsnt_mtst_site_etc_cont
+    - anes_mthd_etc_cont
+    - afop_asmt_item_etc_cont
+    - inva_dgre_nm
+    - radi_rsmg_invl_yn_spnm
+    - tme_qlt_dgre_spnm
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0249
+  name: COLORECTAL_CANCER.colorectal_cancer_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: COLORECTAL_CANCER
+  fields:
+  - colorectal_cancer_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0250
+  name: COLORECTAL_CANCER.colorectal_cancer_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: COLORECTAL_CANCER
+  fields:
+  - colorectal_cancer_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: colorectal_cancer_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0251
+  name: COLORECTAL_CANCER.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: COLORECTAL_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0252
+  name: COLORECTAL_CANCER.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: COLORECTAL_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0253
+  name: COLORECTAL_CANCER.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: COLORECTAL_CANCER
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0254
+  name: COLORECTAL_CANCER.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: COLORECTAL_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0255
+  name: COLORECTAL_CANCER.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: COLORECTAL_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0256
+  name: COLORECTAL_CANCER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: COLORECTAL_CANCER
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0257
+  name: COLORECTAL_CANCER.diag_rgst_ymd 필수
+  category: Completeness
+  subcategory: value
+  table: COLORECTAL_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 diag_rgst_ymd 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0258
+  name: COLORECTAL_CANCER.diag_rgst_ymd 타입(date)
+  category: Conformance
+  subcategory: value
+  table: COLORECTAL_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: diag_rgst_ymd 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0259
+  name: COLORECTAL_CANCER.diag_rgst_ymd 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: COLORECTAL_CANCER
+  fields:
+  - diag_rgst_ymd
+  severity: error
+  check: not_future
+  params: {}
+  desc: diag_rgst_ymd 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0260
+  name: MASLD 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: MASLD
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 MASLD 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0261
+  name: MASLD 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: MASLD
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - masld_id
+    - person_id
+    - visit_occurrence_id
+    - fib4_score
+    - apri_score
+    - bard_score
+    - safe_score
+    - liverrisk_score
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0262
+  name: MASLD.masld_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: MASLD
+  fields:
+  - masld_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0263
+  name: MASLD.masld_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MASLD
+  fields:
+  - masld_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: masld_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0264
+  name: MASLD.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: MASLD
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0265
+  name: MASLD.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MASLD
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0266
+  name: MASLD.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: MASLD
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0267
+  name: MASLD.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: MASLD
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0268
+  name: MASLD.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: MASLD
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0269
+  name: MASLD.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: MASLD
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0270
+  name: MASLD.fib4_score 타입(float)
+  category: Conformance
+  subcategory: value
+  table: MASLD
+  fields:
+  - fib4_score
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: fib4_score 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0271
+  name: MASLD.fib4_score 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: MASLD
+  fields:
+  - fib4_score
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 50
+  desc: fib4_score 은 [0, 50] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0272
+  name: MASLD.apri_score 타입(float)
+  category: Conformance
+  subcategory: value
+  table: MASLD
+  fields:
+  - apri_score
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: apri_score 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0273
+  name: MASLD.apri_score 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: MASLD
+  fields:
+  - apri_score
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 30
+  desc: apri_score 은 [0, 30] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0274
+  name: MASLD.bard_score 타입(float)
+  category: Conformance
+  subcategory: value
+  table: MASLD
+  fields:
+  - bard_score
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: bard_score 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0275
+  name: MASLD.bard_score 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: MASLD
+  fields:
+  - bard_score
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 4
+  desc: bard_score 은 [0, 4] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0276
+  name: MASLD.safe_score 타입(float)
+  category: Conformance
+  subcategory: value
+  table: MASLD
+  fields:
+  - safe_score
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: safe_score 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0277
+  name: MASLD.safe_score 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: MASLD
+  fields:
+  - safe_score
+  severity: warning
+  check: range
+  params:
+    min: -50
+    max: 300
+  desc: safe_score 은 [-50, 300] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0278
+  name: MASLD.liverrisk_score 타입(float)
+  category: Conformance
+  subcategory: value
+  table: MASLD
+  fields:
+  - liverrisk_score
+  severity: error
+  check: type
+  params:
+    type: float
+  desc: liverrisk_score 은 float 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0279
+  name: DIABETES 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: DIABETES
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 DIABETES 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0280
+  name: DIABETES 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: DIABETES
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - dm_id
+    - person_id
+    - visit_occurrence_id
+    - condition_start_date
+    - condition_end_date
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0281
+  name: DIABETES.dm_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: DIABETES
+  fields:
+  - dm_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0282
+  name: DIABETES.dm_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DIABETES
+  fields:
+  - dm_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: dm_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0283
+  name: DIABETES.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: DIABETES
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0284
+  name: DIABETES.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DIABETES
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0285
+  name: DIABETES.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: DIABETES
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0286
+  name: DIABETES.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: DIABETES
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0287
+  name: DIABETES.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: DIABETES
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0288
+  name: DIABETES.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: DIABETES
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0289
+  name: DIABETES.condition_start_date 필수
+  category: Completeness
+  subcategory: value
+  table: DIABETES
+  fields:
+  - condition_start_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 condition_start_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0290
+  name: DIABETES.condition_start_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: DIABETES
+  fields:
+  - condition_start_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: condition_start_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0291
+  name: DIABETES.condition_start_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: DIABETES
+  fields:
+  - condition_start_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: condition_start_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0292
+  name: DIABETES.condition_end_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: DIABETES
+  fields:
+  - condition_end_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: condition_end_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0293
+  name: DIABETES.condition_end_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: DIABETES
+  fields:
+  - condition_end_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: condition_end_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0294
+  name: LYMPHOMA 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: LYMPHOMA
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 LYMPHOMA 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0295
+  name: LYMPHOMA 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: LYMPHOMA
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - lymphoma_id
+    - person_id
+    - visit_occurrence_id
+    - diagnosis_date
+    - histology_icdo3_code
+    - cell_of_origin
+    - double_expressor_yn
+    - double_hit_triple_hit_status
+    - t_14_18_result
+    - t_11_14_result
+    - mipi_score
+    - mipi_c_risk_group
+    - hodgkin_ips_score
+    - pit_score
+    - minimal_residual_disease_result
+    - ctdna_result
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0296
+  name: LYMPHOMA.lymphoma_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: LYMPHOMA
+  fields:
+  - lymphoma_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0297
+  name: LYMPHOMA.lymphoma_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - lymphoma_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: lymphoma_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0298
+  name: LYMPHOMA.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0299
+  name: LYMPHOMA.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0300
+  name: LYMPHOMA.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: LYMPHOMA
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0301
+  name: LYMPHOMA.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0302
+  name: LYMPHOMA.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0303
+  name: LYMPHOMA.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: LYMPHOMA
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0304
+  name: LYMPHOMA.diagnosis_date 필수
+  category: Completeness
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - diagnosis_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 diagnosis_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0305
+  name: LYMPHOMA.diagnosis_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - diagnosis_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: diagnosis_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0306
+  name: LYMPHOMA.diagnosis_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: LYMPHOMA
+  fields:
+  - diagnosis_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: diagnosis_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0307
+  name: LYMPHOMA.histology_icdo3_code 필수
+  category: Completeness
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - histology_icdo3_code
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 histology_icdo3_code 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0308
+  name: LYMPHOMA.histology_icdo3_code 패턴
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - histology_icdo3_code
+  severity: warning
+  check: pattern
+  params:
+    regex: ^\d{4}/[0-9]$
+  desc: histology_icdo3_code 은 정규식 ^\d{4}/[0-9]$ 에 맞아야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0309
+  name: LYMPHOMA.double_expressor_yn 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - double_expressor_yn
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: double_expressor_yn 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0310
+  name: LYMPHOMA.mipi_score 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - mipi_score
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: mipi_score 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0311
+  name: LYMPHOMA.mipi_score 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: LYMPHOMA
+  fields:
+  - mipi_score
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 15
+  desc: mipi_score 은 [0, 15] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0312
+  name: LYMPHOMA.hodgkin_ips_score 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - hodgkin_ips_score
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: hodgkin_ips_score 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0313
+  name: LYMPHOMA.hodgkin_ips_score 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: LYMPHOMA
+  fields:
+  - hodgkin_ips_score
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 7
+  desc: hodgkin_ips_score 은 [0, 7] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0314
+  name: LYMPHOMA.pit_score 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: LYMPHOMA
+  fields:
+  - pit_score
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: pit_score 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0315
+  name: LYMPHOMA.pit_score 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: LYMPHOMA
+  fields:
+  - pit_score
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 4
+  desc: pit_score 은 [0, 4] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0316
+  name: SACT 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: SACT
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 SACT 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0317
+  name: SACT 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: SACT
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - sact_id
+    - person_id
+    - regimen_concept_id
+    - regimen_source_value
+    - regimen_start_date
+    - regimen_end_date
+    - line_of_therapy
+    - number_of_cycles
+    - therapy_intent
+    - ecog_performance_status
+    - best_overall_response
+    - date_of_progression
+    - recurrence_anatomic_site
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0318
+  name: SACT.sact_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: SACT
+  fields:
+  - sact_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0319
+  name: SACT.sact_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - sact_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: sact_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0320
+  name: SACT.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: SACT
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0321
+  name: SACT.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0322
+  name: SACT.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: SACT
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0323
+  name: SACT.regimen_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: SACT
+  fields:
+  - regimen_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 regimen_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0324
+  name: SACT.regimen_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - regimen_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: regimen_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0325
+  name: SACT.regimen_source_value 필수
+  category: Completeness
+  subcategory: value
+  table: SACT
+  fields:
+  - regimen_source_value
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 regimen_source_value 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0326
+  name: SACT.regimen_start_date 필수
+  category: Completeness
+  subcategory: value
+  table: SACT
+  fields:
+  - regimen_start_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 regimen_start_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0327
+  name: SACT.regimen_start_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - regimen_start_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: regimen_start_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0328
+  name: SACT.regimen_start_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: SACT
+  fields:
+  - regimen_start_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: regimen_start_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0329
+  name: SACT.regimen_end_date 필수
+  category: Completeness
+  subcategory: value
+  table: SACT
+  fields:
+  - regimen_end_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 regimen_end_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0330
+  name: SACT.regimen_end_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - regimen_end_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: regimen_end_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0331
+  name: SACT.regimen_end_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: SACT
+  fields:
+  - regimen_end_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: regimen_end_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0332
+  name: SACT.line_of_therapy 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - line_of_therapy
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: line_of_therapy 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0333
+  name: SACT.line_of_therapy 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: SACT
+  fields:
+  - line_of_therapy
+  severity: warning
+  check: range
+  params:
+    min: 1
+    max: 20
+  desc: line_of_therapy 은 [1, 20] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0334
+  name: SACT.number_of_cycles 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - number_of_cycles
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: number_of_cycles 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0335
+  name: SACT.number_of_cycles 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: SACT
+  fields:
+  - number_of_cycles
+  severity: warning
+  check: range
+  params:
+    min: 1
+    max: 100
+  desc: number_of_cycles 은 [1, 100] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0336
+  name: SACT.therapy_intent 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - therapy_intent
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: therapy_intent 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0337
+  name: SACT.therapy_intent 코드표
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - therapy_intent
+  severity: error
+  check: codelist
+  params:
+    codelist: SACT.therapy_intent
+  desc: therapy_intent 값은 코드표 SACT.therapy_intent 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0338
+  name: SACT.ecog_performance_status 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - ecog_performance_status
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: ecog_performance_status 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0339
+  name: SACT.ecog_performance_status 범위
+  category: Plausibility
+  subcategory: atemporal
+  table: SACT
+  fields:
+  - ecog_performance_status
+  severity: warning
+  check: range
+  params:
+    min: 0
+    max: 5
+  desc: ecog_performance_status 은 [0, 5] 범위여야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0340
+  name: SACT.date_of_progression 타입(date)
+  category: Conformance
+  subcategory: value
+  table: SACT
+  fields:
+  - date_of_progression
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: date_of_progression 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0341
+  name: SACT.date_of_progression 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: SACT
+  fields:
+  - date_of_progression
+  severity: error
+  check: not_future
+  params: {}
+  desc: date_of_progression 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0342
+  name: ADVERSE_EVENT 테이블 존재
+  category: Completeness
+  subcategory: table
+  table: ADVERSE_EVENT
+  fields: []
+  severity: error
+  check: table_present
+  params: {}
+  desc: 코호트 구성에 포함된 ADVERSE_EVENT 테이블이 제출되어야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0343
+  name: ADVERSE_EVENT 컬럼 구성
+  category: Conformance
+  subcategory: structure
+  table: ADVERSE_EVENT
+  fields: []
+  severity: error
+  check: columns
+  params:
+    expected:
+    - adverse_event_id
+    - person_id
+    - visit_occurrence_id
+    - adverse_event_concept_id
+    - adverse_event_start_date
+    - severity_concept_id
+    - causality_concept_id
+    - is_serious_yn
+    - seriousness_concept_id
+    - outcome_concept_id
+    - action_taken_concept_id
+    aliases: *id001
+  desc: 명세의 모든 컬럼이 존재해야 한다. 명세에 없는 컬럼은 경고.
+  scope: all
+  source: auto:spec
+- id: ST-0344
+  name: ADVERSE_EVENT.adverse_event_id PK 유일성
+  category: Conformance
+  subcategory: relational
+  table: ADVERSE_EVENT
+  fields:
+  - adverse_event_id
+  severity: error
+  check: pk_unique
+  params: {}
+  desc: PK 는 NULL 이 아니고 유일해야 한다.
+  scope: all
+  source: auto:spec
+- id: ST-0345
+  name: ADVERSE_EVENT.adverse_event_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - adverse_event_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: adverse_event_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0346
+  name: ADVERSE_EVENT.person_id 필수
+  category: Completeness
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - person_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 person_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0347
+  name: ADVERSE_EVENT.person_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - person_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: person_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0348
+  name: ADVERSE_EVENT.person_id -> PERSON.person_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: ADVERSE_EVENT
+  fields:
+  - person_id
+  severity: error
+  check: fk
+  params:
+    ref_table: PERSON
+    ref_field: person_id
+  desc: person_id 의 값은 PERSON.person_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0349
+  name: ADVERSE_EVENT.visit_occurrence_id 필수
+  category: Completeness
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 visit_occurrence_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0350
+  name: ADVERSE_EVENT.visit_occurrence_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: visit_occurrence_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0351
+  name: ADVERSE_EVENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성
+  category: Conformance
+  subcategory: relational
+  table: ADVERSE_EVENT
+  fields:
+  - visit_occurrence_id
+  severity: error
+  check: fk
+  params:
+    ref_table: VISIT_OCCURRENCE
+    ref_field: visit_occurrence_id
+  desc: visit_occurrence_id 의 값은 VISIT_OCCURRENCE.visit_occurrence_id 에 존재해야 한다 (참조 테이블이 코호트에 없으면 건너뜀).
+  scope: all
+  source: auto:spec
+- id: ST-0352
+  name: ADVERSE_EVENT.adverse_event_concept_id 필수
+  category: Completeness
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - adverse_event_concept_id
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 adverse_event_concept_id 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0353
+  name: ADVERSE_EVENT.adverse_event_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - adverse_event_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: adverse_event_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0354
+  name: ADVERSE_EVENT.adverse_event_start_date 필수
+  category: Completeness
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - adverse_event_start_date
+  severity: error
+  check: not_null
+  params: {}
+  desc: 필수 필드 adverse_event_start_date 은 NULL 일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0355
+  name: ADVERSE_EVENT.adverse_event_start_date 타입(date)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - adverse_event_start_date
+  severity: error
+  check: type
+  params:
+    type: date
+  desc: adverse_event_start_date 은 date 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0356
+  name: ADVERSE_EVENT.adverse_event_start_date 미래 날짜 금지
+  category: Plausibility
+  subcategory: temporal
+  table: ADVERSE_EVENT
+  fields:
+  - adverse_event_start_date
+  severity: error
+  check: not_future
+  params: {}
+  desc: adverse_event_start_date 은 검증 실행일보다 미래일 수 없다.
+  scope: all
+  source: auto:spec
+- id: ST-0357
+  name: ADVERSE_EVENT.severity_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - severity_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: severity_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0358
+  name: ADVERSE_EVENT.severity_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - severity_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.severity_concept_id
+  desc: severity_concept_id 값은 코드표 OMOP.severity_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0359
+  name: ADVERSE_EVENT.causality_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - causality_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: causality_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0360
+  name: ADVERSE_EVENT.causality_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - causality_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.causality_concept_id
+  desc: causality_concept_id 값은 코드표 OMOP.causality_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0361
+  name: ADVERSE_EVENT.is_serious_yn 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - is_serious_yn
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: is_serious_yn 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0362
+  name: ADVERSE_EVENT.seriousness_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - seriousness_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: seriousness_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0363
+  name: ADVERSE_EVENT.seriousness_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - seriousness_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.seriousness_concept_id
+  desc: seriousness_concept_id 값은 코드표 OMOP.seriousness_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0364
+  name: ADVERSE_EVENT.outcome_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - outcome_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: outcome_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0365
+  name: ADVERSE_EVENT.outcome_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - outcome_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.outcome_concept_id
+  desc: outcome_concept_id 값은 코드표 OMOP.outcome_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec
+- id: ST-0366
+  name: ADVERSE_EVENT.action_taken_concept_id 타입(integer)
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - action_taken_concept_id
+  severity: error
+  check: type
+  params:
+    type: integer
+  desc: action_taken_concept_id 은 integer 형식이어야 한다 (날짜는 YYYY-MM-DD).
+  scope: all
+  source: auto:spec
+- id: ST-0367
+  name: ADVERSE_EVENT.action_taken_concept_id 코드표
+  category: Conformance
+  subcategory: value
+  table: ADVERSE_EVENT
+  fields:
+  - action_taken_concept_id
+  severity: warning
+  check: codelist
+  params:
+    codelist: OMOP.action_taken_concept_id
+  desc: action_taken_concept_id 값은 코드표 OMOP.action_taken_concept_id 에 있어야 한다. (OMOP 집합은 병원 설정으로 확장 가능하므로 경고)
+  scope: all
+  source: auto:spec

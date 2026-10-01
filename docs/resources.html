@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>자료실 · Quality Validator</title>
+  <meta name="description" content="K-AI 코호트 데이터 품질검증 앱의 기본 명세(v3) 자료: 입력 양식, 컬럼 명세서, 검증 규칙 목록, 견본 데이터 기대 결과.">
+  <style>
+    :root { --bg:#f4f6f9; --card:#fff; --ink:#132033; --mut:#5b6b80; --line:#dbe2ea; --acc:#275BAB; --acc2:#00C2D1; --err:#b42318; --warn:#9a5b00; --code:#eef2f7; color-scheme: light; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#101623; --card:#172033; --ink:#e6edf6; --mut:#9aabc2; --line:#2a3750; --acc:#7aa7f0; --code:#1f2b42; --err:#ff8a7a; --warn:#f0b35a; color-scheme: dark; } }
+    :root[data-theme="dark"] { --bg:#101623; --card:#172033; --ink:#e6edf6; --mut:#9aabc2; --line:#2a3750; --acc:#7aa7f0; --code:#1f2b42; --err:#ff8a7a; --warn:#f0b35a; color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.6 -apple-system, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif; }
+    a { color: var(--acc); }
+    header { position:sticky; top:0; z-index:5; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(16px); border-bottom:1px solid var(--line); }
+    .wrap { max-width:1180px; margin:0 auto; padding:0 20px; }
+    header .wrap { display:flex; align-items:center; gap:18px; height:58px; }
+    header b { font-size:16px; } header nav { display:flex; gap:16px; margin-left:auto; font-size:14px; }
+    header nav a { color:var(--mut); text-decoration:none; } header nav a:hover { color:var(--ink); }
+    h1 { font-size:30px; margin:34px 0 6px; } h2 { font-size:21px; margin:0 0 4px; }
+    .lede { color:var(--mut); margin:0 0 20px; max-width:860px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 22px; margin:0 0 20px; }
+    .sub { color:var(--mut); font-size:13.5px; margin:0 0 14px; }
+    .stats { display:flex; flex-wrap:wrap; gap:10px; margin:0 0 22px; }
+    .stat { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px 16px; min-width:120px; }
+    .stat b { display:block; font-size:22px; } .stat span { color:var(--mut); font-size:12.5px; }
+    td.mono:first-child { white-space:nowrap; }
+    table { width:100%; border-collapse:collapse; font-size:13.5px; }
+    th, td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { color:var(--mut); font-weight:600; background:var(--card); white-space:nowrap; }
+    td.num, th.num { text-align:right; white-space:nowrap; }
+    code, .mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size:12.5px; }
+    code { background:var(--code); padding:1px 5px; border-radius:4px; }
+    .btns { display:flex; flex-wrap:wrap; gap:8px; }
+    .btn { display:inline-block; border:1px solid var(--acc); color:var(--acc); background:transparent; border-radius:7px; padding:5px 11px; font-size:13px; text-decoration:none; white-space:nowrap; }
+    .btn.solid { background:var(--acc); color:#fff; }
+    .filters { display:flex; flex-wrap:wrap; gap:10px; align-items:end; margin:0 0 12px; }
+    .filters label { display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--mut); }
+    .filters .grow { flex:1; min-width:220px; }
+    input, select { font:inherit; font-size:14px; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:7px; padding:6px 8px; }
+    .tag { display:inline-block; font-size:11.5px; padding:0 7px; border-radius:9px; background:var(--code); color:var(--mut); white-space:nowrap; }
+    .tag.error { color:var(--err); } .tag.warning { color:var(--warn); }
+    details summary { cursor:pointer; color:var(--mut); font-size:12.5px; }
+    pre { background:var(--code); padding:10px; border-radius:8px; overflow:auto; font-size:12px; margin:6px 0 0; }
+    .count { color:var(--mut); font-size:13px; margin:0 0 8px; }
+    .scroll { max-height:70vh; overflow:auto; border:1px solid var(--line); border-radius:8px; }
+    .scroll th { position:sticky; top:0; z-index:1; }
+    .note { font-size:13px; color:var(--mut); }
+    footer { color:var(--mut); font-size:12.5px; padding:24px 0 40px; }
+  </style>
+</head>
+<body>
+<header><div class="wrap">
+  <b>Quality Validator · 자료실</b>
+  <nav><a href="#downloads">내려받기</a><a href="#rules">검증 규칙</a><a href="#columns">컬럼 명세</a><a href="./">← 소개 페이지</a></nav>
+</div></header>
+<main class="wrap">
+  <h1>자료실 <span id="ed" class="tag"></span></h1>
+  <p class="lede">앱의 기본 명세에서 그대로 만든 자료입니다. 병원은 앱을 설치하기 전에 입력 양식을 받고, 어떤 규칙으로 검사받는지 미리 볼 수 있습니다. 명세나 규칙이 바뀌면 이 페이지도 다음 배포 때 함께 바뀝니다.</p>
+  <div class="stats" id="stats"></div>
+
+  <section class="card" id="downloads">
+    <h2>내려받기</h2>
+    <p class="sub">엑셀 양식은 시트 하나가 테이블 하나이고 '명세' 시트에 컬럼 설명이 있습니다. CSV 묶음은 테이블마다 헤더만 있는 파일입니다. 앱의 '입력 양식 내려받기'와 같은 모양입니다.</p>
+    <div class="btns" style="margin-bottom:14px" id="common"></div>
+    <div style="overflow:auto"><table>
+      <thead><tr><th>코호트</th><th class="num">표</th><th class="num">적용 규칙</th><th>입력 양식</th><th>견본 데이터 기대 결과 <span class="note">(clean / dirty 위반 수)</span></th></tr></thead>
+      <tbody id="cohorts"></tbody>
+    </table></div>
+    <p class="note">견본 데이터(100명 가상 코호트, clean·dirty)는 <a href="https://github.com/nanumspace/KAI_DQ_App/releases/latest">최신 릴리스</a>에서 받습니다. 폴더째 앱의 검증 실행 화면에 넣으면 위 기대 결과와 같은 수가 나와야 합니다.</p>
+  </section>
+
+  <section class="card" id="rules">
+    <h2>검증 규칙</h2>
+    <p class="sub">구조 규칙은 명세에서 자동 생성되고, 교차 규칙은 여러 표를 함께 보는 SQL 입니다. 분류는 Kahn 프레임워크(적합성 Conformance · 완전성 Completeness · 타당성 Plausibility)를 따릅니다. 심각도 error 는 적재 거부 수준, warning 은 검토 필요입니다.</p>
+    <div class="filters">
+      <label>코호트<select id="f-cohort"><option value="">전체</option></select></label>
+      <label>종류<select id="f-kind"><option value="">전체</option><option>구조</option><option>교차</option></select></label>
+      <label>분류<select id="f-cat"><option value="">전체</option><option>Conformance</option><option>Completeness</option><option>Plausibility</option></select></label>
+      <label>심각도<select id="f-sev"><option value="">전체</option><option>error</option><option>warning</option></select></label>
+      <label>테이블<select id="f-table"><option value="">전체</option></select></label>
+      <label class="grow">검색<input id="f-q" type="search" placeholder="규칙 id, 이름, 컬럼, 설명"></label>
+    </div>
+    <p class="count" id="rcount"></p>
+    <div class="scroll"><table>
+      <thead><tr><th>규칙</th><th>이름과 설명</th><th>분류</th><th>심각도</th><th>테이블 · 컬럼</th></tr></thead>
+      <tbody id="rbody"></tbody>
+    </table></div>
+  </section>
+
+  <section class="card" id="columns">
+    <h2>컬럼 명세</h2>
+    <p class="sub">필수 Y 인 컬럼은 비어 있으면 오류입니다. 코드표가 있는 컬럼은 표시된 코드만 받습니다(OMOP 집합은 경고 수준).</p>
+    <div class="filters">
+      <label>테이블<select id="c-table"></select></label>
+      <label class="grow">검색<input id="c-q" type="search" placeholder="컬럼명, 설명 (모든 표에서)"></label>
+    </div>
+    <p class="count" id="ccount"></p>
+    <div class="scroll"><table>
+      <thead><tr><th>테이블</th><th>컬럼</th><th>타입</th><th>필수</th><th>키 · 참조</th><th>값 제약</th><th>설명</th></tr></thead>
+      <tbody id="cbody"></tbody>
+    </table></div>
+  </section>
+  <footer id="foot"></footer>
+</main>
+<script>
+(function () {
+  'use strict';
+  try { var t = localStorage.getItem('kai-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var fmt = function (n) { return Number(n).toLocaleString('ko-KR'); };
+  var R = 'resources/';
+
+  fetch(R + 'data.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(render).catch(function (e) {
+    $('stats').innerHTML = '<p class="note">자료를 불러오지 못했습니다: ' + esc(e.message) + '</p>';
+  });
+
+  function render(d) {
+    $('ed').textContent = d.edition + ' · ' + d.spec_version;
+    var c = d.counts;
+    $('stats').innerHTML = [['표', c.tables], ['컬럼', c.fields], ['구조 규칙', c.structural], ['교차 규칙', c.semantic], ['코호트', d.cohorts.length]]
+      .map(function (s) { return '<div class="stat"><b>' + fmt(s[1]) + '</b><span>' + s[0] + '</span></div>'; }).join('');
+    $('common').innerHTML = '<a class="btn solid" href="' + R + d.files.column_spec + '" download>컬럼 명세서 (xlsx, 전체 표)</a>' +
+      '<a class="btn" href="' + R + d.files.rules_csv + '" download>검증 규칙 목록 (csv)</a>';
+    $('cohorts').innerHTML = d.cohorts.map(function (k) {
+      var e = k.expected || {}, cl = e.clean, di = e.dirty;
+      return '<tr><td><b>' + esc(k.kor) + '</b> <span class="mono">' + esc(k.id) + '</span></td><td class="num">' + k.tables.length +
+        '</td><td class="num">' + k.rules + '</td><td><div class="btns"><a class="btn" href="' + R + k.template_xlsx + '" download>엑셀</a><a class="btn" href="' + R + k.template_csv + '" download>CSV 묶음</a></div></td><td>' +
+        (cl ? fmt(cl.violations) + ' / ' + (di ? fmt(di.violations) : '–') + ' <span class="note">(규칙 ' + cl.rules + '개)</span>' : '–') + '</td></tr>';
+    }).join('');
+    $('foot').innerHTML = esc(d.spec_name) + ' · 이 페이지는 저장소의 spec/v3 와 rules/*_v3.yaml 에서 생성됩니다 (docs/build_resources.py).';
+
+    // 규칙
+    var fc = $('f-cohort'), ft = $('f-table');
+    d.cohorts.forEach(function (k) { fc.insertAdjacentHTML('beforeend', '<option value="' + esc(k.id) + '">' + esc(k.kor) + '</option>'); });
+    Object.keys(d.tables).forEach(function (t) { ft.insertAdjacentHTML('beforeend', '<option>' + esc(t) + '</option>'); });
+    var rows = d.rules.map(function (r) {
+      return { r: r, hay: [r.id, r.name, r.desc, r.table, r.fields, r.check].join(' ').toLowerCase() };
+    });
+    function drawRules() {
+      var co = fc.value, kd = $('f-kind').value, ca = $('f-cat').value, sv = $('f-sev').value, tb = ft.value, q = $('f-q').value.trim().toLowerCase();
+      var hit = rows.filter(function (x) {
+        var r = x.r;
+        return (!co || r.cohorts.indexOf(co) >= 0) && (!kd || r.kind === kd) && (!ca || r.category === ca) && (!sv || r.severity === sv) &&
+          (!tb || r.table.split(',').indexOf(tb) >= 0) && (!q || x.hay.indexOf(q) >= 0);
+      });
+      $('rcount').textContent = hit.length + '개 규칙' + (co ? ' (' + fc.options[fc.selectedIndex].text + '에 적용)' : '');
+      $('rbody').innerHTML = hit.map(function (x) {
+        var r = x.r;
+        return '<tr><td class="mono">' + esc(r.id) + '<br><span class="tag">' + esc(r.kind) + '</span></td><td><b>' + esc(r.name) + '</b><br>' + esc(r.desc) +
+          (r.sql ? '<details><summary>SQL</summary><pre>' + esc(r.sql) + '</pre></details>' : '') +
+          (r.cohorts.length < d.cohorts.length ? '<div class="note">적용: ' + esc(r.cohorts.join(', ')) + '</div>' : '') +
+          '</td><td>' + esc(r.category) + '<br><span class="note">' + esc(r.subcategory) + '</span></td><td><span class="tag ' + esc(r.severity) + '">' + esc(r.severity) +
+          '</span></td><td class="mono">' + esc(r.table) + (r.fields ? '<br><span class="note">' + esc(r.fields) + '</span>' : '') + '</td></tr>';
+      }).join('');
+    }
+    ['f-cohort', 'f-kind', 'f-cat', 'f-sev', 'f-table'].forEach(function (id) { $(id).addEventListener('change', drawRules); });
+    $('f-q').addEventListener('input', drawRules);
+    drawRules();
+
+    // 컬럼 명세
+    var ct = $('c-table');
+    Object.keys(d.tables).forEach(function (t) { ct.insertAdjacentHTML('beforeend', '<option value="' + esc(t) + '">' + esc(t) + ' · ' + esc(d.tables[t].kor) + '</option>'); });
+    function constraint(f) {
+      var out = [];
+      if (f.codelist) {
+        var cl = d.codelists[f.codelist] || {};
+        out.push('코드표 <code>' + esc(f.codelist) + '</code><br>' + Object.keys(cl).map(function (k) { return '<span class="mono">' + esc(k) + '</span>=' + esc(cl[k]); }).join(', '));
+      }
+      if (f.range) out.push('범위 ' + esc(f.range[0]) + ' ~ ' + esc(f.range[1]));
+      if (f.pattern) out.push('형식 <code>' + esc(f.pattern) + '</code>');
+      return out.join('<br>');
+    }
+    function drawCols() {
+      var q = $('c-q').value.trim().toLowerCase(), list = [];
+      Object.keys(d.tables).forEach(function (t) {
+        if (!q && t !== ct.value) return;
+        d.tables[t].fields.forEach(function (f) {
+          if (q && (t + ' ' + f.name + ' ' + f.desc).toLowerCase().indexOf(q) < 0) return;
+          list.push('<tr><td class="mono">' + esc(t) + '</td><td class="mono"><b>' + esc(f.name) + '</b></td><td>' + esc(f.type) + '</td><td>' + (f.required ? '<b>Y</b>' : 'N') +
+            '</td><td class="mono">' + esc(f.key) + (f.ref ? '<br><span class="note">' + esc(f.ref) + '</span>' : '') + '</td><td>' + constraint(f) + '</td><td>' + esc(f.desc).replace(/\n/g, '<br>') + '</td></tr>');
+        });
+      });
+      $('ccount').textContent = q ? list.length + '개 컬럼 (모든 표에서 검색)' : list.length + '개 컬럼';
+      $('cbody').innerHTML = list.join('');
+    }
+    ct.addEventListener('change', drawCols); $('c-q').addEventListener('input', drawCols);
+    drawCols();
+  }
+})();
+</script>
+</body>
+</html>

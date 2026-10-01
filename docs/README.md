@@ -14,4 +14,6 @@
 
 `index.html`과 `img/`는 GitHub Pages 소개 페이지(https://nanumspace.github.io/KAI_DQ_App/)의 원본입니다. `docs/` 가 바뀌면 `.github/workflows/deploy-pages.yml` 이 자동으로 배포합니다.
 
+`resources.html`은 자료실 페이지입니다. 코호트별 입력 양식(엑셀·CSV), 컬럼 명세서, 검증 규칙 목록, 견본 데이터 기대 결과를 담습니다. 이 페이지가 읽는 `docs/resources/` 는 저장소에 넣지 않습니다. 배포할 때 `python docs/build_resources.py` 가 기본 명세(`spec/v3/`)와 규칙(`rules/*_v3.yaml`), 견본 보고서 요약(`dq/reports/*_v3_*/summary.json`)에서 만듭니다. 그래서 명세나 규칙을 고치면 다음 배포에 저절로 반영됩니다. 생성기는 엔진과 같은 기준으로 코호트별 규칙 수를 세고, 그 수가 견본 보고서와 다르면 실패합니다. 의뢰사 원본 자료(`raw/`, `spec/client_v1/`)는 싣지 않습니다. 로컬에서 미리 보려면 `python docs/build_resources.py` 를 실행한 뒤 `python -m http.server --directory docs` 를 띄웁니다.
+
 각 하위 폴더의 README(`app/README.md`, `dq-ts/README.md`)는 그 구성 요소의 세부 사항을 다룹니다.

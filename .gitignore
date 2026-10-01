@@ -36,3 +36,6 @@ pilot/out/
 
 # 오피스 잠금 파일
 ~$*
+
+# GitHub Pages 자료실 생성물 (배포 때 docs/build_resources.py 가 만든다)
+docs/resources/

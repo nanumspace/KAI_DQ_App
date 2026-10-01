@@ -1,12 +1,16 @@
 name: Deploy GitHub Pages
 
 # docs/ 를 정적 사이트로 GitHub Actions 에서 직접 배포한다 (Jekyll 미사용, 순수 정적 HTML).
+# 자료실(docs/resources.html)이 읽는 docs/resources/ 는 배포 때 기본 명세(v3)·규칙에서 만든다 (저장소에는 넣지 않음).
 on:
   push:
     branches: [main]
     paths:
       - "docs/**"
       - ".github/workflows/deploy-pages.yml"
+      - "spec/v3/**"
+      - "rules/rules_*_v3.yaml"
+      - "dq/reports/*_v3_*/summary.json"
   workflow_dispatch:
 
 permissions:
@@ -28,6 +32,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r spec/requirements.txt
+      - run: python docs/build_resources.py
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs

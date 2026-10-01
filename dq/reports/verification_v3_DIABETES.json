@@ -1,0 +1,187 @@
+{
+ "cohort": "DIABETES",
+ "clean": {
+  "rules": 247,
+  "violations": 0,
+  "failed_rules": 0,
+  "false_positive_rate": 0.0
+ },
+ "dirty": {
+  "rules": 247,
+  "violations": 1539,
+  "failed_rules": 202
+ },
+ "faults_total": 212,
+ "faults_detected": 212,
+ "recall": 1.0,
+ "fault_types": 23,
+ "fault_types_fully_detected": 23,
+ "missed": [],
+ "by_type": [
+  {
+   "fault_type": "AE_AFTER_DEATH",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "CODELIST",
+   "n": 11,
+   "detected": 11,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "COLUMN_MISSING",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DAYS_SUPPLY_MISMATCH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DISEASE_VISIT_PERSON_MISMATCH",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DRUG_END_BEFORE_START",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "EVENT_AFTER_DEATH",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "EVENT_VISIT_PERSON_MISMATCH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FK_BROKEN",
+   "n": 17,
+   "detected": 17,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FREQ_WITHOUT_DAYS_SUPPLY",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FUTURE_DATE",
+   "n": 13,
+   "detected": 13,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "INTERVAL_WITHOUT_NUMBER",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "MUST_BE_NULL",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PERSON_WITHOUT_DISEASE_ROW",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PK_DUP",
+   "n": 9,
+   "detected": 9,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PK_NULL",
+   "n": 9,
+   "detected": 9,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "RANGE",
+   "n": 13,
+   "detected": 13,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "RANGE_LOW_GT_HIGH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_NULL",
+   "n": 42,
+   "detected": 42,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "TABLE_MISSING",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "TYPE_BAD",
+   "n": 78,
+   "detected": 78,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_BEFORE_BIRTH",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_END_BEFORE_START",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  }
+ ],
+ "by_category": [
+  {
+   "category": "Completeness",
+   "n": 55,
+   "detected": 55,
+   "recall": 1.0
+  },
+  {
+   "category": "Conformance",
+   "n": 121,
+   "detected": 121,
+   "recall": 1.0
+  },
+  {
+   "category": "Plausibility",
+   "n": 36,
+   "detected": 36,
+   "recall": 1.0
+  }
+ ],
+ "collateral_rules": [
+  "ST-0358",
+  "ST-0360",
+  "ST-0363",
+  "ST-0365",
+  "ST-0367"
+ ]
+}

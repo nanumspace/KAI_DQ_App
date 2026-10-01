@@ -1,0 +1,937 @@
+﻿rule_id,rule_name,category,severity,table,field,row_key,person_id,detail
+ST-0003,PERSON.person_id PK 유일성,Conformance,error,PERSON,person_id,,,PK NULL
+ST-0003,PERSON.person_id PK 유일성,Conformance,error,PERSON,person_id,100047,100047,PK 중복: 100047
+ST-0003,PERSON.person_id PK 유일성,Conformance,error,PERSON,person_id,100047,100047,PK 중복: 100047
+ST-0004,PERSON.person_id 타입(integer),Conformance,error,PERSON,person_id,NOT_A_NUMBER,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0005,PERSON.gender_concept_id 필수,Completeness,error,PERSON,gender_concept_id,100091,100091,gender_concept_id NULL
+ST-0006,PERSON.gender_concept_id 타입(integer),Conformance,error,PERSON,gender_concept_id,100052,100052,gender_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0007,PERSON.gender_concept_id 코드표,Conformance,warning,PERSON,gender_concept_id,100052,100052,gender_concept_id=NOT_A_NUMBER 코드표(OMOP.gender_concept_id) 밖
+ST-0007,PERSON.gender_concept_id 코드표,Conformance,warning,PERSON,gender_concept_id,100078,100078,gender_concept_id=9999999 코드표(OMOP.gender_concept_id) 밖
+ST-0008,PERSON.year_of_birth 필수,Completeness,error,PERSON,year_of_birth,100061,100061,year_of_birth NULL
+ST-0009,PERSON.year_of_birth 타입(integer),Conformance,error,PERSON,year_of_birth,100016,100016,year_of_birth='NOT_A_NUMBER' 은 integer 아님
+ST-0010,PERSON.year_of_birth 범위,Plausibility,warning,PERSON,year_of_birth,100030,100030,"year_of_birth=21260 범위 [1900,2026] 밖"
+ST-0011,PERSON.month_of_birth 타입(integer),Conformance,error,PERSON,month_of_birth,100026,100026,month_of_birth='NOT_A_NUMBER' 은 integer 아님
+ST-0012,PERSON.month_of_birth 범위,Plausibility,warning,PERSON,month_of_birth,100009,100009,"month_of_birth=1120 범위 [1,12] 밖"
+ST-0013,PERSON.day_of_birth 타입(integer),Conformance,error,PERSON,day_of_birth,100090,100090,day_of_birth='NOT_A_NUMBER' 은 integer 아님
+ST-0014,PERSON.day_of_birth 범위,Plausibility,warning,PERSON,day_of_birth,100041,100041,"day_of_birth=1310 범위 [1,31] 밖"
+ST-0015,PERSON.age_at_index 필수,Completeness,error,PERSON,age_at_index,100035,100035,age_at_index NULL
+ST-0016,PERSON.age_at_index 타입(integer),Conformance,error,PERSON,age_at_index,100021,100021,age_at_index='NOT_A_NUMBER' 은 integer 아님
+ST-0017,PERSON.age_at_index 범위,Plausibility,warning,PERSON,age_at_index,100010,100010,"age_at_index=2100 범위 [0,110] 밖"
+ST-0018,PERSON.care_site_id 필수,Completeness,error,PERSON,care_site_id,100039,100039,care_site_id NULL
+ST-0019,PERSON.care_site_id 타입(integer),Conformance,error,PERSON,care_site_id,100075,100075,care_site_id='NOT_A_NUMBER' 은 integer 아님
+ST-0020,PERSON.observation_period_start_date 타입(date),Conformance,error,PERSON,observation_period_start_date,100060,100060,observation_period_start_date='2026-13-45' 은 date 아님
+ST-0021,PERSON.observation_period_start_date 미래 날짜 금지,Plausibility,error,PERSON,observation_period_start_date,100025,100025,observation_period_start_date=2099-01-01 미래 날짜
+ST-0022,PERSON.death_date 타입(date),Conformance,error,PERSON,death_date,100076,100076,death_date='2026-13-45' 은 date 아님
+ST-0023,PERSON.death_date 미래 날짜 금지,Plausibility,error,PERSON,death_date,100080,100080,death_date=2099-01-01 미래 날짜
+ST-0026,VISIT_OCCURRENCE.visit_occurrence_id PK 유일성,Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,,100009,PK NULL
+ST-0026,VISIT_OCCURRENCE.visit_occurrence_id PK 유일성,Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,100209,100011,PK 중복: 100209
+ST-0026,VISIT_OCCURRENCE.visit_occurrence_id PK 유일성,Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,100209,100029,PK 중복: 100209
+ST-0027,VISIT_OCCURRENCE.visit_occurrence_id 타입(integer),Conformance,error,VISIT_OCCURRENCE,visit_occurrence_id,NOT_A_NUMBER,100018,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0028,VISIT_OCCURRENCE.person_id 필수,Completeness,error,VISIT_OCCURRENCE,person_id,100182,,person_id NULL
+ST-0029,VISIT_OCCURRENCE.person_id 타입(integer),Conformance,error,VISIT_OCCURRENCE,person_id,100139,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100357,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100358,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100359,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100360,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100361,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100362,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100363,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100364,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100365,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100366,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100367,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100368,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100369,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100370,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100371,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100372,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100373,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100432,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100678,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100679,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100680,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100681,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100682,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100683,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100684,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100685,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100686,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100687,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100688,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100959,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100960,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100961,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100962,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100963,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100964,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100965,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100966,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100967,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100968,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100969,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100970,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100971,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100972,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0030,VISIT_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,VISIT_OCCURRENCE,person_id,100973,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0031,VISIT_OCCURRENCE.visit_concept_id 필수,Completeness,error,VISIT_OCCURRENCE,visit_concept_id,101123,100063,visit_concept_id NULL
+ST-0032,VISIT_OCCURRENCE.visit_concept_id 타입(integer),Conformance,error,VISIT_OCCURRENCE,visit_concept_id,101839,100099,visit_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0033,VISIT_OCCURRENCE.visit_concept_id 코드표,Conformance,warning,VISIT_OCCURRENCE,visit_concept_id,101540,100085,visit_concept_id=9999999 코드표(OMOP.visit_concept_id) 밖
+ST-0033,VISIT_OCCURRENCE.visit_concept_id 코드표,Conformance,warning,VISIT_OCCURRENCE,visit_concept_id,101839,100099,visit_concept_id=NOT_A_NUMBER 코드표(OMOP.visit_concept_id) 밖
+ST-0034,VISIT_OCCURRENCE.visit_start_date 필수,Completeness,error,VISIT_OCCURRENCE,visit_start_date,100850,100047,visit_start_date NULL
+ST-0035,VISIT_OCCURRENCE.visit_start_date 타입(date),Conformance,error,VISIT_OCCURRENCE,visit_start_date,100248,100014,visit_start_date='2026-13-45' 은 date 아님
+ST-0036,VISIT_OCCURRENCE.visit_start_date 미래 날짜 금지,Plausibility,error,VISIT_OCCURRENCE,visit_start_date,100140,100007,visit_start_date=2099-01-01 미래 날짜
+ST-0037,VISIT_OCCURRENCE.visit_end_date 필수,Completeness,error,VISIT_OCCURRENCE,visit_end_date,101802,100097,visit_end_date NULL
+ST-0038,VISIT_OCCURRENCE.visit_end_date 타입(date),Conformance,error,VISIT_OCCURRENCE,visit_end_date,100085,100004,visit_end_date='2026-13-45' 은 date 아님
+ST-0039,VISIT_OCCURRENCE.visit_end_date 미래 날짜 금지,Plausibility,error,VISIT_OCCURRENCE,visit_end_date,101566,100086,visit_end_date=2099-01-01 미래 날짜
+ST-0040,VISIT_OCCURRENCE.visit_type_concept_id 필수,Completeness,error,VISIT_OCCURRENCE,visit_type_concept_id,100602,100033,visit_type_concept_id NULL
+ST-0041,VISIT_OCCURRENCE.visit_type_concept_id 타입(integer),Conformance,error,VISIT_OCCURRENCE,visit_type_concept_id,100310,100018,visit_type_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0042,VISIT_OCCURRENCE.visit_type_concept_id 코드표,Conformance,warning,VISIT_OCCURRENCE,visit_type_concept_id,100310,100018,visit_type_concept_id=NOT_A_NUMBER 코드표(OMOP.visit_type_concept_id) 밖
+ST-0042,VISIT_OCCURRENCE.visit_type_concept_id 코드표,Conformance,warning,VISIT_OCCURRENCE,visit_type_concept_id,101765,100096,visit_type_concept_id=9999999 코드표(OMOP.visit_type_concept_id) 밖
+ST-0044,PROCEDURE_OCCURRENCE 컬럼 구성,Conformance,error,PROCEDURE_OCCURRENCE,procedure_source_value,,,컬럼 누락: procedure_source_value
+ST-0045,PROCEDURE_OCCURRENCE.procedure_occurrence_id PK 유일성,Conformance,error,PROCEDURE_OCCURRENCE,procedure_occurrence_id,,100011,PK NULL
+ST-0045,PROCEDURE_OCCURRENCE.procedure_occurrence_id PK 유일성,Conformance,error,PROCEDURE_OCCURRENCE,procedure_occurrence_id,100101,100010,PK 중복: 100101
+ST-0045,PROCEDURE_OCCURRENCE.procedure_occurrence_id PK 유일성,Conformance,error,PROCEDURE_OCCURRENCE,procedure_occurrence_id,100101,100050,PK 중복: 100101
+ST-0046,PROCEDURE_OCCURRENCE.procedure_occurrence_id 타입(integer),Conformance,error,PROCEDURE_OCCURRENCE,procedure_occurrence_id,NOT_A_NUMBER,100056,procedure_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0047,PROCEDURE_OCCURRENCE.visit_occurrence_id 타입(integer),Conformance,error,PROCEDURE_OCCURRENCE,visit_occurrence_id,100338,100033,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0048,PROCEDURE_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,visit_occurrence_id,100087,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0048,PROCEDURE_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,visit_occurrence_id,100088,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0048,PROCEDURE_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,visit_occurrence_id,100089,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0048,PROCEDURE_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,visit_occurrence_id,100299,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0048,PROCEDURE_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,visit_occurrence_id,100300,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0048,PROCEDURE_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,visit_occurrence_id,100301,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0048,PROCEDURE_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,visit_occurrence_id,100725,100069,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0049,PROCEDURE_OCCURRENCE.person_id 필수,Completeness,error,PROCEDURE_OCCURRENCE,person_id,100214,,person_id NULL
+ST-0050,PROCEDURE_OCCURRENCE.person_id 타입(integer),Conformance,error,PROCEDURE_OCCURRENCE,person_id,101075,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100200,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100201,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100202,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100203,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100204,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100205,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100206,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100207,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100208,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100209,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100210,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100211,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100248,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100388,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100389,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100390,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100391,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100392,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100393,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100394,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100395,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100396,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100397,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100398,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100399,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100545,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100546,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100547,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100548,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100549,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100550,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100551,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100552,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100553,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100554,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100555,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0051,PROCEDURE_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,PROCEDURE_OCCURRENCE,person_id,100556,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0052,PROCEDURE_OCCURRENCE.procedure_concept_id 필수,Completeness,error,PROCEDURE_OCCURRENCE,procedure_concept_id,100343,100033,procedure_concept_id NULL
+ST-0053,PROCEDURE_OCCURRENCE.procedure_concept_id 타입(integer),Conformance,error,PROCEDURE_OCCURRENCE,procedure_concept_id,100145,100014,procedure_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0054,PROCEDURE_OCCURRENCE.procedure_date 필수,Completeness,error,PROCEDURE_OCCURRENCE,procedure_date,100368,100035,procedure_date NULL
+ST-0055,PROCEDURE_OCCURRENCE.procedure_date 타입(date),Conformance,error,PROCEDURE_OCCURRENCE,procedure_date,100402,100039,procedure_date='2026-13-45' 은 date 아님
+ST-0056,PROCEDURE_OCCURRENCE.procedure_date 미래 날짜 금지,Plausibility,error,PROCEDURE_OCCURRENCE,procedure_date,100482,100046,procedure_date=2099-01-01 미래 날짜
+ST-0057,PROCEDURE_OCCURRENCE.procedure_type_concept_id 필수,Completeness,error,PROCEDURE_OCCURRENCE,procedure_type_concept_id,100380,100036,procedure_type_concept_id NULL
+ST-0058,PROCEDURE_OCCURRENCE.procedure_type_concept_id 타입(integer),Conformance,error,PROCEDURE_OCCURRENCE,procedure_type_concept_id,100172,100017,procedure_type_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0059,PROCEDURE_OCCURRENCE.procedure_type_concept_id 코드표,Conformance,warning,PROCEDURE_OCCURRENCE,procedure_type_concept_id,100172,100017,procedure_type_concept_id=NOT_A_NUMBER 코드표(OMOP.procedure_type_concept_id) 밖
+ST-0059,PROCEDURE_OCCURRENCE.procedure_type_concept_id 코드표,Conformance,warning,PROCEDURE_OCCURRENCE,procedure_type_concept_id,101006,100094,procedure_type_concept_id=9999999 코드표(OMOP.procedure_type_concept_id) 밖
+ST-0062,DRUG_EXPOSURE.drug_exposure_id PK 유일성,Conformance,error,DRUG_EXPOSURE,drug_exposure_id,,100045,PK NULL
+ST-0062,DRUG_EXPOSURE.drug_exposure_id PK 유일성,Conformance,error,DRUG_EXPOSURE,drug_exposure_id,100497,100002,PK 중복: 100497
+ST-0062,DRUG_EXPOSURE.drug_exposure_id PK 유일성,Conformance,error,DRUG_EXPOSURE,drug_exposure_id,100497,100039,PK 중복: 100497
+ST-0063,DRUG_EXPOSURE.drug_exposure_id 타입(integer),Conformance,error,DRUG_EXPOSURE,drug_exposure_id,NOT_A_NUMBER,100081,drug_exposure_id='NOT_A_NUMBER' 은 integer 아님
+ST-0064,DRUG_EXPOSURE.visit_occurrence_id 필수,Completeness,error,DRUG_EXPOSURE,visit_occurrence_id,100762,100060,visit_occurrence_id NULL
+ST-0065,DRUG_EXPOSURE.visit_occurrence_id 타입(integer),Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,100058,100003,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0066,DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,100252,100018,visit_occurrence_id=100334 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0066,DRUG_EXPOSURE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,DRUG_EXPOSURE,visit_occurrence_id,101035,100080,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0067,DRUG_EXPOSURE.person_id 필수,Completeness,error,DRUG_EXPOSURE,person_id,100561,,person_id NULL
+ST-0068,DRUG_EXPOSURE.person_id 타입(integer),Conformance,error,DRUG_EXPOSURE,person_id,100134,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100256,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100257,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100258,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100259,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100260,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100261,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100262,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100263,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100264,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100265,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100266,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100267,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100268,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100693,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100694,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100695,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100696,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100697,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100698,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100699,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,100700,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0069,DRUG_EXPOSURE.person_id -> PERSON.person_id 참조무결성,Conformance,error,DRUG_EXPOSURE,person_id,101150,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0070,DRUG_EXPOSURE.sact_id 타입(integer),Conformance,error,DRUG_EXPOSURE,sact_id,100469,100036,sact_id='NOT_A_NUMBER' 은 integer 아님
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100752,100058,sact_id=100072 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100753,100058,sact_id=100072 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100754,100058,sact_id=100072 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100755,100058,sact_id=100072 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100756,100058,sact_id=100072 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100757,100058,sact_id=100072 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100863,100068,sact_id=100081 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100864,100068,sact_id=100081 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100865,100068,sact_id=100081 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100866,100068,sact_id=100081 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100867,100068,sact_id=100081 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100868,100068,sact_id=100081 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100869,100068,sact_id=100081 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,100870,100068,sact_id=100081 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101121,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101122,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101123,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101124,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101125,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101126,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101127,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101128,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101129,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101130,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101131,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101132,100086,sact_id=100105 가 SACT.sact_id 에 없음
+ST-0071,DRUG_EXPOSURE.sact_id -> SACT.sact_id 참조무결성,Conformance,error,DRUG_EXPOSURE,sact_id,101299,100098,sact_id=999999999 가 SACT.sact_id 에 없음
+ST-0072,DRUG_EXPOSURE.drug_concept_id 필수,Completeness,error,DRUG_EXPOSURE,drug_concept_id,100723,100056,drug_concept_id NULL
+ST-0073,DRUG_EXPOSURE.drug_concept_id 타입(integer),Conformance,error,DRUG_EXPOSURE,drug_concept_id,101162,100088,drug_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0074,DRUG_EXPOSURE.drug_exposure_start_date 필수,Completeness,error,DRUG_EXPOSURE,drug_exposure_start_date,100664,100052,drug_exposure_start_date NULL
+ST-0075,DRUG_EXPOSURE.drug_exposure_start_date 타입(date),Conformance,error,DRUG_EXPOSURE,drug_exposure_start_date,100150,100011,drug_exposure_start_date='2026-13-45' 은 date 아님
+ST-0076,DRUG_EXPOSURE.drug_exposure_start_date 미래 날짜 금지,Plausibility,error,DRUG_EXPOSURE,drug_exposure_start_date,100274,100021,drug_exposure_start_date=2099-01-01 미래 날짜
+ST-0077,DRUG_EXPOSURE.drug_exposure_end_date 필수,Completeness,error,DRUG_EXPOSURE,drug_exposure_end_date,100988,100077,drug_exposure_end_date NULL
+ST-0078,DRUG_EXPOSURE.drug_exposure_end_date 타입(date),Conformance,error,DRUG_EXPOSURE,drug_exposure_end_date,101273,100096,drug_exposure_end_date='2026-13-45' 은 date 아님
+ST-0079,DRUG_EXPOSURE.drug_exposure_end_date 미래 날짜 금지,Plausibility,error,DRUG_EXPOSURE,drug_exposure_end_date,100363,100026,drug_exposure_end_date=2099-01-01 미래 날짜
+ST-0080,DRUG_EXPOSURE.days_supply 타입(integer),Conformance,error,DRUG_EXPOSURE,days_supply,100209,100016,days_supply='NOT_A_NUMBER' 은 integer 아님
+ST-0081,DRUG_EXPOSURE.days_supply 범위,Plausibility,warning,DRUG_EXPOSURE,days_supply,100012,100001,"days_supply=5000 범위 [0,400] 밖"
+ST-0082,DRUG_EXPOSURE.amount_unit_concept_id 타입(integer),Conformance,error,DRUG_EXPOSURE,amount_unit_concept_id,100151,100011,amount_unit_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0083,DRUG_EXPOSURE.amount_unit_concept_id 코드표,Conformance,warning,DRUG_EXPOSURE,amount_unit_concept_id,100151,100011,amount_unit_concept_id=NOT_A_NUMBER 코드표(OMOP.amount_unit_concept_id) 밖
+ST-0083,DRUG_EXPOSURE.amount_unit_concept_id 코드표,Conformance,warning,DRUG_EXPOSURE,amount_unit_concept_id,100524,100041,amount_unit_concept_id=9999999 코드표(OMOP.amount_unit_concept_id) 밖
+ST-0084,DRUG_EXPOSURE.amount_value 타입(float),Conformance,error,DRUG_EXPOSURE,amount_value,101019,100079,amount_value='NOT_A_NUMBER' 은 float 아님
+ST-0085,DRUG_EXPOSURE.amount_value 범위,Plausibility,warning,DRUG_EXPOSURE,amount_value,100742,100058,"amount_value=1001000 범위 [0,100000] 밖"
+ST-0094,DRUG_EXPOSURE.frequency_per_day 타입(integer),Conformance,error,DRUG_EXPOSURE,frequency_per_day,100227,100018,frequency_per_day='NOT_A_NUMBER' 은 integer 아님
+ST-0095,DRUG_EXPOSURE.frequency_per_day 범위,Plausibility,warning,DRUG_EXPOSURE,frequency_per_day,100795,100064,"frequency_per_day=1240 범위 [1,24] 밖"
+ST-0096,DRUG_EXPOSURE.dosing_interval_day 타입(integer),Conformance,error,DRUG_EXPOSURE,dosing_interval_day,100342,100025,dosing_interval_day='NOT_A_NUMBER' 은 integer 아님
+ST-0097,DRUG_EXPOSURE.dosing_interval_day 범위,Plausibility,warning,DRUG_EXPOSURE,dosing_interval_day,100894,100071,"dosing_interval_day=2800 범위 [1,180] 밖"
+ST-0098,DRUG_EXPOSURE.dosing_number 타입(integer),Conformance,error,DRUG_EXPOSURE,dosing_number,100253,100018,dosing_number='NOT_A_NUMBER' 은 integer 아님
+ST-0099,DRUG_EXPOSURE.dosing_number 범위,Plausibility,warning,DRUG_EXPOSURE,dosing_number,101336,100100,"dosing_number=6000 범위 [1,500] 밖"
+ST-0103,CONDITION_OCCURRENCE.condition_occurrence_id PK 유일성,Conformance,error,CONDITION_OCCURRENCE,condition_occurrence_id,,100037,PK NULL
+ST-0103,CONDITION_OCCURRENCE.condition_occurrence_id PK 유일성,Conformance,error,CONDITION_OCCURRENCE,condition_occurrence_id,100379,100077,PK 중복: 100379
+ST-0103,CONDITION_OCCURRENCE.condition_occurrence_id PK 유일성,Conformance,error,CONDITION_OCCURRENCE,condition_occurrence_id,100379,100077,PK 중복: 100379
+ST-0104,CONDITION_OCCURRENCE.condition_occurrence_id 타입(integer),Conformance,error,CONDITION_OCCURRENCE,condition_occurrence_id,NOT_A_NUMBER,100048,condition_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0105,CONDITION_OCCURRENCE.visit_occurrence_id 타입(integer),Conformance,error,CONDITION_OCCURRENCE,visit_occurrence_id,100057,100010,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0106,CONDITION_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,visit_occurrence_id,100046,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0106,CONDITION_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,visit_occurrence_id,100047,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0106,CONDITION_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,visit_occurrence_id,100048,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0106,CONDITION_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,visit_occurrence_id,100049,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0106,CONDITION_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,visit_occurrence_id,100143,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0106,CONDITION_OCCURRENCE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,visit_occurrence_id,100144,100029,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0107,CONDITION_OCCURRENCE.person_id 필수,Completeness,error,CONDITION_OCCURRENCE,person_id,100025,,person_id NULL
+ST-0108,CONDITION_OCCURRENCE.person_id 타입(integer),Conformance,error,CONDITION_OCCURRENCE,person_id,100339,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100022,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100098,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100099,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100100,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100101,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100180,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100181,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100182,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100250,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0109,CONDITION_OCCURRENCE.person_id -> PERSON.person_id 참조무결성,Conformance,error,CONDITION_OCCURRENCE,person_id,100251,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0110,CONDITION_OCCURRENCE.condition_concept_id 필수,Completeness,error,CONDITION_OCCURRENCE,condition_concept_id,100212,100045,condition_concept_id NULL
+ST-0111,CONDITION_OCCURRENCE.condition_concept_id 타입(integer),Conformance,error,CONDITION_OCCURRENCE,condition_concept_id,100141,100028,condition_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0112,CONDITION_OCCURRENCE.condition_start_date 필수,Completeness,error,CONDITION_OCCURRENCE,condition_start_date,100463,100095,condition_start_date NULL
+ST-0113,CONDITION_OCCURRENCE.condition_start_date 타입(date),Conformance,error,CONDITION_OCCURRENCE,condition_start_date,100342,100070,condition_start_date='2026-13-45' 은 date 아님
+ST-0114,CONDITION_OCCURRENCE.condition_start_date 미래 날짜 금지,Plausibility,error,CONDITION_OCCURRENCE,condition_start_date,100124,100024,condition_start_date=2099-01-01 미래 날짜
+ST-0115,CONDITION_OCCURRENCE.condition_type_concept_id 필수,Completeness,error,CONDITION_OCCURRENCE,condition_type_concept_id,100029,100005,condition_type_concept_id NULL
+ST-0116,CONDITION_OCCURRENCE.condition_type_concept_id 타입(integer),Conformance,error,CONDITION_OCCURRENCE,condition_type_concept_id,100122,100024,condition_type_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0117,CONDITION_OCCURRENCE.condition_type_concept_id 코드표,Conformance,warning,CONDITION_OCCURRENCE,condition_type_concept_id,100122,100024,condition_type_concept_id=NOT_A_NUMBER 코드표(OMOP.condition_type_concept_id) 밖
+ST-0117,CONDITION_OCCURRENCE.condition_type_concept_id 코드표,Conformance,warning,CONDITION_OCCURRENCE,condition_type_concept_id,100152,100031,condition_type_concept_id=9999999 코드표(OMOP.condition_type_concept_id) 밖
+ST-0120,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,,100065,PK NULL
+ST-0120,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,103737,100008,PK 중복: 103737
+ST-0120,MEASUREMENT.measurement_id PK 유일성,Conformance,error,MEASUREMENT,measurement_id,103737,100052,PK 중복: 103737
+ST-0121,MEASUREMENT.measurement_id 타입(integer),Conformance,error,MEASUREMENT,measurement_id,NOT_A_NUMBER,100087,measurement_id='NOT_A_NUMBER' 은 integer 아님
+ST-0122,MEASUREMENT.visit_occurrence_id 타입(integer),Conformance,error,MEASUREMENT,visit_occurrence_id,102418,100033,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100652,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100653,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100654,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100655,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100656,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100657,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100658,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100659,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100660,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100661,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100662,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,100663,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,101344,100018,visit_occurrence_id=100334 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,101345,100018,visit_occurrence_id=100334 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,101346,100018,visit_occurrence_id=100334 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,101347,100018,visit_occurrence_id=100334 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,101348,100018,visit_occurrence_id=100334 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,101349,100018,visit_occurrence_id=100334 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,101350,100018,visit_occurrence_id=100334 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102175,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102176,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102177,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102178,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102179,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102180,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102181,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102182,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102183,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102184,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102185,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,102186,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0123,MEASUREMENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,MEASUREMENT,visit_occurrence_id,105403,100074,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0124,MEASUREMENT.person_id 필수,Completeness,error,MEASUREMENT,person_id,104556,,person_id NULL
+ST-0125,MEASUREMENT.person_id 타입(integer),Conformance,error,MEASUREMENT,person_id,106340,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101412,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101413,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101414,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101415,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101416,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101417,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101418,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101419,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101420,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101421,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101422,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101423,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101424,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101425,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101426,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101427,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101428,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101429,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101430,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101431,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101432,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101433,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101434,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101435,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101436,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101437,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101438,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101439,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101440,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101441,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101442,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101443,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101444,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101445,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101446,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101447,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101448,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101449,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101450,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101451,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101452,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101453,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101454,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101455,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101456,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101457,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101458,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101459,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101460,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101461,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101462,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101463,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101464,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101465,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101466,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101467,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101468,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101469,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101470,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101471,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101472,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101473,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101474,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101475,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101476,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101477,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101478,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101479,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101480,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,101481,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102705,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102706,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102707,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102708,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102709,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102710,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102711,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102712,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102713,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102714,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102715,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102716,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102717,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102718,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102719,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102720,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102721,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102722,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102723,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102724,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102725,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102726,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102727,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102728,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102729,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102730,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102731,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102732,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102733,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102734,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,102735,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103868,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103869,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103870,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103871,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103872,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103873,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103874,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103875,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103876,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103877,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103878,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103879,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103880,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103881,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103882,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103883,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103884,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103885,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103886,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103887,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103888,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103889,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103890,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103891,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103892,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103893,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103894,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103895,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103896,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103897,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103898,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103899,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103900,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103901,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103902,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103903,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103904,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103905,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103906,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103907,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103908,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103909,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103910,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103911,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103912,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103913,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103914,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103915,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103916,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103917,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103918,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103919,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103920,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103921,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103922,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103923,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103924,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103925,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,103926,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0126,MEASUREMENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,MEASUREMENT,person_id,105587,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0127,MEASUREMENT.measurement_concept_id 필수,Completeness,error,MEASUREMENT,measurement_concept_id,101234,100018,measurement_concept_id NULL
+ST-0128,MEASUREMENT.measurement_concept_id 타입(integer),Conformance,error,MEASUREMENT,measurement_concept_id,105147,100071,measurement_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0129,MEASUREMENT.measurement_date 필수,Completeness,error,MEASUREMENT,measurement_date,104686,100065,measurement_date NULL
+ST-0130,MEASUREMENT.measurement_date 타입(date),Conformance,error,MEASUREMENT,measurement_date,103043,100043,measurement_date='2026-13-45' 은 date 아님
+ST-0131,MEASUREMENT.measurement_date 미래 날짜 금지,Plausibility,error,MEASUREMENT,measurement_date,100424,100005,measurement_date=2099-01-01 미래 날짜
+ST-0132,MEASUREMENT.measurement_type_concept_id 필수,Completeness,error,MEASUREMENT,measurement_type_concept_id,105629,100078,measurement_type_concept_id NULL
+ST-0133,MEASUREMENT.measurement_type_concept_id 타입(integer),Conformance,error,MEASUREMENT,measurement_type_concept_id,107306,100099,measurement_type_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0134,MEASUREMENT.measurement_type_concept_id 코드표,Conformance,warning,MEASUREMENT,measurement_type_concept_id,103850,100052,measurement_type_concept_id=9999999 코드표(OMOP.measurement_type_concept_id) 밖
+ST-0134,MEASUREMENT.measurement_type_concept_id 코드표,Conformance,warning,MEASUREMENT,measurement_type_concept_id,107306,100099,measurement_type_concept_id=NOT_A_NUMBER 코드표(OMOP.measurement_type_concept_id) 밖
+ST-0135,MEASUREMENT.value_as_number 타입(float),Conformance,error,MEASUREMENT,value_as_number,102380,100032,value_as_number='NOT_A_NUMBER' 은 float 아님
+ST-0136,MEASUREMENT.value_as_number 범위,Plausibility,warning,MEASUREMENT,value_as_number,100422,100005,"value_as_number=10001000 범위 [-1000000,1000000] 밖"
+ST-0138,MEASUREMENT.unit_concept_id 타입(integer),Conformance,error,MEASUREMENT,unit_concept_id,105482,100075,unit_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0139,MEASUREMENT.unit_concept_id 코드표,Conformance,warning,MEASUREMENT,unit_concept_id,105482,100075,unit_concept_id=NOT_A_NUMBER 코드표(OMOP.unit_concept_id) 밖
+ST-0139,MEASUREMENT.unit_concept_id 코드표,Conformance,warning,MEASUREMENT,unit_concept_id,107168,100097,unit_concept_id=9999999 코드표(OMOP.unit_concept_id) 밖
+ST-0140,MEASUREMENT.range_low 타입(float),Conformance,error,MEASUREMENT,range_low,106712,100094,range_low='NOT_A_NUMBER' 은 float 아님
+ST-0141,MEASUREMENT.range_low 범위,Plausibility,warning,MEASUREMENT,range_low,105593,100077,"range_low=10001000 범위 [-1000000,1000000] 밖"
+ST-0142,MEASUREMENT.range_high 타입(float),Conformance,error,MEASUREMENT,range_high,106167,100085,range_high='NOT_A_NUMBER' 은 float 아님
+ST-0143,MEASUREMENT.range_high 범위,Plausibility,warning,MEASUREMENT,range_high,103214,100045,"range_high=10001000 범위 [-1000000,1000000] 밖"
+ST-0145,OBSERVATION 컬럼 구성,Conformance,error,OBSERVATION,value_as_concept_id,,,컬럼 누락: value_as_concept_id
+ST-0146,OBSERVATION.observation_id PK 유일성,Conformance,error,OBSERVATION,observation_id,,100036,PK NULL
+ST-0146,OBSERVATION.observation_id PK 유일성,Conformance,error,OBSERVATION,observation_id,100004,100002,PK 중복: 100004
+ST-0146,OBSERVATION.observation_id PK 유일성,Conformance,error,OBSERVATION,observation_id,100004,100087,PK 중복: 100004
+ST-0147,OBSERVATION.observation_id 타입(integer),Conformance,error,OBSERVATION,observation_id,NOT_A_NUMBER,100007,observation_id='NOT_A_NUMBER' 은 integer 아님
+ST-0148,OBSERVATION.visit_occurrence_id 필수,Completeness,error,OBSERVATION,visit_occurrence_id,100103,100052,visit_occurrence_id NULL
+ST-0149,OBSERVATION.visit_occurrence_id 타입(integer),Conformance,error,OBSERVATION,visit_occurrence_id,100087,100044,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0150,OBSERVATION.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,OBSERVATION,visit_occurrence_id,100017,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0150,OBSERVATION.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,OBSERVATION,visit_occurrence_id,100018,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0150,OBSERVATION.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,OBSERVATION,visit_occurrence_id,100057,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0150,OBSERVATION.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,OBSERVATION,visit_occurrence_id,100058,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0150,OBSERVATION.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,OBSERVATION,visit_occurrence_id,100154,100077,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0151,OBSERVATION.person_id 필수,Completeness,error,OBSERVATION,person_id,100137,,person_id NULL
+ST-0152,OBSERVATION.person_id 타입(integer),Conformance,error,OBSERVATION,person_id,100163,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0153,OBSERVATION.person_id -> PERSON.person_id 참조무결성,Conformance,error,OBSERVATION,person_id,100033,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0153,OBSERVATION.person_id -> PERSON.person_id 참조무결성,Conformance,error,OBSERVATION,person_id,100039,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0153,OBSERVATION.person_id -> PERSON.person_id 참조무결성,Conformance,error,OBSERVATION,person_id,100040,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0153,OBSERVATION.person_id -> PERSON.person_id 참조무결성,Conformance,error,OBSERVATION,person_id,100075,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0153,OBSERVATION.person_id -> PERSON.person_id 참조무결성,Conformance,error,OBSERVATION,person_id,100076,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0153,OBSERVATION.person_id -> PERSON.person_id 참조무결성,Conformance,error,OBSERVATION,person_id,100105,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0153,OBSERVATION.person_id -> PERSON.person_id 참조무결성,Conformance,error,OBSERVATION,person_id,100106,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0154,OBSERVATION.observation_concept_id 필수,Completeness,error,OBSERVATION,observation_concept_id,100107,100054,observation_concept_id NULL
+ST-0155,OBSERVATION.observation_concept_id 타입(integer),Conformance,error,OBSERVATION,observation_concept_id,100056,100028,observation_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0156,OBSERVATION.observation_date 필수,Completeness,error,OBSERVATION,observation_date,100142,100071,observation_date NULL
+ST-0157,OBSERVATION.observation_date 타입(date),Conformance,error,OBSERVATION,observation_date,100156,100078,observation_date='2026-13-45' 은 date 아님
+ST-0158,OBSERVATION.observation_date 미래 날짜 금지,Plausibility,error,OBSERVATION,observation_date,100116,100058,observation_date=2099-01-01 미래 날짜
+ST-0159,OBSERVATION.observation_type_concept_id 필수,Completeness,error,OBSERVATION,observation_type_concept_id,100083,100042,observation_type_concept_id NULL
+ST-0160,OBSERVATION.observation_type_concept_id 타입(integer),Conformance,error,OBSERVATION,observation_type_concept_id,100158,100079,observation_type_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0161,OBSERVATION.observation_type_concept_id 코드표,Conformance,warning,OBSERVATION,observation_type_concept_id,100008,100004,observation_type_concept_id=9999999 코드표(OMOP.observation_type_concept_id) 밖
+ST-0161,OBSERVATION.observation_type_concept_id 코드표,Conformance,warning,OBSERVATION,observation_type_concept_id,100158,100079,observation_type_concept_id=NOT_A_NUMBER 코드표(OMOP.observation_type_concept_id) 밖
+ST-0162,OBSERVATION.value_as_number 타입(float),Conformance,error,OBSERVATION,value_as_number,100181,100091,value_as_number='NOT_A_NUMBER' 은 float 아님
+ST-0163,OBSERVATION.value_as_number 범위,Plausibility,warning,OBSERVATION,value_as_number,100009,100005,"value_as_number=10001000 범위 [-1000000,1000000] 밖"
+ST-0169,NOTE.note_id PK 유일성,Conformance,error,NOTE,note_id,,100017,PK NULL
+ST-0169,NOTE.note_id PK 유일성,Conformance,error,NOTE,note_id,100139,100038,PK 중복: 100139
+ST-0169,NOTE.note_id PK 유일성,Conformance,error,NOTE,note_id,100139,100064,PK 중복: 100139
+ST-0170,NOTE.note_id 타입(integer),Conformance,error,NOTE,note_id,NOT_A_NUMBER,100030,note_id='NOT_A_NUMBER' 은 integer 아님
+ST-0171,NOTE.visit_occurrence_id 타입(integer),Conformance,error,NOTE,visit_occurrence_id,100270,100074,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0172,NOTE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,NOTE,visit_occurrence_id,100031,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0172,NOTE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,NOTE,visit_occurrence_id,100032,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0172,NOTE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,NOTE,visit_occurrence_id,100106,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0172,NOTE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,NOTE,visit_occurrence_id,100107,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0172,NOTE.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,NOTE,visit_occurrence_id,100160,100043,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0173,NOTE.person_id 필수,Completeness,error,NOTE,person_id,100040,,person_id NULL
+ST-0174,NOTE.person_id 타입(integer),Conformance,error,NOTE,person_id,100303,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100057,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100074,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100075,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100076,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100138,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100139,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100140,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100141,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100195,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100196,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100197,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0175,NOTE.person_id -> PERSON.person_id 참조무결성,Conformance,error,NOTE,person_id,100198,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0176,NOTE.note_date 필수,Completeness,error,NOTE,note_date,100014,100004,note_date NULL
+ST-0177,NOTE.note_date 타입(date),Conformance,error,NOTE,note_date,100286,100078,note_date='2026-13-45' 은 date 아님
+ST-0178,NOTE.note_date 미래 날짜 금지,Plausibility,error,NOTE,note_date,100015,100005,note_date=2099-01-01 미래 날짜
+ST-0179,NOTE.note_type_concept_id 필수,Completeness,error,NOTE,note_type_concept_id,100019,100006,note_type_concept_id NULL
+ST-0180,NOTE.note_type_concept_id 타입(integer),Conformance,error,NOTE,note_type_concept_id,100315,100085,note_type_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0181,NOTE.note_type_concept_id 코드표,Conformance,warning,NOTE,note_type_concept_id,100212,100057,note_type_concept_id=9999999 코드표(OMOP.note_type_concept_id) 밖
+ST-0181,NOTE.note_type_concept_id 코드표,Conformance,warning,NOTE,note_type_concept_id,100315,100085,note_type_concept_id=NOT_A_NUMBER 코드표(OMOP.note_type_concept_id) 밖
+ST-0182,NOTE.note_class_concept_id 필수,Completeness,error,NOTE,note_class_concept_id,100155,100041,note_class_concept_id NULL
+ST-0183,NOTE.note_class_concept_id 타입(integer),Conformance,error,NOTE,note_class_concept_id,100311,100084,note_class_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0184,NOTE.note_class_concept_id 코드표,Conformance,warning,NOTE,note_class_concept_id,100079,100021,note_class_concept_id=9999999 코드표(OMOP.note_class_concept_id) 밖
+ST-0184,NOTE.note_class_concept_id 코드표,Conformance,warning,NOTE,note_class_concept_id,100311,100084,note_class_concept_id=NOT_A_NUMBER 코드표(OMOP.note_class_concept_id) 밖
+ST-0188,DRUG_INGREDIENT_STRUCTURE.ingredient_concept_id PK 유일성,Conformance,error,DRUG_INGREDIENT_STRUCTURE,ingredient_concept_id,,,PK NULL
+ST-0188,DRUG_INGREDIENT_STRUCTURE.ingredient_concept_id PK 유일성,Conformance,error,DRUG_INGREDIENT_STRUCTURE,ingredient_concept_id,1397141,,PK 중복: 1397141
+ST-0188,DRUG_INGREDIENT_STRUCTURE.ingredient_concept_id PK 유일성,Conformance,error,DRUG_INGREDIENT_STRUCTURE,ingredient_concept_id,1397141,,PK 중복: 1397141
+ST-0189,DRUG_INGREDIENT_STRUCTURE.ingredient_concept_id 타입(integer),Conformance,error,DRUG_INGREDIENT_STRUCTURE,ingredient_concept_id,NOT_A_NUMBER,,ingredient_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0190,DRUG_INGREDIENT_STRUCTURE.smiles 필수,Completeness,error,DRUG_INGREDIENT_STRUCTURE,smiles,35604205,,smiles NULL
+ST-0193,LUNG_CANCER.lung_cancer_id PK 유일성,Conformance,error,LUNG_CANCER,lung_cancer_id,,100005,PK NULL
+ST-0193,LUNG_CANCER.lung_cancer_id PK 유일성,Conformance,error,LUNG_CANCER,lung_cancer_id,100059,100009,PK 중복: 100059
+ST-0193,LUNG_CANCER.lung_cancer_id PK 유일성,Conformance,error,LUNG_CANCER,lung_cancer_id,100059,100059,PK 중복: 100059
+ST-0194,LUNG_CANCER.lung_cancer_id 타입(integer),Conformance,error,LUNG_CANCER,lung_cancer_id,NOT_A_NUMBER,100076,lung_cancer_id='NOT_A_NUMBER' 은 integer 아님
+ST-0195,LUNG_CANCER.person_id 필수,Completeness,error,LUNG_CANCER,person_id,100060,,person_id NULL
+ST-0196,LUNG_CANCER.person_id 타입(integer),Conformance,error,LUNG_CANCER,person_id,100063,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0197,LUNG_CANCER.person_id -> PERSON.person_id 참조무결성,Conformance,error,LUNG_CANCER,person_id,100003,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0197,LUNG_CANCER.person_id -> PERSON.person_id 참조무결성,Conformance,error,LUNG_CANCER,person_id,100020,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0197,LUNG_CANCER.person_id -> PERSON.person_id 참조무결성,Conformance,error,LUNG_CANCER,person_id,100038,100038,person_id=100038 가 PERSON.person_id 에 없음
+ST-0197,LUNG_CANCER.person_id -> PERSON.person_id 참조무결성,Conformance,error,LUNG_CANCER,person_id,100053,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0198,LUNG_CANCER.visit_occurrence_id 필수,Completeness,error,LUNG_CANCER,visit_occurrence_id,100042,100042,visit_occurrence_id NULL
+ST-0199,LUNG_CANCER.visit_occurrence_id 타입(integer),Conformance,error,LUNG_CANCER,visit_occurrence_id,100067,100067,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0200,LUNG_CANCER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,LUNG_CANCER,visit_occurrence_id,100059,100009,visit_occurrence_id=100165 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0200,LUNG_CANCER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,LUNG_CANCER,visit_occurrence_id,100029,100029,visit_occurrence_id=100538 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0200,LUNG_CANCER.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,LUNG_CANCER,visit_occurrence_id,100087,100087,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0201,LUNG_CANCER.diag_rgst_ymd 필수,Completeness,error,LUNG_CANCER,diag_rgst_ymd,100044,100044,diag_rgst_ymd NULL
+ST-0202,LUNG_CANCER.diag_rgst_ymd 타입(date),Conformance,error,LUNG_CANCER,diag_rgst_ymd,100082,100082,diag_rgst_ymd='2026-13-45' 은 date 아님
+ST-0203,LUNG_CANCER.diag_rgst_ymd 미래 날짜 금지,Plausibility,error,LUNG_CANCER,diag_rgst_ymd,100056,100056,diag_rgst_ymd=2099-01-01 미래 날짜
+ST-0204,LUNG_CANCER.histologic_diagnosis 필수,Completeness,error,LUNG_CANCER,histologic_diagnosis,100004,100004,histologic_diagnosis NULL
+ST-0205,LUNG_CANCER.histologic_diagnosis 타입(integer),Conformance,error,LUNG_CANCER,histologic_diagnosis,100046,100046,histologic_diagnosis='NOT_A_NUMBER' 은 integer 아님
+ST-0206,LUNG_CANCER.histologic_diagnosis 코드표,Conformance,error,LUNG_CANCER,histologic_diagnosis,100046,100046,histologic_diagnosis=NOT_A_NUMBER 코드표(LUNG_CANCER.histologic_diagnosis) 밖
+ST-0206,LUNG_CANCER.histologic_diagnosis 코드표,Conformance,error,LUNG_CANCER,histologic_diagnosis,100073,100073,histologic_diagnosis=9999999 코드표(LUNG_CANCER.histologic_diagnosis) 밖
+ST-0207,LUNG_CANCER.histology_icdo3_code 필수,Completeness,error,LUNG_CANCER,histology_icdo3_code,100027,100027,histology_icdo3_code NULL
+ST-0208,LUNG_CANCER.histology_icdo3_code 패턴,Conformance,warning,LUNG_CANCER,histology_icdo3_code,100098,100098,histology_icdo3_code='BAD-CODE' 패턴 불일치
+ST-0209,LUNG_CANCER.primary_site_icdo3_code 필수,Completeness,error,LUNG_CANCER,primary_site_icdo3_code,100022,100022,primary_site_icdo3_code NULL
+ST-0210,LUNG_CANCER.primary_site_icdo3_code 패턴,Conformance,warning,LUNG_CANCER,primary_site_icdo3_code,100028,100028,primary_site_icdo3_code='BAD-CODE' 패턴 불일치
+ST-0211,LUNG_CANCER.histologic_diagnosis_source_value 필수,Completeness,error,LUNG_CANCER,histologic_diagnosis_source_value,100026,100026,histologic_diagnosis_source_value NULL
+ST-0212,LUNG_CANCER.clinical_stage 필수,Completeness,error,LUNG_CANCER,clinical_stage,100052,100052,clinical_stage NULL
+ST-0213,LUNG_CANCER.clinical_stage_ajcc_edition 타입(integer),Conformance,error,LUNG_CANCER,clinical_stage_ajcc_edition,100061,100061,clinical_stage_ajcc_edition='NOT_A_NUMBER' 은 integer 아님
+ST-0214,LUNG_CANCER.clinical_stage_ajcc_edition 코드표,Conformance,error,LUNG_CANCER,clinical_stage_ajcc_edition,100014,100014,clinical_stage_ajcc_edition=9999999 코드표(LUNG_CANCER.clinical_stage_ajcc_edition) 밖
+ST-0214,LUNG_CANCER.clinical_stage_ajcc_edition 코드표,Conformance,error,LUNG_CANCER,clinical_stage_ajcc_edition,100061,100061,clinical_stage_ajcc_edition=NOT_A_NUMBER 코드표(LUNG_CANCER.clinical_stage_ajcc_edition) 밖
+ST-0215,LUNG_CANCER.stage_iv_diagnosis_date 타입(date),Conformance,error,LUNG_CANCER,stage_iv_diagnosis_date,100085,100085,stage_iv_diagnosis_date='2026-13-45' 은 date 아님
+ST-0216,LUNG_CANCER.stage_iv_diagnosis_date 미래 날짜 금지,Plausibility,error,LUNG_CANCER,stage_iv_diagnosis_date,100008,100008,stage_iv_diagnosis_date=2099-01-01 미래 날짜
+ST-0318,SACT.sact_id PK 유일성,Conformance,error,SACT,sact_id,,100058,PK NULL
+ST-0318,SACT.sact_id PK 유일성,Conformance,error,SACT,sact_id,100102,100084,PK 중복: 100102
+ST-0318,SACT.sact_id PK 유일성,Conformance,error,SACT,sact_id,100102,100086,PK 중복: 100102
+ST-0319,SACT.sact_id 타입(integer),Conformance,error,SACT,sact_id,NOT_A_NUMBER,100068,sact_id='NOT_A_NUMBER' 은 integer 아님
+ST-0320,SACT.person_id 필수,Completeness,error,SACT,person_id,100104,,person_id NULL
+ST-0321,SACT.person_id 타입(integer),Conformance,error,SACT,person_id,100056,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0322,SACT.person_id -> PERSON.person_id 참조무결성,Conformance,error,SACT,person_id,100024,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0322,SACT.person_id -> PERSON.person_id 참조무결성,Conformance,error,SACT,person_id,100039,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0322,SACT.person_id -> PERSON.person_id 참조무결성,Conformance,error,SACT,person_id,100066,100053,person_id=100053 가 PERSON.person_id 에 없음
+ST-0323,SACT.regimen_concept_id 필수,Completeness,error,SACT,regimen_concept_id,100041,100034,regimen_concept_id NULL
+ST-0324,SACT.regimen_concept_id 타입(integer),Conformance,error,SACT,regimen_concept_id,100109,100088,regimen_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0325,SACT.regimen_source_value 필수,Completeness,error,SACT,regimen_source_value,100078,100066,regimen_source_value NULL
+ST-0326,SACT.regimen_start_date 필수,Completeness,error,SACT,regimen_start_date,100013,100010,regimen_start_date NULL
+ST-0327,SACT.regimen_start_date 타입(date),Conformance,error,SACT,regimen_start_date,100044,100037,regimen_start_date='2026-13-45' 은 date 아님
+ST-0328,SACT.regimen_start_date 미래 날짜 금지,Plausibility,error,SACT,regimen_start_date,100034,100027,regimen_start_date=2099-01-01 미래 날짜
+ST-0329,SACT.regimen_end_date 필수,Completeness,error,SACT,regimen_end_date,100113,100092,regimen_end_date NULL
+ST-0330,SACT.regimen_end_date 타입(date),Conformance,error,SACT,regimen_end_date,100075,100064,regimen_end_date='2026-13-45' 은 date 아님
+ST-0331,SACT.regimen_end_date 미래 날짜 금지,Plausibility,error,SACT,regimen_end_date,100086,100072,regimen_end_date=2099-01-01 미래 날짜
+ST-0332,SACT.line_of_therapy 타입(integer),Conformance,error,SACT,line_of_therapy,100050,100041,line_of_therapy='NOT_A_NUMBER' 은 integer 아님
+ST-0333,SACT.line_of_therapy 범위,Plausibility,warning,SACT,line_of_therapy,100007,100005,"line_of_therapy=1200 범위 [1,20] 밖"
+ST-0334,SACT.number_of_cycles 타입(integer),Conformance,error,SACT,number_of_cycles,100028,100023,number_of_cycles='NOT_A_NUMBER' 은 integer 아님
+ST-0335,SACT.number_of_cycles 범위,Plausibility,warning,SACT,number_of_cycles,100098,100081,"number_of_cycles=2000 범위 [1,100] 밖"
+ST-0336,SACT.therapy_intent 타입(integer),Conformance,error,SACT,therapy_intent,100069,100056,therapy_intent='NOT_A_NUMBER' 은 integer 아님
+ST-0337,SACT.therapy_intent 코드표,Conformance,error,SACT,therapy_intent,100033,100026,therapy_intent=9999999 코드표(SACT.therapy_intent) 밖
+ST-0337,SACT.therapy_intent 코드표,Conformance,error,SACT,therapy_intent,100069,100056,therapy_intent=NOT_A_NUMBER 코드표(SACT.therapy_intent) 밖
+ST-0338,SACT.ecog_performance_status 타입(integer),Conformance,error,SACT,ecog_performance_status,100106,100086,ecog_performance_status='NOT_A_NUMBER' 은 integer 아님
+ST-0339,SACT.ecog_performance_status 범위,Plausibility,warning,SACT,ecog_performance_status,100037,100030,"ecog_performance_status=1050 범위 [0,5] 밖"
+ST-0340,SACT.date_of_progression 타입(date),Conformance,error,SACT,date_of_progression,100125,100100,date_of_progression='2026-13-45' 은 date 아님
+ST-0341,SACT.date_of_progression 미래 날짜 금지,Plausibility,error,SACT,date_of_progression,100100,100082,date_of_progression=2099-01-01 미래 날짜
+ST-0344,ADVERSE_EVENT.adverse_event_id PK 유일성,Conformance,error,ADVERSE_EVENT,adverse_event_id,,100052,PK NULL
+ST-0344,ADVERSE_EVENT.adverse_event_id PK 유일성,Conformance,error,ADVERSE_EVENT,adverse_event_id,100130,100004,PK 중복: 100130
+ST-0344,ADVERSE_EVENT.adverse_event_id PK 유일성,Conformance,error,ADVERSE_EVENT,adverse_event_id,100130,100060,PK 중복: 100130
+ST-0345,ADVERSE_EVENT.adverse_event_id 타입(integer),Conformance,error,ADVERSE_EVENT,adverse_event_id,NOT_A_NUMBER,100001,adverse_event_id='NOT_A_NUMBER' 은 integer 아님
+ST-0346,ADVERSE_EVENT.person_id 필수,Completeness,error,ADVERSE_EVENT,person_id,100196,,person_id NULL
+ST-0347,ADVERSE_EVENT.person_id 타입(integer),Conformance,error,ADVERSE_EVENT,person_id,100016,NOT_A_NUMBER,person_id='NOT_A_NUMBER' 은 integer 아님
+ST-0348,ADVERSE_EVENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,ADVERSE_EVENT,person_id,100048,100020,person_id=100020 가 PERSON.person_id 에 없음
+ST-0348,ADVERSE_EVENT.person_id -> PERSON.person_id 참조무결성,Conformance,error,ADVERSE_EVENT,person_id,100231,999999999,person_id=999999999 가 PERSON.person_id 에 없음
+ST-0349,ADVERSE_EVENT.visit_occurrence_id 필수,Completeness,error,ADVERSE_EVENT,visit_occurrence_id,100153,100065,visit_occurrence_id NULL
+ST-0350,ADVERSE_EVENT.visit_occurrence_id 타입(integer),Conformance,error,ADVERSE_EVENT,visit_occurrence_id,100211,100092,visit_occurrence_id='NOT_A_NUMBER' 은 integer 아님
+ST-0351,ADVERSE_EVENT.visit_occurrence_id -> VISIT_OCCURRENCE.visit_occurrence_id 참조무결성,Conformance,error,ADVERSE_EVENT,visit_occurrence_id,100148,100065,visit_occurrence_id=999999999 가 VISIT_OCCURRENCE.visit_occurrence_id 에 없음
+ST-0352,ADVERSE_EVENT.adverse_event_concept_id 필수,Completeness,error,ADVERSE_EVENT,adverse_event_concept_id,100030,100011,adverse_event_concept_id NULL
+ST-0353,ADVERSE_EVENT.adverse_event_concept_id 타입(integer),Conformance,error,ADVERSE_EVENT,adverse_event_concept_id,100013,100002,adverse_event_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0354,ADVERSE_EVENT.adverse_event_start_date 필수,Completeness,error,ADVERSE_EVENT,adverse_event_start_date,100003,100001,adverse_event_start_date NULL
+ST-0355,ADVERSE_EVENT.adverse_event_start_date 타입(date),Conformance,error,ADVERSE_EVENT,adverse_event_start_date,100180,100074,adverse_event_start_date='2026-13-45' 은 date 아님
+ST-0356,ADVERSE_EVENT.adverse_event_start_date 미래 날짜 금지,Plausibility,error,ADVERSE_EVENT,adverse_event_start_date,100126,100058,adverse_event_start_date=2099-01-01 미래 날짜
+ST-0357,ADVERSE_EVENT.severity_concept_id 타입(integer),Conformance,error,ADVERSE_EVENT,severity_concept_id,100019,100005,severity_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0358,ADVERSE_EVENT.severity_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,severity_concept_id,100019,100005,severity_concept_id=NOT_A_NUMBER 코드표(OMOP.severity_concept_id) 밖
+ST-0358,ADVERSE_EVENT.severity_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,severity_concept_id,100181,100076,severity_concept_id=9999999 코드표(OMOP.severity_concept_id) 밖
+ST-0359,ADVERSE_EVENT.causality_concept_id 타입(integer),Conformance,error,ADVERSE_EVENT,causality_concept_id,100179,100074,causality_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0360,ADVERSE_EVENT.causality_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,causality_concept_id,100132,100061,causality_concept_id=9999999 코드표(OMOP.causality_concept_id) 밖
+ST-0360,ADVERSE_EVENT.causality_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,causality_concept_id,100179,100074,causality_concept_id=NOT_A_NUMBER 코드표(OMOP.causality_concept_id) 밖
+ST-0361,ADVERSE_EVENT.is_serious_yn 타입(integer),Conformance,error,ADVERSE_EVENT,is_serious_yn,100055,100021,is_serious_yn='NOT_A_NUMBER' 은 integer 아님
+ST-0362,ADVERSE_EVENT.seriousness_concept_id 타입(integer),Conformance,error,ADVERSE_EVENT,seriousness_concept_id,100157,100067,seriousness_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0363,ADVERSE_EVENT.seriousness_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,seriousness_concept_id,100021,100006,seriousness_concept_id=9999999 코드표(OMOP.seriousness_concept_id) 밖
+ST-0363,ADVERSE_EVENT.seriousness_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,seriousness_concept_id,100157,100067,seriousness_concept_id=NOT_A_NUMBER 코드표(OMOP.seriousness_concept_id) 밖
+ST-0364,ADVERSE_EVENT.outcome_concept_id 타입(integer),Conformance,error,ADVERSE_EVENT,outcome_concept_id,100124,100055,outcome_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0365,ADVERSE_EVENT.outcome_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,outcome_concept_id,100124,100055,outcome_concept_id=NOT_A_NUMBER 코드표(OMOP.outcome_concept_id) 밖
+ST-0365,ADVERSE_EVENT.outcome_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,outcome_concept_id,100213,100093,outcome_concept_id=9999999 코드표(OMOP.outcome_concept_id) 밖
+ST-0366,ADVERSE_EVENT.action_taken_concept_id 타입(integer),Conformance,error,ADVERSE_EVENT,action_taken_concept_id,100219,100094,action_taken_concept_id='NOT_A_NUMBER' 은 integer 아님
+ST-0367,ADVERSE_EVENT.action_taken_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,action_taken_concept_id,100129,100060,action_taken_concept_id=9999999 코드표(OMOP.action_taken_concept_id) 밖
+ST-0367,ADVERSE_EVENT.action_taken_concept_id 코드표,Conformance,warning,ADVERSE_EVENT,action_taken_concept_id,100219,100094,action_taken_concept_id=NOT_A_NUMBER 코드표(OMOP.action_taken_concept_id) 밖
+SEM3-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,100140,100007,visit_end_date 2021-08-26 < visit_start_date 2099-01-01
+SEM3-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,100664,100037,visit_end_date 2024-03-05 < visit_start_date 2024-03-06
+SEM3-COM-001,방문 종료일 >= 시작일,Plausibility,error,VISIT_OCCURRENCE,,101136,100064,visit_end_date 2023-09-12 < visit_start_date 2023-09-13
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100549,100030,visit_start_date 2020-02-28 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100550,100030,visit_start_date 2020-03-11 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100551,100030,visit_start_date 2020-04-01 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100552,100030,visit_start_date 2020-04-22 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100553,100030,visit_start_date 2020-05-13 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100554,100030,visit_start_date 2020-04-09 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100555,100030,visit_start_date 2020-05-02 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100556,100030,visit_start_date 2020-07-07 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100557,100030,visit_start_date 2020-07-17 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100558,100030,visit_start_date 2020-08-07 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100559,100030,visit_start_date 2020-08-28 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100560,100030,visit_start_date 2020-09-18 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100561,100030,visit_start_date 2020-10-09 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100562,100030,visit_start_date 2020-10-21 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,100563,100030,visit_start_date 2021-02-17 < year_of_birth 21260
+SEM3-COM-002,방문일 >= 출생연도,Plausibility,error,"PERSON,VISIT_OCCURRENCE",,101814,100098,visit_start_date 1890-01-01 < year_of_birth 1963
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100413,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100414,100022,이벤트일 2021-04-04 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100415,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100416,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100417,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100418,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100419,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100420,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100421,100022,이벤트일 2021-08-17 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100422,100022,이벤트일 2021-11-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100423,100022,이벤트일 2022-02-24 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100424,100022,이벤트일 2022-06-01 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100425,100022,이벤트일 2022-09-06 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100426,100022,이벤트일 2022-12-15 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100427,100022,이벤트일 2023-03-09 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100428,100022,이벤트일 2023-05-29 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100997,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100998,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:100999,100055,이벤트일 2021-09-13 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101000,100055,이벤트일 2021-10-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101001,100055,이벤트일 2022-01-14 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101002,100055,이벤트일 2022-04-12 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101003,100055,이벤트일 2022-07-02 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101004,100055,이벤트일 2022-10-03 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101005,100055,이벤트일 2022-12-31 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101006,100055,이벤트일 2023-04-01 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101007,100055,이벤트일 2023-07-09 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,VISIT_OCCURRENCE:101008,100055,이벤트일 2023-09-29 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100216,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100217,100022,이벤트일 2021-03-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100218,100022,이벤트일 2021-03-29 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100219,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100220,100022,이벤트일 2021-08-17 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100221,100022,이벤트일 2021-11-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100222,100022,이벤트일 2022-02-24 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100223,100022,이벤트일 2022-06-01 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100224,100022,이벤트일 2022-09-06 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100225,100022,이벤트일 2022-12-15 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100226,100022,이벤트일 2023-03-09 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100227,100022,이벤트일 2023-05-29 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100573,100055,이벤트일 2022-01-14 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100574,100055,이벤트일 2022-04-12 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100575,100055,이벤트일 2022-07-02 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100576,100055,이벤트일 2022-10-03 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100577,100055,이벤트일 2022-12-31 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100578,100055,이벤트일 2023-04-01 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100579,100055,이벤트일 2023-07-09 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100580,100055,이벤트일 2023-09-29 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100274,100021,이벤트일 2099-01-01 > death_date 2023-07-31
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100300,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100301,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100302,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100303,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100304,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100305,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100306,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100307,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100308,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100309,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100310,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100311,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100718,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100719,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100720,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100721,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100722,100055,이벤트일 2021-09-13 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101676,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101677,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101678,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101679,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101680,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101681,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101682,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101683,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101684,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101685,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101686,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101687,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101688,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101689,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101690,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101691,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101692,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101693,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101694,100022,이벤트일 2021-04-14 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101695,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101696,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101697,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101698,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101699,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101700,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101701,100022,이벤트일 2021-04-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101702,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101703,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101704,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101705,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101706,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101707,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101708,100022,이벤트일 2021-04-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101709,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101710,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101711,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101712,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101713,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101714,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101715,100022,이벤트일 2021-05-05 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101716,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101717,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101718,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101719,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101720,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101721,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101722,100022,이벤트일 2021-05-12 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101723,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101724,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101725,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101726,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101727,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101728,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101729,100022,이벤트일 2021-05-19 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101730,100022,이벤트일 2021-08-17 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101731,100022,이벤트일 2021-08-17 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101732,100022,이벤트일 2021-11-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101733,100022,이벤트일 2021-11-21 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101734,100022,이벤트일 2022-02-24 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101735,100022,이벤트일 2022-02-24 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101736,100022,이벤트일 2022-06-01 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101737,100022,이벤트일 2022-06-01 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101738,100022,이벤트일 2022-09-06 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101739,100022,이벤트일 2022-09-06 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101740,100022,이벤트일 2022-12-15 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101741,100022,이벤트일 2022-12-15 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101742,100022,이벤트일 2023-03-09 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101743,100022,이벤트일 2023-03-09 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101744,100022,이벤트일 2023-05-29 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101745,100022,이벤트일 2023-05-29 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104026,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104027,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104028,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104029,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104030,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104031,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104032,100055,이벤트일 2021-09-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104033,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104034,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104035,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104036,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104037,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104038,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104039,100055,이벤트일 2021-10-16 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104040,100055,이벤트일 2022-01-14 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104041,100055,이벤트일 2022-01-14 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104042,100055,이벤트일 2022-04-12 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104043,100055,이벤트일 2022-04-12 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104044,100055,이벤트일 2022-07-02 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104045,100055,이벤트일 2022-07-02 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104046,100055,이벤트일 2022-10-03 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104047,100055,이벤트일 2022-10-03 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104048,100055,이벤트일 2022-12-31 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104049,100055,이벤트일 2022-12-31 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104050,100055,이벤트일 2023-04-01 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104051,100055,이벤트일 2023-04-01 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104052,100055,이벤트일 2023-07-09 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104053,100055,이벤트일 2023-07-09 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104054,100055,이벤트일 2023-09-29 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:104055,100055,이벤트일 2023-09-29 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,CONDITION_OCCURRENCE:100113,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,CONDITION_OCCURRENCE:100114,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,CONDITION_OCCURRENCE:100115,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,CONDITION_OCCURRENCE:100260,100055,이벤트일 2021-09-13 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,CONDITION_OCCURRENCE:100261,100055,이벤트일 2021-10-25 > death_date 2021-09-12
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,OBSERVATION:100043,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,OBSERVATION:100044,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,NOTE:100081,100022,이벤트일 2021-03-27 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,NOTE:100082,100022,이벤트일 2021-03-28 > death_date 2021-03-22
+SEM3-COM-003,사망 이후 임상 이벤트 금지,Plausibility,error,"CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PERSON,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,NOTE:100083,100022,이벤트일 2021-04-04 > death_date 2021-03-22
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100113,100011,visit 100209 의 person_id=100029
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,PROCEDURE_OCCURRENCE:100248,999999999,visit 100465 의 person_id=100024
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100314,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:100315,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,DRUG_EXPOSURE:101150,999999999,visit 101589 의 person_id=100087
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:100826,100011,visit 100209 의 person_id=100029
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:100827,100011,visit 100209 의 person_id=100029
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101513,100001,visit 100378 의 person_id=100021
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101765,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101766,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101767,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101768,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101769,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101770,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:101771,100023,visit 100432 의 person_id=999999999
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:103670,100001,visit 100919 의 person_id=100052
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,MEASUREMENT:105587,999999999,visit 101409 의 person_id=100077
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,CONDITION_OCCURRENCE:100022,999999999,visit 100067 의 person_id=100003
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,OBSERVATION:100033,999999999,visit 100283 의 person_id=100017
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,NOTE:100057,999999999,visit 100259 의 person_id=100015
+SEM3-COM-004,이벤트-방문 환자 일치,Conformance,error,"ADVERSE_EVENT,CONDITION_OCCURRENCE,DRUG_EXPOSURE,MEASUREMENT,NOTE,OBSERVATION,PROCEDURE_OCCURRENCE,VISIT_OCCURRENCE",,ADVERSE_EVENT:100231,999999999,visit 101818 의 person_id=100098
+SEM3-COM-005,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100012,100001,days_supply=5000 이나 기간=28
+SEM3-COM-005,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100274,100021,end < start
+SEM3-COM-005,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100363,100026,days_supply=1 이나 기간=27514
+SEM3-COM-005,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100376,100027,days_supply=99 이나 기간=1
+SEM3-COM-005,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,100931,100073,end < start
+SEM3-COM-005,"약물 종료일 >= 시작일, days_supply 일치",Plausibility,error,DRUG_EXPOSURE,,101010,100079,days_supply=99 이나 기간=1
+SEM3-COM-006,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,100253,100018,"dosing_interval_day>1, dosing_number 없음"
+SEM3-COM-006,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,100672,100052,"frequency_per_day 있음, days_supply 없음"
+SEM3-COM-006,투여 빈도/간격 조건부 필수,Completeness,warning,DRUG_EXPOSURE,,100897,100071,"dosing_interval_day>1, dosing_number 없음"
+SEM3-COM-007,정상범위 하한 <= 상한,Plausibility,error,MEASUREMENT,,101238,100018,range_low 140.0 > range_high 40.0
+SEM3-COM-007,정상범위 하한 <= 상한,Plausibility,error,MEASUREMENT,,105566,100077,range_low 107.5 > range_high 7.5
+SEM3-COM-007,정상범위 하한 <= 상한,Plausibility,error,MEASUREMENT,,105593,100077,range_low 10001000.0 > range_high 5.0
+SEM3-COM-008,특화 테이블 누락 환자,Completeness,warning,PERSON,,100003,100003,LUNG_CANCER 에 행 없음
+SEM3-COM-008,특화 테이블 누락 환자,Completeness,warning,PERSON,,None,,LUNG_CANCER 에 행 없음
+SEM3-COM-008,특화 테이블 누락 환자,Completeness,warning,PERSON,,None,,LUNG_CANCER 에 행 없음
+SEM3-COM-008,특화 테이블 누락 환자,Completeness,warning,PERSON,,100060,100060,LUNG_CANCER 에 행 없음
+SEM3-COM-008,특화 테이블 누락 환자,Completeness,warning,PERSON,,100063,100063,LUNG_CANCER 에 행 없음
+SEM3-COM-008,특화 테이블 누락 환자,Completeness,warning,PERSON,,100093,100093,LUNG_CANCER 에 행 없음
+SEM3-COM-009,특화 테이블 방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,LUNG_CANCER:100003,999999999,visit 100058 의 person_id=100003
+SEM3-COM-009,특화 테이블 방문 환자 일치,Conformance,error,VISIT_OCCURRENCE,,LUNG_CANCER:100039,100039,visit 100755 의 person_id=100042
+SEM3-COM-010,이상사례 발생일 사망 이후 금지,Plausibility,error,"ADVERSE_EVENT,PERSON",,100123,100055,adverse_event_start_date 2021-09-13 > death_date 2021-09-12
+SEM3-COM-010,이상사례 발생일 사망 이후 금지,Plausibility,error,"ADVERSE_EVENT,PERSON",,100124,100055,adverse_event_start_date 2021-10-25 > death_date 2021-09-12
+SEM3-SACT-001,항암요법 기간 및 line 번호,Plausibility,error,SACT,,100007,100005,line_of_therapy=1200 이나 시작일 순서=1
+SEM3-SACT-001,항암요법 기간 및 line 번호,Plausibility,error,SACT,,100034,100027,regimen_end_date < regimen_start_date
+SEM3-SACT-001,항암요법 기간 및 line 번호,Plausibility,error,SACT,,100044,100037,line_of_therapy=1 이나 시작일 순서=2
+SEM3-SACT-001,항암요법 기간 및 line 번호,Plausibility,error,SACT,,100045,100037,line_of_therapy=2 이나 시작일 순서=1
+SEM3-SACT-001,항암요법 기간 및 line 번호,Plausibility,error,SACT,,100099,100081,line_of_therapy=9 이나 시작일 순서=2
+SEM3-SACT-001,항암요법 기간 및 line 번호,Plausibility,error,SACT,,100117,100095,regimen_end_date < regimen_start_date
+SEM3-SACT-001,항암요법 기간 및 line 번호,Plausibility,error,SACT,,100056,,line_of_therapy=2 이나 시작일 순서=1
+SEM3-SACT-002,항암요법 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,SACT",,100018,100015,regimen_end_date 2020-09-22 < MAX(drug end) 2025-03-09
+SEM3-SACT-002,항암요법 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,SACT",,100033,100026,regimen_end_date 2023-09-25 < MAX(drug end) 2099-01-01
+SEM3-SACT-002,항암요법 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,SACT",,100034,100027,regimen_start_date 2099-01-01 <> MIN(drug start) 2021-01-02
+SEM3-SACT-002,항암요법 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,SACT",,100102,100086,regimen_start_date 2020-11-03 <> MIN(drug start) 2021-06-15
+SEM3-SACT-002,항암요법 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,SACT",,100114,100093,regimen_start_date 2019-05-29 <> MIN(drug start) 2019-06-01
+SEM3-SACT-002,항암요법 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,SACT",,100117,100095,regimen_end_date 2019-04-15 < MAX(drug end) 2019-09-03
+SEM3-SACT-002,항암요법 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,SACT",,None,100058,연결된 DRUG_EXPOSURE 없음
+SEM3-SACT-002,항암요법 기간이 연결 약물 기간과 일치,Plausibility,warning,"DRUG_EXPOSURE,SACT",,None,100068,연결된 DRUG_EXPOSURE 없음
+SEM3-SACT-003,진행일 >= 항암 시작일,Plausibility,error,SACT,,100029,100024,date_of_progression 2023-11-07 < regimen_start_date 2023-11-17
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100416,100032,SACT 100039 의 person_id=999999999
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100417,100032,SACT 100039 의 person_id=999999999
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100418,100032,SACT 100039 의 person_id=999999999
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100419,100032,SACT 100039 의 person_id=999999999
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100420,100032,SACT 100039 의 person_id=999999999
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100421,100032,SACT 100039 의 person_id=999999999
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100422,100032,SACT 100039 의 person_id=999999999
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100423,100032,SACT 100039 의 person_id=999999999
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,100986,100077,SACT 100018 의 person_id=100015
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101089,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101090,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101091,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101092,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101093,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101094,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101095,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101096,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101097,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101098,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101099,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101100,100084,SACT 100102 의 person_id=100086
+SEM3-SACT-004,약물-항암요법 환자 일치,Conformance,error,"DRUG_EXPOSURE,SACT",,101150,999999999,SACT 100108 의 person_id=100087
+SEM3-SACT-005,항종양제(ATC L01) 투여는 sact_id 필수,Completeness,error,"DRUG_EXPOSURE,SACT",,100469,100036,항종양제(etoposide) 인데 sact_id 없음
+SEM3-SACT-005,항종양제(ATC L01) 투여는 sact_id 필수,Completeness,error,"DRUG_EXPOSURE,SACT",,100684,100052,항종양제(osimertinib) 인데 sact_id 없음
+SEM3-SACT-005,항종양제(ATC L01) 투여는 sact_id 필수,Completeness,error,"DRUG_EXPOSURE,SACT",,101328,100100,항종양제(pemetrexed) 인데 sact_id 없음
+SEM3-LC-001,임상 병기가 AJCC 판수의 병기군에 있음,Conformance,error,LUNG_CANCER,,LUNG_CANCER:100014,100014,clinical_stage=IIIA 는 AJCC 9999999판 병기군이 아님
+SEM3-LC-001,임상 병기가 AJCC 판수의 병기군에 있음,Conformance,error,LUNG_CANCER,,LUNG_CANCER:100040,100040,clinical_stage=IA1 는 AJCC 7판 병기군이 아님
+SEM3-LC-001,임상 병기가 AJCC 판수의 병기군에 있음,Conformance,error,LUNG_CANCER,,LUNG_CANCER:100050,100050,clinical_stage=IIIA 인데 AJCC 판수 없음
+SEM3-LC-001,임상 병기가 AJCC 판수의 병기군에 있음,Conformance,error,LUNG_CANCER,,LUNG_CANCER:100061,100061,clinical_stage=IIB 인데 AJCC 판수 없음
+SEM3-LC-001,임상 병기가 AJCC 판수의 병기군에 있음,Conformance,error,LUNG_CANCER,,LUNG_CANCER:100091,100091,clinical_stage=IV 는 AJCC 8판 병기군이 아님
+SEM3-LC-002,"제한기/확장기(LD/ED)는 소세포폐암에만, 판수 없이",Conformance,error,LUNG_CANCER,,LUNG_CANCER:100048,100048,clinical_stage=ED 인데 AJCC 판수=8
+SEM3-LC-002,"제한기/확장기(LD/ED)는 소세포폐암에만, 판수 없이",Conformance,error,LUNG_CANCER,,LUNG_CANCER:100088,100088,clinical_stage=ED 인데 histologic_diagnosis=1
+SEM3-LC-003,조직형 범주와 ICD-O-3 형태 코드 일치,Plausibility,warning,LUNG_CANCER,,LUNG_CANCER:100016,100016,histologic_diagnosis=1 와 histology_icdo3_code=8041/3 불일치
+SEM3-LC-003,조직형 범주와 ICD-O-3 형태 코드 일치,Plausibility,warning,LUNG_CANCER,,LUNG_CANCER:100029,100029,histologic_diagnosis=2 와 histology_icdo3_code=8140/3 불일치
+SEM3-LC-004,원발 부위 코드는 폐(C34),Plausibility,warning,LUNG_CANCER,,LUNG_CANCER:100028,100028,primary_site_icdo3_code=BAD-CODE 가 C34 아님
+SEM3-LC-004,원발 부위 코드는 폐(C34),Plausibility,warning,LUNG_CANCER,,LUNG_CANCER:100051,100051,primary_site_icdo3_code=C50.9 가 C34 아님

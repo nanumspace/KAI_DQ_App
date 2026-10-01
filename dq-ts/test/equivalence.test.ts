@@ -99,3 +99,58 @@ describe("v2: Python 참조 구현과 동등성", () => {
     }
   });
 });
+
+// ---------------------------------------------------------------- v3 경로
+// v3(의뢰사 9/30 매뉴얼 + 10/01 검토 결정)도 6개 코호트를 모두 돌려 Python 과 보고서·위반 행까지 같은지 본다.
+// v3 는 v1 과 같은 '질환별 표' 모양이라 v1 코드 경로를 다른 파일로 돈다. 생성은 `python dq/run_all.py --spec v3`.
+describe("v3: Python 참조 구현과 동등성", () => {
+  const v3Out = path.join(getRoot(), "dq-ts/output/test-reports-v3");
+  const pyDir = (kind: string, cohort: string) => path.join(getRoot(), `dq/reports/${kind}_v3_${cohort}`);
+  const dataDir = (kind: string, cohort: string) => path.join(getRoot(), `synth/output/${kind}_v3/${cohort}`);
+  const ready = COHORTS.filter((c) =>
+    fs.existsSync(dataDir("clean", c)) && fs.existsSync(path.join(pyDir("clean", c), "summary.json")));
+
+  beforeAll(async () => {
+    fs.rmSync(v3Out, { recursive: true, force: true });
+    for (const c of ready) for (const kind of ["clean", "dirty"]) {
+      if (!fs.existsSync(dataDir(kind, c))) continue;
+      await runEngine({ cohort: c, today: TODAY, spec: "v3", data: dataDir(kind, c), out: path.join(v3Out, `${kind}_${c}`) });
+    }
+  }, 300_000);
+
+  it("6개 코호트가 모두 v3 샘플 데이터와 Python 보고서를 갖고 있다", () => {
+    expect(ready).toEqual(COHORTS);
+  });
+
+  for (const c of COHORTS) {
+    it(`${c}: clean·dirty 의 보고서(report.md)가 Python 과 같다`, () => {
+      for (const kind of ["clean", "dirty"]) {
+        const py = path.join(pyDir(kind, c), "report.md");
+        const ts = path.join(v3Out, `${kind}_${c}`, "report.md");
+        if (!fs.existsSync(py) || !fs.existsSync(ts)) continue;
+        expect(fs.readFileSync(ts, "utf-8"), `${c} ${kind} 의 report.md 가 Python 과 다르다`).toBe(fs.readFileSync(py, "utf-8"));
+      }
+    });
+
+    it(`${c}: clean·dirty 의 위반 행이 Python 과 같다`, () => {
+      const norm = (p: string) => fs.readFileSync(p, "utf-8").replace(/^\uFEFF/, "").split(/\r?\n/).filter(Boolean).sort();
+      let compared = 0;
+      for (const kind of ["clean", "dirty"]) {
+        const py = path.join(pyDir(kind, c), "findings.csv");
+        const ts = path.join(v3Out, `${kind}_${c}`, "findings.csv");
+        if (!fs.existsSync(py) || !fs.existsSync(ts)) continue;
+        expect(norm(ts), `${c} ${kind} 의 위반 행이 Python 과 다르다`).toEqual(norm(py));
+        compared += 1;
+      }
+      expect(compared, `${c} 를 대조할 보고서가 없다`).toBe(2);
+    });
+  }
+
+  it("깨끗한 데이터에서는 어느 코호트도 위반이 없다", () => {
+    for (const c of ready) {
+      const p = path.join(v3Out, `clean_${c}`, "findings.csv");
+      const rows = fs.readFileSync(p, "utf-8").split(/\r?\n/).filter(Boolean);
+      expect(rows.length, `${c} 의 깨끗한 데이터에 위반이 있다`).toBe(1);   // 머리글 한 줄만
+    }
+  });
+});

@@ -1,0 +1,180 @@
+{
+ "cohort": "MASLD",
+ "clean": {
+  "rules": 251,
+  "violations": 0,
+  "failed_rules": 0,
+  "false_positive_rate": 0.0
+ },
+ "dirty": {
+  "rules": 251,
+  "violations": 1360,
+  "failed_rules": 206
+ },
+ "faults_total": 218,
+ "faults_detected": 218,
+ "recall": 1.0,
+ "fault_types": 22,
+ "fault_types_fully_detected": 22,
+ "missed": [],
+ "by_type": [
+  {
+   "fault_type": "AE_AFTER_DEATH",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "CODELIST",
+   "n": 11,
+   "detected": 11,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "COLUMN_MISSING",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DAYS_SUPPLY_MISMATCH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DISEASE_VISIT_PERSON_MISMATCH",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "DRUG_END_BEFORE_START",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "EVENT_AFTER_DEATH",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "EVENT_VISIT_PERSON_MISMATCH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FK_BROKEN",
+   "n": 17,
+   "detected": 17,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FREQ_WITHOUT_DAYS_SUPPLY",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "FUTURE_DATE",
+   "n": 11,
+   "detected": 11,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "INTERVAL_WITHOUT_NUMBER",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "MUST_BE_NULL",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PERSON_WITHOUT_DISEASE_ROW",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PK_DUP",
+   "n": 10,
+   "detected": 10,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "PK_NULL",
+   "n": 10,
+   "detected": 10,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "RANGE",
+   "n": 17,
+   "detected": 17,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "RANGE_LOW_GT_HIGH",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "REQUIRED_NULL",
+   "n": 42,
+   "detected": 42,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "TYPE_BAD",
+   "n": 81,
+   "detected": 81,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_BEFORE_BIRTH",
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0
+  },
+  {
+   "fault_type": "VISIT_END_BEFORE_START",
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0
+  }
+ ],
+ "by_category": [
+  {
+   "category": "Completeness",
+   "n": 55,
+   "detected": 55,
+   "recall": 1.0
+  },
+  {
+   "category": "Conformance",
+   "n": 125,
+   "detected": 125,
+   "recall": 1.0
+  },
+  {
+   "category": "Plausibility",
+   "n": 38,
+   "detected": 38,
+   "recall": 1.0
+  }
+ ],
+ "collateral_rules": [
+  "ST-0358",
+  "ST-0360",
+  "ST-0365",
+  "ST-0367"
+ ]
+}

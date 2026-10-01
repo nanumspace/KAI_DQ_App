@@ -1,0 +1,8 @@
+ingredient_concept_id,smiles
+1308216,NCCCCC(NC(CCc1ccccc1)C(=O)O)C(=O)N1CCCC1C(=O)O
+1503297,CN(C)C(=N)NC(=N)N
+1545958,CC(C)c1c(C(=O)Nc2ccccc2)c(-c2ccccc2)c(-c2ccc(F)cc2)n1CCC(O)CC(O)CC(=O)O
+1580747,Fc1cc(F)c(F)cc1CC(N)CC(=O)N1CCn2c(nnc2C(F)(F)F)C1
+1584910,CCc1ccc(CCOc2ccc(CC3SC(=O)NC3=O)cc2)nc1
+1597756,CCC1=C(C)CN(C1=O)C(=O)NCCc1ccc(cc1)S(=O)(=O)NC(=O)NC1CCC(C)CC1
+45774435,OCC1OC(c2ccc(Cl)c(Cc3ccc(OC4CCOC4)cc3)c2)C(O)C(O)C1O

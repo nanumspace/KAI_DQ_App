@@ -1,0 +1,127 @@
+sact_id,person_id,regimen_concept_id,regimen_source_value,regimen_start_date,regimen_end_date,line_of_therapy,number_of_cycles,therapy_intent,ecog_performance_status,best_overall_response,date_of_progression,recurrence_anatomic_site
+100001,100001,35838997,Osimertinib,2022-03-22,2023-10-30,1,21,3,1,SD,,
+100002,100002,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2022-11-09,2023-01-11,1,4,3,1,PR,2023-05-02,Brain
+100003,100002,35888467,Docetaxel,2023-05-22,2023-08-14,2,5,3,2,PD,,
+100004,100003,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2021-04-20,2021-05-25,1,6,5,2,PR,,
+100005,100003,35828479,Pembrolizumab consolidation,2021-06-24,2021-11-11,2,6,4,2,SD,,
+100006,100004,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2022-10-31,2023-01-02,1,4,3,3,SD,2023-02-06,Brain
+100007,100005,35886387,Cisplatin + Pemetrexed,2020-07-16,2020-09-17,1,4,2,0,NE,,
+100008,100006,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2019-10-10,2019-12-12,1,4,3,1,PD,,
+100009,100008,35886387,Cisplatin + Pemetrexed,2021-03-02,2021-05-04,1,4,2,0,NE,,
+100010,100008,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2022-05-01,2022-07-03,2,4,3,0,PR,,Contralateral lung
+100011,100009,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2022-09-05,2022-11-07,1,4,3,1,PD,2023-01-01,Lung
+100012,100009,35888467,Docetaxel,2023-01-11,2023-02-22,2,3,3,2,PD,,
+100013,100010,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2019-12-04,2020-02-05,1,4,3,1,PR,,
+100014,100011,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-04-11,2021-06-13,1,4,3,1,PR,,Contralateral lung
+100015,100013,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2023-11-20,2024-01-22,1,4,3,2,PR,,
+100016,100014,35886387,Cisplatin + Pemetrexed,2020-04-16,2020-06-18,1,4,2,0,NE,,
+100017,100014,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-01-08,2021-03-12,2,4,3,0,PR,,Liver
+100018,100015,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-07-21,2020-09-22,1,4,3,1,PR,,
+100019,100016,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2019-09-16,2019-11-18,1,4,3,1,SD,2020-02-03,Lung
+100020,100016,35888467,Docetaxel,2020-02-10,2020-03-02,2,2,3,2,PD,,
+100021,100017,35886387,Cisplatin + Pemetrexed,2021-12-02,2022-02-03,1,4,2,1,NE,,
+100022,100018,35838997,Osimertinib,2019-11-15,2021-05-27,1,20,3,0,PR,2021-08-20,Brain
+100023,100018,35888467,Docetaxel,2021-09-10,2021-12-24,2,6,3,1,SD,,
+100024,100020,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2021-04-20,2021-05-25,1,6,5,0,PR,,
+100025,100021,35838997,Osimertinib,2021-05-04,2023-02-06,1,23,3,1,PR,2023-04-19,Liver
+100026,100021,35888467,Docetaxel,2023-04-29,2023-06-10,2,3,3,2,SD,,
+100027,100022,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2021-04-14,2021-05-19,1,6,5,1,SD,,
+100028,100023,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2020-09-05,2020-10-10,1,6,5,1,PR,,
+100029,100024,35833518,Etoposide + Cisplatin,2023-11-17,2024-01-19,1,4,3,1,CR,2024-03-13,Bone
+100030,100024,35888467,Docetaxel,2024-03-21,2024-07-04,2,6,3,2,SD,,
+100031,100025,35886387,Cisplatin + Pemetrexed,2022-01-28,2022-04-01,1,4,2,2,NE,,
+100032,100026,35886387,Cisplatin + Pemetrexed,2022-10-28,2022-12-30,1,4,2,1,NE,,
+100033,100026,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2023-07-24,2023-09-25,2,4,3,1,PR,,Adrenal gland
+100034,100027,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-01-02,2021-03-06,1,4,3,2,SD,,
+100035,100028,35886387,Cisplatin + Pemetrexed,2021-02-12,2021-04-16,1,4,2,1,NE,,
+100036,100030,35833518,Etoposide + Cisplatin,2020-03-11,2020-05-13,1,4,3,1,PD,2020-07-07,Brain
+100037,100030,35888467,Docetaxel,2020-07-17,2020-10-09,2,5,3,2,SD,,
+100038,100031,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-03-11,2020-05-13,1,4,3,1,PR,,
+100039,100032,35886387,Cisplatin + Pemetrexed,2024-01-01,2024-03-04,1,4,2,2,NE,,
+100040,100033,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2022-11-20,2023-01-22,1,4,3,2,PD,,
+100041,100034,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2025-05-31,2025-08-02,1,4,3,1,PR,,Adrenal gland
+100042,100035,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-11-29,2022-01-31,1,4,3,1,PR,2022-05-26,Liver
+100043,100036,35833518,Etoposide + Cisplatin,2022-07-10,2022-09-11,1,4,3,1,CR,,
+100044,100037,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2024-01-03,2024-03-06,1,4,3,1,SD,2024-06-10,Brain
+100045,100037,35888467,Docetaxel,2024-06-29,2024-10-12,2,6,3,2,PD,,
+100046,100039,35886387,Cisplatin + Pemetrexed,2022-10-26,2022-12-28,1,4,2,2,NE,,
+100047,100040,35886387,Cisplatin + Pemetrexed,2023-07-16,2023-09-17,1,4,2,1,NE,,
+100048,100040,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2024-07-05,2024-09-06,2,4,3,1,PR,,Bone
+100049,100041,35886387,Cisplatin + Pemetrexed,2019-07-12,2019-09-13,1,4,2,0,NE,,
+100050,100041,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2019-12-25,2020-02-26,2,4,3,0,PR,,Bone
+100051,100042,35886387,Cisplatin + Pemetrexed,2019-10-24,2019-12-26,1,4,2,1,NE,,
+100052,100043,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2023-04-26,2023-06-28,1,4,3,1,PR,2023-07-23,Lung
+100053,100043,35888467,Docetaxel,2023-08-05,2023-08-26,2,2,3,2,PD,,
+100054,100044,35833518,Etoposide + Cisplatin,2019-07-03,2019-09-04,1,4,3,3,PD,2019-12-25,Bone
+100055,100045,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2022-06-20,2022-07-25,1,6,5,0,PR,,
+100056,100045,35828479,Pembrolizumab consolidation,2022-08-24,2023-01-11,2,6,4,0,SD,,
+100057,100046,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2022-01-06,2022-02-10,1,6,5,0,CR,,
+100058,100046,35828479,Pembrolizumab consolidation,2022-03-12,2022-07-30,2,6,4,0,SD,,
+100059,100047,35886387,Cisplatin + Pemetrexed,2023-04-15,2023-06-17,1,4,2,1,NE,,
+100060,100048,35833518,Etoposide + Cisplatin,2022-12-02,2023-02-03,1,4,3,1,CR,2023-03-08,Bone
+100061,100048,35888467,Docetaxel,2023-03-18,2023-04-08,2,2,3,2,SD,,
+100062,100050,35886387,Cisplatin + Pemetrexed,2023-04-19,2023-06-21,1,4,2,2,NE,,
+100063,100050,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2023-10-02,2023-12-04,2,4,3,2,PR,,Liver
+100064,100051,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2023-08-02,2023-09-06,1,6,5,0,PR,,
+100065,100052,35838997,Osimertinib,2024-01-15,2026-02-08,1,27,3,2,PR,,
+100066,100053,35886387,Cisplatin + Pemetrexed,2020-03-31,2020-06-02,1,4,2,0,NE,,
+100067,100054,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2021-10-10,2021-11-14,1,6,5,1,SD,,
+100068,100055,35886387,Cisplatin + Pemetrexed,2021-08-14,2021-10-16,1,4,2,1,NE,,
+100069,100056,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-05-15,2021-07-17,1,4,3,1,PR,2021-09-19,Liver
+100070,100056,35888467,Docetaxel,2021-10-01,2021-12-03,2,4,3,2,PR,,
+100071,100058,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2023-09-29,2023-11-03,1,6,5,3,PR,,
+100072,100058,35828479,Pembrolizumab consolidation,2023-12-03,2024-04-21,2,6,4,3,SD,,
+100073,100060,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2023-03-13,2023-05-15,1,4,3,1,PD,,
+100074,100062,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-03-02,2020-05-04,1,4,3,1,SD,,
+100075,100064,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2023-07-12,2023-09-13,1,4,3,1,PD,,
+100076,100065,35838997,Osimertinib,2020-08-03,2022-07-31,1,26,3,2,PR,2022-08-26,Liver
+100077,100065,35888467,Docetaxel,2022-09-12,2022-11-14,2,4,3,3,PD,,
+100078,100066,35886387,Cisplatin + Pemetrexed,2021-11-25,2022-01-27,1,4,2,2,NE,,
+100079,100067,35886387,Cisplatin + Pemetrexed,2019-08-04,2019-10-06,1,4,2,1,NE,,
+100080,100067,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-04-25,2020-06-27,2,4,3,1,PR,,Bone
+100081,100068,35833518,Etoposide + Cisplatin,2023-04-08,2023-06-10,1,4,3,1,CR,,
+100082,100069,35886387,Cisplatin + Pemetrexed,2020-08-08,2020-10-10,1,4,2,1,NE,,
+100083,100070,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2022-08-26,2022-09-30,1,6,5,0,PR,,
+100084,100071,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2021-03-14,2021-04-18,1,6,5,1,SD,,
+100085,100072,35886387,Cisplatin + Pemetrexed,2019-11-21,2020-01-23,1,4,2,0,NE,,
+100086,100072,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-10-27,2021-12-29,2,4,3,0,PR,,Bone
+100087,100073,35838997,Osimertinib,2021-07-06,2022-08-01,1,14,3,2,PR,,
+100088,100074,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2024-04-04,2024-06-06,1,4,3,2,PR,,Bone
+100089,100075,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-04-06,2020-06-08,1,4,3,0,PR,,
+100090,100076,35833518,Etoposide + Cisplatin,2021-06-08,2021-08-10,1,4,3,3,CR,2021-12-03,Bone
+100091,100077,35886387,Cisplatin + Pemetrexed,2023-01-13,2023-03-17,1,4,2,0,NE,,
+100092,100077,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2025-03-09,2025-05-11,2,4,3,0,PR,,Adrenal gland
+100093,100078,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-10-14,2021-12-16,1,4,3,1,PR,,
+100094,100079,35886387,Cisplatin + Pemetrexed,2020-07-04,2020-09-05,1,4,2,1,NE,,
+100095,100079,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2022-09-09,2022-11-11,2,4,3,1,PR,,Bone
+100096,100080,35833518,Etoposide + Cisplatin,2023-03-07,2023-05-09,1,4,3,2,CR,2023-08-04,Liver
+100097,100080,35888467,Docetaxel,2023-08-22,2023-10-03,2,3,3,3,SD,,
+100098,100081,35886387,Cisplatin + Pemetrexed,2023-10-21,2023-12-23,1,4,2,1,NE,,
+100099,100081,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2026-01-15,2026-03-19,2,4,3,1,PR,,Contralateral lung
+100100,100082,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-01-09,2020-03-12,1,4,3,0,PD,2020-04-07,Bone
+100101,100083,35886387,Cisplatin + Pemetrexed,2022-08-27,2022-10-29,1,4,2,0,NE,,
+100102,100084,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-06-15,2021-08-17,1,4,3,1,PR,,Bone
+100103,100085,35886387,Cisplatin + Pemetrexed,2021-01-02,2021-03-06,1,4,2,1,NE,,
+100104,100085,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2023-02-13,2023-04-17,2,4,3,1,PR,,Adrenal gland
+100105,100086,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-11-03,2021-01-05,1,4,3,0,PR,2021-03-19,Lung
+100106,100086,35888467,Docetaxel,2021-03-29,2021-04-19,2,2,3,1,PR,,
+100107,100087,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2021-05-04,2021-06-08,1,6,5,3,SD,,
+100108,100087,35828479,Pembrolizumab consolidation,2021-07-08,2021-11-25,2,6,4,3,SD,,
+100109,100088,35886387,Cisplatin + Pemetrexed,2021-09-29,2021-12-01,1,4,2,0,NE,,
+100110,100089,35886387,Cisplatin + Pemetrexed,2023-12-08,2024-02-09,1,4,2,1,NE,,
+100111,100089,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2026-01-27,2026-03-31,2,4,3,1,PR,,Bone
+100112,100091,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2024-07-26,2024-09-27,1,4,3,2,PR,,Adrenal gland
+100113,100092,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-03-18,2021-05-20,1,4,3,1,SD,,
+100114,100093,35886387,Cisplatin + Pemetrexed,2019-06-01,2019-08-03,1,4,2,0,NE,,
+100115,100094,35838997,Osimertinib,2019-04-08,2020-11-15,1,21,3,2,SD,,
+100116,100095,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2019-02-10,2019-03-17,1,6,5,3,CR,,
+100117,100095,35828479,Pembrolizumab consolidation,2019-04-16,2019-09-03,2,6,4,3,SD,,
+100118,100096,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2021-12-01,2022-02-02,1,4,3,0,PR,2022-03-19,Bone
+100119,100096,35888467,Docetaxel,2022-03-26,2022-07-09,2,6,3,1,PD,,
+100120,100097,35880532,Weekly Carboplatin + Paclitaxel (CCRT),2023-01-15,2023-02-19,1,6,5,1,SD,,
+100121,100097,35828479,Pembrolizumab consolidation,2023-03-21,2023-08-08,2,6,4,1,SD,,
+100122,100098,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-10-24,2020-12-26,1,4,3,2,PD,2021-02-27,Brain
+100123,100098,35888467,Docetaxel,2021-03-16,2021-06-29,2,6,3,3,SD,,
+100124,100099,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2020-07-12,2020-09-13,1,4,3,2,PR,,Liver
+100125,100100,35848967,Pembrolizumab + Carboplatin + Pemetrexed,2023-01-25,2023-03-29,1,4,3,1,PR,2023-06-26,Brain
+100126,100100,35888467,Docetaxel,2023-07-15,2023-08-05,2,2,3,2,SD,,

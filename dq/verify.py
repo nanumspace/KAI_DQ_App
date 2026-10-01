@@ -5,6 +5,7 @@
     python dq/verify.py --cohort LUNG_CANCER
     python dq/verify.py --all
     python dq/verify.py --spec v2 --cohort LUNG_CANCER
+    python dq/verify.py --spec v3 --all      # v3: 6개 코호트 + verification_summary_v3.md
 
 clean 실행 결과(오탐 0 확인)와 dirty 실행 결과(fault_manifest 대비 재현율)를 비교해
   dq/reports/verification_<COHORT>.json / .md  와  dq/reports/verification_summary.md 를 만든다.
@@ -23,8 +24,8 @@ COHORTS = ["LUNG_CANCER", "BREAST_CANCER", "COLORECTAL_CANCER", "MASLD", "DIABET
 
 def verify(cohort, spec="v1"):
     rep = os.path.join(ROOT, "dq/reports")
-    tag = "" if spec == "v1" else "v2_"
-    dirty_dir = "dirty" if spec == "v1" else "dirty_v2"
+    tag = "" if spec == "v1" else f"{spec}_"
+    dirty_dir = "dirty" if spec == "v1" else f"dirty_{spec}"
     clean = json.load(open(os.path.join(rep, f"clean_{tag}{cohort}/summary.json"), encoding="utf-8"))
     dirty = json.load(open(os.path.join(rep, f"dirty_{tag}{cohort}/summary.json"), encoding="utf-8"))
     findings = pd.read_csv(os.path.join(rep, f"dirty_{tag}{cohort}/findings.csv"), dtype=str, keep_default_na=False)
@@ -90,13 +91,14 @@ def verify(cohort, spec="v1"):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--cohort"); ap.add_argument("--all", action="store_true")
-    ap.add_argument("--spec", default="v1", choices=["v1", "v2"])
+    ap.add_argument("--spec", default="v1", choices=["v1", "v2", "v3"])
     a = ap.parse_args()
-    cohorts = (["LUNG_CANCER"] if a.spec == "v2" else COHORTS) if a.all else [a.cohort]
+    cohorts = COHORTS if a.all else [a.cohort]
+    suffix = "" if a.spec == "v1" else f"_{a.spec}"
     outs = [verify(c, a.spec) for c in cohorts]
     if a.all:
-        with open(os.path.join(ROOT, "dq/reports/verification_summary.md"), "w", encoding="utf-8") as fh:
+        with open(os.path.join(ROOT, f"dq/reports/verification_summary{suffix}.md"), "w", encoding="utf-8") as fh:
             fh.write("# 검증 프로그램 검출 성능 요약 (6개 코호트)\n\n| 코호트 | 규칙 수 | clean 오탐 | 주입 오류 | 검출 | 재현율 | 오류 유형(전부 검출/전체) |\n|---|---|---|---|---|---|---|\n")
             for o in outs:
                 fh.write(f"| {o['cohort']} | {o['dirty']['rules']} | {o['clean']['violations']} | {o['faults_total']} | {o['faults_detected']} | {o['recall']} | {o['fault_types_fully_detected']}/{o['fault_types']} |\n")
-        json.dump(outs, open(os.path.join(ROOT, "dq/reports/verification_summary.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=str)
+        json.dump(outs, open(os.path.join(ROOT, f"dq/reports/verification_summary{suffix}.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=str)

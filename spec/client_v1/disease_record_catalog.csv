@@ -1,0 +1,40 @@
+cohort,source_field,manual_required,target_table,concept_column,standard_concept_id,standard_code_hint,value_column,mapping_status,record_context
+LUNG_CANCER,diag_rgst_ymd,Y,CONDITION_OCCURRENCE,condition_concept_id,,,condition_start_date,NEEDS_DECISION,진단정보 등록일과 실제 진단일이 같은지 확인 필요
+LUNG_CANCER,histologic_diagnosis,Y,CONDITION_OCCURRENCE,condition_concept_id,,ICDO3 histology-topography,condition_concept_id,NEEDS_VOCAB,OHDSI 종양 관례: 조직형은 폐암 진단 CONDITION 행의 ICD-O-3 조직형-부위 개념으로 표현; 원천 1~7 범주는 condition_source_value에 보존; ICD-O-3 코드 유무는 검토 질문 Q05
+LUNG_CANCER,histologic_diagnosis_source_value,Y,CONDITION_OCCURRENCE,condition_concept_id,,,condition_source_value,SAME_RECORD,histologic_diagnosis와 같은 진단 행의 원천 자유 기입 명칭
+LUNG_CANCER,clinical_stage,Y,MEASUREMENT,measurement_concept_id,,Cancer Modifier c-[판수]th_AJCC/UICC-Stage-[병기],measurement_concept_id,NEEDS_ATHENA_ID,OHDSI 종양 관례: 병기 개념 자체를 measurement_concept_id로 기록; 판수는 clinical_stage_ajcc_edition(제안 C04); 소세포폐암 LD/ED는 질문 Q12; 진단과의 연결은 LUNG_CANCER 행 단위(사건 연결 열 C11 미채택)
+LUNG_CANCER,stage_iv_diagnosis_date,N,CONDITION_OCCURRENCE,condition_concept_id,,,condition_start_date,NEEDS_DECISION,IV기 최초 진단과 재발을 동일 개념으로 합치지 말 것; 진단 또는 재발 사건을 구분
+BREAST_CANCER,diag_rgst_ymd,Y,CONDITION_OCCURRENCE,condition_concept_id,,,condition_start_date,NEEDS_DECISION,등록일과 진단일의 의미 확인 필요; 로컬 카탈로그 후보 4112853 Malignant tumor of breast는 Athena 재확인 전 사용 금지
+BREAST_CANCER,menopause_status,Y,OBSERVATION,observation_concept_id,,,value_as_concept_id,NEEDS_SCHEMA_AND_VOCAB,진단 시 폐경 상태; 9월30일 OBSERVATION에는 결과 개념 열 없음; 로컬 3012687 Menstrual status는 폐경 상태와 같지 않음
+BREAST_CANCER,pregnant_at_diagnosis,Y,OBSERVATION,observation_concept_id,,,value_as_concept_id,NEEDS_SCHEMA_AND_VOCAB,진단 시 임신 여부; 결과 개념 열 추가 필요; Yes No Unknown Not Applicable 모두 별개
+BREAST_CANCER,history_of_live_birth,Y,OBSERVATION,observation_concept_id,,,value_as_concept_id,NEEDS_SCHEMA_AND_VOCAB,출산 경험 유무; 결과 개념 열 추가 필요; Live births 횟수 개념과 혼동 금지
+BREAST_CANCER,postpartum_at_diagnosis,Y,OBSERVATION,observation_concept_id,,,value_as_concept_id,NEEDS_SCHEMA_AND_VOCAB,진단 전 1년 이내 출산 여부; 결과 개념 열 추가 필요
+BREAST_CANCER,fertility_history,Y,OBSERVATION,observation_concept_id,,,value_as_concept_id,NEEDS_SCHEMA_AND_VOCAB,보존 치료 여부; 결과 개념 열 추가 필요; 실제 시행은 PROCEDURE_OCCURRENCE 또는 DRUG_EXPOSURE
+BREAST_CANCER,fertility_treatment_type,N,PROCEDURE_OCCURRENCE,procedure_concept_id,,,procedure_concept_id,NEEDS_SCHEMA_AND_VOCAB,GnRHa는 DRUG_EXPOSURE인데 현재 sact_id와 note_id가 모두 Y라 비항암 투여를 저장할 수 없음; 동결 로컬 후보 난자 4234919 배아 2213355; 혼합은 복수 행
+COLORECTAL_CANCER,diag_rgst_ymd,Y,CONDITION_OCCURRENCE,condition_concept_id,,,condition_start_date,NEEDS_DECISION,등록일과 진단일의 의미 확인 필요
+COLORECTAL_CANCER,ostm_frsn_clsf_etc_cont,N,OBSERVATION,observation_concept_id,,,value_as_string,NEEDS_VOCAB,장루 수술 사건과 연결되는 원천 기타/복수 사유
+COLORECTAL_CANCER,inap_dsnt_mtst_site_etc_cont,N,OBSERVATION,observation_concept_id,,,value_as_string,NEEDS_VOCAB,원격전이 평가 사건과 연결되는 부위 설명
+COLORECTAL_CANCER,anes_mthd_etc_cont,N,OBSERVATION,observation_concept_id,,,value_as_string,NEEDS_VOCAB,문합 수술 사건과 연결되는 방법 설명
+COLORECTAL_CANCER,afop_asmt_item_etc_cont,N,OBSERVATION,observation_concept_id,,,value_as_string,NEEDS_VOCAB,수술 후 평가 사건과 연결되는 기타 평가 항목
+COLORECTAL_CANCER,inva_dgre_nm,N,OBSERVATION,observation_concept_id,,,value_as_string,NEEDS_VOCAB,침윤도 원문; 범주형 결과 개념으로 변경하려면 OBSERVATION.value_as_concept_id 열이 필요
+COLORECTAL_CANCER,radi_rsmg_invl_yn_spnm,N,OBSERVATION,observation_concept_id,,,value_as_string,NEEDS_VOCAB,절제연 상태; 범주형 결과는 코드 매핑 검토
+COLORECTAL_CANCER,tme_qlt_dgre_spnm,N,OBSERVATION,observation_concept_id,,,value_as_string,NEEDS_VOCAB,TME 완전도; 범주형 결과는 코드 매핑 검토
+MASLD,fib4_score,N,MEASUREMENT,measurement_concept_id,,,value_as_number,NEEDS_VOCAB,FIB-4 산출 점수; 입력 원자료와 계산 결과 구별
+MASLD,apri_score,N,MEASUREMENT,measurement_concept_id,,,value_as_number,NEEDS_VOCAB,APRI 산출 점수
+MASLD,bard_score,N,MEASUREMENT,measurement_concept_id,,,value_as_number,NEEDS_VOCAB,BARD 산출 점수
+MASLD,safe_score,N,MEASUREMENT,measurement_concept_id,,,value_as_number,NEEDS_VOCAB,SAFE 산출 점수
+MASLD,liverrisk_score,N,MEASUREMENT,measurement_concept_id,,,value_as_number,NEEDS_VOCAB,LiverRisk 산출 점수
+DIABETES,condition_start_date,Y,CONDITION_OCCURRENCE,condition_concept_id,,,condition_start_date,NEEDS_VOCAB,당뇨 진단 종류를 결정해야 존재 검사가 가능
+DIABETES,condition_end_date,N,CONDITION_OCCURRENCE,condition_concept_id,,,,NEEDS_SCHEMA_CHANGE,9월30일 CONDITION_OCCURRENCE에 종료일 열이 없음; 표준 OMOP 조건 종료일 열을 추가할지 결정
+LYMPHOMA,diagnosis_date,Y,CONDITION_OCCURRENCE,condition_concept_id,,,condition_start_date,NEEDS_VOCAB,림프종 세부 진단 concept와 확진일 연결
+LYMPHOMA,cell_of_origin,Y,MEASUREMENT,measurement_concept_id,,LOINC:93783-9,value_as_concept_id,NEEDS_ATHENA_ID,DLBCL일 때만 적용할지 확인; 기존 v2에는 LOINC 코드만 존재
+LYMPHOMA,double_expressor_yn,N,MEASUREMENT,measurement_concept_id,,,value_as_concept_id,NEEDS_VOCAB,MYC/BCL2 단백 발현; 결과의 Yes/No/미상 구분
+LYMPHOMA,double_hit_triple_hit_status,N,MEASUREMENT,measurement_concept_id,,,value_as_concept_id,NEEDS_VOCAB,유전자 재배열 분류; 표준 범주 미확정이면 value_source_value 보존
+LYMPHOMA,t_14_18_result,N,MEASUREMENT,measurement_concept_id,,,value_as_concept_id,NEEDS_VOCAB,t(14;18) 결과; 검사법과 결과를 구분
+LYMPHOMA,t_11_14_result,N,MEASUREMENT,measurement_concept_id,,,value_as_concept_id,NEEDS_VOCAB,t(11;14) 결과; 검사법과 결과를 구분
+LYMPHOMA,mipi_score,N,MEASUREMENT,measurement_concept_id,,,value_as_number,NEEDS_VOCAB,MIPI 정량 점수
+LYMPHOMA,mipi_c_risk_group,N,MEASUREMENT,measurement_concept_id,,,value_as_concept_id,NEEDS_VOCAB,MIPI-c 위험군; 결과 개념 집합 필요
+LYMPHOMA,hodgkin_ips_score,N,MEASUREMENT,measurement_concept_id,,,value_as_number,NEEDS_VOCAB,호지킨 IPS 정량 점수
+LYMPHOMA,pit_score,N,MEASUREMENT,measurement_concept_id,,,value_as_number,NEEDS_VOCAB,말초 T세포 림프종 PIT 정량 점수
+LYMPHOMA,minimal_residual_disease_result,N,MEASUREMENT,measurement_concept_id,,,value_as_concept_id,NEEDS_VOCAB,검사법별 MRD 결과; 정량값이면 value_as_number와 단위 필요
+LYMPHOMA,ctdna_result,N,MEASUREMENT,measurement_concept_id,,,value_as_concept_id,NEEDS_VOCAB,ctDNA 검출 또는 정량 결과; 검사법 및 단위 필요

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>매뉴얼 수정 제안 · 의뢰사 확인 질문</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<a class="skip" href="#detail">상세 패널로 건너뛰기</a>
+<header class="top">
+  <div>
+    <h1>매뉴얼 수정 제안 · 의뢰사 확인 질문</h1>
+    <p class="sub" id="source-name"></p>
+  </div>
+  <div class="actions">
+    <a class="btn" href="/api/export.md" download>수정 제안서(.md)</a>
+    <a class="btn" href="/api/export.csv" download>CSV</a>
+    <a class="btn" href="/api/export.json" download>JSON</a>
+  </div>
+</header>
+<div class="banner notice" role="note">
+  <strong>사용 순서:</strong> ① 의뢰사 확인 질문에 답합니다(모르면 보류). ② 답에 따라 각 수정 제안이 <em>필요 / 불필요</em>로 자동 표시됩니다. ③ 제안마다 채택·채택 안 함·보류를 정합니다. 질문 답과 어긋나는 결정은 경고로 표시됩니다. 이 화면은 원본 엑셀을 직접 고치지 않습니다. 확정되면 ‘수정 제안서’를 내려받아 의뢰사에 전달합니다.
+</div>
+<div class="banner" id="warning" role="alert" hidden></div>
+<section class="summary" id="summary" aria-label="진행 현황" aria-live="polite"></section>
+<section class="filters" aria-label="필터">
+  <label>종류
+    <select id="f-kind">
+      <option value="">전체</option>
+      <option value="question">의뢰사 확인 질문</option>
+      <option value="change">매뉴얼 수정 제안</option>
+    </select>
+  </label>
+  <label>상태
+    <select id="f-state">
+      <option value="">전체</option>
+      <option value="open">미결정</option>
+      <option value="done">결정됨</option>
+      <option value="conflict">모순 있음</option>
+    </select>
+  </label>
+  <label class="grow">검색 <input type="search" id="f-q" placeholder="필드명, 시트, 내용 …" autocomplete="off"></label>
+</section>
+<main class="layout">
+  <nav class="list-pane" aria-label="항목 목록">
+    <p class="count" id="count" aria-live="polite"></p>
+    <ul id="list" class="list" role="listbox" aria-label="검토 항목"></ul>
+  </nav>
+  <section class="detail" id="detail" tabindex="-1" aria-label="항목 상세"></section>
+</main>
+<div class="status" id="status" role="status" aria-live="polite"></div>
+<script src="/app.js"></script>
+</body>
+</html>

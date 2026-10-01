@@ -1,0 +1,33 @@
+cohort,source_field,source_code,source_label,candidate_omop_concept_id,candidate_concept_name,usage,review_status
+LUNG_CANCER,histologic_diagnosis,1,Adenocarcinoma,,,condition_concept_id,UNRESOLVED
+LUNG_CANCER,histologic_diagnosis,2,Squamous cell carcinoma,,,condition_concept_id,UNRESOLVED
+LUNG_CANCER,histologic_diagnosis,3,Large cell carcinoma,,,condition_concept_id,UNRESOLVED
+LUNG_CANCER,histologic_diagnosis,4,Small cell carcinoma,,,condition_concept_id,UNRESOLVED
+LUNG_CANCER,histologic_diagnosis,5,Carcinoma tumor 계열,,,condition_concept_id,UNRESOLVED
+LUNG_CANCER,histologic_diagnosis,6,NSCLC NOS,,,condition_concept_id,UNRESOLVED
+LUNG_CANCER,histologic_diagnosis,7,기타,,,condition_concept_id,UNRESOLVED
+BREAST_CANCER,menopause_status,1,Premenopausal,,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,menopause_status,2,Postmenopausal,,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,menopause_status,3,Unknown,,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,menopause_status,4,Not Applicable (남성),,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,pregnant_at_diagnosis,1,Yes,4188539,Yes,value_as_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,pregnant_at_diagnosis,2,No,4188540,No,value_as_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,pregnant_at_diagnosis,3,Unknown,,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,pregnant_at_diagnosis,4,Not Applicable (남성),,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,history_of_live_birth,1,Yes,4188539,Yes,value_as_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,history_of_live_birth,2,No,4188540,No,value_as_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,history_of_live_birth,3,Unknown,,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,history_of_live_birth,4,Not Applicable (남성),,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,postpartum_at_diagnosis,1,Yes,4188539,Yes,value_as_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,postpartum_at_diagnosis,2,No,4188540,No,value_as_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,postpartum_at_diagnosis,3,Unknown,,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,postpartum_at_diagnosis,4,Not Applicable (남성),,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,fertility_history,1,Yes,4188539,Yes,value_as_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,fertility_history,2,No,4188540,No,value_as_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,fertility_history,3,Unknown,,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,fertility_history,4,Not Applicable (남성),,,value_as_concept_id,UNRESOLVED
+BREAST_CANCER,fertility_treatment_type,1,GnRHa,,,drug_concept_id,UNRESOLVED
+BREAST_CANCER,fertility_treatment_type,2,난자 동결,4234919,Cryopreservation of oocyte,procedure_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,fertility_treatment_type,3,배아 동결,2213355,Cryopreservation of embryo,procedure_concept_id,LOCAL_CATALOG_CANDIDATE
+BREAST_CANCER,fertility_treatment_type,4,기타,,,source_value,UNRESOLVED
+BREAST_CANCER,fertility_treatment_type,5,GnRHa+동결,,,multiple_records,UNRESOLVED

@@ -1,0 +1,5 @@
+procedure_occurrence_id,visit_occurrence_id,person_id,procedure_concept_id,procedure_source_value,procedure_date,procedure_type_concept_id
+500081,500298,500020,4179908,,2022-12-03,32817
+500082,500303,500020,4179908,,2023-11-20,32817
+500083,500307,500020,4179908,,2024-11-16,32817
+500084,500311,500020,4179908,,2025-11-09,32817

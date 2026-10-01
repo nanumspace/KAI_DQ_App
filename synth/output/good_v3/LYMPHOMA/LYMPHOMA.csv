@@ -1,0 +1,2 @@
+lymphoma_id,person_id,visit_occurrence_id,diagnosis_date,histology_icdo3_code,cell_of_origin,double_expressor_yn,double_hit_triple_hit_status,t_14_18_result,t_11_14_result,mipi_score,mipi_c_risk_group,hodgkin_ips_score,pit_score,minimal_residual_disease_result,ctdna_result
+600001,600001,600001,2022-07-04,9680/3,GCB,0,,,,,,,,Positive (1e-4),

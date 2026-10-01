@@ -1,0 +1,2 @@
+breast_cancer_id,person_id,visit_occurrence_id,diag_rgst_ymd,menopause_status,pregnant_at_diagnosis,history_of_live_birth,postpartum_at_diagnosis,fertility_history,fertility_treatment_type
+200004,200004,200075,2023-02-27,2,2,1,2,2,

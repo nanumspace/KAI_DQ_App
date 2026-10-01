@@ -1,0 +1,4 @@
+adverse_event_id,person_id,visit_occurrence_id,adverse_event_concept_id,adverse_event_start_date,severity_concept_id,causality_concept_id,is_serious_yn,seriousness_concept_id,outcome_concept_id,action_taken_concept_id
+600001,600001,600008,301794,2022-08-31,4,3,1,3,1,2
+600002,600001,600009,196523,2022-09-21,2,3,0,,1,1
+600003,600001,600021,27674,2024-09-20,1,3,0,,1,1

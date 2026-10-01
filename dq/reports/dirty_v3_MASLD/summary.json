@@ -3,39 +3,39 @@
  "run_date": "2026-09-07",
  "tables": {
   "PERSON": 100,
-  "VISIT_OCCURRENCE": 1519,
-  "PROCEDURE_OCCURRENCE": 320,
-  "DRUG_EXPOSURE": 2797,
-  "CONDITION_OCCURRENCE": 349,
-  "MEASUREMENT": 10900,
-  "OBSERVATION": 906,
-  "NOTE": 420,
+  "VISIT_OCCURRENCE": 1386,
+  "PROCEDURE_OCCURRENCE": 333,
+  "DRUG_EXPOSURE": 2338,
+  "CONDITION_OCCURRENCE": 311,
+  "MEASUREMENT": 10762,
+  "OBSERVATION": 894,
+  "NOTE": 433,
   "MASLD": 99,
-  "ADVERSE_EVENT": 17,
+  "ADVERSE_EVENT": 5,
   "DRUG_INGREDIENT_STRUCTURE": 5
  },
  "rules_total": 251,
- "rules_failed": 206,
- "rules_skipped": 8,
+ "rules_failed": 190,
+ "rules_skipped": 10,
  "rules_error": 0,
- "violations_total": 1360,
- "violations_error": 1308,
- "violations_warning": 52,
+ "violations_total": 977,
+ "violations_error": 928,
+ "violations_warning": 49,
  "by_category": {
   "Completeness": {
    "rules": 57,
    "failed": 44,
-   "violations": 51
+   "violations": 52
   },
   "Conformance": {
    "rules": 155,
-   "failed": 128,
-   "violations": 978
+   "failed": 113,
+   "violations": 662
   },
   "Plausibility": {
    "rules": 39,
-   "failed": 34,
-   "violations": 331
+   "failed": 33,
+   "violations": 263
   }
  },
  "rules": [
@@ -386,7 +386,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -400,7 +400,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -414,7 +414,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -428,7 +428,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -442,7 +442,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -455,8 +455,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 66,
-   "rows_checked": 1519,
+   "violations": 46,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -470,7 +470,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -484,7 +484,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -498,7 +498,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -512,7 +512,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -526,7 +526,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -540,7 +540,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -554,7 +554,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -568,7 +568,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -582,7 +582,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -596,7 +596,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -610,7 +610,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -624,7 +624,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 1519,
+   "rows_checked": 1386,
    "note": ""
   },
   {
@@ -652,7 +652,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -666,7 +666,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -680,7 +680,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -694,7 +694,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -708,7 +708,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -722,7 +722,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -736,7 +736,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -749,8 +749,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 10,
-   "rows_checked": 320,
+   "violations": 9,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -764,7 +764,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -778,7 +778,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -792,7 +792,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -806,7 +806,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -820,7 +820,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -834,7 +834,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -848,7 +848,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -862,7 +862,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 320,
+   "rows_checked": 333,
    "note": ""
   },
   {
@@ -888,9 +888,9 @@
    "table": "DRUG_EXPOSURE",
    "fields": "",
    "check": "columns",
-   "status": "pass",
-   "violations": 0,
-   "rows_checked": 2797,
+   "status": "fail",
+   "violations": 1,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -904,7 +904,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -918,7 +918,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -932,7 +932,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -946,7 +946,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -959,8 +959,8 @@
    "fields": "visit_occurrence_id",
    "check": "fk",
    "status": "fail",
-   "violations": 9,
-   "rows_checked": 2797,
+   "violations": 7,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -974,7 +974,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -988,7 +988,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1001,8 +1001,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 167,
-   "rows_checked": 2797,
+   "violations": 43,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1016,7 +1016,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1030,7 +1030,7 @@
    "check": "fk",
    "status": "skipped",
    "violations": 0,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": "참조 테이블 SACT 코호트에 없음"
   },
   {
@@ -1044,7 +1044,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1058,7 +1058,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1072,7 +1072,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1086,7 +1086,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1100,7 +1100,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1114,7 +1114,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1128,7 +1128,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1142,7 +1142,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1156,7 +1156,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1170,7 +1170,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1184,7 +1184,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1198,7 +1198,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1212,7 +1212,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1226,7 +1226,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1240,7 +1240,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1254,7 +1254,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1268,7 +1268,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1280,10 +1280,10 @@
    "table": "DRUG_EXPOSURE",
    "fields": "numerator_unit_concept_id",
    "check": "type",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
-   "rows_checked": 2797,
-   "note": ""
+   "rows_checked": 2338,
+   "note": "컬럼 없음: ['numerator_unit_concept_id']"
   },
   {
    "rule_id": "ST-0090",
@@ -1294,10 +1294,10 @@
    "table": "DRUG_EXPOSURE",
    "fields": "numerator_unit_concept_id",
    "check": "codelist",
-   "status": "pass",
+   "status": "skipped",
    "violations": 0,
-   "rows_checked": 2797,
-   "note": ""
+   "rows_checked": 2338,
+   "note": "컬럼 없음: ['numerator_unit_concept_id']"
   },
   {
    "rule_id": "ST-0091",
@@ -1310,7 +1310,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1324,7 +1324,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1338,7 +1338,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1352,7 +1352,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1366,7 +1366,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1380,7 +1380,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1394,7 +1394,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1408,7 +1408,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1422,7 +1422,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1436,7 +1436,7 @@
    "check": "must_be_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2797,
+   "rows_checked": 2338,
    "note": ""
   },
   {
@@ -1464,7 +1464,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1478,7 +1478,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1492,7 +1492,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1506,7 +1506,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1519,8 +1519,8 @@
    "fields": "visit_occurrence_id",
    "check": "fk",
    "status": "fail",
-   "violations": 4,
-   "rows_checked": 349,
+   "violations": 1,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1534,7 +1534,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1548,7 +1548,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1561,8 +1561,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 13,
-   "rows_checked": 349,
+   "violations": 10,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1576,7 +1576,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1590,7 +1590,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1604,7 +1604,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1618,7 +1618,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1632,7 +1632,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1646,7 +1646,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1660,7 +1660,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1674,7 +1674,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 349,
+   "rows_checked": 311,
    "note": ""
   },
   {
@@ -1700,9 +1700,9 @@
    "table": "MEASUREMENT",
    "fields": "",
    "check": "columns",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 10900,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1716,7 +1716,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1730,7 +1730,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1744,7 +1744,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1757,8 +1757,8 @@
    "fields": "visit_occurrence_id",
    "check": "fk",
    "status": "fail",
-   "violations": 33,
-   "rows_checked": 10900,
+   "violations": 17,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1772,7 +1772,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1786,7 +1786,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1799,8 +1799,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 455,
-   "rows_checked": 10900,
+   "violations": 324,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1814,7 +1814,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1828,7 +1828,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1842,7 +1842,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1856,7 +1856,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1870,7 +1870,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1884,7 +1884,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1898,7 +1898,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1912,7 +1912,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1926,7 +1926,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1940,7 +1940,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1954,7 +1954,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1968,7 +1968,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1982,7 +1982,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -1996,7 +1996,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -2010,7 +2010,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -2024,7 +2024,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -2038,7 +2038,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10900,
+   "rows_checked": 10762,
    "note": ""
   },
   {
@@ -2066,7 +2066,7 @@
    "check": "columns",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2080,7 +2080,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2094,7 +2094,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2108,7 +2108,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2122,7 +2122,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2135,8 +2135,8 @@
    "fields": "visit_occurrence_id",
    "check": "fk",
    "status": "fail",
-   "violations": 4,
-   "rows_checked": 906,
+   "violations": 2,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2150,7 +2150,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2164,7 +2164,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2177,8 +2177,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 37,
-   "rows_checked": 906,
+   "violations": 27,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2192,7 +2192,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2206,7 +2206,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2220,7 +2220,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2234,7 +2234,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2248,7 +2248,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2262,7 +2262,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2276,7 +2276,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2290,7 +2290,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2304,7 +2304,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2318,7 +2318,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2332,7 +2332,7 @@
    "check": "type",
    "status": "skipped",
    "violations": 0,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": "컬럼 없음: ['value_as_concept_id']"
   },
   {
@@ -2346,7 +2346,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2360,7 +2360,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 906,
+   "rows_checked": 894,
    "note": ""
   },
   {
@@ -2388,7 +2388,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2402,7 +2402,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2416,7 +2416,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2430,7 +2430,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2443,8 +2443,8 @@
    "fields": "visit_occurrence_id",
    "check": "fk",
    "status": "fail",
-   "violations": 3,
-   "rows_checked": 420,
+   "violations": 1,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2458,7 +2458,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2472,7 +2472,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2485,8 +2485,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 13,
-   "rows_checked": 420,
+   "violations": 12,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2500,7 +2500,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2514,7 +2514,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2528,7 +2528,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2542,7 +2542,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2556,7 +2556,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2570,7 +2570,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2584,7 +2584,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2598,7 +2598,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2612,7 +2612,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2626,7 +2626,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 420,
+   "rows_checked": 433,
    "note": ""
   },
   {
@@ -2793,7 +2793,7 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 3,
+   "violations": 4,
    "rows_checked": 99,
    "note": ""
   },
@@ -2835,7 +2835,7 @@
    "fields": "visit_occurrence_id",
    "check": "fk",
    "status": "fail",
-   "violations": 2,
+   "violations": 1,
    "rows_checked": 99,
    "note": ""
   },
@@ -2990,7 +2990,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3004,7 +3004,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3018,7 +3018,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3032,7 +3032,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3044,9 +3044,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "person_id",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3058,9 +3058,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "person_id",
    "check": "fk",
-   "status": "fail",
-   "violations": 3,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3074,7 +3074,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3086,9 +3086,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "visit_occurrence_id",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3100,9 +3100,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "visit_occurrence_id",
    "check": "fk",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3116,7 +3116,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3128,9 +3128,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "adverse_event_concept_id",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3144,7 +3144,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3156,9 +3156,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "adverse_event_start_date",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3172,7 +3172,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3184,9 +3184,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "severity_concept_id",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3198,9 +3198,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "severity_concept_id",
    "check": "codelist",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3212,9 +3212,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "causality_concept_id",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3226,9 +3226,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "causality_concept_id",
    "check": "codelist",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3240,9 +3240,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "is_serious_yn",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3256,7 +3256,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3270,7 +3270,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 17,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3282,9 +3282,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "outcome_concept_id",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3296,9 +3296,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "outcome_concept_id",
    "check": "codelist",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3310,9 +3310,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "action_taken_concept_id",
    "check": "type",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3324,9 +3324,9 @@
    "table": "ADVERSE_EVENT",
    "fields": "action_taken_concept_id",
    "check": "codelist",
-   "status": "fail",
-   "violations": 1,
-   "rows_checked": 17,
+   "status": "pass",
+   "violations": 0,
+   "rows_checked": 5,
    "note": ""
   },
   {
@@ -3367,7 +3367,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 276,
+   "violations": 209,
    "rows_checked": 0,
    "note": ""
   },
@@ -3381,7 +3381,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 11,
+   "violations": 27,
    "rows_checked": 0,
    "note": ""
   },
@@ -3437,7 +3437,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 5,
+   "violations": 6,
    "rows_checked": 0,
    "note": ""
   },
@@ -3464,8 +3464,8 @@
    "table": "ADVERSE_EVENT,PERSON",
    "fields": "",
    "check": "sql",
-   "status": "fail",
-   "violations": 1,
+   "status": "pass",
+   "violations": 0,
    "rows_checked": 0,
    "note": ""
   },

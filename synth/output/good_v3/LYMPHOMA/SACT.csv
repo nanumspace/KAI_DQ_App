@@ -1,0 +1,3 @@
+sact_id,person_id,regimen_concept_id,regimen_source_value,regimen_start_date,regimen_end_date,line_of_therapy,number_of_cycles,therapy_intent,ecog_performance_status,best_overall_response,date_of_progression,recurrence_anatomic_site
+600001,600001,35875967,R-CHOP,2022-07-15,2022-11-01,1,6,5,1,CR,2024-07-14,retroperitoneal lymph node
+600002,600001,35858725,R-GDP,2024-08-03,2024-09-17,2,3,6,2,CR,,

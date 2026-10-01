@@ -1,0 +1,2 @@
+lung_cancer_id,person_id,visit_occurrence_id,diag_rgst_ymd,histologic_diagnosis,histology_icdo3_code,primary_site_icdo3_code,histologic_diagnosis_source_value,clinical_stage,clinical_stage_ajcc_edition,stage_iv_diagnosis_date
+100003,100003,100064,2022-05-09,1,8140/3,C34.3,Adenocarcinoma,IIIA,8,2024-04-09

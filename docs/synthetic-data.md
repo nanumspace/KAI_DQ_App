@@ -1,8 +1,12 @@
 # 가상데이터
 
-> **기본 판 v3 의 생성기** 는 `synth/framework_v3.py` 와 `synth/scenarios/` 의 v3 시나리오이고, `python synth/generate.py --spec v3 --all` 로 `synth/output/clean_v3/<COHORT>/` 를 만듭니다. 오류는 `synth/inject_faults_v3.py` 가 규칙에서 오류 유형을 뽑아 `synth/output/dirty_v3/<COHORT>/`(와 `fault_manifest.csv`)에 주입합니다(코호트당 212~275건). 릴리스의 견본 데이터 zip 도 이 v3 폴더입니다. clean 은 6개 코호트 모두 위반 0, dirty 는 전부 검출됩니다.
+> **기본 판 v3**: `python dq/run_all.py --spec v3` 는 `synth/output/clean_v3/`(질환당 100명) → `dirty_v3/`(규칙에서 역으로 만든 오류 + manifest) → `good_v3/`(질환마다 **연결된 가상 환자 1명**)을 만듭니다. Good Sample은 `python synth/build_good_samples_v3.py` 로 clean 코호트에서 진단·방문·검사·약물·문서가 연결된 사례 중 생존 추적 기록을 우선 고릅니다(폐암·유방암은 수술과 전신치료가 있는 사례). 해당 환자의 모든 행과 사용 성분 참조행을 내보냅니다. 릴리스 zip에는 Good Sample의 CSV와 같은 내용의 엑셀 통합본이 들어갑니다.
 >
-> **아래 본문은 v1 생성기를 설명합니다.** v2 는 `synth/framework_v2.py` 와 `synth/scenarios/*_v2.py`(6개 코호트), `synth/inject_faults_v2.py`(규칙에서 오류 유형을 뽑는 주입기)로 같은 여정을 v2 저장 구조에 적습니다. `python synth/generate.py --spec v2 --all`. 명세에 없는 컬럼이나 값 집합에 없는 코드를 쓰면 그 자리에서 멈추고, 사망을 여정 뒤에 정하면 걸쇠에 걸립니다.
+> **용도가 다릅니다.** clean/dirty 100명 자료는 엔진의 규칙·입력 경로 회귀시험용입니다. 오류 주입은 검사 규칙을 읽고 해당 규칙을 어기는 값을 만드는 방식이므로, «주입 오류 모두 검출»은 실제 병원 데이터 오류의 재현율이 아닙니다. Good Sample은 한 명의 종단 기록이 여러 표에서 어떻게 연결되는지 보여주는 구조 예시이지, 모든 환자에게 동일한 검사·치료를 권하는 지침이나 실데이터 분포 추정치가 아닙니다. 둘 다 실제 환자 자료를 사용하지 않습니다.
+>
+> **품질 한계:** v3 샘플 생성기는 검사값(WBC·ANC), 진단·치료 조합, 판독문·병기를 서로 맞추도록 보강했지만 임상의 감수나 실제 병원 추출본 검증을 대체하지 않습니다. 병원 원천 코드(`*_source_value`)·파일 ID는 확인할 원본이 없어 꾸며 넣지 않았고, OMOP concept_id 는 기관의 Athena 어휘판과 대조해야 합니다. 병원별 결측·단위·코딩 관행·실데이터 오류율은 파일럿에서 따로 점검해야 합니다.
+>
+> **아래 본문은 v1 생성기를 설명합니다.** v2 는 `synth/framework_v2.py` 와 `synth/scenarios/*_v2.py`, `synth/inject_faults_v2.py` 를 씁니다. `python synth/generate.py --spec v2 --all`.
 
 검증 프로그램의 개발과 시험에 쓰는 데이터는 모두 가상데이터입니다. 저장소의 `synth/output/`에 들어 있는 CSV는 실제 환자와 무관하며, 같은 시드로 다시 생성하면 같은 내용이 나옵니다.
 
@@ -49,4 +53,4 @@ clean 데이터에 오류 유형 30여 종을 각 2~3건씩 주입하고, 오류
 
 ## 저장소에 포함된 데이터
 
-`synth/output/clean*/`과 `synth/output/dirty*/`(v1·v2·v3 각각, v3 는 `clean_v3`·`dirty_v3`)를 모두 저장소에 포함합니다. clean은 앱 설치본의 견본 데이터로 빌드에 필요하고, dirty와 manifest는 TypeScript 엔진의 회귀 시험(`dq-ts`의 `npm test`)이 읽습니다. 다시 만들려면 [reproduce.md](reproduce.md)를 보세요.
+`synth/output/clean*/`, `dirty*/`, `good_v3/`를 저장소에 포함합니다. v3 clean·dirty 는 엔진의 회귀 시험용이고 Good Sample은 환자 1명의 전체 방문·이벤트·질환 기록을 연결한 CSV(질환별 `README.md` 포함)입니다. 환자별 표에 해당 사건이 없으면 헤더만 있는 빈 CSV를 둡니다. DRUG_INGREDIENT_STRUCTURE는 환자 표가 아닌 성분 참조표이며 해당 환자에게 사용된 성분만 남깁니다. 다시 만들려면 [reproduce.md](reproduce.md)를 보세요.

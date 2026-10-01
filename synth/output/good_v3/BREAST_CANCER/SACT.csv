@@ -1,0 +1,4 @@
+sact_id,person_id,regimen_concept_id,regimen_source_value,regimen_start_date,regimen_end_date,line_of_therapy,number_of_cycles,therapy_intent,ecog_performance_status,best_overall_response,date_of_progression,recurrence_anatomic_site
+200004,200004,35871715,Docetaxel + Carboplatin + Trastuzumab (TCH),2023-03-23,2023-07-06,1,6,1,0,PR,,
+200005,200004,35801264,Trastuzumab,2023-09-02,2024-03-30,2,11,2,0,NE,,
+200006,200004,35895029,Letrozole,2024-04-13,2026-07-31,3,10,2,0,NE,,

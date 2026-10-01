@@ -8,8 +8,9 @@ v1 `masld.py` 의 환자 여정을 v3 테이블로 옮겼다. MASLD 특화 테�
 
 여정: 진단 외래(초음파, 동반질환, 신체계측, 혈액검사, 생활습관) → 1개월 FibroScan(일부 간생검) → 6개월 간격 추적 2~5년
 (체중 변화, 검사, 일부 F3→F4 진행, 간경변 환자 일부 간이식, 일부 사망).
-이 코호트에는 SACT 가 없으므로 DRUG_EXPOSURE.sact_id 는 항상 비어 있다. 이상사례는 semaglutide 오심,
-당뇨약 저혈당, statin 간독성.
+이 코호트에는 SACT 가 없으므로 DRUG_EXPOSURE.sact_id 는 항상 비어 있다. 이상사례는 semaglutide 오심, statin 간독성.
+저혈당은 이 코호트의 당뇨약(metformin/empagliflozin/pioglitazone/semaglutide)만으로는 근거가 없고 인슐린·SU 를 쓰지 않으므로 만들지 않는다.
+동일 약제 처방은 다음 처방 시작 전날까지로 맞춰(공백/겹침 없음) 겹치지 않는다.
 
 점수 산식
   FIB-4 = age x AST / (PLT x sqrt(ALT))                APRI = (AST/40) / PLT x 100
@@ -29,7 +30,7 @@ METFORMIN, EMPA, PIO, SEMA, STATIN, ACEI = 1503297, 45774435, 1584910, 1583722, 
 AST, ALT, PLT, HBA1C, GLU, TG, HDL, LDL = 3013721, 3006923, 3024929, 3004410, 3004501, 3022192, 3007070, 3028437
 BMI_C, HT_C, WT_C, SBP, DBP, ALB, BILI, CR = 3038553, 3036277, 3025315, 3004249, 3012888, 3020491, 3024128, 3016723
 US, TE, BIOPSY, LT = 4180938, 4260906, 4287806, 4321806
-NAUSEA, HYPOGLY, HEPATOTOX = 27674, 24609, 4055224
+NAUSEA, HEPATOTOX = 27674, 4055224
 OBS_LIFESTYLE, OBS_SMOKING = 4083515, 4275495
 NOTE_RAD, CLASS_RAD = 44814637, 36716164
 NOTE_PATH, CLASS_PATH = 44814640, 36716165
@@ -218,12 +219,13 @@ def generate(ctx: CtxV3, n=100):
               + f". FIB-4 {fib4}, APRI {apri}. Lifestyle modification counselled; FibroScan scheduled."
         ctx.note(p, index, txt, note_type=NOTE_OPD, note_class=CLASS_PROG, vid=vid)
         sema_first = None
+        m1 = ctx.days(index, ctx.randint(28, 35))
+        fu0 = ctx.days(index, ctx.randint(170, 200))
         if drugs:
-            ids = _prescribe(ctx, p, index, vid, drugs, 30)
+            ids = _prescribe(ctx, p, index, vid, drugs, (m1 - index).days)      # 다음 처방(1개월 외래) 전날까지
             sema_first = (index, ids.get(SEMA))
 
         # ---- 2) 1개월 외래: FibroScan, 90일 처방 / 간생검
-        m1 = ctx.days(index, ctx.randint(28, 35))
         if _ok(ctx, p, m1):
             mvid = ctx.visit_on(p, m1)
             if ctx.bern(0.8):
@@ -251,11 +253,11 @@ def generate(ctx: CtxV3, n=100):
         # 중간 리필 (1개월 방문 + 90일)
         if drugs and _ok(ctx, p, ctx.days(m1, 90)):
             r = ctx.days(m1, 90)
-            _prescribe(ctx, p, r, ctx.visit_on(p, r), drugs, 90)
+            _prescribe(ctx, p, r, ctx.visit_on(p, r), drugs, (fu0 - r).days)    # 첫 6개월 추적 전날까지
 
         # ---- 3) 6개월 간격 추적
         n_fu = ctx.randint(4, 10)
-        fu = ctx.days(index, ctx.randint(170, 200))
+        fu = fu0
         k, transplanted = 0, None
         while k < n_fu and fu <= ctx.today:
             # 이번 추적에서 결정되는 사망일 (이후 이벤트는 이 날짜 이전으로 제한)
@@ -283,29 +285,27 @@ def generate(ctx: CtxV3, n=100):
                 _elastography(ctx, p, fu, fvid, stage, steat)
             _record(ctx, p, fu, fvid, _lab_values(ctx, stage if transplanted is None else 1, dm, statin, full=(stage >= 3 or k % 2 == 0)))
             ctx.observation(p, fu, OBS_LIFESTYLE, vid=fvid, value_string=f"Lifestyle counselling; weight {wt} kg")
+            gap = ctx.randint(170, 200)
+            next_fu = ctx.days(fu, gap)
+            # 간이식 (간경변 진단 1년 이후): 다음 방문일이 달라지므로 처방 기간 산정 전에 결정
+            tx = None
+            if cirr_date and transplanted is None and dd is None and (fu - cirr_date).days >= 365 and ctx.bern(0.09):
+                tx_c = ctx.days(fu, ctx.randint(45, 120))
+                if ctx.days(tx_c, 14) <= ctx.today:
+                    tx = tx_c
+                    next_fu = ctx.days(tx, ctx.randint(170, 200))
             if drugs:
                 _prescribe(ctx, p, fu, fvid, drugs, 90)
                 r = ctx.days(fu, 90)
                 if _ok(ctx, p, r) and (dd is None or r < dd):
-                    _prescribe(ctx, p, r, ctx.visit_on(p, r), drugs, 90)
-            # 저혈당 이상사례 (당뇨 약물)
-            if dm and ctx.bern(0.05):
-                ae_day = ctx.days(fu, ctx.randint(5, 60))
-                if _ok(ctx, p, ae_day) and (dd is None or ae_day < dd):
-                    grade = ctx.choice([1, 2, 3], p=[0.55, 0.3, 0.15])
-                    avid = ctx.visit(p, ae_day, ER if grade >= 3 else OUTPATIENT)
-                    ctx.ae(p, ae_day, HYPOGLY, grade, vid=avid, causality=2, action=2 if grade >= 3 else 1)
-                    ctx.condition(p, ae_day, HYPOGLY, vid=avid)
-            # 간이식 (간경변 진단 1년 이후)
-            if cirr_date and transplanted is None and dd is None and (fu - cirr_date).days >= 365 and ctx.bern(0.09):
-                tx = ctx.days(fu, ctx.randint(45, 120))
-                if ctx.days(tx, 14) <= ctx.today:
-                    _transplant(ctx, p, tx, dm)
-                    transplanted = tx
-                    fu = ctx.days(tx, ctx.randint(170, 200)); k += 1
-                    continue
+                    _prescribe(ctx, p, r, ctx.visit_on(p, r), drugs, (next_fu - r).days)   # 다음 추적 전날까지
+            if tx is not None:
+                _transplant(ctx, p, tx, dm)
+                transplanted = tx
+                fu = next_fu; k += 1
+                continue
             if dd is not None:
                 _death(ctx, p, dd)
                 break
-            fu = ctx.days(fu, ctx.randint(170, 200)); k += 1
+            fu = next_fu; k += 1
         ctx.finalize_person(p)

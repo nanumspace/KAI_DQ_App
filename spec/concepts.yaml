@@ -105,6 +105,7 @@ drugs:
   1350504: {name: etoposide, category: 1, route: IV, unit: 8576, dose: 100, dose_unit_label: "mg/m2", cycle_days: 21}
   1329033: {name: bleomycin, category: 1, route: IV, unit: 8510, dose: 10, dose_unit_label: "unit/m2", cycle_days: 14}
   1319193: {name: dacarbazine, category: 1, route: IV, unit: 8576, dose: 375, dose_unit_label: "mg/m2", cycle_days: 14}
+  19008264: {name: vinblastine, category: 1, route: IV, unit: 8576, dose: 6, dose_unit_label: "mg/m2", cycle_days: 14} # Athena 대조 필요
   1305058: {name: brentuximab vedotin, category: 4, route: IV, unit: 8576, dose: 1.8, dose_unit_label: "mg/kg", cycle_days: 21}
   # 비항암제
   1503297: {name: metformin, category: null, route: PO, unit: 8576, dose: 500, dose_unit_label: "mg", cycle_days: null}

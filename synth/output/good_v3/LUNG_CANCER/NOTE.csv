@@ -1,0 +1,6 @@
+note_id,visit_occurrence_id,person_id,note_date,note_text,note_type_concept_id,note_class_concept_id,file_id
+100010,100064,100003,2022-05-09,"Chest CT (contrast). 우하엽 에 spiculated mass. Mediastinal lymphadenopathy. No distant metastasis. Impression: Lung cancer, 우하엽, cT2aN2M0. Recommend tissue confirmation.",44814637,36716164,
+100011,100064,100003,2022-05-10,"Lung, 우하엽, bronchoscopic biopsy: Adenocarcinoma, NOS. Differentiation: poorly differentiated. Pathologic TNM is not assigned on a biopsy specimen; clinical stage cT2aN2M0 is from imaging.",44814640,36716165,
+100012,100065,100003,2022-05-21,Molecular pathology (NGS panel): EGFR exon 19 deletion; ALK IHC negative; KRAS wild type; PD-L1 TPS 1%.,44814640,36716165,
+100013,100066,100003,2022-06-26,"Lung, 우하엽, lobectomy: Adenocarcinoma, NOS. Differentiation: poorly differentiated. Visceral pleural invasion: absent. Lymph nodes: 5/14 positive. Pathologic stage pT2aN2M0.",44814640,36716165,
+100014,100077,100003,2024-04-09,Chest CT: new Brain lesion suspicious for recurrence.,44814637,36716164,

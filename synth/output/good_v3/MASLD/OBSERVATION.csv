@@ -1,0 +1,8 @@
+observation_id,visit_occurrence_id,person_id,observation_concept_id,observation_source_value,observation_date,observation_type_concept_id,value_as_number,value_as_string,value_as_concept_id,unit_concept_id,value_source_value
+400774,401212,400087,4275495,,2019-10-28,32817,,Current smoker,,,
+400775,401212,400087,4083515,,2019-10-28,32817,,"Lifestyle counselling: weight loss 7-10%, Mediterranean diet",,,
+400776,401213,400087,4083515,,2019-11-26,32817,,Lifestyle counselling reinforced,,,
+400777,401218,400087,4083515,,2020-05-11,32817,,Lifestyle counselling; weight 77.6 kg,,,
+400778,401220,400087,4083515,,2020-11-09,32817,,Lifestyle counselling; weight 77.5 kg,,,
+400779,401222,400087,4083515,,2021-05-28,32817,,Lifestyle counselling; weight 78.1 kg,,,
+400780,401224,400087,4083515,,2021-11-28,32817,,Lifestyle counselling; weight 78.4 kg,,,

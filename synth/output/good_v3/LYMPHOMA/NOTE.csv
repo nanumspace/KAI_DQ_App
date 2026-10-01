@@ -1,0 +1,7 @@
+note_id,visit_occurrence_id,person_id,note_date,note_text,note_type_concept_id,note_class_concept_id,file_id
+600001,600001,600001,2022-07-06,"Lymph node, inguinal lymph node, excisional biopsy: Diffuse large B-cell lymphoma. Immunohistochemistry: CD20 positive, CD10 positive, BCL6 positive, MUM1 negative. Cell of origin by Hans algorithm: GCB. MYC/BCL2 protein co-expression absent. Ki-67 74%. Specimen adequate for ancillary studies.",44814640,36716165,
+600002,600001,600001,2022-07-05,"FDG PET/CT (baseline). Hypermetabolic lymphadenopathy in 3 nodal regions including inguinal lymph node, SUVmax 19.7. Non-contiguous extranodal involvement: liver. Impression: Lymphoma, Lugano stage IV.",44814637,36716164,
+600003,600010,600001,2022-08-25,FDG PET/CT (interim PET2). Deauville score 3. Complete metabolic response.,44814637,36716164,
+600004,600011,600001,2022-11-23,FDG PET/CT (end of treatment). Deauville score 2. Complete metabolic response.,44814637,36716164,
+600005,600017,600001,2024-07-14,FDG PET/CT: new hypermetabolic lesions (retroperitoneal lymph node). Relapsed lymphoma.,44814637,36716164,
+600006,600022,600001,2024-10-03,FDG PET/CT (end of treatment). Deauville score 3. Complete metabolic response.,44814637,36716164,

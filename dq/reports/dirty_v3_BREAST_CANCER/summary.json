@@ -3,25 +3,25 @@
  "run_date": "2026-09-07",
  "tables": {
   "PERSON": 100,
-  "VISIT_OCCURRENCE": 3594,
-  "PROCEDURE_OCCURRENCE": 1300,
-  "DRUG_EXPOSURE": 2643,
-  "CONDITION_OCCURRENCE": 475,
-  "MEASUREMENT": 10075,
+  "VISIT_OCCURRENCE": 3497,
+  "PROCEDURE_OCCURRENCE": 1272,
+  "DRUG_EXPOSURE": 2516,
+  "CONDITION_OCCURRENCE": 494,
+  "MEASUREMENT": 9746,
   "OBSERVATION": 100,
-  "NOTE": 449,
+  "NOTE": 447,
   "BREAST_CANCER": 99,
-  "ADVERSE_EVENT": 332,
-  "SACT": 184,
+  "ADVERSE_EVENT": 356,
+  "SACT": 177,
   "DRUG_INGREDIENT_STRUCTURE": 10
  },
  "rules_total": 287,
  "rules_failed": 252,
  "rules_skipped": 0,
  "rules_error": 0,
- "violations_total": 1177,
- "violations_error": 1111,
- "violations_warning": 66,
+ "violations_total": 1611,
+ "violations_error": 1544,
+ "violations_warning": 67,
  "by_category": {
   "Completeness": {
    "rules": 69,
@@ -31,12 +31,12 @@
   "Conformance": {
    "rules": 176,
    "failed": 154,
-   "violations": 771
+   "violations": 1154
   },
   "Plausibility": {
    "rules": 42,
    "failed": 41,
-   "violations": 340
+   "violations": 391
   }
  },
  "rules": [
@@ -387,7 +387,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -401,7 +401,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -415,7 +415,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -429,7 +429,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -443,7 +443,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -456,8 +456,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 84,
-   "rows_checked": 3594,
+   "violations": 161,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -471,7 +471,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -485,7 +485,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -499,7 +499,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -513,7 +513,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -527,7 +527,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -541,7 +541,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -555,7 +555,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -569,7 +569,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -583,7 +583,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -597,7 +597,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -611,7 +611,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -625,7 +625,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 3594,
+   "rows_checked": 3497,
    "note": ""
   },
   {
@@ -653,7 +653,7 @@
    "check": "columns",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -667,7 +667,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -681,7 +681,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -695,7 +695,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -709,7 +709,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -723,7 +723,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -737,7 +737,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -750,8 +750,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 35,
-   "rows_checked": 1300,
+   "violations": 40,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -765,7 +765,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -779,7 +779,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -793,7 +793,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -807,7 +807,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -821,7 +821,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -835,7 +835,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -849,7 +849,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -863,7 +863,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 1300,
+   "rows_checked": 1272,
    "note": ""
   },
   {
@@ -891,7 +891,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -905,7 +905,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -919,7 +919,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -933,7 +933,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -947,7 +947,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -961,7 +961,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 4,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -975,7 +975,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -989,7 +989,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1002,8 +1002,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 57,
-   "rows_checked": 2643,
+   "violations": 126,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1017,7 +1017,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1030,8 +1030,8 @@
    "fields": "sact_id",
    "check": "fk",
    "status": "fail",
-   "violations": 45,
-   "rows_checked": 2643,
+   "violations": 46,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1045,7 +1045,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1059,7 +1059,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1073,7 +1073,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1087,7 +1087,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1101,7 +1101,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1115,7 +1115,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1129,7 +1129,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1143,7 +1143,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1157,7 +1157,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1171,7 +1171,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1185,7 +1185,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1199,7 +1199,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1213,7 +1213,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1227,7 +1227,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1241,7 +1241,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1255,7 +1255,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1269,7 +1269,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1283,7 +1283,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1297,7 +1297,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1311,7 +1311,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1325,7 +1325,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1339,7 +1339,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1353,7 +1353,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1367,7 +1367,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1381,7 +1381,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1395,7 +1395,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1409,7 +1409,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1423,7 +1423,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 2643,
+   "rows_checked": 2516,
    "note": ""
   },
   {
@@ -1451,7 +1451,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1465,7 +1465,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1479,7 +1479,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1493,7 +1493,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1507,7 +1507,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1521,7 +1521,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1535,7 +1535,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1548,8 +1548,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 12,
-   "rows_checked": 475,
+   "violations": 25,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1563,7 +1563,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1577,7 +1577,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1591,7 +1591,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1605,7 +1605,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1619,7 +1619,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1633,7 +1633,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1647,7 +1647,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1661,7 +1661,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 475,
+   "rows_checked": 494,
    "note": ""
   },
   {
@@ -1689,7 +1689,7 @@
    "check": "columns",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1703,7 +1703,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1717,7 +1717,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1731,7 +1731,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1745,7 +1745,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 7,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1759,7 +1759,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1773,7 +1773,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1786,8 +1786,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 248,
-   "rows_checked": 10075,
+   "violations": 441,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1801,7 +1801,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1815,7 +1815,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1829,7 +1829,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1843,7 +1843,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1857,7 +1857,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1871,7 +1871,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1885,7 +1885,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1899,7 +1899,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1913,7 +1913,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1927,7 +1927,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1941,7 +1941,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1955,7 +1955,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1969,7 +1969,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1983,7 +1983,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -1997,7 +1997,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -2011,7 +2011,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -2025,7 +2025,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 10075,
+   "rows_checked": 9746,
    "note": ""
   },
   {
@@ -2375,7 +2375,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2389,7 +2389,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2403,7 +2403,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2417,7 +2417,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2431,7 +2431,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2445,7 +2445,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2459,7 +2459,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2472,8 +2472,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 14,
-   "rows_checked": 449,
+   "violations": 16,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2487,7 +2487,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2501,7 +2501,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2515,7 +2515,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2529,7 +2529,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2543,7 +2543,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2557,7 +2557,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2571,7 +2571,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2585,7 +2585,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2599,7 +2599,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -2613,7 +2613,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 449,
+   "rows_checked": 447,
    "note": ""
   },
   {
@@ -3131,7 +3131,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3145,7 +3145,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3159,7 +3159,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3173,7 +3173,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3187,7 +3187,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3200,8 +3200,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 5,
-   "rows_checked": 184,
+   "violations": 9,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3215,7 +3215,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3229,7 +3229,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3243,7 +3243,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3257,7 +3257,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3271,7 +3271,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3285,7 +3285,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3299,7 +3299,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3313,7 +3313,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3327,7 +3327,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3341,7 +3341,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3355,7 +3355,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3369,7 +3369,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3383,7 +3383,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3397,7 +3397,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3411,7 +3411,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3425,7 +3425,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3439,7 +3439,7 @@
    "check": "range",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3453,7 +3453,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3467,7 +3467,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 184,
+   "rows_checked": 177,
    "note": ""
   },
   {
@@ -3495,7 +3495,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3509,7 +3509,7 @@
    "check": "pk_unique",
    "status": "fail",
    "violations": 3,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3523,7 +3523,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3537,7 +3537,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3551,7 +3551,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3564,8 +3564,8 @@
    "fields": "person_id",
    "check": "fk",
    "status": "fail",
-   "violations": 8,
-   "rows_checked": 332,
+   "violations": 19,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3579,7 +3579,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3593,7 +3593,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3607,7 +3607,7 @@
    "check": "fk",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3621,7 +3621,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3635,7 +3635,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3649,7 +3649,7 @@
    "check": "not_null",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3663,7 +3663,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3677,7 +3677,7 @@
    "check": "not_future",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3691,7 +3691,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3705,7 +3705,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3719,7 +3719,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3733,7 +3733,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3747,7 +3747,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3761,7 +3761,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3775,7 +3775,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3789,7 +3789,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3803,7 +3803,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3817,7 +3817,7 @@
    "check": "type",
    "status": "fail",
    "violations": 1,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3831,7 +3831,7 @@
    "check": "codelist",
    "status": "fail",
    "violations": 2,
-   "rows_checked": 332,
+   "rows_checked": 356,
    "note": ""
   },
   {
@@ -3858,7 +3858,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 38,
+   "violations": 36,
    "rows_checked": 0,
    "note": ""
   },
@@ -3872,7 +3872,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 229,
+   "violations": 289,
    "rows_checked": 0,
    "note": ""
   },
@@ -3886,7 +3886,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 39,
+   "violations": 28,
    "rows_checked": 0,
    "note": ""
   },
@@ -3984,7 +3984,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 16,
+   "violations": 9,
    "rows_checked": 0,
    "note": ""
   },
@@ -4026,7 +4026,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 18,
+   "violations": 37,
    "rows_checked": 0,
    "note": ""
   },
@@ -4040,7 +4040,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 3,
+   "violations": 2,
    "rows_checked": 0,
    "note": ""
   },
@@ -4054,7 +4054,7 @@
    "fields": "",
    "check": "sql",
    "status": "fail",
-   "violations": 1,
+   "violations": 2,
    "rows_checked": 0,
    "note": ""
   }

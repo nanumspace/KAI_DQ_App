@@ -1,6 +1,6 @@
 ingredient_concept_id,smiles
-1545958,NCCCCC(NC(CCc1ccccc1)C(=O)O)C(=O)N1CCCC1C(=O)O
+,NCCCCC(NC(CCc1ccccc1)C(=O)O)C(=O)N1CCCC1C(=O)O
 NOT_A_NUMBER,CN(C)C(=N)NC(=N)N
 1545958,CC(C)c1c(C(=O)Nc2ccccc2)c(-c2ccccc2)c(-c2ccc(F)cc2)n1CCC(O)CC(O)CC(=O)O
-,CCc1ccc(CCOc2ccc(CC3SC(=O)NC3=O)cc2)nc1
+1545958,CCc1ccc(CCOc2ccc(CC3SC(=O)NC3=O)cc2)nc1
 45774435,

@@ -3,13 +3,13 @@
  "run_date": "2026-09-07",
  "tables": {
   "PERSON": 100,
-  "VISIT_OCCURRENCE": 1653,
-  "PROCEDURE_OCCURRENCE": 446,
-  "DRUG_EXPOSURE": 4298,
-  "CONDITION_OCCURRENCE": 298,
-  "MEASUREMENT": 13032,
+  "VISIT_OCCURRENCE": 1633,
+  "PROCEDURE_OCCURRENCE": 437,
+  "DRUG_EXPOSURE": 4226,
+  "CONDITION_OCCURRENCE": 293,
+  "MEASUREMENT": 12849,
   "OBSERVATION": 100,
-  "NOTE": 1650,
+  "NOTE": 1630,
   "DIABETES": 100,
   "ADVERSE_EVENT": 18,
   "DRUG_INGREDIENT_STRUCTURE": 7
@@ -386,7 +386,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -400,7 +400,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -414,7 +414,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -428,7 +428,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -442,7 +442,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -456,7 +456,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -470,7 +470,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -484,7 +484,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -498,7 +498,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -512,7 +512,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -526,7 +526,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -540,7 +540,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -554,7 +554,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -568,7 +568,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -582,7 +582,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -596,7 +596,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -610,7 +610,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -624,7 +624,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1653,
+   "rows_checked": 1633,
    "note": ""
   },
   {
@@ -652,7 +652,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -666,7 +666,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -680,7 +680,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -694,7 +694,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -708,7 +708,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -722,7 +722,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -736,7 +736,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -750,7 +750,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -764,7 +764,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -778,7 +778,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -792,7 +792,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -806,7 +806,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -820,7 +820,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -834,7 +834,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -848,7 +848,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -862,7 +862,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 446,
+   "rows_checked": 437,
    "note": ""
   },
   {
@@ -890,7 +890,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -904,7 +904,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -918,7 +918,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -932,7 +932,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -946,7 +946,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -960,7 +960,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -974,7 +974,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -988,7 +988,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1002,7 +1002,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1016,7 +1016,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1030,7 +1030,7 @@
    "check": "fk",
    "status": "skipped",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": "참조 테이블 SACT 코호트에 없음"
   },
   {
@@ -1044,7 +1044,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1058,7 +1058,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1072,7 +1072,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1086,7 +1086,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1100,7 +1100,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1114,7 +1114,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1128,7 +1128,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1142,7 +1142,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1156,7 +1156,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1170,7 +1170,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1184,7 +1184,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1198,7 +1198,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1212,7 +1212,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1226,7 +1226,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1240,7 +1240,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1254,7 +1254,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1268,7 +1268,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1282,7 +1282,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1296,7 +1296,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1310,7 +1310,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1324,7 +1324,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1338,7 +1338,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1352,7 +1352,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1366,7 +1366,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1380,7 +1380,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1394,7 +1394,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1408,7 +1408,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1422,7 +1422,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1436,7 +1436,7 @@
    "check": "must_be_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 4298,
+   "rows_checked": 4226,
    "note": ""
   },
   {
@@ -1464,7 +1464,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1478,7 +1478,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1492,7 +1492,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1506,7 +1506,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1520,7 +1520,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1534,7 +1534,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1548,7 +1548,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1562,7 +1562,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1576,7 +1576,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1590,7 +1590,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1604,7 +1604,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1618,7 +1618,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1632,7 +1632,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1646,7 +1646,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1660,7 +1660,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1674,7 +1674,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 298,
+   "rows_checked": 293,
    "note": ""
   },
   {
@@ -1702,7 +1702,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1716,7 +1716,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1730,7 +1730,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1744,7 +1744,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1758,7 +1758,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1772,7 +1772,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1786,7 +1786,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1800,7 +1800,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1814,7 +1814,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1828,7 +1828,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1842,7 +1842,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1856,7 +1856,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1870,7 +1870,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1884,7 +1884,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1898,7 +1898,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1912,7 +1912,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1926,7 +1926,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1940,7 +1940,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1954,7 +1954,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1968,7 +1968,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1982,7 +1982,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -1996,7 +1996,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -2010,7 +2010,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -2024,7 +2024,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -2038,7 +2038,7 @@
    "check": "range",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 13032,
+   "rows_checked": 12849,
    "note": ""
   },
   {
@@ -2388,7 +2388,7 @@
    "check": "columns",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2402,7 +2402,7 @@
    "check": "pk_unique",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2416,7 +2416,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2430,7 +2430,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2444,7 +2444,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2458,7 +2458,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2472,7 +2472,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2486,7 +2486,7 @@
    "check": "fk",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2500,7 +2500,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2514,7 +2514,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2528,7 +2528,7 @@
    "check": "not_future",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2542,7 +2542,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2556,7 +2556,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2570,7 +2570,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2584,7 +2584,7 @@
    "check": "not_null",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2598,7 +2598,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2612,7 +2612,7 @@
    "check": "codelist",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {
@@ -2626,7 +2626,7 @@
    "check": "type",
    "status": "pass",
    "violations": 0,
-   "rows_checked": 1650,
+   "rows_checked": 1630,
    "note": ""
   },
   {

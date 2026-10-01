@@ -45,6 +45,9 @@ if __name__ == "__main__":
         for c in cohorts:
             sh("synth/generate.py", "--spec", "v3", "--cohort", c, "--n", str(a.n), "--seed", str(20260907 + COHORTS.index(c)))
             sh("dq/engine.py", "--spec", "v3", "--cohort", c, "--data", f"synth/output/clean_v3/{c}", "--out", f"dq/reports/clean_v3_{c}", "--today", a.today)
+            clean_summary = json.load(open(os.path.join(ROOT, f"dq/reports/clean_v3_{c}/summary.json"), encoding="utf-8"))
+            if clean_summary["violations_total"] or clean_summary["rules_error"]:
+                raise SystemExit(f"{c}: clean v3 must pass all rules ({clean_summary['violations_total']} violations)")
             sh("synth/inject_faults_v3.py", "--cohort", c)
             sh("dq/engine.py", "--spec", "v3", "--cohort", c, "--data", f"synth/output/dirty_v3/{c}", "--out", f"dq/reports/dirty_v3_{c}", "--today", a.today)
             sh("dq/verify.py", "--spec", "v3", "--cohort", c)
@@ -55,6 +58,13 @@ if __name__ == "__main__":
                 s = json.load(open(os.path.join(ROOT, f"dq/reports/clean_v3_{c}/summary.json"), encoding="utf-8"))
                 counts[c] = s["tables"]
             json.dump(counts, open(os.path.join(ROOT, "synth/output/clean_v3/_counts.json"), "w", encoding="utf-8"), indent=1)
+            sh("synth/build_good_samples_v3.py")
+            for c in COHORTS:
+                sh("dq/engine.py", "--spec", "v3", "--cohort", c, "--data", f"synth/output/good_v3/{c}", "--out", f"dq/reports/good_v3_{c}", "--today", a.today)
+                good_summary = json.load(open(os.path.join(ROOT, f"dq/reports/good_v3_{c}/summary.json"), encoding="utf-8"))
+                if good_summary["violations_total"] or good_summary["rules_error"]:
+                    raise SystemExit(f"{c}: Good Sample must pass all rules ({good_summary['violations_total']} violations)")
+            sh("synth/check_samples_v3.py")
             print(open(os.path.join(ROOT, "dq/reports/verification_summary_v3.md"), encoding="utf-8").read())
         raise SystemExit(0)
     cohorts = [a.cohort] if a.cohort else COHORTS

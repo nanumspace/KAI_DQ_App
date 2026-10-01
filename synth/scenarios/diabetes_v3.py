@@ -45,7 +45,7 @@ def _journey(ctx, p):
     ht = ctx.normal(171 if male else 158, 6, 145, 195)
     bmi = ctx.normal(26.5, 3.5, 18, 42)
     wt = round(bmi * (ht / 100) ** 2, 1)
-    a1c = ctx.normal(7.6, 1.4, 5.8, 13.5)
+    a1c = ctx.normal(7.6, 1.4, 6.5, 13.5)                         # 신규 진단: HbA1c >= 6.5% (진단 기준)
     base_a1c = a1c
     smoker = ctx.bern(0.45 if male else 0.08)
     cur_smok = smoker and ctx.bern(0.6)
@@ -90,7 +90,8 @@ def _journey(ctx, p):
             a1c = max(5.0, min(14.0, round(a1c + 0.5 * (target - a1c) + float(ctx.rng.normal(0, 0.35)), 1)))
             wt = round(max(35.0, wt + float(ctx.rng.normal(-0.3 if any(d in regimen for d in (EMPAGLIFLOZIN, SEMAGLUTIDE)) else 0.1, 1.0))), 1)
             bmi = round(wt / (ht / 100) ** 2, 1)
-        fpg = ctx.normal(a1c * 25 - 45, 15, 60, 400, 0)
+        # 진단 방문은 FPG >= 126 도 함께 충족 (A1c 6.5 이상과 모순 없도록), 이후 정기 방문은 저혈당 범위(<70) 제외
+        fpg = ctx.normal(a1c * 25 - 45, 15, 126 if k == 0 else 70, 400, 0)
         sbp = ctx.normal(138 if has_htn else 124, 12, 90, 200, 0)
         dbp = ctx.normal(84 if has_htn else 76, 8, 50, 120, 0)
         ctx.measure(p, cur, A1C, a1c, vid=vid)
@@ -98,17 +99,19 @@ def _journey(ctx, p):
         ctx.measure(p, cur, SBP, sbp, vid=vid); ctx.measure(p, cur, DBP, dbp, vid=vid)
         ctx.measure(p, cur, WT, wt, vid=vid); ctx.measure(p, cur, BMI, bmi, vid=vid)
         labs = {}
+        gap = ctx.randint(84, 98)                                     # 다음 방문까지 일수 = 처방 일수 (겹침/공백 없음)
         if annual:
             shifts = {TG: 40 if has_dlp else 0, LDL: (30 if has_dlp else 0) - (25 if ATORVASTATIN in regimen else 0),
-                      CREA: 0.9 if ckd_on else 0.0, EGFR: -45 if ckd_on else 0}
-            labs = ctx.labs(p, cur, [TG, HDL, LDL, AST, ALT, CREA, EGFR], vid=vid, shifts=shifts)
+                      CREA: 0.9 if ckd_on else 0.0}
+            labs = ctx.labs(p, cur, [TG, HDL, LDL, AST, ALT, CREA], vid=vid, shifts=shifts)
+            labs[EGFR] = _egfr(labs[CREA], p.age_on(cur), male)         # eGFR 은 creatinine/나이/성별 (CKD-EPI 2021) 에서 계산
+            ctx.measure(p, cur, EGFR, labs[EGFR], vid=vid)
             ctx.procedure(p, cur, FUNDOSCOPY, vid=vid)
         added = None
         if k > 0 and a1c > 8.0 and ladder and ctx.bern(0.7):
             added = ladder.pop(0); regimen.append(added)
-        days = ctx.choice([30, 60, 90]) if k == 0 else 90
-        for c in regimen:
-            _rx(ctx, p, cur, c, days, vid)
+        days = gap
+        rx_ids = {c: _rx(ctx, p, cur, c, days, vid) for c in regimen}
         ctx.note(p, cur, _note_text(k, a1c, fpg, sbp, dbp, bmi, regimen, added, new_dx, labs, cur_smok, smoker),
                  note_type=NOTE_OPD, note_class=CLASS_PROGRESS, vid=vid)
         # 저혈당 이상사례 (SU/인슐린 사용자)
@@ -128,8 +131,13 @@ def _journey(ctx, p):
                          note_type=NOTE_OPD, note_class=CLASS_PROGRESS, vid=avid)
                 if grade >= 2 and culprit == GLIMEPIRIDE and ctx.bern(0.5):
                     regimen.remove(GLIMEPIRIDE)
-                    if SITAGLIPTIN not in regimen: regimen.append(SITAGLIPTIN)
-        cur = ctx.days(cur, ctx.randint(84, 98)); k += 1
+                    _stop_rx(ctx, rx_ids[GLIMEPIRIDE], ae_day)          # 처방 중단일 = 이상사례일 (이후 구간은 대체 약제)
+                    if SITAGLIPTIN not in regimen:
+                        regimen.append(SITAGLIPTIN)
+                        sita_day = ctx.days(ae_day, 1)
+                        if sita_day <= ctx.today and gap - (ae_day - cur).days - 1 >= 1:
+                            _rx(ctx, p, sita_day, SITAGLIPTIN, gap - (ae_day - cur).days - 1, avid)
+        cur = ctx.days(cur, gap); k += 1
     last = visit_dates[-1]
     # ---- 관해 (소수; 마지막 방문 이후가 아니라 추적 중 한 방문일을 종료일로)
     if len(visit_dates) >= 8 and ctx.bern(0.04):
@@ -153,6 +161,28 @@ def _journey(ctx, p):
                         r["quantity"] = r["dosing_number"]
                     elif r["quantity"] is not None:
                         r["quantity"] = r["days_supply"] * (r["frequency_per_day"] or 1)
+
+
+def _egfr(creatinine, age, male):
+    """CKD-EPI 2021 (race 계수 없음). 명세 plausible 범위 [1, 200] 로 제한한 정수."""
+    k, a = (0.9, -0.302) if male else (0.7, -0.241)
+    r = creatinine / k
+    v = 142 * min(r, 1.0) ** a * max(r, 1.0) ** -1.200 * 0.9938 ** age * (1.0 if male else 1.012)
+    return float(round(max(1.0, min(200.0, v))))
+
+
+def _stop_rx(ctx, did, end_date):
+    """이미 만든 DRUG_EXPOSURE 행의 종료일을 앞당기고 일수/수량을 맞춘다."""
+    for r in ctx.rows["DRUG_EXPOSURE"]:
+        if r["drug_exposure_id"] == did:
+            r["drug_exposure_end_date"] = end_date
+            r["days_supply"] = (end_date - r["drug_exposure_start_date"]).days + 1
+            if r["dosing_number"] is not None:
+                r["dosing_number"] = max(1, r["days_supply"] // 7)
+                r["quantity"] = r["dosing_number"]
+            elif r["quantity"] is not None:
+                r["quantity"] = r["days_supply"] * (r["frequency_per_day"] or 1)
+            return
 
 
 def _rx(ctx, p, date, concept, days, vid):

@@ -1,10 +1,11 @@
-// 견본 데이터 묶음 생성: synth/output/{clean,dirty}_<판>/<COHORT>/ 를 코호트·종류별 zip 으로 만든다 (판 기본 v3).
+// 견본 데이터 묶음 생성: synth/output/{clean,dirty}_<판>/<COHORT>/ 와 v3 good_v3/ 를 코호트·종류별 zip 으로 만든다.
+// good 는 연결된 가상 환자 1명의 모든 테이블을 담는다. clean/dirty 는 규칙 회귀시험용 100명이다.
 // 각 zip 에는 <TABLE>.csv, (dirty) fault_manifest.csv, README.txt 가 폴더 바로 아래에, 시트당 테이블 하나인 엑셀 파일이 excel/ 에 들어간다.
 // 앱은 끌어다 놓은 폴더의 바로 아래 파일만 읽으므로, 폴더째 넣으면 CSV 로 실행되고 엑셀은 excel/ 안의 파일 하나를 넣어 시험한다.
 // 기대 결과(규칙 수, 위반 건수)는 dq/reports/<kind>_<판>_<COHORT>/summary.json 에서 읽는다.
 //
 //   node app/build/pack-samples.cjs <출력 폴더> <버전> [판: v1|v2|v3, 기본 v3]
-//   → <출력 폴더>/SampleData-<버전>-<COHORT>-<kind>.zip ×12, SampleData-<버전>-all.zip
+//   → v3: <출력 폴더>/SampleData-<버전>-<COHORT>-<kind>.zip ×18, SampleData-<버전>-all.zip
 
 const fs = require("node:fs");
 const os = require("node:os");
@@ -23,7 +24,7 @@ const profiles = edition === "v2"
   : YAML.parse(fs.readFileSync(path.join(ROOT, edition === "v3" ? "spec/v3/cohort_profiles_v3.yaml" : "spec/cohort_profiles.yaml"), "utf8")).cohorts;
 if (edition === "v2") for (const p of Object.values(profiles)) p.tables = [...p.omop_tables, ...p.extension_tables];
 const COHORTS = Object.keys(profiles);
-const KINDS = ["clean", "dirty"];
+const KINDS = edition === "v3" ? ["clean", "dirty", "good"] : ["clean", "dirty"];
 
 function summary(kind, cohort) {
   const p = path.join(ROOT, "dq/reports", `${kind}_${edition}_${cohort}`, "summary.json");
@@ -37,9 +38,11 @@ function readme(kind, cohort, sum, manifestRows) {
   const lines = [
     `K-AI 코호트 데이터 품질검증 견본 데이터 · ${kor} (${cohort}) · ${kind} · v${version}`,
     "",
-    edition === "v3"
-      ? "이 폴더의 데이터는 v3 명세(의뢰사 9/30 매뉴얼 수정안 + 10/1 검토 결정)에서 프로그램으로 만든 가상데이터입니다. 실제 환자나 병원과 무관합니다."
-      : `이 폴더의 데이터는 ${edition} 명세에서 프로그램으로 만든 가상데이터입니다. 실제 환자나 병원과 무관합니다.`,
+    kind === "good"
+      ? "이 폴더는 가상 환자 1명의 종단 기록입니다. 표 간 참조와 일부 임상 불변식을 점검했지만 임상전문가 감수·실제 환자 자료는 아닙니다."
+      : edition === "v3"
+        ? "이 폴더는 v3 명세의 규칙 회귀시험용 100명 가상데이터입니다. 실제 환자나 병원과 무관합니다."
+        : `이 폴더의 데이터는 ${edition} 명세에서 프로그램으로 만든 가상데이터입니다. 실제 환자나 병원과 무관합니다.`,
     edition === "v2" ? "EHR 추출본과 서식 변환 결과를 이미 합쳐 놓은 모양이라 폴더 하나로 검증할 수 있습니다." : "환자 표와 질환 본표 등이 폴더 하나에 들어 있어 그대로 검증할 수 있습니다.",
     "Quality Validator 의 동작을 확인하는 용도이며, 폴더째 앱의 '검증 실행' 화면에 끌어다 놓으면 됩니다.",
     "",
@@ -49,10 +52,10 @@ function readme(kind, cohort, sum, manifestRows) {
   ];
   if (kind === "dirty") lines.push("  fault_manifest.csv     주입한 오류의 정답표 (fault_id, 유형, 테이블, 행 키, 환자 ID, 원래 값, 바꾼 값, 잡아야 할 규칙 id)");
   lines.push("");
-  if (kind === "clean") {
-    lines.push("기대 결과", "  오류를 넣지 않은 데이터입니다. 모든 규칙을 통과해 위반 0건이 나와야 합니다.");
+  if (kind === "dirty") {
+    lines.push("기대 결과", `  규칙에서 역으로 만든 오류를 ${manifestRows}건 주입했습니다(실제 병원 데이터 검출률이 아닙니다). 주입한 오류마다 해당 규칙이 발화해야 하며, 한 오류가 여러 규칙에 걸리므로 위반 건수는 주입 건수보다 많습니다.`);
   } else {
-    lines.push("기대 결과", `  규칙에서 뽑은 오류 유형 40여 종을 ${manifestRows}건 주입했습니다. 규칙이 모두 잡아야 하며, 한 오류가 여러 규칙에 걸리므로 위반 건수는 주입 건수보다 많습니다.`);
+    lines.push("기대 결과", `  ${kind === "good" ? "환자 1명의 연결된 표 예시" : "규칙 시험용 clean 데이터"}입니다. 위반 0건이 나와야 합니다.`);
   }
   if (sum) lines.push(`  검증 실행일 ${sum.run_date} 기준 참조 결과: 실행 규칙 ${sum.rules}개, 실패 규칙 ${sum.failed}개, 위반 ${sum.violations}건`);
   lines.push(
@@ -82,10 +85,20 @@ const stage = fs.mkdtempSync(path.join(os.tmpdir(), "kai-samples-"));
 const allDirs = [];
 for (const cohort of COHORTS) for (const kind of KINDS) {
   const src = path.join(ROOT, "synth/output", `${kind}${edition === "v1" ? "" : "_" + edition}`, cohort);
-  if (!fs.existsSync(src)) { console.warn(`건너뜀 (없음): ${src}`); continue; }
+  if (!fs.existsSync(src)) {
+    if (kind === "good") throw new Error(`Good Sample을 먼저 생성하세요: ${src}`);
+    console.warn(`건너뜀 (없음): ${src}`); continue;
+  }
   const name = `SampleData-${version}-${cohort}-${kind}`;
   const dir = path.join(stage, name);
   fs.mkdirSync(dir, { recursive: true });
+  if (kind === "good") {
+    const detail = path.join(src, "README.md");
+    if (!fs.existsSync(detail)) throw new Error(`Good Sample 설명이 없습니다: ${detail}`);
+    fs.copyFileSync(detail, path.join(dir, "README.md"));
+    const result = summary(kind, cohort);
+    if (!result || result.violations !== 0) throw new Error(`Good Sample 엔진 검증을 먼저 통과시키세요: ${cohort}`);
+  }
   const tables = profiles[cohort].tables;
   const wb = XLSX.utils.book_new();
   let manifestRows = 0;
@@ -109,7 +122,10 @@ const allZip = path.join(outDir, `SampleData-${version}-all.zip`);
 fs.rmSync(allZip, { force: true });
 fs.writeFileSync(path.join(stage, "README.txt"), [
   `K-AI 코호트 데이터 품질검증 견본 데이터 전체 묶음 · v${version}`, "",
-  "6개 코호트 × clean(오류 없음)/dirty(오류 주입) 12개 폴더입니다. 폴더마다 README.txt 에 파일 구성과 기대 결과가 있습니다.",
+  edition === "v3"
+    ? "6개 코호트 × clean/dirty(100명 규칙 시험용) + good(가상 환자 1명, 연결된 임상 흐름) = 18개 폴더입니다."
+    : "6개 코호트 × clean(오류 없음)/dirty(오류 주입) 12개 폴더입니다.",
+  "폴더마다 README.txt 에 파일 구성과 기대 결과가 있습니다.",
   "모두 가상데이터이며 실제 환자와 무관합니다. 폴더 하나를 앱의 '검증 실행' 화면에 끌어다 놓으면 됩니다.", "",
   "https://github.com/nanumspace/KAI_DQ_App", ""].join("\n"));
 execFileSync("zip", ["-r", "-q", "-X", allZip, "README.txt", ...allDirs], { cwd: stage });

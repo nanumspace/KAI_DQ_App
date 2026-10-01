@@ -23,11 +23,11 @@ LABEL = {DLBCL: "Diffuse large B-cell lymphoma", HL: "Classical Hodgkin lymphoma
          PTCL: "Peripheral T-cell lymphoma, NOS", FL: "Follicular lymphoma", MZL: "Marginal zone lymphoma"}
 NODAL_SITES = ["cervical lymph node", "axillary lymph node", "mediastinal lymph node", "inguinal lymph node",
                "retroperitoneal lymph node", "abdominal lymph node"]
-EXTRANODAL = ["stomach", "bone", "liver", "lung", "skin", "tonsil", "small intestine", "kidney"]
+EXTRANODAL = ["stomach", "bone", "liver", "lung", "skin", "bone marrow", "small intestine", "kidney"]
 R_CHOP = [1314273, 1310317, 1338512, 1308290, 1551099]
 CHOP = [1310317, 1338512, 1308290, 1551099]
 R_CVP = [1314273, 1310317, 1308290, 1551099]
-ABVD = [1338512, 1329033, 1319193]
+ABVD = [1338512, 1329033, 19008264, 1319193]    # doxorubicin, bleomycin, vinblastine, dacarbazine
 R_GDP = [1314273, 1314924, 1518254, 1397141]
 GDP = [1314924, 1518254, 1397141]
 DEX4 = {1518254: 4}                       # 덱사메타손은 사이클당 4일
@@ -36,15 +36,16 @@ RESP_OF_DS = {1: "CR", 2: "CR", 3: "CR", 4: "PR", 5: "PD"}
 
 PATH_REPORT = ("Lymph node, {site}, excisional biopsy: {hist}. Immunohistochemistry: {ihc}. Ki-67 {ki67}%. "
                "Specimen adequate for ancillary studies.")
-PET_REPORT = ("FDG PET/CT (baseline). Hypermetabolic lymphadenopathy in {n} nodal regions, SUVmax {suv}. {extra} "
-              "Impression: Lymphoma, Lugano stage {stage}.")
+PET_REPORT = ("FDG PET/CT (baseline). Hypermetabolic lymphadenopathy in {n} nodal region{s} including {primary}{dist}, "
+              "SUVmax {suv}. {extra} Impression: Lymphoma, Lugano stage {stage}.")
 RESP_REPORT = "FDG PET/CT ({tp}). Deauville score {ds}. {resp}."
-IHC_TXT = {DLBCL: "CD20 positive, CD10 {cd10}, BCL6 positive, MUM1 {mum1}",
-           HL: "CD30 positive, CD15 positive, PAX5 weak positive, CD20 negative",
-           MCL: "CD20 positive, CD5 positive, Cyclin D1 positive, SOX11 positive",
+# DLBCL(Hans 알고리즘, 세포기원과 일치)·외투세포(cyclin D1 은 t(11;14) 결과와 일치)는 _ihc_text 가 만든다.
+IHC_TXT = {HL: "CD30 positive, CD15 positive, PAX5 weak positive, CD20 negative",
            PTCL: "CD3 positive, CD4 positive, CD5 partial loss, CD20 negative",
            FL: "CD20 positive, CD10 positive, BCL2 positive, BCL6 positive",
            MZL: "CD20 positive, CD5 negative, CD10 negative, CD23 negative"}
+LABEL_BY_CODE = {"9684/3": "Diffuse large B-cell lymphoma, immunoblastic",
+                 "9688/3": "T-cell/histiocyte-rich large B-cell lymphoma"}
 
 
 def generate(ctx: CtxV3, n=100):
@@ -80,20 +81,35 @@ def generate(ctx: CtxV3, n=100):
         ctx.procedure(p, pet_day, 4305790, vid=dx_vid)
         ctx.procedure(p, bm_day, 4023083, vid=dx_vid)
         ki67 = int(ctx.normal(70 if (dlbcl or ptcl) else (25 if mcl else (12 if (fl or mzl) else 40)), 12, 3, 99, 0))
-        cd10 = "positive" if ctx.bern(0.45) else "negative"
-        mum1 = "positive" if cd10 == "negative" else "negative"
-        ctx.note(p, bm_day, PATH_REPORT.format(site=primary, hist=LABEL[sub], ki67=ki67,
-                                               ihc=IHC_TXT[sub].format(cd10=cd10, mum1=mum1)),
-                 note_type=44814640, note_class=36716165, vid=dx_vid)
-        suv = ctx.normal(18 if (dlbcl or hl or ptcl) else 9, 5, 3, 40)
-        extranodal = ctx.bern(0.4 if adv else 0.1)
-        ctx.note(p, pet_day, PET_REPORT.format(n=ctx.randint(1, 4) if not adv else ctx.randint(4, 9), suv=suv, stage=stage,
-                                               extra=f"Extranodal involvement: {ctx.choice(EXTRANODAL)}." if extranodal else "No extranodal involvement."),
-                 vid=dx_vid)
         leuk = labs[3010813]
         ldh_high = labs[3022250] > 250
+        extranodal = stage == "IV"            # Lugano IV 만 비인접 결외 침범이 있다 (I~III 은 결절 영역으로만 기술)
+        fields = _subtype_fields(ctx, sub, p.age_at_index, ecog, ldh_high, leuk, ki67, adv, extranodal)
+        ctx.note(p, bm_day, PATH_REPORT.format(site=primary, hist=LABEL_BY_CODE.get(code, LABEL[sub]), ki67=ki67,
+                                               ihc=_ihc_text(ctx, sub, fields)),
+                 note_type=44814640, note_class=36716165, vid=dx_vid)
+        suv = ctx.normal(18 if (dlbcl or hl or ptcl) else 9, 5, 3, 40)
+        if stage == "I":
+            n_reg, dist = 1, ""
+        elif stage == "II":
+            n_reg, dist = ctx.randint(2, 3), ", all on the same side of the diaphragm"
+        elif stage == "III":
+            n_reg, dist = ctx.randint(4, 9), ", on both sides of the diaphragm"
+        else:
+            n_reg, dist = ctx.randint(2, 9), ""
+        if extranodal:
+            sites = [ctx.choice(EXTRANODAL)]
+            if ctx.bern(0.4):
+                other = ctx.choice(EXTRANODAL)
+                if other not in sites:
+                    sites.append(other)
+            extra = f"Non-contiguous extranodal involvement: {', '.join(sites)}."
+        else:
+            extra = "No extranodal involvement."
+        ctx.note(p, pet_day, PET_REPORT.format(n=n_reg, s="" if n_reg == 1 else "s", primary=primary, dist=dist, suv=suv,
+                                               stage=stage, extra=extra), vid=dx_vid)
         row = ctx.disease_row(p, dx_vid, diagnosis_date=index, histology_icdo3_code=code)
-        row.update(_subtype_fields(ctx, sub, p.age_at_index, ecog, ldh_high, leuk, ki67, adv, extranodal))
+        row.update(fields)
 
         # ---- 2) 1차 치료
         last = ctx.days(index, 5)
@@ -204,6 +220,25 @@ def _subtype_fields(ctx, sub, age, ecog, ldh_high, leuk, ki67, adv, extranodal):
     if sub in (DLBCL, HL, PTCL) and ctx.bern(0.25):
         f["ctdna_result"] = ctx.choice(["Not detected", "Detected"], p=[0.45, 0.55])
     return f
+
+
+def _ihc_text(ctx, sub, f):
+    """면역염색 소견. DLBCL 은 Hans 알고리즘 결과가 cell_of_origin 과 같고, 외투세포는 cyclin D1 이 t(11;14) 와 같다."""
+    if sub == DLBCL:
+        coo = f["cell_of_origin"]
+        if coo == "unclassifiable":
+            return "CD20 positive; CD10, BCL6 and MUM1 not interpretable (limited viable tissue), Hans algorithm cannot classify"
+        if coo == "GCB":      # CD10 양성, 또는 CD10 음성이면서 BCL6 양성·MUM1 음성
+            cd10, bcl6, mum1 = ("positive", "positive", "negative") if ctx.bern(0.7) else ("negative", "positive", "negative")
+        else:                 # CD10 음성이면서 MUM1 양성 (BCL6 무관)
+            cd10, bcl6, mum1 = "negative", ctx.choice(["positive", "negative"]), "positive"
+        de = "present (double-expressor)" if f.get("double_expressor_yn") else "absent"
+        return (f"CD20 positive, CD10 {cd10}, BCL6 {bcl6}, MUM1 {mum1}. Cell of origin by Hans algorithm: {coo}. "
+                f"MYC/BCL2 protein co-expression {de}")
+    if sub == MCL:
+        cyclin = "positive" if f["t_11_14_result"] == "Positive" else "negative"
+        return f"CD20 positive, CD5 positive, Cyclin D1 {cyclin}, SOX11 positive"
+    return IHC_TXT[sub]
 
 
 def _followups(ctx, p, start, until):

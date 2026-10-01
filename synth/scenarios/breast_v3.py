@@ -43,7 +43,7 @@ BX_REPORT = ("Breast, {lat}, {loc}, ultrasound-guided core needle biopsy: {hist}
 CT_REPORT = ("CT chest, abdomen and pelvis with contrast. {lat} breast mass {size} cm. {node}. {met} "
              "Impression: breast cancer, c{t}{n}{m}.")
 SP_REPORT = ("Breast, {lat}, {op}{slnb}: {hist}. Tumor size {size} cm. Lymphovascular invasion: {lvi}. "
-             "Resection margins: {margin}. Sentinel lymph nodes: {psln}/{tsln} positive. Pathologic stage {t}{n}M0.{resp}")
+             "Resection margins: {margin}. Lymph nodes: {psln}/{tsln} positive. Pathologic stage {t}{n}M0.{resp}")
 
 
 def _plan(ctx, age, gender):
@@ -178,14 +178,17 @@ def _surg_path(ctx, p, st, op_day, nact, bcs, salvage=False):
             pT, psize = "y" + t, round(ctx.rand(*TSIZE[t]), 1)
             pN = "y" + ("N0" if (N == "N0" or ctx.bern(0.5)) else ctx.choice(["N1", "N2"], p=[0.7, 0.3]))
     else:
-        t = T if ctx.bern(0.8) else ctx.choice(["T1b", "T1c", "T2"])
+        t = "Tis" if st["hist"] == "DCIS" else (T if ctx.bern(0.8) else ctx.choice(["T1b", "T1c", "T2"]))
         pT, psize = t, round(ctx.rand(*TSIZE[t]), 1)
         if st["hist"] == "DCIS":
             pN = "N0" if st["slnb"] else "NX"
         else:
             pN = N if ctx.bern(0.75) else ctx.choice(["N0", "N1", "N2"], p=[0.5, 0.35, 0.15])
     nn = pN.lstrip("y")
-    if st["slnb"]:
+    if nn == "N2":                      # pN2 = 양성 림프절 4~9개 → 전액와 림프절 수 기준
+        tot = ctx.randint(6, 14)
+        pos = ctx.randint(4, min(9, tot))
+    elif st["slnb"]:
         tot = ctx.randint(1, 5)
         pos = 0 if nn == "N0" else ctx.randint(1, min(3, tot))
     else:
@@ -359,6 +362,7 @@ def generate(ctx: CtxV3, n=100):
         surgery_day = None
         last_adj_end = stage_day          # 내분비치료를 제외한 마지막 국소/전신 치료 종료일
         chemo_end = None
+        prior_bcs = False
         recur_day = None
         if M == "M1":
             start = ctx.days(stage_day, ctx.randint(7, 21))
@@ -393,6 +397,7 @@ def generate(ctx: CtxV3, n=100):
                 surgery_day = ctx.days(index, ctx.randint(21, 45))
             if surgery_day <= ctx.today:
                 svid, bcs, los = _surgery(ctx, p, st, surgery_day, nact)
+                prior_bcs = bcs
                 spath_day, pN, pcr = _surg_path(ctx, p, st, surgery_day, nact, bcs)
                 nn = pN.lstrip("y")
                 last_adj_end = ctx.days(surgery_day, los)
@@ -458,7 +463,7 @@ def generate(ctx: CtxV3, n=100):
                 start = ctx.days(fu, ctx.randint(7, 21))
                 if not distant and site_nm.startswith("Ipsilateral"):
                     sd = ctx.days(fu, ctx.randint(14, 28))
-                    if sd <= ctx.today:
+                    if sd <= ctx.today and prior_bcs:       # 이전 전절제술 후 흉벽 재발에는 전절제술을 반복하지 않음
                         _surgery(ctx, p, st, sd, False, salvage=True)
                         _surg_path(ctx, p, st, sd, False, False, salvage=True)
                         start = ctx.days(sd, ctx.randint(30, 45))

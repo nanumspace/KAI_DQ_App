@@ -1,0 +1,2 @@
+sact_id,person_id,regimen_concept_id,regimen_source_value,regimen_start_date,regimen_end_date,line_of_therapy,number_of_cycles,therapy_intent,ecog_performance_status,best_overall_response,date_of_progression,recurrence_anatomic_site
+300001,300001,35877558,FOLFOX + Bevacizumab,2021-09-10,2022-01-28,1,11,3,0,PD,,Bone

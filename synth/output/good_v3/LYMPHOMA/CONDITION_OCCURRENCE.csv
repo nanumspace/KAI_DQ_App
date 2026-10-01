@@ -1,0 +1,5 @@
+condition_occurrence_id,visit_occurrence_id,person_id,condition_concept_id,condition_source_value,condition_start_date,condition_type_concept_id
+600001,600001,600001,4300704,,2022-07-04,32817
+600002,600008,600001,301794,,2022-08-31,32817
+600003,600009,600001,196523,,2022-09-21,32817
+600004,600021,600001,27674,,2024-09-20,32817

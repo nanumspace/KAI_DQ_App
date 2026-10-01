@@ -9,7 +9,7 @@
   },
   "dirty": {
    "rules": 287,
-   "violations": 936,
+   "violations": 935,
    "failed_rules": 251
   },
   "faults_total": 275,
@@ -256,7 +256,7 @@
   },
   "dirty": {
    "rules": 287,
-   "violations": 1177,
+   "violations": 1611,
    "failed_rules": 252
   },
   "faults_total": 272,
@@ -672,11 +672,11 @@
   },
   "dirty": {
    "rules": 251,
-   "violations": 1360,
-   "failed_rules": 206
+   "violations": 977,
+   "failed_rules": 190
   },
-  "faults_total": 218,
-  "faults_detected": 218,
+  "faults_total": 207,
+  "faults_detected": 207,
   "recall": 1.0,
   "fault_types": 22,
   "fault_types_fully_detected": 22,
@@ -732,8 +732,8 @@
    },
    {
     "fault_type": "FK_BROKEN",
-    "n": 17,
-    "detected": 17,
+    "n": 15,
+    "detected": 15,
     "recall": 1.0
    },
    {
@@ -798,8 +798,8 @@
    },
    {
     "fault_type": "TYPE_BAD",
-    "n": 81,
-    "detected": 81,
+    "n": 72,
+    "detected": 72,
     "recall": 1.0
    },
    {
@@ -824,8 +824,8 @@
    },
    {
     "category": "Conformance",
-    "n": 125,
-    "detected": 125,
+    "n": 114,
+    "detected": 114,
     "recall": 1.0
    },
    {
@@ -835,12 +835,7 @@
     "recall": 1.0
    }
   ],
-  "collateral_rules": [
-   "ST-0358",
-   "ST-0360",
-   "ST-0365",
-   "ST-0367"
-  ]
+  "collateral_rules": []
  },
  {
   "cohort": "DIABETES",
@@ -852,7 +847,7 @@
   },
   "dirty": {
    "rules": 247,
-   "violations": 1539,
+   "violations": 1348,
    "failed_rules": 202
   },
   "faults_total": 212,
@@ -1039,7 +1034,7 @@
   },
   "dirty": {
    "rules": 281,
-   "violations": 1246,
+   "violations": 1288,
    "failed_rules": 245
   },
   "faults_total": 266,

@@ -124,7 +124,7 @@ class CtxV3(CtxV1):
         for cyc in range(cycles):
             if (p.death_date is not None and cur > p.death_date) or cur > self.today:
                 break
-            vid = self.visit(p, cur, INPATIENT, los=2) if (inpatient_first and cyc == 0) else self.visit_on(p, cur)
+            vid = self.visit(p, cur, INPATIENT, los=min(2, (self.today - cur).days)) if (inpatient_first and cyc == 0) else self.visit_on(p, cur)
             cycle_dates.append(cur)
             for c in drug_concepts:
                 dc = CONCEPTS["drugs"][c]
@@ -137,8 +137,8 @@ class CtxV3(CtxV1):
                     if dc["name"] == "capecitabine": days = 14
                 else:
                     days = 1
-                if p.death_date is not None and self.days(cur, days - 1) > p.death_date:
-                    days = max(1, (p.death_date - cur).days + 1)
+                last = min(self.today, p.death_date) if p.death_date is not None else self.today
+                days = min(days, (last - cur).days + 1)
                 _, e = self.drug(p, cur, c, days, vid=vid, sact_id=sid, freq=1 if dc["route"] == "PO" else None,
                                  interval=None if dc["route"] == "PO" else cd, number=None if dc["route"] == "PO" else 1)
                 ends.append(e)
@@ -186,6 +186,33 @@ class CtxV3(CtxV1):
             is_serious_yn=1 if serious else 0, seriousness_concept_id=(1 if grade == 5 else 3) if serious else None,
             outcome_concept_id=outcome, action_taken_concept_id=action))
         return aid
+
+    # v3 전용 하한: AST/ALT 정확히 0, 크레아티닌 0.1 같은 비현실 값을 막는다 (v1/v2 CtxV1.labs 는 건드리지 않음).
+    LAB_FLOOR = {3013721: 8.0, 3006923: 6.0, 3016723: 0.5}
+    WBC, ANC = 3010813, 3017732
+
+    def labs(self, p, date, concepts, vid=None, shifts=None):
+        """CtxV1.labs 와 같은 시그니처. 같은 날 WBC/ANC 는 종속 추출: WBC 를 먼저 뽑고 ANC = WBC x 호중구 분획
+        (분획 평균은 ANC shift 만큼 낮아짐), 따라서 항상 0.1 <= ANC <= WBC."""
+        shifts = shifts or {}
+        out = {}
+        for c in concepts:
+            nd = 2 if c in (3016723, 3004410, 3024128, 3020491) else 1
+            if c == self.WBC:
+                out[c] = self.lab_value(c, shifts.get(c, 0.0), lo=0.3, nd=nd)
+            elif c == self.ANC and self.WBC in concepts:
+                continue                                           # WBC 이후 파생
+            else:
+                out[c] = self.lab_value(c, shifts.get(c, 0.0), lo=self.LAB_FLOOR.get(c), nd=nd)
+        if self.ANC in concepts:
+            if self.WBC in out:
+                frac = self.normal(0.60 + 0.05 * shifts.get(self.ANC, 0.0), 0.10, 0.05, 0.90, 3)
+                out[self.ANC] = round(min(out[self.WBC], max(0.1, out[self.WBC] * frac)), 1)
+            else:
+                out[self.ANC] = self.lab_value(self.ANC, shifts.get(self.ANC, 0.0), lo=0.1)
+        for c in concepts:                                         # 요청 순서대로 기록
+            self.measure(p, date, c, out[c], vid=vid)
+        return {c: out[c] for c in concepts}
 
     def monitor(self, p, cycle_dates, drugs, ae_p=0.45, labs=(3000963, 3010813, 3017732, 3024929, 3016723, 3013721, 3006923),
                 ae_pool=((27674, 0.2), (301794, 0.2), (439777, 0.15), (4223659, 0.15), (196523, 0.1), (4166735, 0.1), (140214, 0.05), (4304213, 0.05))):

@@ -259,15 +259,18 @@ def generate(ctx: CtxV3, n=100):
                 _pathology(ctx, p, row, sd, site_nm, rectal, kcd, hist_cd, grade, t, nn, "M1", False, size)
                 last = dsch
             s = ctx.days(last, ctx.randint(10, 25))
+            if surgery_day is not None:                 # bevacizumab 병용 요법은 대수술 후 최소 28일 뒤 시작
+                s = max(s, ctx.days(surgery_day, 28))
             if ecog <= 2:
                 drugs = [1320011, 955632, 1397599]
                 ncy = _cap_cycles(ctx, s, ctx.randint(8, 12), 14)
                 if ncy > 0:
+                    resp1 = ctx.choice(["PR", "SD", "PD"], p=[0.5, 0.35, 0.15])
                     sid, e, cyc = ctx.sact(p, "FOLFOX + Bevacizumab", drugs, s, ncy, 3, ecog=ecog,
-                                           response=ctx.choice(["PR", "SD", "PD"], p=[0.5, 0.35, 0.15]), cycle_days=14)
+                                           response=resp1, cycle_days=14)
                     had_oxali = True; last = e
                     ctx.monitor(p, cyc, drugs, ae_pool=_pool(drugs))
-                    if ctx.bern(0.55):
+                    if resp1 == "PD" or ctx.bern(0.55):      # 최선반응이 PD 이면 진행 기록이 반드시 있어야 함
                         pd_day = ctx.days(e, ctx.randint(20, 120))
                         if pd_day <= ctx.today:
                             pvid = ctx.visit_on(p, pd_day)

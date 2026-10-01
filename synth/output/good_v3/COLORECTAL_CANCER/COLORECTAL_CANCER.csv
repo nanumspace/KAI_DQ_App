@@ -1,0 +1,2 @@
+colorectal_cancer_id,person_id,visit_occurrence_id,diag_rgst_ymd,ostm_frsn_clsf_etc_cont,inap_dsnt_mtst_site_etc_cont,anes_mthd_etc_cont,afop_asmt_item_etc_cont,inva_dgre_nm,radi_rsmg_invl_yn_spnm,tme_qlt_dgre_spnm
+300001,300001,300001,2019-06-25,,,Intracorporeal side-to-side stapled anastomosis,,Subserosa / perirectal fat,침범 없음,

@@ -1,0 +1,8 @@
+adverse_event_id,person_id,visit_occurrence_id,adverse_event_concept_id,adverse_event_start_date,severity_concept_id,causality_concept_id,is_serious_yn,seriousness_concept_id,outcome_concept_id,action_taken_concept_id
+100016,100003,100066,437663,2022-06-23,1,3,0,,1,1
+100017,100003,100071,4223659,2022-09-12,1,3,0,,1,1
+100018,100003,100094,4223659,2024-11-16,2,3,0,,1,1
+100019,100003,100095,301794,2024-12-08,3,3,1,3,1,2
+100020,100003,100096,439777,2025-04-29,1,3,0,,1,1
+100021,100003,100097,4166735,2025-06-01,2,3,0,,1,1
+100022,100003,100098,27674,2025-06-25,1,3,0,,1,1

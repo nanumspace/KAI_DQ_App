@@ -1,0 +1,7 @@
+note_id,visit_occurrence_id,person_id,note_date,note_text,note_type_concept_id,note_class_concept_id,file_id
+300001,300001,300001,2019-06-25,"Colonoscopy: Ulceroinfiltrative mass at Ascending colon, 4.7 cm in size, occupying about 79% of the lumen. Multiple biopsies taken. Impression: Ascending colon cancer, r/o adenocarcinoma. Biopsy pending.",32831,36716177,
+300002,300001,300001,2019-06-28,"Colon, Ascending colon, endoscopic biopsy: Adenocarcinoma, NOS, moderately differentiated.",44814640,36716165,
+300003,300002,300001,2019-06-30,"CT abdomen and pelvis (contrast). Wall thickening of the ascending colon (4.7 cm) with no significant regional lymphadenopathy. No distant metastasis. Impression: ascending colon cancer, c300.",44814637,36716164,
+300004,300003,300001,2019-08-02,Discharge summary. Right hemicolectomy (laparoscopic) on 2019-07-23 for ascending colon cancer. EBL 225 mL. Postoperative course uneventful. Discharged on POD 10.,44814641,36716213,
+300005,300003,300001,2019-07-31,"Colon, resection: Adenocarcinoma, NOS, moderately differentiated. Tumor size 3.6 cm, gross type ulceroinfiltrative. Depth of invasion: Subserosa / perirectal fat. Lymph nodes: 0/32 positive. Pathologic stage pT3N0M0.",44814640,36716165,
+300006,300007,300001,2021-08-14,"CT abdomen and pelvis: new bone lesion, suspicious for recurrence.",44814637,36716164,

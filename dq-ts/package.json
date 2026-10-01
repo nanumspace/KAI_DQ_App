@@ -1,6 +1,6 @@
 {
   "name": "kai-dq-engine",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "K-AI 코호트 데이터 품질 검증 엔진 (TypeScript 이식)",
   "license": "Apache-2.0",

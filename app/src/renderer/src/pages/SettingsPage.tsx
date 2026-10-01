@@ -11,6 +11,7 @@ export function SettingsPage() {
   const [err, setErr] = useState<string | null>(null);
 
   const refresh = () => {
+    window.dispatchEvent(new Event("kai:config"));
     api.getConfig().then((c) => { setCfg(c); setToday(c.defaultToday ?? ""); }).catch((e) => setErr(String(e)));
     api.listCohorts().then(setCohorts).catch((e) => setErr(String(e)));
   };
@@ -21,7 +22,7 @@ export function SettingsPage() {
     if (!d) return;
     try { setCfg(await api.setConfig({ root: d })); setMsg("명세 위치를 저장했습니다."); refresh(); } catch (e) { setErr(String(e)); }
   };
-  const saveSpec = async (v: "v1" | "v2") => {
+  const saveSpec = async (v: "v1" | "v2" | "v3") => {
     try { setCfg(await api.setConfig({ specVersion: v })); setMsg(`${v} 명세로 바꿨습니다. 검증 실행 화면에서 코호트를 다시 고르세요.`); refresh(); }
     catch (e) { setErr(String(e)); }
   };
@@ -51,14 +52,15 @@ export function SettingsPage() {
         <Card title="명세 판" sub="어느 저장 구조로 검증할지 고릅니다. 바꾸면 코호트 · 규칙 · 견본 데이터가 함께 바뀝니다">
           <div className="form">
             <label>판
-              <select value={cfg.specVersion} onChange={(e) => saveSpec(e.target.value as "v1" | "v2")}>
-                <option value="v2">v2 — OMOP CDM 5.4 + K-AI 확장 (기본)</option>
+              <select value={cfg.specVersion} onChange={(e) => saveSpec(e.target.value as "v1" | "v2" | "v3")}>
+                <option value="v3">v3 — 의뢰사 9/30 매뉴얼 수정안 (기본)</option>
+                <option value="v2">v2 — OMOP CDM 5.4 + K-AI 확장</option>
                 <option value="v1">v1 — 질환별 단일 표 (옛 제출본용)</option>
               </select>
             </label>
             <p className="muted" style={{ fontSize: 12.5, lineHeight: 1.6 }}>
-              v2 는 환자·방문·검사를 OMOP 표준 표에 앉히고, 서식으로 받는 항목만 K-AI 확장 표에 둡니다.
-              v1 로 이미 낸 데이터를 다시 볼 때만 v1 을 고르세요.
+              v3 는 의뢰사 9/30 매뉴얼에 10/1 검토 결정을 반영한 판입니다. 코호트마다 질환 본표 하나와 문자열 코드표를 쓰는 v1 모양이며, 치료는 SACT 표에 둡니다.
+              v2 는 OMOP 표준 표 중심의 재설계본, v1 은 이미 낸 옛 제출본을 다시 볼 때만 고르세요.
             </p>
           </div>
         </Card>
@@ -77,7 +79,7 @@ export function SettingsPage() {
         </Card>
         <Card title="정보">
           <div className="kv">
-            <span className="k">프로그램</span><span>Quality Validator v0.2.0</span>
+            <span className="k">프로그램</span><span>Quality Validator v0.3.0</span>
             <span className="k">엔진</span><span>kai-dq-engine (TypeScript) · DuckDB</span>
             <span className="k">규칙 체계</span><span>Kahn 3축 (적합성 · 완전성 · 타당성) · 심각도 오류/경고</span>
           </div>

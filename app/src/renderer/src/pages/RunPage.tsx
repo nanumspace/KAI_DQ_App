@@ -36,7 +36,7 @@ export function RunPage({ nav }: { nav: Nav }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [drag, setDrag] = useState(false);
-  const [specVersion, setSpecVersion] = useState<"v1" | "v2">("v2");
+  const [specVersion, setSpecVersion] = useState<"v1" | "v2" | "v3">("v3");
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

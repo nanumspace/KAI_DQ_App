@@ -7,7 +7,7 @@ import type { OutputFile, RunOutputs } from "@shared/types";
 import type { NormReport } from "./input";
 import { checkLabel } from "@shared/labels";
 
-export const APP_VERSION = "0.2.0";
+export const APP_VERSION = "0.3.0";
 
 const FILES: Omit<OutputFile, "path" | "size">[] = [
   { key: "report", name: "report.md", label: "검증 보고서", desc: "요약, 분류별 집계, 실패 규칙과 예시(값은 가림). 사람이 읽는 결과.", shareable: true },

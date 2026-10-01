@@ -2,7 +2,7 @@
 // 메시지: {type:"run", root, cohort, dataDir, outDir, today, spec} → progress ... → {type:"done", summary} | {type:"error", message}
 import { runEngine, setRoot } from "@engine/index.js";
 
-interface RunMsg { type: "run"; root: string; cohort: string; dataDir: string; outDir: string; today?: string; spec?: "v1" | "v2" }
+interface RunMsg { type: "run"; root: string; cohort: string; dataDir: string; outDir: string; today?: string; spec?: "v1" | "v2" | "v3" }
 
 const port = process.parentPort;
 

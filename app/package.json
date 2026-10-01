@@ -68,6 +68,13 @@
         ]
       },
       {
+        "from": "../spec/v3",
+        "to": "kai/spec/v3",
+        "filter": [
+          "*.yaml"
+        ]
+      },
+      {
         "from": "../rules",
         "to": "kai/rules",
         "filter": [
@@ -84,6 +91,13 @@
       {
         "from": "../synth/output/clean_v2",
         "to": "kai/samples_v2",
+        "filter": [
+          "**/*.csv"
+        ]
+      },
+      {
+        "from": "../synth/output/clean_v3",
+        "to": "kai/samples_v3",
         "filter": [
           "**/*.csv"
         ]

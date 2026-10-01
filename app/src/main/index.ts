@@ -36,17 +36,20 @@ function createWindow(): BrowserWindow {
 }
 
 // ------------------------------------------------------------------ 명세·규칙
-// 기본은 v2(저장 구조 재설계본)다. v1 로 낸 데이터를 아직 들고 있는 기관을 위해 옛 경로도 고를 수 있다.
-function isV2(): boolean { return config.specVersion !== "v1"; }
+// 기본은 v3(의뢰사 9/30 매뉴얼 수정안)다. v2(OMOP 재설계본)와 v1(옛 제출본)도 고를 수 있다.
+// v1·v3 는 질환별 단일 표 구조라 같은 로더를 판 이름만 바꿔 쓴다. v2 만 따로 로더가 있다.
+function edition(): "v1" | "v2" | "v3" { return config.specVersion; }
+function isV2(): boolean { return edition() === "v2"; }
+function tableEdition(): "v1" | "v3" { return edition() === "v3" ? "v3" : "v1"; }
 
-function spec(): Spec { setRoot(config.root); return isV2() ? loadSpecV2() : loadSpec(); }
+function spec(): Spec { setRoot(config.root); return isV2() ? loadSpecV2() : loadSpec(tableEdition()); }
 
 function cohorts(): CohortInfo[] {
   setRoot(config.root);
   if (isV2()) {
     return Object.entries(loadProfilesV2()).map(([id, p]) => ({ id, kor: p.kor, tables: [...p.omop_tables, ...p.extension_tables] }));
   }
-  return Object.entries(loadProfiles()).map(([id, p]) => ({ id, kor: p.kor, tables: p.tables }));
+  return Object.entries(loadProfiles(tableEdition())).map(([id, p]) => ({ id, kor: p.kor, tables: p.tables }));
 }
 
 function cohortOf(id: string): CohortInfo {
@@ -58,12 +61,12 @@ function cohortOf(id: string): CohortInfo {
 function rules(): RuleInfo[] {
   setRoot(config.root);
   const v2 = isV2();
-  const st: RuleInfo[] = (v2 ? loadStructuralRulesV2() : loadStructuralRules()).map((r) => ({
+  const st: RuleInfo[] = (v2 ? loadStructuralRulesV2() : loadStructuralRules(tableEdition())).map((r) => ({
     id: r.id, name: r.name, category: r.category, subcategory: r.subcategory ?? "", severity: r.severity,
     table: r.table, fields: r.fields.join(","), check: r.check, desc: r.desc ?? "",
     scope: r.scope === "all" ? "all" : r.scope.join(","), kind: "structural",
   }));
-  const se: RuleInfo[] = (v2 ? loadSemanticRulesV2() : loadSemanticRules()).map((r) => ({
+  const se: RuleInfo[] = (v2 ? loadSemanticRulesV2() : loadSemanticRules(tableEdition())).map((r) => ({
     id: r.id, name: r.name, category: r.category, subcategory: r.subcategory ?? "", severity: r.severity,
     table: r.requires.join(","), fields: "", check: "sql", desc: r.desc ?? "",
     scope: r.scope === "all" ? "all" : r.scope.join(","), kind: "semantic", sql: r.sql,
@@ -73,10 +76,10 @@ function rules(): RuleInfo[] {
 
 /** 견본 데이터 위치: 개발 중에는 synth/output, 설치본은 resources/kai/samples. 명세 판마다 폴더가 다르다. */
 function sampleDir(cohort: string): string | null {
-  const v2 = isV2();
+  const ed = edition();
   const cands = [
-    path.join(config.root, v2 ? "samples_v2" : "samples", cohort),
-    path.join(config.root, v2 ? "synth/output/clean_v2" : "synth/output/clean", cohort),
+    path.join(config.root, ed === "v1" ? "samples" : `samples_${ed}`, cohort),
+    path.join(config.root, ed === "v1" ? "synth/output/clean" : `synth/output/clean_${ed}`, cohort),
   ];
   return cands.find((p) => fs.existsSync(path.join(p, "PERSON.csv"))) ?? null;
 }
@@ -88,7 +91,7 @@ function sampleDir(cohort: string): string | null {
  * 나머지가 없으면 막지 않고 경고만 낸다 — 엔진이 '테이블 없음'으로 따로 보고한다.
  */
 function requiredTables(tables: string[]): string[] {
-  if (isV2()) return ["PERSON"];
+  if (isV2()) return ["PERSON"];   // v1·v3: 환자 + 그 코호트의 질환 본표
   const s = spec();
   const disease = tables.find((t) => s.tables[t].category === "disease");
   return disease ? ["PERSON", disease] : ["PERSON"];
@@ -277,12 +280,12 @@ async function smoke(): Promise<void> {
   const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
   try {
     // 켜져 있는 명세 판의 가상데이터를 쓴다 (v2 는 clean_v2 / dirty_v2)
-    const sfx = isV2() ? "_v2" : "";
+    const sfx = config.specVersion === "v1" ? "" : `_${config.specVersion}`;
     const synth = path.join(config.root, "synth/output");
     // 설치본에는 synth/ 가 없고 내장 견본만 있다. 그때는 견본으로 돈다(dirty 는 없어 건너뛴다).
     const dataOf = (kind: "clean" | "dirty", cohort: string): string | null => {
       const cands = [path.join(synth, `${kind}${sfx}/${cohort}`)];
-      if (kind === "clean") cands.push(path.join(config.root, sfx ? "samples_v2" : "samples", cohort));
+      if (kind === "clean") cands.push(path.join(config.root, sfx ? `samples${sfx}` : "samples", cohort));
       return cands.find((d) => fs.existsSync(path.join(d, "PERSON.csv"))) ?? null;
     };
     log(`명세 ${config.specVersion} · 규칙 ${rules().length}개 · ${config.packaged ? "설치본" : "개발 모드"}`);
@@ -352,7 +355,7 @@ async function smoke(): Promise<void> {
     }
     let crfPayload: unknown = null;
     // v2 서식 경로: 빈 양식을 만들고, 채워진 서식을 레코드로 되돌린다
-    {
+    if (config.specVersion === "v2") {
       const blank = path.join(out, "crf-blank");
       const files = writeCrfTemplates("LUNG_CANCER", blank);
       log(`crf 빈 양식 ${files.length}개 → ${blank}`);
@@ -392,7 +395,8 @@ async function smoke(): Promise<void> {
     // 화면 캡처: 검증 실행 화면은 대응표 상태를 보기 위해 렌더러에 계획을 넣어 준다
     // 화면은 폴더 2곳을 넣은 모습으로 찍는다 (엑셀 경로는 위에서 실행으로 확인했다)
     if (planFolders ?? planX) win!.webContents.send("smoke:plan", planFolders ?? planX);
-    for (const page of ["run", "crf", "report", "findings", "dashboard", "rules", "monitor", "settings"]) {
+    const pages = ["run", "crf", "report", "findings", "dashboard", "rules", "monitor", "settings"].filter((p) => p !== "crf" || isV2());
+    for (const page of pages) {
       win!.webContents.send("nav", page);
       // 화면이 붙은 뒤에 보내야 한다 — 그 화면은 열릴 때 비로소 듣기 시작한다
       await wait(400);
@@ -414,7 +418,7 @@ async function smoke(): Promise<void> {
 app.whenReady().then(async () => {
   config = readConfig();
   // 자동 점검에서는 어느 명세 판으로 돌릴지 환경변수로 고른다 (v1 회귀 확인용)
-  if (SMOKE && (process.env.KAI_SMOKE_SPEC === "v1" || process.env.KAI_SMOKE_SPEC === "v2")) {
+  if (SMOKE && (process.env.KAI_SMOKE_SPEC === "v1" || process.env.KAI_SMOKE_SPEC === "v2" || process.env.KAI_SMOKE_SPEC === "v3")) {
     config = writeConfig({ specVersion: process.env.KAI_SMOKE_SPEC });
   }
   await db.openDb(path.join(app.getPath("userData"), "history.duckdb"));

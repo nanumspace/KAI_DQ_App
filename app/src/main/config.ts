@@ -20,7 +20,7 @@ export function readConfig(): AppConfig {
   return {
     root: saved.root && fs.existsSync(path.join(saved.root, "spec")) ? saved.root : defaultRoot(),
     defaultToday: saved.defaultToday ?? null,
-    specVersion: saved.specVersion === "v1" ? "v1" : "v2",
+    specVersion: saved.specVersion === "v1" || saved.specVersion === "v2" ? saved.specVersion : "v3",
     userData: app.getPath("userData"),
     packaged: app.isPackaged,
   };

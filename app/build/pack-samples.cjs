@@ -1,9 +1,9 @@
-// 견본 데이터 묶음 생성: synth/output/{clean_v2,dirty_v2}/<COHORT>/ 를 코호트·종류별 zip 으로 만든다 (v2 명세).
+// 견본 데이터 묶음 생성: synth/output/{clean,dirty}_<판>/<COHORT>/ 를 코호트·종류별 zip 으로 만든다 (판 기본 v3).
 // 각 zip 에는 <TABLE>.csv, (dirty) fault_manifest.csv, README.txt 가 폴더 바로 아래에, 시트당 테이블 하나인 엑셀 파일이 excel/ 에 들어간다.
 // 앱은 끌어다 놓은 폴더의 바로 아래 파일만 읽으므로, 폴더째 넣으면 CSV 로 실행되고 엑셀은 excel/ 안의 파일 하나를 넣어 시험한다.
-// 기대 결과(규칙 수, 위반 건수)는 dq/reports/<kind>_v2_<COHORT>/summary.json 에서 읽는다.
+// 기대 결과(규칙 수, 위반 건수)는 dq/reports/<kind>_<판>_<COHORT>/summary.json 에서 읽는다.
 //
-//   node app/build/pack-samples.cjs <출력 폴더> <버전>
+//   node app/build/pack-samples.cjs <출력 폴더> <버전> [판: v1|v2|v3, 기본 v3]
 //   → <출력 폴더>/SampleData-<버전>-<COHORT>-<kind>.zip ×12, SampleData-<버전>-all.zip
 
 const fs = require("node:fs");
@@ -15,16 +15,18 @@ const XLSX = require("xlsx");
 const YAML = require("yaml");
 
 const ROOT = path.resolve(__dirname, "../..");
-const [outDir, version] = process.argv.slice(2);
-if (!outDir || !version) { console.error("사용법: node pack-samples.cjs <출력 폴더> <버전>"); process.exit(2); }
+const [outDir, version, edition = "v3"] = process.argv.slice(2);
+if (!outDir || !version || !["v1", "v2", "v3"].includes(edition)) { console.error("사용법: node pack-samples.cjs <출력 폴더> <버전> [v1|v2|v3]"); process.exit(2); }
 
-const profiles = YAML.parse(fs.readFileSync(path.join(ROOT, "spec/v2/cohort_profiles_v2.yaml"), "utf8")).cohorts;
-for (const p of Object.values(profiles)) p.tables = [...p.omop_tables, ...p.extension_tables];
+const profiles = edition === "v2"
+  ? YAML.parse(fs.readFileSync(path.join(ROOT, "spec/v2/cohort_profiles_v2.yaml"), "utf8")).cohorts
+  : YAML.parse(fs.readFileSync(path.join(ROOT, edition === "v3" ? "spec/v3/cohort_profiles_v3.yaml" : "spec/cohort_profiles.yaml"), "utf8")).cohorts;
+if (edition === "v2") for (const p of Object.values(profiles)) p.tables = [...p.omop_tables, ...p.extension_tables];
 const COHORTS = Object.keys(profiles);
 const KINDS = ["clean", "dirty"];
 
 function summary(kind, cohort) {
-  const p = path.join(ROOT, "dq/reports", `${kind}_v2_${cohort}`, "summary.json");
+  const p = path.join(ROOT, "dq/reports", `${kind}_${edition}_${cohort}`, "summary.json");
   if (!fs.existsSync(p)) return null;
   const s = JSON.parse(fs.readFileSync(p, "utf8"));
   return { rules: s.rules_total, violations: s.violations_total, run_date: s.run_date, failed: s.rules_failed };
@@ -35,8 +37,10 @@ function readme(kind, cohort, sum, manifestRows) {
   const lines = [
     `K-AI 코호트 데이터 품질검증 견본 데이터 · ${kor} (${cohort}) · ${kind} · v${version}`,
     "",
-    "이 폴더의 데이터는 v2 명세(OMOP CDM 5.4 + K-AI 확장)에서 프로그램으로 만든 가상데이터입니다. 실제 환자나 병원과 무관합니다.",
-    "EHR 추출본과 서식 변환 결과를 이미 합쳐 놓은 모양이라 폴더 하나로 검증할 수 있습니다.",
+    edition === "v3"
+      ? "이 폴더의 데이터는 v3 명세(의뢰사 9/30 매뉴얼 수정안 + 10/1 검토 결정)에서 프로그램으로 만든 가상데이터입니다. 실제 환자나 병원과 무관합니다."
+      : `이 폴더의 데이터는 ${edition} 명세에서 프로그램으로 만든 가상데이터입니다. 실제 환자나 병원과 무관합니다.`,
+    edition === "v2" ? "EHR 추출본과 서식 변환 결과를 이미 합쳐 놓은 모양이라 폴더 하나로 검증할 수 있습니다." : "환자 표와 질환 본표 등이 폴더 하나에 들어 있어 그대로 검증할 수 있습니다.",
     "Quality Validator 의 동작을 확인하는 용도이며, 폴더째 앱의 '검증 실행' 화면에 끌어다 놓으면 됩니다.",
     "",
     "파일",
@@ -77,7 +81,7 @@ fs.mkdirSync(outDir, { recursive: true });
 const stage = fs.mkdtempSync(path.join(os.tmpdir(), "kai-samples-"));
 const allDirs = [];
 for (const cohort of COHORTS) for (const kind of KINDS) {
-  const src = path.join(ROOT, "synth/output", `${kind}_v2`, cohort);
+  const src = path.join(ROOT, "synth/output", `${kind}${edition === "v1" ? "" : "_" + edition}`, cohort);
   if (!fs.existsSync(src)) { console.warn(`건너뜀 (없음): ${src}`); continue; }
   const name = `SampleData-${version}-${cohort}-${kind}`;
   const dir = path.join(stage, name);

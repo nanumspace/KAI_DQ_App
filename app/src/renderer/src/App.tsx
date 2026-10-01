@@ -28,12 +28,21 @@ export function App() {
   const [page, setPage] = useState<Page>("run");
   const [runId, setRunId] = useState<string | undefined>();
   const [version, setVersion] = useState(0); // 실행 완료 시 증가 → 목록 갱신
-  // 꼬리말은 지금 켜진 명세 판의 실제 규모를 적는다 (v1 과 v2 는 규칙 수가 다르다)
+  // 꼬리말은 지금 켜진 명세 판의 실제 규모를 적는다 (판마다 규칙 수가 다르다).
+  // '서식 변환'은 v2 저장 레코드를 만드는 기능이라 v2 에서만 메뉴에 둔다. 설정에서 판을 바꾸면 다시 읽는다.
   const [foot, setFoot] = useState("");
+  const [specVersion, setSpecVersion] = useState<string>("");
   useEffect(() => {
-    Promise.all([api.listRules(), api.listCohorts(), api.getConfig()])
-      .then(([rs, cs, cfg]) => setFoot(`${cfg.specVersion} · 규칙 ${rs.length.toLocaleString("ko-KR")}개 · 코호트 ${cs.length}개`))
+    const load = () => Promise.all([api.listRules(), api.listCohorts(), api.getConfig()])
+      .then(([rs, cs, cfg]) => {
+        setFoot(`${cfg.specVersion} · 규칙 ${rs.length.toLocaleString("ko-KR")}개 · 코호트 ${cs.length}개`);
+        setSpecVersion(cfg.specVersion);
+        if (cfg.specVersion !== "v2") setPage((p) => (p === "crf" ? "run" : p));
+      })
       .catch(() => setFoot(""));
+    load();
+    window.addEventListener("kai:config", load);
+    return () => window.removeEventListener("kai:config", load);
   }, []);
 
   const go = (p: Page, r?: string) => { setPage(p); if (r !== undefined) setRunId(r); };
@@ -45,12 +54,12 @@ export function App() {
     <div className="app">
       <aside className="sidebar">
         <div className="brand">Quality Validator<small>K-AI 코호트 데이터 품질검증</small></div>
-        {MENU.map((m) => (
+        {MENU.filter((m) => m.id !== "crf" || specVersion === "v2").map((m) => (
           <button key={m.id} className={page === m.id ? "active" : ""} onClick={() => setPage(m.id)}>
             <span className="icon">{m.icon}</span>{m.label}
           </button>
         ))}
-        <div className="foot">{foot}<br />v0.2.0</div>
+        <div className="foot">{foot}<br />v0.3.0</div>
       </aside>
       <main className="main">
         {page === "dashboard" && <Dashboard key={version} nav={nav} />}
